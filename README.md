@@ -36,7 +36,7 @@ Branch name is better with your name/id on it and it should be somewhat descript
 When contributing, please checkout to a new branch from main branch, and code as you wish. After finishing your code, commit and push your branch to remote repository:
 
 ```bash
-git push -d origin <your_branch_name>
+git push -u origin <your_branch_name>
 ```
 
 Then, start a pull request.
