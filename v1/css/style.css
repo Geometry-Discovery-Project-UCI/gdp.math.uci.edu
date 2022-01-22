@@ -47,7 +47,7 @@ ol {
     margin-left: 1vw;
     line-height: 25px;
 }
-          
+
 .banner {
     background-color: antiquewhite;
     padding-top: 25px;
@@ -101,16 +101,16 @@ svg {
 }
 
 #tri0, .ptoTri, #nap1, #nap2 {
-    fill:none;
-    stroke:#000000;
-    stroke-miterlimit:10;
+    fill: none;
+    stroke: #000000;
+    stroke-miterlimit: 10;
 }
 
 .app {
-    display:inline-block;
+    display: inline-block;
 
     margin-top: 2rem;
-    vertical-align:middle;
+    vertical-align: middle;
     flex-grow: 2;
     flex-basis: 500px;
 }
@@ -134,7 +134,7 @@ svg {
     flex-direction: row;
     align-items: center;
     flex-wrap: nowrap;
-    
+
 }
 
 .s-text {

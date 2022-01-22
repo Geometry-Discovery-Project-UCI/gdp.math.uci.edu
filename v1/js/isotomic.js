@@ -40,7 +40,7 @@ letterC.setAttribute("x", pC[0] - 5);
 letterC.setAttribute("y", pC[1] - 5);
 
 const isotomicMouse = (p) => {
- 
+
 
   if (isInside(pA[0], pA[1], pB[0], pB[1], pC[0], pC[1], p.x, p.y)) {
     dot.setAttributeNS(null, "cx", pP[0]);
@@ -77,24 +77,24 @@ const isotomicMouse = (p) => {
   var theta = Math.atan(-1 / mBC);
   var dist = distToLine([p.x, p.y], pC, pA);
   p2 = [p.x - dist * Math.cos(theta), p.y - dist * Math.sin(theta)];
-  
+
   const pCN = lineLineIntersection(pC, pP, pA, pB);
   drawLine(pC, pCN, line4)
-  
+
   const pAN = lineLineIntersection(pA, pP, pC, pB);
   drawLine(pA, pAN, line5)
-  
+
   const pBN = lineLineIntersection(pB, pP, pC, pA);
   drawLine(pB, pBN, line6);
-  
+
   const dC = findDistance(pCN, pB);
   const pDC = pointAlongLine(pA, pB, dC);
   drawLine(pC, pDC, line7);
-  
+
   const dA = findDistance(pAN, pB);
   const pDA = pointAlongLine(pC, pB, dA);
   drawLine(pA, pDA, line8);
-  
+
   const dB = findDistance(pBN, pC);
   const pDB = pointAlongLine(pA, pC, dB);
   drawLine(pB, pDB, line9);
@@ -103,7 +103,7 @@ const isotomicMouse = (p) => {
 //isotomicMouse(pP);
 letterP.setAttribute("x", pP[0]);
 letterP.setAttribute("y", pP[1] - 10);
- 
+
 tri.setAttributeNS(null, "points", makeString(points));
 // svg.("onclick", (event) => {
 //   var p;
@@ -115,5 +115,5 @@ svg.addEventListener("mousemove", (event) => {
   isotomicMouse(p);
 
   // if ()
-  
+
 });
