@@ -197,3 +197,11 @@ const radiansToDegress = (r) => {
     let pi = 3.14;
     return r * (180/pi);
 }
+
+// 定比分点函数
+// The functions returns the point (1-lambda)*pt0+\lambda*pt1
+// In particular, if lambda=0.5, it returns to the midpoint
+
+const findPointwithFixedRatio = (pt0, pt1, lambda) => {
+    return [(1 - lambda) * pt0[0] + lambda * pt1[0], (1 - lambda) * pt0[1] + lambda * pt1[1]];
+};
