@@ -9,7 +9,11 @@ const aLabel = makeLabel("A");
 const bLabel = makeLabel("B");
 const cLabel = makeLabel("C");
 
-const iLabel = makeLabel("I");
+const dLabel = makeLabel("D");
+const eLabel = makeLabel("E");
+const fLabel = makeLabel("F");
+
+const gLabel = makeLabel("G");
 
 const incircle = makeCircle();
 
@@ -25,10 +29,14 @@ const triangle = makeMovablePolygon([{
     cLabel.set({ left: coords[2].x + 5, top: coords[2].y });
 
     const incenter = calculateIncenter(coords[0], coords[1], coords[2]);
-    iLabel.set({ left: incenter.x + 5, top: incenter.y + 5 });
+    gLabel.set({ left: incenter.x + 5, top: incenter.y + 5 });
     const onBC = calculateIntersect(makeLine(coords[0], incenter), makeLine(coords[1], coords[2]), true);
     const onAC = calculateIntersect(makeLine(coords[1], incenter), makeLine(coords[0], coords[2]), true);
     const onAB = calculateIntersect(makeLine(coords[2], incenter), makeLine(coords[0], coords[1]), true);
+
+    dLabel.set({ left: onAB.x - 25, top: onAB.y - 25 })
+    eLabel.set({ left: onAC.x + 10, top: onAB.y - 25 })
+    fLabel.set({ left: onBC.x, top: onBC.y })
 
     bisectionOnAB.set({
         x1: coords[2].x, y1: coords[2].y,
@@ -50,11 +58,13 @@ const triangle = makeMovablePolygon([{
 
 canvas.add(triangle);
 
-canvas.add(iLabel);
-
 canvas.add(aLabel);
 canvas.add(bLabel);
 canvas.add(cLabel);
+canvas.add(dLabel);
+canvas.add(eLabel);
+canvas.add(fLabel);
+canvas.add(gLabel);
 
 canvas.add(bisectionOnAB);
 canvas.add(bisectionOnAC);
