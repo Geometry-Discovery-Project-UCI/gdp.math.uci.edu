@@ -66,8 +66,8 @@ function solvePerpendicularLineEquation(originalM, pt) {
 }
 
 function calculateDistanceFromPointToLine(pt, line) {
-    const {m: k , b: b} = solveLinearEquation({ x: line.x1, y: line.y1 }, { x: line.x2, y: line.y2 });
-    const {m: m, b: c}  = solvePerpendicularLineEquation(k, pt);
+    const { m: k, b: b } = solveLinearEquation({ x: line.x1, y: line.y1 }, { x: line.x2, y: line.y2 });
+    const { m: m, b: c } = solvePerpendicularLineEquation(k, pt);
     const x = (c - b) / (k - m);
     const y = k * x + b;
     return calculateDistanceBetweenTwoPoints(pt, { x: x, y: y });

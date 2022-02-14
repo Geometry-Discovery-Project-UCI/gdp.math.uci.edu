@@ -96,7 +96,7 @@ function makeLabel(text, fontSize) {
 }
 
 function makeCircle(radius, center, fill, stroke) {
-    center =  center || { x: 0, y: 0 };
+    center = center || { x: 0, y: 0 };
     radius = radius || 5;
     return new fabric.Circle({
         left: center.x,
