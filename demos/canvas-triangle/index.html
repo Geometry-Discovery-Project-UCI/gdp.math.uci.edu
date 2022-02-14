@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Triangle</title>
-    <script src="https://unpkg.com/fabric@4.6.0/dist/fabric.min.js"></script>
+    <script src="https://unpkg.com/fabric@5.0.0/dist/fabric.min.js"></script>
 </head>
 <style>
     html,
@@ -25,7 +25,6 @@
 </body>
 <script>
     const canvas = new fabric.Canvas("canvas");
-
     // create a polygon object
     var points = [{
         x: 2, y: 1
@@ -38,13 +37,20 @@
         left: 100,
         top: 100,
         fill: 'white',
-        strokeWidth: 0.05,
-        stroke: 'gray',
+        strokeWidth: 0.01,
+        stroke: 'black',
         scaleX: 100,
         scaleY: 100,
         objectCaching: false,
         transparentCorners: false,
     });
+
+    const line = new fabric.Line([1, 2, 30, 50], {
+        left: 50,
+        top: 50,
+        stroke: 'black'
+    });
+    canvas.add(line);
 
     // define a function that can locate the controls.
     // this function will be used both for drawing and for interaction.
@@ -99,7 +105,8 @@
 
     canvas.setActiveObject(polygon);
     polygon.cornerStyle = 'circle';
-    polygon.cornerColor = 'rgba(0,0,255,0.5)';
+    polygon.cornerColor = 'rgba(0,0,0,0)';
+    polygon.cornerSize = 20;
     polygon.controls = polygon.points.reduce(function (acc, point, index) {
         acc['p' + index] = new fabric.Control({
             positionHandler: polygonPositionHandler,
