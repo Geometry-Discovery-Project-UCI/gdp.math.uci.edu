@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Five Centers</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/fabric@5.0.0/dist/fabric.min.js"></script>
+    <script src="js/canvas-utils.js"></script>
+    <script src="js/geometry-utils.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div id="centroid-wrapper">
+            <h3>Centroid</h3>
+            <canvas id="centroid-canvas" width="300" height="300"></canvas>
+        </div>
+        <div id="incenter-wrapper">
+            <h3>Incenter</h3>
+            <canvas id="incenter-canvas" width="300" height="300"></canvas>
+        </div>
+    </div>
+</body>
+<script src="js/centroid.js"></script>
+<script src="js/incenter.js"></script>
+
+</html>
