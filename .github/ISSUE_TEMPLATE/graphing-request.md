@@ -2,7 +2,7 @@
 name: Graphing request
 about: Suggest a topic for this project
 title: "[Graph]"
-labels: ''
+labels: graph
 assignees: ''
 
 ---
