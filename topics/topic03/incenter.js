@@ -58,7 +58,7 @@
         })
         eLabel.set({
             left: onAC.x + 10,
-            top: onAB.y - 25
+            top: onAC.y - 25
         })
         fLabel.set({
             left: onBC.x,
