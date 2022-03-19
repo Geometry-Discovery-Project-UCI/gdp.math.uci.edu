@@ -62,11 +62,6 @@ a {
     display: inline;
 }
 
-.topic-wrapper {
-    display: grid;
-    grid-template-columns: 250px 250px;
-}
-
 .topic-image, .topic-demo {
     width: 200px;
     height: 120px;
@@ -106,11 +101,11 @@ svg {
 }
 
 #left-nav {
-    flex: 1 0 0;
+    flex: 1 3;
 }
 
 #right-content {
-    flex: 1 1 0;
+    flex: 3 1; 
 }
 
 #inner-content {
