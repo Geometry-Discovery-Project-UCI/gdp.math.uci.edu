@@ -48,9 +48,9 @@
             left: incenter.x + 5,
             top: incenter.y + 5
         });
-        const onBC = calculateIntersect(makeLine(coords[0], incenter), makeLine(coords[1], coords[2]), true);
-        const onAC = calculateIntersect(makeLine(coords[1], incenter), makeLine(coords[0], coords[2]), true);
-        const onAB = calculateIntersect(makeLine(coords[2], incenter), makeLine(coords[0], coords[1]), true);
+        const onBC = calculateLineIntersectInPoints(makeLine(coords[0], incenter), makeLine(coords[1], coords[2]), true);
+        const onAC = calculateLineIntersectInPoints(makeLine(coords[1], incenter), makeLine(coords[0], coords[2]), true);
+        const onAB = calculateLineIntersectInPoints(makeLine(coords[2], incenter), makeLine(coords[0], coords[1]), true);
 
         dLabel.set({
             left: onAB.x - 25,

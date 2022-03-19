@@ -79,7 +79,7 @@
             top: mp3.y
         });
 
-        const intersect = calculateIntersect(median1, median2);
+        const intersect = calculateLineIntersectInPoints(median1, median2);
 
         gLabel.set({
             left: intersect.x + 5,

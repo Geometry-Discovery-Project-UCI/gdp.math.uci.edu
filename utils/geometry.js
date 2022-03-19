@@ -5,7 +5,7 @@ function calculateMidpoint(p1, p2) {
     }
 }
 
-function calculateIntersect(line1, line2, isVector) {
+function calculateLineIntersectInPoints(line1, line2, isVector) {
     isVector = isVector | false;
 
     // Check if none of the lines are of length 0
@@ -58,16 +58,25 @@ function solveLinearEquation(pt1, pt2) {
     return {
         m,
         b
-    }
+    };
 }
 
 function solvePerpendicularLineEquation(originalM, pt) {
-    const m = originalM == 0 ? 10000 : -1. / originalM;
+    const m = originalM === 0 ? 10000 : -1. / originalM;
     const b = pt.y - m * pt.x;
     return {
         m,
         b
-    }
+    };
+}
+
+function calculateLineIntersectInLinearEquation(m1, b1, m2, b2) {
+    const x = (b2 - b1) / (m1 - m2);
+    const y = m1 * x + b1;
+    return {
+        x,
+        y
+    };
 }
 
 function calculateDistanceFromPointToLine(pt, line) {
@@ -85,8 +94,10 @@ function calculateDistanceFromPointToLine(pt, line) {
         m: m,
         b: c
     } = solvePerpendicularLineEquation(k, pt);
-    const x = (c - b) / (k - m);
-    const y = k * x + b;
+    const {
+        x,
+        y
+    } = calculateLineIntersectInLinearEquation(k, b, m, c);
     return calculateDistanceBetweenTwoPoints(pt, {
         x: x,
         y: y
