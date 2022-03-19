@@ -3,8 +3,10 @@ function _polygonPositionHandler(fn) {
         const c = fabricObject.points.map(function (pt) {
             const x = (pt.x - fabricObject.pathOffset.x),
                 y = (pt.y - fabricObject.pathOffset.y);
-            return fabric.util.transformPoint(
-                { x: x, y: y },
+            return fabric.util.transformPoint({
+                    x: x,
+                    y: y
+                },
                 fabric.util.multiplyTransformMatrices(
                     fabricObject.canvas.viewportTransform,
                     fabricObject.calcTransformMatrix()
@@ -75,8 +77,14 @@ function makeMovablePolygon(vertexes, fn) {
 }
 
 function makeLine(pt1, pt2, stroke) {
-    pt1 = pt1 || { x: 0, y: 0 };
-    pt2 = pt2 || { x: 0, y: 0 };
+    pt1 = pt1 || {
+        x: 0,
+        y: 0
+    };
+    pt2 = pt2 || {
+        x: 0,
+        y: 0
+    };
     return new fabric.Line([pt1.x, pt1.y, pt2.x, pt2.y], {
         stroke: "black",
         hasControls: false,
@@ -96,7 +104,10 @@ function makeLabel(text, fontSize) {
 }
 
 function makeCircle(radius, center, fill, stroke) {
-    center = center || { x: 0, y: 0 };
+    center = center || {
+        x: 0,
+        y: 0
+    };
     radius = radius || 5;
     return new fabric.Circle({
         left: center.x,
