@@ -31,7 +31,10 @@ function calculateIntersect(line1, line2, isVector) {
     let x = line1.x1 + ua * (line1.x2 - line1.x1)
     let y = line1.y1 + ua * (line1.y2 - line1.y1)
 
-    return { x, y }
+    return {
+        x,
+        y
+    }
 }
 
 function calculateDistanceBetweenTwoPoints(pt1, pt2) {
@@ -53,7 +56,8 @@ function solveLinearEquation(pt1, pt2) {
     const m = 1. * (pt2.y - pt1.y) / (pt2.x - pt1.x);
     const b = pt1.y - m * pt1.x;
     return {
-        m, b
+        m,
+        b
     }
 }
 
@@ -61,14 +65,30 @@ function solvePerpendicularLineEquation(originalM, pt) {
     const m = originalM == 0 ? 10000 : -1. / originalM;
     const b = pt.y - m * pt.x;
     return {
-        m, b
+        m,
+        b
     }
 }
 
 function calculateDistanceFromPointToLine(pt, line) {
-    const { m: k, b: b } = solveLinearEquation({ x: line.x1, y: line.y1 }, { x: line.x2, y: line.y2 });
-    const { m: m, b: c } = solvePerpendicularLineEquation(k, pt);
+    const {
+        m: k,
+        b: b
+    } = solveLinearEquation({
+        x: line.x1,
+        y: line.y1
+    }, {
+        x: line.x2,
+        y: line.y2
+    });
+    const {
+        m: m,
+        b: c
+    } = solvePerpendicularLineEquation(k, pt);
     const x = (c - b) / (k - m);
     const y = k * x + b;
-    return calculateDistanceBetweenTwoPoints(pt, { x: x, y: y });
+    return calculateDistanceBetweenTwoPoints(pt, {
+        x: x,
+        y: y
+    });
 }

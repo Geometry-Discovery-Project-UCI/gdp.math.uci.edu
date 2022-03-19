@@ -5,17 +5,112 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geometry Discovery Project</title>
+    <meta name="Copyright" content="Zhiqin Lu, Chris Davis">
+    <meta name="Author" content="Zhiqin Lu, Chris Davis">
+    <meta name="Description" content="GDP & UCI">
+    <meta name="resource-type" content="document">
+    <meta name="distribution" content="global">
+    <meta name="KeyWords" content="Zhiqin Lu, Chris Davis, UCI, Mathematics">
+
+    <title>GDP @ UCI</title>
+    <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.prod.js"></script>
     <link rel="icon" href="public/icons/favicon.ico">
     <link rel="stylesheet" href="style.css">
-    <script src="main.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Patua+One&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Remove me -->
-    <a href="topics/centroid">Centroid</a>
-    <a href="topics/incenter">Incenter</a>
-    <!-- Remove me -->
+    <div class="banner">
+        <h1>The Geometry Discovery Project</h1>
+        <h2>University of California, Irvine</h2>
+    </div>
+
+    <div id="wrapper">
+        <div id="left-nav">
+            <div class="main">
+                <div class="col1">
+                    <div class="content topics">
+                        <h3>Topics:</h3>
+                        <div>
+                            <ol id="topic-list" start="1">
+                                <li v-for="topic in topics" @click="reloadInnerContent(topic)" class="topic">
+                                    <div>
+                                        {{ topic.title }}, by {{ topic.authors.join(", ") }}
+                                        <div class="topic-wrapper">
+                                            <div>
+                                                <img :src="topic.imageUrl" :alt="topic.title" class="topic-image">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="content">
+                        <h3>Essays</h3>
+                        <ol>
+                            <li>
+                                <a href="public/pdfs/twenty-one.pdf" style="text-decoration:none">The 20 degree
+                                    questions</a>
+                            </li>
+
+                            <li>
+                                <a href="public/pdfs/special-techniques.pdf" style="text-decoration:none">The usage of
+                                    special techniques</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content">
+                <h3>Project Coordinators:</h3>
+                <ol>
+                    <li>Dr. Zhiqin Lu, UCI, zlu@uci.edu</li>
+                    <li>Dr. Christopher Davis, UCI, daviscj@uci.edu</li>
+                    <li>Dr. Xianfu Liu, UCI, xianful@uci.edu</li>
+                </ol>
+            </div>
+
+            <div class="content">
+                <h3>Contributors:</h3>
+                <ol>
+                    <li>Shiyi Lyu, slyu6@uci.edu</li>
+                    <li>Xinxi Guo, x6guo@ucsd.edu</li>
+                </ol>
+            </div>
+
+            <div class="content">
+                <h3>Links</h3>
+                <ol>
+                    <li><a href="https://kskedlaya.org/geometryunbound/" style="text-decoration:none">Geometry
+                            Unbound</a>
+                        by Kiran Kedlaya</li>
+                    <li><a href="https://www.math.uci.edu/~mathcircle/" style="text-decoration:none">UCI Math Circle</a>
+                    </li>
+                    <li><a href="https://www.fullerton.edu/math/resources/mathcircle.php">Fullerton Math Circle</a></li>
+                    <li><a href="http://www.morningstarinstitute.org">Morning Star Institute</a> by Yifeng Yu</li>
+                </ol>
+            </div>
+
+            <div class="content">
+                <h3>Credits</h3>
+                <ol>
+                    <li>
+                        The purple highlighting was copied from
+                        <a href="http://idl.cs.washington.edu/">UW Interactive Data Lab</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div id="right-content">
+            <iframe id="inner-content" src="topics/topic01"></iframe>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
 </body>
 
 </html>
