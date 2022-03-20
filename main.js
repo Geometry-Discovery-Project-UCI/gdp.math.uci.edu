@@ -31,6 +31,10 @@
         methods: {
             reloadInnerContent(topic) {
                 innerContent.src = topic.pageUrl;
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             }
         }
     }).mount("#topic-list");
