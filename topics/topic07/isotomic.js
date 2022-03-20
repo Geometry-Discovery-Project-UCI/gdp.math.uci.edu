@@ -28,7 +28,14 @@ const line9 = document.querySelector("#lineCp_isotomic");
 const letterB = document.querySelector("#letterB_isotomic");
 const letterA = document.querySelector("#letterA_isotomic");
 const letterC = document.querySelector("#letterC_isotomic");
+const letterD = document.querySelector("#letterD_isotomic");
+const letterE = document.querySelector("#letterE_isotomic");
+const letterF = document.querySelector("#letterF_isotomic");
+const letterDp = document.querySelector("#letterDp_isotomic");
+const letterEp = document.querySelector("#letterEp_isotomic");
+const letterFp = document.querySelector("#letterFp_isotomic");
 const letterP = document.querySelector("#letterP_isotomic");
+const letterPp = document.querySelector("#letterPp_isotomic");
 
 
 ptoAngles = [1.4, 3.4, 5, 6];
@@ -89,7 +96,7 @@ const isotomicMouse = (p) => {
   
   const pBN = lineLineIntersection(pB, pP, pC, pA);
   drawLine(pB, pBN, line6);
-  
+
   const dC = findDistance(pCN, pB);
   const pDC = pointAlongLine(pA, pB, dC);
   drawLine(pC, pDC, line7);
@@ -101,6 +108,29 @@ const isotomicMouse = (p) => {
   const dB = findDistance(pBN, pC);
   const pDB = pointAlongLine(pA, pC, dB);
   drawLine(pB, pDB, line9);
+
+  const pPN = lineLineIntersection(pC, pDC, pB, pDB);
+  console.log(dC, pDC);
+  letterPp.setAttribute("x", pPN[0]);
+  letterPp.setAttribute("y", pPN[1] - 10);
+
+  letterF.setAttribute("x", pCN[0]);
+  letterF.setAttribute("y", pCN[1] + 20);
+
+  letterD.setAttribute("x", pAN[0] - 20);
+  letterD.setAttribute("y", pAN[1]);
+
+  letterE.setAttribute("x", pBN[0] + 20);
+  letterE.setAttribute("y", pBN[1]);
+
+  letterFp.setAttribute("x", pDC[0]);
+  letterFp.setAttribute("y", pDC[1] + 20);
+
+  letterDp.setAttribute("x", pDA[0] - 20);
+  letterDp.setAttribute("y", pDA[1]);
+
+  letterEp.setAttribute("x", pDB[0] + 20);
+  letterEp.setAttribute("y", pDB[1]);
 };
 
 var pPoint = DOMPoint.fromPoint({x: 160, y: 260, z: 0, w: 0});
