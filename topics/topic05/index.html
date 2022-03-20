@@ -1,19 +1,21 @@
 <html>
+
 <head>
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/fabric@5.0.0/dist/fabric.min.js"></script>
     <script src="../../utils/canvas.js"></script>
     <script src="../../utils/geometry.js"></script>
+    <script src="../../utils/geoutil.js"></script>
+    <script src="simsonline.js"></script>
 </head>
+
 <body>
     <h1>Simson Line</h1>
-<!--     <div>Resources:</div>
-    <ul>
-        <li>
-            <div><a href="topic01.pdf" target="_blank">Reading</a> by Zhiqin Lu</div>
-        </li>
-    </ul> -->
-  <svg id="tri-app" width="500" height="500" style="border: 2px solid black" >
+    <div>
+        <span>Resources:</span>
+        <ul>
+            <li>
+                 <svg id="tri-app" width="500" height="500" style="border: 2px solid black" >
                                 <circle id="ptoCircle_simsonline" r="200" cx="250" cy="250" fill="white" stroke="black"/>
                                 <polygon id="tri_simsonline" fill="white" stroke="black"/>
 
@@ -33,11 +35,14 @@
                     <text id="letterB_simsonline">B</text>
                     <text id="letterC_simsonline">A</text>
                     <text id="letterP_simsonline">P</text>
-                            </svg>
-                            <script src="../../../utils/geoutil.js"></script>
-
-      <script src="simsonline.js"></script>
-
+                 </svg>
+            </li>
+        </ul>
+        </ul>
+    </div>
+    <script src="incenter.js"></script>
+    <script src="centroid.js"></script>
+    <script src="orthocenter.js"></script>
 </body>
 
 </html>
