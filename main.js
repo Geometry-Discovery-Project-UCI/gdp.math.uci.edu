@@ -19,12 +19,12 @@
                     new Topic("Erdős-Mordell Inequality", ["Zhiqin Lu"], "public/images/topic04.png", "topics/topic04"),
                     new Topic("Simson Line", ["Zhiqin Lu"], "public/images/topic05.png", "topics/topic05"),
                     new Topic("Pascal and Brainchon Theorems", [""], "public/images/topic06.png", "topics/topic06"),
-                    new Topic("Gergonne and Nagel Points", ["" ], "public/images/topic08.png", "topics/topic08"),
+                    new Topic("Isogonal Conjugate and Isotomic Conjugate Points", ["Zhiqin Lu", "Shiyi Lyu"], "public/images/topic07.png", "topics/topic07"),
+                    new Topic("Gergonne and Nagel Points", [""], "public/images/topic08.png", "topics/topic08"),
                     new Topic("Napoleon's Theorem", ["Zhiqin Lu"], "public/images/topic09.png", "topics/topic09"),
-                    new Topic("Ptolemy Theorem's and Kelvin Transform", ["Zhiqin Lu" ], "public/images/topic10.png", "topics/topic10"),
+                    new Topic("Ptolemy Theorem's and Kelvin Transform", ["Zhiqin Lu"], "public/images/topic10.png", "topics/topic10"),
                     new Topic("Dual Triangles", ["Zhiqin Lu"], "public/images/topic11.png", "topics/topic11"),
-    
-
+                    new Topic("Lemoine Circles", ["Zhiqin Lu"], "public/images/topic17.png", "topics/topic17"),
                 ]
             }
         },
