@@ -1,19 +1,79 @@
+html, body {
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    flex: 1;
+    padding: 24px 0px 24px 48px;
+    background-color: antiquewhite;
+}
+
+#app-wrapper {
+    flex: 6;
+    display: flex;
+    flex-direction: row;
+}
+
+nav {
+    flex: 1;
+    padding: 0px 18px 12px 12px;
+    border-right: 1px solid lightgray;
+}
+
+main {
+    flex: 5;
+}
+
+#main-content {
+    height: 100%;
+    width: 100%;
+}
+
+.topic-image {
+    width: 80%;
+    margin-top: 12px;
+}
+
+/*
+ * The above beautifies everything :)
+ */
+
+.topic {
+    cursor: pointer;
+}
+
+#topics li {
+    padding: 12px;
+}
+
+#topics li:hover {
+    box-shadow: 2px 2px 18px #8a5ed3;
+}
+
+a {
+    text-decoration: none;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Patua One', serif;
     letter-spacing: 0.03em;
 }
 
 h1 {
-    margin: 0;
-    margin-bottom: 0;
-    margin-bottom: 0;
+    margin: 0px;
     font-size: 40px;
 }
 
 h2 {
-    margin-left: 20px;
-    margin-top: 2px;
-    margin-bottom: 0px;
+    margin: 0px 0px 0px 12px;
     color: hsla(0, 0%, 24%, 1);
     font-size: 28px;
 }
@@ -29,74 +89,12 @@ h3 {
     margin-bottom: 10px;
 }
 
-
-body {
-    background-color: white;
-    font-family: 'Open Sans', sans-serif;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-}
-
 ol {
-    margin-top: 0;
-    margin-left: 1vw;
-    line-height: 25px;
+    margin-top: 0px;
+    margin-left: 12px;
+    line-height: 24px;
 }
 
 li {
-    max-width: 500px;
-    border-radius: 10px;
-}
-
-a {
-    text-decoration: none;
-    display: inline;
-}
-
-#app {
-    display: flex;
-}
-
-header {
-    background-color: antiquewhite;
-    padding-top: 25px;
-    padding-bottom: 25px;
-    padding-left: 2vw;
-}
-
-nav {
-    flex: 1 4;
-    border-right: 1px solid black;
-}
-
-main {
-    flex: 4 1;
-}
-
-#main-content {
-    width: 100%;
-    height: 100%;
-}
-
-#topics {
-    margin-right: 8px;
-}
-
-#topics li {
-    padding: 10px;
-}
-
-#topics li:hover {
-    box-shadow: 2px 2px 18px #8a5ed3;
-}
-
-.topic {
-    cursor: pointer;
-}
-
-.topic-image {
-    width: 200px;
-    height: 120px;
-    margin-top: 2px;
+    border-radius: 12px;
 }
