@@ -20,91 +20,87 @@
 </head>
 
 <body>
-    <div class="banner">
-        <h1>The Geometry Discovery Project</h1>
-        <h2>University of California, Irvine</h2>
-    </div>
-
     <div id="wrapper">
-        <div id="left-nav">
-            <div class="main">
-                <div class="col1">
-                    <div class="content topics">
-                        <h3>Topics:</h3>
-                        <div>
-                            <ol id="topic-list" start="1">
-                                <li v-for="topic in topics" @click="reloadInnerContent(topic)" class="topic">
+        <header>
+            <h1>The Geometry Discovery Project</h1>
+            <h2>University of California, Irvine</h2>
+        </header>
+        <div id="app">
+            <nav>
+                <div id="topics">
+                    <h3>Topics</h3>
+                    <ol id="topic-list">
+                        <li v-for="topic in topics" @click="reloadMainContent(topic)" class="topic">
+                            <div>
+                                <span>{{ topic.title }}</span>
+                                <span v-if="topic.authors.length > 0">, by {{ topic.authors.join(", ") }}</span>
+                                <div class="topic-wrapper">
                                     <div>
-                                        {{ topic.title }}, by {{ topic.authors.join(", ") }}
-                                        <div class="topic-wrapper">
-                                            <div>
-                                                <img :src="topic.imageUrl" :alt="topic.title" class="topic-image">
-                                            </div>
-                                        </div>
+                                        <img :src="topic.imageUrl" :alt="topic.title" class="topic-image">
                                     </div>
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="content">
-                        <h3>Essays</h3>
-                        <ol>
-                            <li>
-                                <a href="public/pdfs/twenty-one.pdf" style="text-decoration:none">The 20 degree
-                                    questions</a>
-                            </li>
-
-                            <li>
-                                <a href="public/pdfs/special-techniques.pdf" style="text-decoration:none">The usage of
-                                    special techniques</a>
-                            </li>
-                        </ol>
-                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ol>
                 </div>
-            </div>
 
-            <div class="content">
-                <h3>Links</h3>
-                <ol>
-                    <li><a href="https://kskedlaya.org/geometryunbound/" style="text-decoration:none">Geometry
-                            Unbound</a>
-                        by Kiran Kedlaya</li>
-                    <li><a href="https://www.math.uci.edu/~mathcircle/" style="text-decoration:none">UCI Math Circle</a>
-                    </li>
-                    <li><a href="https://www.fullerton.edu/math/resources/mathcircle.php">Fullerton Math Circle</a></li>
-                    <li><a href="http://www.morningstarinstitute.org">Morning Star Institute</a> by Yifeng Yu</li>
-                </ol>
-            </div>
+                <div id="essays">
+                    <ol>
+                        <li>
+                            <a href="public/pdfs/twenty-one.pdf">The 20 degree
+                                questions</a>
+                        </li>
+                        <li>
+                            <a href="public/pdfs/special-techniques.pdf">The usage of
+                                special techniques</a>
+                        </li>
+                    </ol>
+                </div>
 
-            <div class="content">
-                <h3>Contributors:</h3>
-                <ol>
-                    <li>Zhiqin Lu, UCI, zlu@uci.edu</li>
-                    <li>Christopher Davis, UCI, daviscj@uci.edu</li>
-                    <li>Xianfu Liu, UCI, xianful@uci.edu</li>
-                    <li>Shiyi Lyu, slyu6@uci.edu</li>
-                    <li>Xinxi Guo, x6guo@ucsd.edu</li>
-                    <li>Melissa Yu, melissajiayu@gmail.com </li>
-                </ol>
-            </div>
+                <div id="links">
+                    <h3>Links</h3>
+                    <ol>
+                        <li><a href="https://kskedlaya.org/geometryunbound/">Geometry
+                                Unbound</a>
+                            by Kiran Kedlaya</li>
+                        <li><a href="https://www.math.uci.edu/~mathcircle/">UCI Math
+                                Circle</a>
+                        </li>
+                        <li><a href="https://www.fullerton.edu/math/resources/mathcircle.php">Fullerton Math
+                                Circle</a></li>
+                        <li><a href="http://www.morningstarinstitute.org">Morning Star Institute</a> by Yifeng Yu
+                        </li>
+                    </ol>
+                </div>
 
-            <div class="content">
-                <h3>Credits</h3>
-                <ol>
-                    <li>
-                        The purple highlighting was copied from
-                        <a href="http://idl.cs.washington.edu/">UW Interactive Data Lab</a>
-                    </li>
-                </ol>
-            </div>
-        </div>
+                <div id="contributors">
+                    <h3>Contributors:</h3>
+                    <ol>
+                        <li>Zhiqin Lu, UCI, zlu@uci.edu</li>
+                        <li>Christopher Davis, UCI, daviscj@uci.edu</li>
+                        <li>Xianfu Liu, UCI, xianful@uci.edu</li>
+                        <li>Shiyi Lyu, slyu6@uci.edu</li>
+                        <li>Xinxi Guo, x6guo@ucsd.edu</li>
+                        <li>Melissa Yu, melissajiayu@gmail.com </li>
+                    </ol>
+                </div>
 
-        <div id="right-content">
-            <iframe id="inner-content" src="topics/topic01" scrolling="no" frameBorder="0"></iframe>
+                <div id="credits">
+                    <h3>Credits</h3>
+                    <ol>
+                        <li>
+                            The purple highlighting was copied from
+                            <a href="http://idl.cs.washington.edu/">UW Interactive Data Lab</a>
+                        </li>
+                    </ol>
+                </div>
+            </nav>
+
+            <main>
+                <iframe id="main-content" src="topics/topic01" scrolling="no" frameBorder="0"></iframe>
+            </main>
         </div>
     </div>
-
     <script src="main.js"></script>
 </body>
 
