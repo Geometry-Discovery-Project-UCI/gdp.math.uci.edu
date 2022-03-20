@@ -37,7 +37,6 @@ nav::-webkit-scrollbar {
 
 main {
     flex: 5;
-    width: 800px;
 }
 
 #main-content {
