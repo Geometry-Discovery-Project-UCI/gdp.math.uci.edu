@@ -158,18 +158,17 @@
 
   });
 
-  letterA.setAttribute("x", pA[0]);
-  letterA.setAttribute("y", pA[1] + 5);
+  letterA.setAttribute("x", pA[0] +4);
+  letterA.setAttribute("y", pA[1] +9);
   letterA.setAttribute("font-size", "1.5rem");
 
   letterB.setAttribute("x", pB[0] - 20);
   letterB.setAttribute("y", pB[1] + 10);
   letterB.setAttribute("font-size", "1.5rem");
 
-  letterC.setAttribute("x", pC[0] - 10);
-  letterC.setAttribute("y", pC[1] - 10);
+  letterC.setAttribute("x", pC[0] - 12);
+  letterC.setAttribute("y", pC[1] - 6);
   letterC.setAttribute("font-size", "1.5rem");
-
 
 
 }
