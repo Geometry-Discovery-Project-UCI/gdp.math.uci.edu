@@ -34,9 +34,8 @@
   const letterB = document.querySelector("#letterB_simsonline");
   const letterC = document.querySelector("#letterC_simsonline");
   const letterP = document.querySelector("#letterP_simsonline");
+
   const moveMouse = (p) => {
-
-
     let cosx =
       (p.x - xx) / Math.sqrt((p.x - xx) * (p.x - xx) + (p.y - yy) * (p.y - yy));
     let sinx =
@@ -77,9 +76,9 @@
     // drawFullLine(p2, findSlope(p1, p2), line3);
     raA.setAttribute("width", 8);
     raA.setAttribute("height", 8);
+
     if (p.y > p1[1]) {
       raA.setAttribute("y", p1[1]);
-
     } else {
       raA.setAttribute("y", p1[1] - 8);
     }
@@ -102,8 +101,6 @@
     let tBC = Math.atan(mBC);
     let tAC = Math.atan(mAC);
 
-
-
     if (section == 2) {
       drawLine(pC, pBi, lineE);
       drawLine(pA, p1, lineE2);
@@ -113,8 +110,8 @@
       raC.setAttribute("x", pAi[0]);
       raC.setAttribute("y", pAi[1] - 8);
       raC.setAttribute("transform", "rotate(" + String(radiansToDegress(tAC)) + " " + String(pAi[0]) + " " + String(pAi[1]) + ")");
-
     }
+
     if (section == 4) {
       drawLine(pB, pBi, lineE);
       drawLine(pA, p1, lineE2);
@@ -125,8 +122,8 @@
       raB.setAttribute("x", pBi[0]);
       raB.setAttribute("y", pBi[1]);
       raB.setAttribute("transform", "rotate(" + String(radiansToDegress(tBC)) + " " + String(pBi[0]) + " " + String(pBi[1]) + ")");
-
     }
+
     if (section == 6) {
       drawLine(pC, pAi, lineE);
       drawLine(pB, p1, lineE2);
@@ -137,17 +134,11 @@
       raB.setAttribute("x", pBi[0] - 8);
       raB.setAttribute("y", pBi[1] - 8);
       raB.setAttribute("transform", "rotate(" + String(radiansToDegress(tBC)) + " " + String(pBi[0]) + " " + String(pBi[1]) + ")");
-
     }
-
-
-
-
   }
   let p = new DOMPoint(xx - Math.cos(pi * 5 / 9) * radius, yy - Math.sin(pi / 9) * radius);
   moveMouse(p);
   ptoAngles = [1.4, 3.4, 5, 6];
-
 
   tri.setAttributeNS(null, "points", makeString(points));
 
@@ -155,11 +146,10 @@
     p = new DOMPoint(event.clientX, event.clientY);
     p = p.matrixTransform(svg.getScreenCTM().inverse());
     moveMouse(p);
-
   });
 
-  letterA.setAttribute("x", pA[0] +4);
-  letterA.setAttribute("y", pA[1] +9);
+  letterA.setAttribute("x", pA[0] + 4);
+  letterA.setAttribute("y", pA[1] + 9);
   letterA.setAttribute("font-size", "1.5rem");
 
   letterB.setAttribute("x", pB[0] - 20);
@@ -169,6 +159,4 @@
   letterC.setAttribute("x", pC[0] - 12);
   letterC.setAttribute("y", pC[1] - 6);
   letterC.setAttribute("font-size", "1.5rem");
-
-
 }
