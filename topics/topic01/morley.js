@@ -16,7 +16,6 @@
     const line5 = document.getElementById("line5_morley");
     const line6 = document.getElementById("line6_morley");
 
-
     function GetD(A, B, C, flag) {
         let v1 = C.sub(B);
         let v2 = A.sub(B);
@@ -80,7 +79,6 @@
             [Bprime.x, Bprime.y],
             [Aprime.x, Aprime.y]
         ];
-
         tri2.setAttributeNS(null, "points", makeString(primePoints));
     };
 

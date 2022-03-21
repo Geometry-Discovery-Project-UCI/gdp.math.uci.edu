@@ -39,6 +39,19 @@ main {
     flex: 5;
 }
 
+@media (max-width: 1536px) {
+    main {
+        flex: 3
+    } 
+}
+
+
+@media (max-width: 1024px) {
+    main {
+        flex: 2
+    } 
+}
+
 #main-content {
     height: 100%;
     width: 100%;
