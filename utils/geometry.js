@@ -41,6 +41,7 @@ function calculateDistanceBetweenTwoPoints(pt1, pt2) {
     return Math.sqrt(Math.pow(pt1.x - pt2.x, 2) + Math.pow(pt1.y - pt2.y, 2))
 }
 
+// the trilinear coordinates of Incenter are (1,1,1)
 function calculateIncenter(A, B, C) {
     const AB = calculateDistanceBetweenTwoPoints(A, B)
     const AC = calculateDistanceBetweenTwoPoints(A, C)
@@ -49,6 +50,18 @@ function calculateIncenter(A, B, C) {
     return {
         x: (BC * A.x + AC * B.x + AB * C.x) / (AB + AC + BC),
         y: (BC * A.y + AC * B.y + AB * C.y) / (AB + AC + BC),
+    }
+}
+
+
+function calculateTriangleCenter(A, B, C, X, Y, Z) {
+    const AB = calculateDistanceBetweenTwoPoints(A, B)
+    const AC = calculateDistanceBetweenTwoPoints(A, C)
+    const BC = calculateDistanceBetweenTwoPoints(B, C)
+
+    return {
+        x: (X * BC * A.x + Y * AC * B.x + Z * AB * C.x) / (Z * AB + Y * AC + X * BC),
+        y: (X * BC * A.y + Y * AC * B.y + Z * AB * C.y) / (Z * AB + Y * AC + X * BC),
     }
 }
 
