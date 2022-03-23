@@ -53,17 +53,45 @@ function calculateIncenter(A, B, C) {
     }
 }
 
+// Convertion of Trilinear coordinate system to Cartesian coordinate system
+// https://en.wikipedia.org/wiki/Trilinear_coordinates
+// 
+// In the following fuction, A,B,C are the vertexes of a triangle. x:y:z is the trilinear coordinates of a point.
+// The function returns the Cartesain coordinates of that point.
 
-function calculateTriangleCenter(A, B, C, X, Y, Z) {
+// Common trilinear coordinates of the triangle centers
+// Incenter             --     1:1:1       Excenter   --   -1:1:1  1:-1:1   1:1:-1
+// Centriod             --     a^{-1}:b^{-1}:c^{-1}=csc A: csc B: csc C
+// Circumcenter         --     cos A: cos B: cos C
+// Orthocenter          --     sec A: sec B: sec C
+// Nine-point center    --     cos (B-C):cos(C-A):cos(A-B)   
+// Symmedian point      --     a:b:c=sin A:sin B:sin C
+// Gergonne point       --     (sec A/2)^2:(sec B/2)^2:(sec C/2)^2
+// Nagal point          --     (csc A/2)^2:(csc B/2)^2:(csc C/2)^2
+
+function TrilinearToCartesian(A, B, C, x, y, z) {
     const AB = calculateDistanceBetweenTwoPoints(A, B)
-    const AC = calculateDistanceBetweenTwoPoints(A, C)
+    const CA = calculateDistanceBetweenTwoPoints(A, C)
     const BC = calculateDistanceBetweenTwoPoints(B, C)
 
     return {
-        x: (X * BC * A.x + Y * AC * B.x + Z * AB * C.x) / (Z * AB + Y * AC + X * BC),
-        y: (X * BC * A.y + Y * AC * B.y + Z * AB * C.y) / (Z * AB + Y * AC + X * BC),
+        x: (x * BC * A.x + y * CA * B.x + z * AB * C.x) / (z * AB + y * CA + x * BC),
+        y: (x * BC * A.y + y * CA * B.y + z * AB * C.y) / (z * AB + y * CA + x * BC),
     }
 }
+
+// Conversion of Cartesian coordinate system to Trilinear coordinate system
+
+function TrilinearToCartesian(A, B, C, P) {
+    return {
+        x: calculateSignedDistanceFromPointToLine(P, makeLine(B, C))*Math.sign(calculateSignedDistanceFromPointToLine(A, makeLine(B, C))),
+        y: calculateSignedDistanceFromPointToLine(P, makeLine(A, C))*Math.sign(calculateSignedDistanceFromPointToLine(B, makeLine(A, C))),
+        z: calculateSignedDistanceFromPointToLine(P, makeLine(B, A))*Math.sign(calculateSignedDistanceFromPointToLine(C, makeLine(B, A))),
+    }
+}
+
+
+
 
 function solveLinearEquation(pt1, pt2) {
     const m = 1. * (pt2.y - pt1.y) / (pt2.x - pt1.x);
@@ -116,3 +144,29 @@ function calculateDistanceFromPointToLine(pt, line) {
         y: y
     });
 }
+
+function calculateSignedDistanceFromPointToLine(pt, line) {
+    const {
+        m: k,
+        b: b
+    } = solveLinearEquation({
+        x: line.x1,
+        y: line.y1
+    }, {
+        x: line.x2,
+        y: line.y2
+    });
+    const {
+        m: m,
+        b: c
+    } = solvePerpendicularLineEquation(k, pt);
+    const {
+        x,
+        y
+    } = calculateLineIntersectInLinearEquation(k, b, m, c);
+    return calculateDistanceBetweenTwoPoints(pt, {
+        x: x,
+        y: y
+    });
+}
+
