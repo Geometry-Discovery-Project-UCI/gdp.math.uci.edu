@@ -53,7 +53,7 @@
         const z=2.0*b*a/(b*b+a*a-c*c)
 
 
-        const incenter = calculateTriangleCenter(coords[0], coords[1], coords[2],x,y,z);
+        const incenter = TrilinearToCartesian(coords[0], coords[1], coords[2],x,y,z);
         gLabel.set({
             left: incenter.x + 5,
             top: incenter.y + 5

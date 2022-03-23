@@ -69,14 +69,14 @@ function calculateIncenter(A, B, C) {
 // Gergonne point       --     (sec A/2)^2:(sec B/2)^2:(sec C/2)^2
 // Nagal point          --     (csc A/2)^2:(csc B/2)^2:(csc C/2)^2
 
-function TrilinearToCartesian(A, B, C, x, y, z) {
+function TrilinearToCartesian(A, B, C, a,b,c) {
     const AB = calculateDistanceBetweenTwoPoints(A, B)
     const CA = calculateDistanceBetweenTwoPoints(A, C)
     const BC = calculateDistanceBetweenTwoPoints(B, C)
 
     return {
-        x: (x * BC * A.x + y * CA * B.x + z * AB * C.x) / (z * AB + y * CA + x * BC),
-        y: (x * BC * A.y + y * CA * B.y + z * AB * C.y) / (z * AB + y * CA + x * BC),
+        x: (a * BC * A.x + b * CA * B.x + c * AB * C.x) / (c * AB + b * CA + a * BC),
+        y: (a * BC * A.y + b * CA * B.y + c * AB * C.y) / (c * AB + b * CA + a * BC),
     }
 }
 
@@ -84,9 +84,9 @@ function TrilinearToCartesian(A, B, C, x, y, z) {
 
 function TrilinearToCartesian(A, B, C, P) {
     return {
-        x: calculateSignedDistanceFromPointToLine(P, makeLine(B, C))*Math.sign(calculateSignedDistanceFromPointToLine(A, makeLine(B, C))),
-        y: calculateSignedDistanceFromPointToLine(P, makeLine(A, C))*Math.sign(calculateSignedDistanceFromPointToLine(B, makeLine(A, C))),
-        z: calculateSignedDistanceFromPointToLine(P, makeLine(B, A))*Math.sign(calculateSignedDistanceFromPointToLine(C, makeLine(B, A))),
+        x: calculateSignedDistanceFromPointToLine(P, B, C) * Math.sign(calculateSignedDistanceFromPointToLine(A, B, C)),
+        y: calculateSignedDistanceFromPointToLine(P, A, C) * Math.sign(calculateSignedDistanceFromPointToLine(B, A, C)),
+        z: calculateSignedDistanceFromPointToLine(P, A, B) * Math.sign(calculateSignedDistanceFromPointToLine(C, B, A)),
     }
 }
 
@@ -145,28 +145,8 @@ function calculateDistanceFromPointToLine(pt, line) {
     });
 }
 
-function calculateSignedDistanceFromPointToLine(pt, line) {
-    const {
-        m: k,
-        b: b
-    } = solveLinearEquation({
-        x: line.x1,
-        y: line.y1
-    }, {
-        x: line.x2,
-        y: line.y2
-    });
-    const {
-        m: m,
-        b: c
-    } = solvePerpendicularLineEquation(k, pt);
-    const {
-        x,
-        y
-    } = calculateLineIntersectInLinearEquation(k, b, m, c);
-    return calculateDistanceBetweenTwoPoints(pt, {
-        x: x,
-        y: y
-    });
+function calculateSignedDistanceFromPointToLine(pt, v, w) {
+    var ab = Math.sqrt((w[2] - v[2]) ** 2 + (w[1] - v[1]) ** 2);
+    return ((w[2] - v[2]) * (pt[1] - v[1]) - (w[1] - v[1]) * (pt[2] - v[2])) / ab;
 }
 
