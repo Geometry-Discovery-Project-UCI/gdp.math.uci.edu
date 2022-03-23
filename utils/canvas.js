@@ -76,7 +76,7 @@ function makeMovablePolygon(vertexes, fn) {
     return polygon;
 }
 
-function makeLine(pt1, pt2, stroke) {
+function makeLine(pt1, pt2, stroke,color) {
     pt1 = pt1 || {
         x: 0,
         y: 0
@@ -86,11 +86,11 @@ function makeLine(pt1, pt2, stroke) {
         y: 0
     };
     return new fabric.Line([pt1.x, pt1.y, pt2.x, pt2.y], {
-        stroke: "black",
+        stroke: color || "black",
         hasControls: false,
         hasBorders: false,
         evented: false,
-        stroke: stroke || 1
+        strokewidth: stroke || 1
     });
 }
 

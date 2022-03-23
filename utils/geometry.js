@@ -82,7 +82,7 @@ function TrilinearToCartesian(A, B, C, a,b,c) {
 
 // Conversion of Cartesian coordinate system to Trilinear coordinate system
 
-function TrilinearToCartesian(A, B, C, P) {
+function CartesianToTrilinear(A, B, C, P) {
     return {
         x: calculateSignedDistanceFromPointToLine(P, B, C) * Math.sign(calculateSignedDistanceFromPointToLine(A, B, C)),
         y: calculateSignedDistanceFromPointToLine(P, A, C) * Math.sign(calculateSignedDistanceFromPointToLine(B, A, C)),

@@ -3,7 +3,7 @@
         selection: false
     });
 
-    const SymmedianOnAB = makeLine();
+    const SymmedianOnAB = makeLine(null,null,1,"red");
     const SymmedianOnCA = makeLine();
     const SymmedianOnBC = makeLine();
 
@@ -49,7 +49,7 @@
         const BC = calculateDistanceBetweenTwoPoints(coords[1], coords[2]);
 
 
-       const symmedian = TrilinearToCartesian(coords[0], coords[1], coords[2], 1,1,1);
+       const symmedian = TrilinearToCartesian(coords[0], coords[1], coords[2], BC,CA,AB);
 
        // const symmedian = calculateIncenter(coords[0], coords[1], coords[2]);
 
@@ -58,7 +58,7 @@
             left: symmedian.x + 5,
             top: symmedian.y + 5
         });
-        const onBC = calculateLineIntersectInPoints(makeLine(coords[0], symmedian), makeLine(coords[1], coords[2]), true);
+        const onBC = calculateLineIntersectInPoints(makeLine(coords[0], symmedian), makeLine(coords[1], coords[2],1,"red"), true);
         const onCA = calculateLineIntersectInPoints(makeLine(coords[1], symmedian), makeLine(coords[0], coords[2]), true);
         const onAB = calculateLineIntersectInPoints(makeLine(coords[2], symmedian), makeLine(coords[0], coords[1]), true);
 
