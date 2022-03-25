@@ -53,6 +53,21 @@ function calculateIncenter(A, B, C) {
     }
 }
 
+
+// Angles of a triangle
+
+function calculateThreeAngles(A, B, C) {
+    const c = calculateDistanceBetweenTwoPoints(A, B)
+    const b = calculateDistanceBetweenTwoPoints(A, C)
+    const a = calculateDistanceBetweenTwoPoints(B, C)
+
+    return {
+        x: Math.acos((b ** 2 + c ** 2 - a ** 2) / 2 / b / c),
+        y: Math.acos((a ** 2 + c ** 2 - b ** 2) / 2 / a / c),
+        z: Math.acos((b ** 2 + a ** 2 - c ** 2) / 2 / b / a),
+    }
+}
+
 // Convertion of Trilinear coordinate system to Cartesian coordinate system
 // https://en.wikipedia.org/wiki/Trilinear_coordinates
 // 
@@ -69,7 +84,7 @@ function calculateIncenter(A, B, C) {
 // Gergonne point       --     (sec A/2)^2:(sec B/2)^2:(sec C/2)^2
 // Nagal point          --     (csc A/2)^2:(csc B/2)^2:(csc C/2)^2
 
-function TrilinearToCartesian(A, B, C, a,b,c) {
+function TrilinearToCartesian(A, B, C, a, b, c) {
     const AB = calculateDistanceBetweenTwoPoints(A, B)
     const CA = calculateDistanceBetweenTwoPoints(A, C)
     const BC = calculateDistanceBetweenTwoPoints(B, C)
@@ -81,6 +96,7 @@ function TrilinearToCartesian(A, B, C, a,b,c) {
 }
 
 // Conversion of Cartesian coordinate system to Trilinear coordinate system
+// By the defintion of trilinear coordinates, they are signed distances to three sides, but need to be calibrated by the orientation.
 
 function CartesianToTrilinear(A, B, C, P) {
     return {
@@ -88,6 +104,13 @@ function CartesianToTrilinear(A, B, C, P) {
         y: calculateSignedDistanceFromPointToLine(P, A, C) * Math.sign(calculateSignedDistanceFromPointToLine(B, A, C)),
         z: calculateSignedDistanceFromPointToLine(P, A, B) * Math.sign(calculateSignedDistanceFromPointToLine(C, B, A)),
     }
+}
+
+// Singed distance, whose absolte value is the distance of a point to a line.
+
+function calculateSignedDistanceFromPointToLine(pt, v, w) {
+    var ab = Math.sqrt((w[2] - v[2]) ** 2 + (w[1] - v[1]) ** 2);
+    return ((w[2] - v[2]) * (pt[1] - v[1]) - (w[1] - v[1]) * (pt[2] - v[2])) / ab;
 }
 
 
@@ -145,8 +168,5 @@ function calculateDistanceFromPointToLine(pt, line) {
     });
 }
 
-function calculateSignedDistanceFromPointToLine(pt, v, w) {
-    var ab = Math.sqrt((w[2] - v[2]) ** 2 + (w[1] - v[1]) ** 2);
-    return ((w[2] - v[2]) * (pt[1] - v[1]) - (w[1] - v[1]) * (pt[2] - v[2])) / ab;
-}
+
 

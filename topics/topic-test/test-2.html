@@ -1,0 +1,51 @@
+<html>
+
+<head>
+
+    <script src="https://unpkg.com/fabric@5.0.0/dist/fabric.min.js"></script>
+    <script src="../../utils/canvas.js"></script>
+    <script src="../../utils/geometry.js"></script>
+</head>
+
+<body>
+    <h1>Click an eye to activate the secret button!</h1>
+
+    <canvas id="smiley" width="400" height="200">
+        <button id="eyesButton"
+            onclick="alert('this secret button, placed as the fallback of the canvas, was clicked using the addHitRegion method!')"></button>
+    </canvas>
+
+
+    <script>
+        var canvas = new fabric.Canvas("smiley");
+        const bisectionOnBC = makeLine();
+
+
+
+        // Initiate a polygon instance
+        var polygon = new fabric.Polygon([
+            { x: 200, y: 10 },
+            { x: 250, y: 50 },
+            { x: 250, y: 180 }], { fill: 'transparent', stroke: 'red' },
+        );
+
+        const point = new fabric.Point(100, 100);
+
+        bisectionOnBC.set({
+            x1: 200,
+            y1: 200,
+            x2: point.x,
+            y2: point.y
+        }, {stroke: "red" });
+
+
+        // Render the polygon in canvas
+        canvas.add(polygon);
+        canvas.add(bisectionOnBC);
+
+    </script>
+
+
+</body>
+
+</html>
