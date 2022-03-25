@@ -96,6 +96,8 @@
         });
     });
 
+   
+
     canvas.add(triangle);
 
     canvas.add(aLabel);
