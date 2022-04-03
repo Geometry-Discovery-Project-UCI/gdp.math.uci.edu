@@ -88,26 +88,25 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: 0.03em;
 }
 
-h1 {
+header > h1 {
+    font-size: 36px;
     margin: 0px;
-    font-size: 40px;
 }
 
-h2 {
-    margin: 0px 0px 0px 12px;
+header > h2 {
     color: hsla(0, 0%, 24%, 1);
-    font-size: 28px;
+    font-size: 24px;
+    margin: 0px;
 }
 
-h3 {
+div#topics h3 {
     font-size: 22px;
     font-style: normal;
     font-weight: 400;
-    line-height: 27px;
-    color: hsla(0, 0%, 0%, 1);
+    line-height: 24px;
     margin-left: 20px;
-    margin-top: 30px;
-    margin-bottom: 10px;
+    margin-top: 24px;
+    margin-bottom: 8px;
 }
 
 ol {

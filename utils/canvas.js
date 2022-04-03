@@ -62,7 +62,8 @@ function makeMovablePolygon(vertexes, fn) {
         cornerColor: 'transparent',
         cornerSize: 20,
         hasBorders: false,
-
+        lockMovementX: true,
+        lockMovementY: true
     });
     polygon.controls = polygon.points.reduce(function (acc, point, index) {
         acc['p' + index] = new fabric.Control({

@@ -1,6 +1,7 @@
 {
     const canvas = new fabric.Canvas("centroid-canvas", {
-        selection: false
+        selection: false,
+        backgroundColor: 'floralwhite'
     });
 
     const median1 = makeLine();

@@ -1,6 +1,7 @@
 {
     const canvas = new fabric.Canvas("incenter-canvas", {
-        selection: false
+        selection: false,
+        backgroundColor: 'floralwhite'
     });
 
     const bisectionOnAB = makeLine();
