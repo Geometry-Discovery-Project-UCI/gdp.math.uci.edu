@@ -1,13 +1,59 @@
 <html>
 
+<head>
+
+    <script src="https://unpkg.com/fabric@5.0.0/dist/fabric.min.js"></script>
+    <script src="../../utils/canvas.js"></script>
+    <script src="../../utils/geometry.js"></script>
+</head>
+
 <body>
-    <h1>Tucker Circles</h1>
-    <div>Resources:</div>
-    <ul>
-        <li>
-            <div>Coming soon...</div>
-        </li>
-    </ul>
+    <h1>Tucker circles</h1>
+    <div>
+        <span>Resources:</span>
+
+
+
+        <ul>
+            <li>
+                <div><a href="" target="_blank">The Article</a> by Zhiqin Lu</div>
+            </li>
+            <li>
+                <div id="tucker-wrapper">
+                    <div>Tucker Circles by Zhiqin Lu</div>
+                    <svg id="tucker-circles" width="500" height="500">
+                        <polygon id="triangle" fill="white" style="stroke:black;stroke-width:2" />
+                        <text id="letterA" font-size="1.5rem">A</text>
+                        <text id="letterB" font-size="1.5rem">B</text>
+                        <text id="letterC" font-size="1.5rem">C</text>
+                        <text id="letterD" font-size="1.5rem">D</text>
+                        <text id="letterE" font-size="1.5rem">E</text>
+                        <text id="letterF" font-size="1.5rem">F</text>
+                        <text id="letterG" font-size="1.5rem">G</text>
+                        <text id="letterH" font-size="1.5rem">H</text>
+                        <text id="letterI" font-size="1.5rem">I</text>
+
+                        <line id="line1" stroke="red"></line>
+                        <line id="line2" stroke="blue"></line>
+                        <line id="line3" stroke="red"></line>
+                        <line id="line4" stroke="blue"></line>
+                        <line id="line5" stroke="red"></line>
+                        <line id="line6" stroke="blue"></line>
+
+
+
+
+
+
+                    </svg>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+    <script src="tucker.js"></script>
+
 </body>
+
 
 </html>
