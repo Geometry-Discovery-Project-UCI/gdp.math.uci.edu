@@ -75,9 +75,7 @@
             x1: coords[1].x,
             y1: coords[1].y,
             x2: aprime.x,
-            y2: aprime.y
-        },
-        {stroke: 'red' }
+            y2: aprime.y}
         );
 
         BCprime.set({
