@@ -50,7 +50,8 @@
                     new Topic("Pappus' Area Theorem", [], "public/images/topic35.png", "topics/topic35"),
                     new Topic("Projective Harmonic Conjugate", [], "public/images/topic36.png", "topics/topic36"),
                     new Topic("Trilinear Coordinate System", ["Natasha Xiao"], "public/images/topic37.png", "topics/topic37"),
-                    new Topic("Routh' Theorem", ["Yeu Chu"], "public/images/topic38.png", "topics/topic38"),
+                    new Topic("Routh's Theorem", ["Yue Chu"], "public/images/topic38.png", "topics/topic38"),
+                    new Topic("Monge's Problem", ["Mai Nguyen"], "public/images/topic39.png", "topics/topic39"),
                     
 
                 ]
