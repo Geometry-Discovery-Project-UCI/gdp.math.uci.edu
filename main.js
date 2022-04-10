@@ -43,7 +43,7 @@
                     new Topic("Davis' Theorem", [], "public/images/topic28.png", "topics/topic28"),
                     new Topic("Tucker Circles", [], "public/images/topic29.png", "topics/topic29"),
                     new Topic("Taylor Circle", [], "public/images/topic30.png", "topics/topic30"),
-                    new Topic("Quadrilateral Area Formulas", ["Zhiin Lu"], "public/images/topic31.png", "topics/topic31"),
+                    new Topic("Quadrilateral Area Formulas", ["Zhiqin Lu"], "public/images/topic31.png", "topics/topic31"),
                     new Topic("Monge's Theorem", [], "public/images/topic32.png", "topics/topic32"),
                     new Topic("Isodynamic Point", [], "public/images/topic33.png", "topics/topic33"),
                     new Topic("Viviani' Theorem", [], "public/images/topic34.png", "topics/topic34"),
