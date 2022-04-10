@@ -44,13 +44,14 @@
                     new Topic("Tucker Circles", [], "public/images/topic29.png", "topics/topic29"),
                     new Topic("Taylor Circle", [], "public/images/topic30.png", "topics/topic30"),
                     new Topic("Quadrilateral Area Formulas", ["Zhiin Lu"], "public/images/topic31.png", "topics/topic31"),
-                    new Topic("Monge's Theorem", [], "public/images/topic32.png", "topics/topic32"),
+                    new Topic("Monge's Theorem", ["Mai Nguyen"], "public/images/topic32.png", "topics/topic32"),
                     new Topic("Isodynamic Point", [], "public/images/topic33.png", "topics/topic33"),
                     new Topic("Viviani' Theorem", [], "public/images/topic34.png", "topics/topic34"),
                     new Topic("Pappus' Area Theorem", [], "public/images/topic35.png", "topics/topic35"),
                     new Topic("Projective Harmonic Conjugate", [], "public/images/topic36.png", "topics/topic36"),
                     new Topic("Trilinear Coordinate System", ["Natasha Xiao"], "public/images/topic37.png", "topics/topic37"),
-                    new Topic("Routh' Theorem", ["Yeu Chu"], "public/images/topic38.png", "topics/topic38"),
+                    new Topic("Routh's Theorem", ["Yue Chu"], "public/images/topic38.png", "topics/topic38"),
+                    new Topic("Monge's Problem", ["Mai Nguyen"], "public/images/topic39.png", "topics/topic39"),
                     
 
                 ]
