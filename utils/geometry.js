@@ -103,3 +103,11 @@ function calculateDistanceFromPointToLine(pt, line) {
         y: y
     });
 }
+
+function calculateSlope(pt1, pt2) {
+    if (pt1.x != pt2.x) {
+        return (pt2.y - pt1.y) / (pt2.x - pt1.x);
+    } else {
+        return NaN;
+    }
+}
