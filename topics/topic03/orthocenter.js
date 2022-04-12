@@ -1,6 +1,7 @@
 {
     const canvas = new fabric.Canvas("orthocenter-canvas", {
-        selection: false
+        selection: false,
+        backgroundColor: 'floralwhite'
     });
 
     // vertexes
