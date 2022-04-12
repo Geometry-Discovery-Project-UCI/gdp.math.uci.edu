@@ -27,6 +27,10 @@ const lLabel = makeLabel("L");
 const mLabel = makeLabel("M");
 const nLabel = makeLabel("N");
 
+const mNode = makeCircle();
+const nNode = makeCircle();
+const lNode = makeCircle();
+
 // Creates movable quadrilateral
 const quadrilateral = makeMovablePolygon([{
     x: 110,
@@ -57,22 +61,26 @@ const quadrilateral = makeMovablePolygon([{
     // for the four points of the quadrilateral
     aLabel.set({
         left: coords[0].x - 25,
-        top: coords[0].y - 25
+        top: coords[0].y - 25,
+        fill: "green"
     });
 
     bLabel.set({
         left: coords[1].x - 15,
-        top: coords[1].y
+        top: coords[1].y,
+        fill: "green"
     });
 
     cLabel.set({
         left: coords[2].x,
-        top: coords[2].y
+        top: coords[2].y,
+        fill: "green"
     });
 
     dLabel.set({
         left: coords[3].x + 5,
-        top: coords[3].y - 25
+        top: coords[3].y - 25,
+        fill: "green"
     });
 
     // Update the line coordinates 
@@ -133,7 +141,6 @@ const quadrilateral = makeMovablePolygon([{
         })
     };
     
-
     // Creates 4 constants to be 4 sides of the quadrilateral
     // Used to determine when the opposite sides are parallel
     const lineBA = makeLine(coords[1], coords[0]);
@@ -247,6 +254,32 @@ const quadrilateral = makeMovablePolygon([{
         top: pointL.y - 10,
         fontSize: 18
     });
+
+    // Update the centers and radius 
+    // of the points L,M,N nodes
+    mNode.set({
+        left: pointM.x - leftOffset * 2,
+        top: pointM.y - topOffset * 2,
+        radius: 2,
+        fill: "red",
+        stroke: "red"
+    });
+
+    nNode.set({
+        left: pointN.x - leftOffset * 2,
+        top: pointN.y - topOffset * 2,
+        radius: 2,
+        fill: "red",
+        stroke: "red"
+    })
+
+    lNode.set({
+        left: pointL.x - leftOffset * 2,
+        top: pointL.y - topOffset * 2,
+        radius: 2,
+        fill: "red",
+        stroke: "red"
+    })
 });
 
 
@@ -271,5 +304,10 @@ canvas.add(mLabel);
 canvas.add(nLabel);
 canvas.add(lLabel);
 
+canvas.add(mNode);
+canvas.add(nNode);
+canvas.add(lNode);
+
 canvas.add(quadrilateral);
+
 

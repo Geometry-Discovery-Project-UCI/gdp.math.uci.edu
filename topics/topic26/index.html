@@ -1,5 +1,25 @@
 <html>
 
+<head>
+    <style>
+    html, body {
+        height: 100%;
+        width: 80%;
+    }
+
+    canvas {
+        border: 1px solid #ccc;
+    }
+    
+    li {
+        margin-bottom: 10px;
+    }
+    </style>
+    <script src="https://unpkg.com/fabric@5.0.0/dist/fabric.min.js"></script>
+    <script src="../../utils/canvas.js"></script>
+    <script src="../../utils/geometry.js"></script>
+</head>
+
 <body>
     <h1>Newton Line</h1>
     <div>Resources:</div>
@@ -7,7 +27,14 @@
         <li>
             <div>Coming soon...</div>
         </li>
+        <li>
+            <div>Animated Newton Line by Mai Nguyen</div>
+            <div id="newton-line-wrapper">
+                <canvas id="newton-line-canvas" width="500" height="500"></canvas>
+            </div>
+        </li>
     </ul>
+    <script src="newton-line.js"></script>
 </body>
 
 </html>
