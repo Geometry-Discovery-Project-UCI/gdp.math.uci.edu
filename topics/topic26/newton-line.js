@@ -11,6 +11,7 @@ const diagAC = makeLine();
 const diagBD = makeLine();
 
 const newtonLine = makeLine(); //line MN
+
 const lineBE = makeLine();
 const lineCE = makeLine();
 const lineBF = makeLine();
@@ -282,7 +283,6 @@ const quadrilateral = makeMovablePolygon([{
     })
 });
 
-
 canvas.add(diagAC);
 canvas.add(diagBD);
 
@@ -309,5 +309,3 @@ canvas.add(nNode);
 canvas.add(lNode);
 
 canvas.add(quadrilateral);
-
-
