@@ -138,12 +138,12 @@ const makeString = (arr) => {
     return `${arr[0][0]},${arr[0][1]} ${arr[1][0]},${arr[1][1]} ${arr[2][0]},${arr[2][1]}`;
 };
 
-const makeTriangle = (pt0, pt1, pt2, ptoTri) => {
+const makeSvgTriangle = (pt0, pt1, pt2, ptoTri) => {
     ptoTri.setAttributeNS(null, "points", makeString([pt0, pt1, pt2]));
 };
 
 
-const makeCircle = (r, x, y) => {
+const makeSvgCircle = (r, x, y) => {
     ptoCircle.setAttributeNS(r, cx, cy);
 };
 

@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     height: 100%;
     min-height: 100%;
     margin: 0;
@@ -42,20 +43,22 @@ main {
 @media (max-width: 1536px) {
     main {
         flex: 3
-    } 
+    }
 }
 
 
 @media (max-width: 1024px) {
     main {
         flex: 2
-    } 
+    }
 }
 
 #main-content {
     height: 100%;
     width: 100%;
-    border-style: none;
+    padding-top: 0px;
+    padding-left: 24px;
+    overflow-y: auto;
 }
 
 .topic-image {
@@ -84,17 +87,22 @@ a {
     text-decoration: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Patua One', serif;
     letter-spacing: 0.03em;
 }
 
-header > h1 {
+header>h1 {
     font-size: 36px;
     margin: 0px;
 }
 
-header > h2 {
+header>h2 {
     color: hsla(0, 0%, 24%, 1);
     font-size: 24px;
     margin: 0px;
@@ -118,4 +126,12 @@ ol {
 
 li {
     border-radius: 12px;
+}
+
+#main-content canvas {
+    border: 1px solid #ccc;
+}
+
+#main-content li {
+    margin-bottom: 12px;
 }
