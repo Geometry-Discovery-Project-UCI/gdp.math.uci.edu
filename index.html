@@ -14,6 +14,8 @@
 
     <title>GDP @ UCI</title>
     <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/fabric@5.0.0/dist/fabric.min.js"></script>
     <link rel="icon" href="public/icons/favicon.ico">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Patua+One&display=swap" rel="stylesheet">
@@ -23,8 +25,13 @@
         integrity="sha384-0fdwu/T/EQMsQlrHCCHoH10pkPLlKA1jL5dFyUOvB3lfeT2540/2g6YgSi2BL14p"
         crossorigin="anonymous"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"
-        integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+        integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"
+        crossorigin="anonymous"></script>
+    <script defer src="main.js"></script>
+    <script src="utils/canvas.js"></script>
+    <script src="utils/geoutil.js"></script>
+    <script src="utils/geometry.js"></script>
+    <script src="utils/vector.js"></script>
 </head>
 
 <body>
@@ -41,7 +48,6 @@
                         <li v-for="topic in topics" @click="reloadMainContent(topic)" class="topic">
                             <div>
                                 <span>{{ topic.title }}</span>
-                                <span v-if="topic.authors.length > 0">, by {{ topic.authors.join(", ") }}</span>
                                 <div class="topic-wrapper">
                                     <div>
                                         <img :src="topic.imageUrl" :alt="topic.title" class="topic-image">
@@ -51,81 +57,94 @@
                         </li>
                     </ol>
                 </div>
-
-                <div id="essays">
-                    <h3>Essays</h3>
-                    <ol>
-                        <li>
-                            <a href="public/pdfs/twenty-one.pdf">The 20 degree
-                                questions</a>
-                        </li>
-                        <li>
-                            <a href="public/pdfs/special-techniques.pdf">The usage of
-                                special techniques</a>
-                        </li>
-                    </ol>
-                </div>
-
-                <div id="links">
-                    <h3>Links</h3>
-                    <ol>
-                        <li><a href="https://kskedlaya.org/geometryunbound/">Geometry
-                                Unbound</a>
-                            by Kiran Kedlaya</li>
-                        <li><a href="https://www.math.uci.edu/~mathcircle/">UCI Math
-                                Circle</a>
-                        </li>
-                        <li><a href="https://www.fullerton.edu/math/resources/mathcircle.php">Fullerton Math
-                                Circle</a></li>
-                        <li><a href="http://www.morningstarinstitute.org">Morning Star Institute</a> by Yifeng Yu
-                        </li>
-                    </ol>
-                </div>
-
-                <div id="contributors">
-                    <h3>Contributors:</h3>
-                    <ol>
-                        <li>Zhiqin Lu, UCI, zlu@uci.edu</li>
-                        <li>Christopher Davis, UCI, daviscj@uci.edu</li>
-                        <li>Xianfu Liu, UCI, xianful@uci.edu</li>
-                        <li>Yue Chu, chuy13@uci.edu</li>
-                        <li>Xinxi Guo, x6guo@ucsd.edu</li>
-                        <li>Dawei Liu, daweil7@uci.edu</li>
-                        <li>Shiyi Lyu, slyu6@uci.edu</li>
-                        <li>Mai, Nguyen, main5@uci.edu</li>
-                        <li>Yufei Ren, yufeir@uci.edu</li>
-                        <li>Satyaki Sarkar, satyakis@uci.edu</li>
-                        <li>Stephanie Wang, stephjw1@uci.edu</li>
-                        <li>Natasha Xiao, jxiao12@uci.edu</li>
-                        <li>Felix Yu, felixyu2627@gmail.com</li>
-                        <li>Melissa Yu, melissajiayu@gmail.com </li>
-
-                    </ol>
-                </div>
-
-                <div id="credits">
-                    <h3>Credits</h3>
-                    <ol>
-                        <li>
-                            The purple highlighting was copied from
-                            <a href="http://idl.cs.washington.edu/">UW Interactive Data Lab</a>
-                        </li>
-                        <li>
-                            <div class="topic-wrapper">
-                                <a target="main-content" href="public/images/2022-Winter-199B.jpg">2022 Winter GDP
-                                    Group</a>
-                            </div>
-                        </li>
-                    </ol>
-                </div>
             </nav>
 
             <main>
-                <iframe id="main-content" src="topics/topic01"></iframe>
+                <div id="main-content">
+                    <h1>{{ topic?.title || 'Welcome!' }}</h1>
+                    <span v-if="topic">
+                        <h3>Contributors: {{ topic.authors.join(", ") }}</h3>
+                        <div>Resources:</div>
+                        <ul>
+                            <li v-if="hasPdf"><a :href="topic.pdfUrl">Reading</a></li>
+                            <li v-else>Reading comming soon...</li>
+                            <span v-html="rawHtml"></span>
+                        </ul>
+                    </span>
+                    <div v-else>
+                        <p>Click on any topic on the left to start!</p>
+                        <div id="essays">
+                            <h3>Essays</h3>
+                            <ol>
+                                <li>
+                                    <a href="public/pdfs/twenty-one.pdf">The 20 degree
+                                        questions</a>
+                                </li>
+                                <li>
+                                    <a href="public/pdfs/special-techniques.pdf">The usage of
+                                        special techniques</a>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <div id="links">
+                            <h3>Links</h3>
+                            <ol>
+                                <li><a href="https://kskedlaya.org/geometryunbound/">Geometry
+                                        Unbound</a>
+                                    by Kiran Kedlaya</li>
+                                <li><a href="https://www.math.uci.edu/~mathcircle/">UCI Math
+                                        Circle</a>
+                                </li>
+                                <li><a href="https://www.fullerton.edu/math/resources/mathcircle.php">Fullerton Math
+                                        Circle</a></li>
+                                <li><a href="http://www.morningstarinstitute.org">Morning Star Institute</a> by Yifeng
+                                    Yu
+                                </li>
+                            </ol>
+                        </div>
+
+                        <div id="contributors">
+                            <h3>Contributors:</h3>
+                            <ol>
+                                <li>Zhiqin Lu, UCI, zlu@uci.edu</li>
+                                <li>Christopher Davis, UCI, daviscj@uci.edu</li>
+                                <li>Xianfu Liu, UCI, xianful@uci.edu</li>
+                                <li>Yue Chu, chuy13@uci.edu</li>
+                                <li>Xinxi Guo, x6guo@ucsd.edu</li>
+                                <li>Shiyi Lyu, slyu6@uci.edu</li>
+                                <li>Mai, Nguyen, main5@uci.edu</li>
+                                <li>Yufei Ren, yufeir@uci.edu</li>
+                                <li>Satyaki Sarkar, satyakis@uci.edu</li>
+                                <li>Stephanie Wang, stephjw1@uci.edu</li>
+                                <li>Natasha Xiao, jxiao12@uci.edu</li>
+                                <li>Felix Yu, felixyu2627@gmail.com</li>
+                                <li>Melissa Yu, melissajiayu@gmail.com </li>
+
+                            </ol>
+                        </div>
+
+                        <div id="credits">
+                            <h3>Credits</h3>
+                            <ol>
+                                <li>
+                                    The purple highlighting was copied from
+                                    <a href="http://idl.cs.washington.edu/">UW Interactive Data Lab</a>
+                                </li>
+                                <li>
+                                    <div class="topic-wrapper">
+                                        <a target="main-content" href="public/images/2022-Winter-199B.jpg">2022 Winter
+                                            GDP
+                                            Group</a>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
-    <script src="main.js"></script>
 </body>
 
 </html>

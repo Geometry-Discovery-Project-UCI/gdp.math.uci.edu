@@ -1,83 +1,24 @@
-<!DOCTYPE html>
-<html>
-
-
-<head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css"
-        integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB" crossorigin="anonymous">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
-        integrity="sha384-0fdwu/T/EQMsQlrHCCHoH10pkPLlKA1jL5dFyUOvB3lfeT2540/2g6YgSi2BL14p"
-        crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"
-        integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
-        onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
-
-    <!-- <style>.katex{font-size:16px} </style> -->
-    <style>
-        html,
-        body {
-            height: 100%;
-            width: 60%;
-            font-size: 20px;
-            font-family: Arial, Verdana, Helvetica, sans-serif;
-            color: blue
-        }
-
-        @font-face {
-            font-family: 'main1';
-            src: url('SF_Cartoonist.ttf');
-        }
-
-        @font-face {
-            font-family: 'main2';
-            src: url('SF_Cartoonist_Hand_SC_Bold.ttf');
-        }
-
-        canvas {
-            border: 1px solid #ccc;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-    </style>
-
-    <script src="https://unpkg.com/fabric@5.0.0/dist/fabric.min.js"></script>
-    <script src="../../utils/canvas.js"></script>
-    <script src="../../utils/geometry.js"></script>
-</head>
-
-<body>
-    <h1>Newton Line</h1>
-    <div>Resources:</div>
-    <ul>
-        <li>
-            <div>Article Coming Soon...</div>
-        </li>
-        <li>
-            <div> <span style="color: red;font-style: italic" ;> Newton Line</span>, also known as <span
-                    style="color: red;font-style: italic" ;>Newton-Gauss Line</span>, is the line that connects the
-                midpoints of the two diagonals in a convex quadrilateral with at most two parallel sides. </div>
-        <li>
-            <div> In the following animation, let $ABCD$ be a convex quadrilateral. Let $ABCDEF$ be the corrsponding
-                <span style="color: red;font-style: italic" ;>complete quadrilateral </span>with the thre diaognals
-                $AC$, $BD$ and $EF$. Then the midpoints of these three
-                diagonals are collinear. The red line is the Newton Line of the convex quadrilateral $ABCD$ or the
-                complete quadrilateral.
-            </div>
-        </li>
-        <li>
-            <div>You can use the mouse to move the vertextes $A$, $B$, $C$, $D$ to see how the Newton Line moves. </div>
-        </li>
-        <li>
-            <div><span style="color: red;font-style: italic" ;>Animated by Mai Nguyen</span> </div>
-        </li>
-        <div id="newton-line-wrapper">
-            <canvas id="newton-line-canvas" width="500" height="500"></canvas>
+<span>
+    <li>
+        <div> <span style="color: red;font-style: italic" ;> Newton Line</span>, also known as <span
+                style="color: red;font-style: italic" ;>Newton-Gauss Line</span>, is the line that connects the
+            midpoints of the two diagonals in a convex quadrilateral with at most two parallel sides. </div>
+    <li>
+        <div> In the following animation, let $ABCD$ be a convex quadrilateral. Let $ABCDEF$ be the corrsponding
+            <span style="color: red;font-style: italic" ;>complete quadrilateral </span>with the thre diaognals
+            $AC$, $BD$ and $EF$. Then the midpoints of these three
+            diagonals are collinear. The red line is the Newton Line of the convex quadrilateral $ABCD$ or the
+            complete quadrilateral.
         </div>
-        </li>
-    </ul>
-    <script src="newton-line.js"></script>
-</body>
-
-</html>
+    </li>
+    <li>
+        <div>You can use the mouse to move the vertextes $A$, $B$, $C$, $D$ to see how the Newton Line moves. </div>
+    </li>
+    <li>
+        <div><span style="color: red;font-style: italic" ;>Animated by Mai Nguyen</span> </div>
+    </li>
+    <div id="newton-line-wrapper">
+        <canvas id="newton-line-canvas" width="500" height="500"></canvas>
+    </div>
+    </li>
+</span>
