@@ -262,6 +262,9 @@
     },
     methods: {
       reloadMainContent(topic) {
+        if (this.topic === topic) {
+          return;
+        }
         this.topic = topic;
         axios
           .get(`${topic.pageUrl}/index.html`)
