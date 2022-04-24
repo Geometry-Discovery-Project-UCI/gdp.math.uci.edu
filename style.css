@@ -1,6 +1,6 @@
 html,
 body {
-    height: 100vh;
+    max-height: 100vh;
     margin: 0;
     font-family: 'Open Sans', sans-serif;
 }
@@ -8,10 +8,10 @@ body {
 #wrapper {
     display: flex;
     flex-direction: column;
+    max-height: 100vh;
 }
 
 header {
-    flex: 1;
     padding: 12px 0px 12px 24px;
     background-color: antiquewhite;
     text-align: center;
@@ -22,7 +22,6 @@ header {
 }
 
 #app-wrapper {
-    flex: 6;
     display: flex;
     flex-direction: row;
     overflow: hidden;
@@ -32,7 +31,6 @@ nav {
     flex: 1;
     padding: 0px;
     overflow-y: auto;
-    height: 100vh;
 }
 
 nav::-webkit-scrollbar {
@@ -44,7 +42,7 @@ nav::-webkit-scrollbar {
     flex-direction: row;
     justify-content: space-around;
     padding: 8px;
-    position:  sticky;
+    position: sticky;
     top: 0px
 }
 
@@ -57,7 +55,7 @@ nav::-webkit-scrollbar {
 }
 
 #search-text {
-    flex: 9;
+    flex: 11;
     width: 90%;
 }
 
@@ -69,7 +67,6 @@ nav::-webkit-scrollbar {
 main {
     flex: 5;
     border-left: 1px solid lightgray;
-    height: 100vh;
 }
 
 @media (max-width: 1536px) {
