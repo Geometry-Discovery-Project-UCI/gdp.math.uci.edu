@@ -6,18 +6,17 @@
   const xx = 250;
   const yy = 250;
 
-  var pA = [xx + Math.cos(pi / 6) * radius, yy + Math.sin(pi / 6) * radius];
-  var pB = [xx - Math.cos(pi / 6) * radius, yy + Math.sin(pi / 6) * radius];
-  var pC = [xx - Math.cos(pi / 3) * radius, yy - Math.sin(pi / 3) * radius];
+  const pA = [xx + Math.cos(pi / 6) * radius, yy + Math.sin(pi / 6) * radius];
+  const pB = [xx - Math.cos(pi / 6) * radius, yy + Math.sin(pi / 6) * radius];
+  const pC = [xx - Math.cos(pi / 3) * radius, yy - Math.sin(pi / 3) * radius];
   const points = [pA, pB, pC];
-  var pP = [349, 305];
+  let pP = [349, 305];
 
   mAB = (pA[1] - pA[1]) / (pB[0] - pA[0]);
   mBC = (pB[1] - pC[1]) / (pB[0] - pC[0]);
   mAC = (pA[1] - pC[1]) / (pA[0] - pC[0]);
 
   const tri = document.querySelector("#tri_isotomic");
-  const cir = document.querySelector("#ptoCircle_isotomic");
   const line4 = document.querySelector("#lineA_isotomic");
   const line5 = document.querySelector("#lineB_isotomic");
   const line6 = document.querySelector("#lineC_isotomic");
@@ -37,7 +36,6 @@
   const letterP = document.querySelector("#letterP_isotomic");
   const letterPp = document.querySelector("#letterPp_isotomic");
 
-
   ptoAngles = [1.4, 3.4, 5, 6];
 
   letterA.setAttribute("x", pA[0] + 5);
@@ -48,23 +46,19 @@
   letterC.setAttribute("y", pC[1] - 5);
 
   const isotomicMouse = (p) => {
-
-
     if (isInside(pA[0], pA[1], pB[0], pB[1], pC[0], pC[1], p.x, p.y)) {
       pP = [p.x, p.y];
-      /*dot.setAttributeNS(null, "cx", pP[0]);
+      /* dot.setAttributeNS(null, "cx", pP[0]);
       dot.setAttributeNS(null, "cy", pP[1]);*/
       letterP.setAttribute("x", pP[0]);
       letterP.setAttribute("y", pP[1] - 10);
-
     } else {
-
       return;
     }
 
-    var cosx =
+    const cosx =
       (p.x - xx) / Math.sqrt((p.x - xx) * (p.x - xx) + (p.y - yy) * (p.y - yy));
-    var sinx =
+    const sinx =
       (p.y - yy) / Math.sqrt((p.x - xx) * (p.x - xx) + (p.y - yy) * (p.y - yy));
 
     p.x = xx + radius * cosx;
@@ -81,18 +75,17 @@
       makeString([points[0], points[1], points[2]])
     );
 
-
     p1 = [p.x, pA[1]];
 
-    var theta = Math.atan(-1 / mBC);
-    var dist = distToLine([p.x, p.y], pC, pA);
+    const theta = Math.atan(-1 / mBC);
+    const dist = distToLine([p.x, p.y], pC, pA);
     p2 = [p.x - dist * Math.cos(theta), p.y - dist * Math.sin(theta)];
 
     const pCN = lineLineIntersection(pC, pP, pA, pB);
-    drawLine(pC, pCN, line4)
+    drawLine(pC, pCN, line4);
 
     const pAN = lineLineIntersection(pA, pP, pC, pB);
-    drawLine(pA, pAN, line5)
+    drawLine(pA, pAN, line5);
 
     const pBN = lineLineIntersection(pB, pP, pC, pA);
     drawLine(pB, pBN, line6);
@@ -132,25 +125,23 @@
     letterEp.setAttribute("y", pDB[1]);
   };
 
-  var pPoint = DOMPoint.fromPoint({
+  const pPoint = DOMPoint.fromPoint({
     x: 160,
     y: 260,
     z: 0,
-    w: 0
+    w: 0,
   });
   isotomicMouse(pPoint);
 
   tri.setAttributeNS(null, "points", makeString(points));
   // svg.("onclick", (event) => {
-  //   var p;
+  //   constp;
   // });
   svg.addEventListener("mousemove", (event) => {
-
-    var p = new DOMPoint(event.clientX, event.clientY);
+    let p = new DOMPoint(event.clientX, event.clientY);
     p = p.matrixTransform(svg.getScreenCTM().inverse());
     isotomicMouse(p);
 
     // if ()
-
-  })
-};
+  });
+}
