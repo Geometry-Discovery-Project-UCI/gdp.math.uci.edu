@@ -18,6 +18,10 @@ header {
     text-align: center;
 }
 
+header:hover {
+    cursor: pointer;
+}
+
 #screen-size-warning {
     display: none;
 }
@@ -32,6 +36,7 @@ header {
 nav {
     flex: 1;
     padding: 0px;
+    overflow-x: hidden;
     overflow-y: auto;
     border-right: 1px solid lightgray;
 }
@@ -53,8 +58,12 @@ nav::-webkit-scrollbar {
     flex: 1;
 }
 
+#search-tip {
+    height: 16px;
+}
+
 #search-tip svg {
-    width: 12px;
+    height: 85%;
 }
 
 #search-text {
@@ -64,6 +73,18 @@ nav::-webkit-scrollbar {
 
 #topic-list {
     margin: 0px;
+}
+
+#back-to-top-wrapper {
+    width: 36px;
+    position: sticky;
+    bottom: -100px;
+    left: 80%;
+    transition: 0.5s;
+}
+
+#back-to-top-wrapper {
+    cursor: pointer;
 }
 
 main {
@@ -191,5 +212,9 @@ header>h2 {
 
     header h2 {
         font-size: 18px;
+    }
+
+    #topics ol {
+        padding-left: 18px;
     }
 }

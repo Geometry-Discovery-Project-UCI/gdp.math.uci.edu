@@ -311,8 +311,21 @@
       scrollNavToTop() {
         document.querySelector("nav").scrollTo({ top: 0, behavior: "smooth" });
       },
+      goBackToIndexPage() {
+        this.topic = null;
+      },
     },
   });
 
   app.mount("body");
+
+  const nav = document.querySelector("nav");
+  const navBackToTop = document.getElementById("back-to-top-wrapper");
+  nav.addEventListener("scroll", () => {
+    if (nav.scrollTop >= 20) {
+      navBackToTop.style.bottom = "12px";
+    } else {
+      navBackToTop.style.bottom = "-100px";
+    }
+  });
 }
