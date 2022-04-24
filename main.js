@@ -85,10 +85,14 @@
                 }).catch(() => {
                     this.rawHtml = "<li>More resources comming soon...</li>";
                 });
+                axios.head(topic.pdfUrl).then(() => {
+                    this.hasPdf = true;
+                }).catch(() => {
+                    this.hasPdf = false;
+                });
                 const http = new XMLHttpRequest();
                 http.open('HEAD', topic.pdfUrl, false);
                 http.send();
-                this.hasPdf = http.status != 404;
             }
         }
     });
