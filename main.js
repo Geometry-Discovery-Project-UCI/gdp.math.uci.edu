@@ -42,7 +42,7 @@
         new Topic("Brahmagupta's Theorem", ["Satyaki Sarkar"], "public/images/topic27.png", "topics/topic27"),
         new Topic("Davis' Theorem", [], "public/images/topic28.png", "topics/topic28"),
         new Topic("Tucker Circles", [], "public/images/topic29.png", "topics/topic29", ["tucker.js"]),
-        new Topic("Taylor Circle", [], "public/images/topic30.png", "topics/topic30"),
+        new Topic("Taylor Circle", ["Jimena Isabel Razo"], "public/images/topic30.png", "topics/topic30",[]),
         new Topic("Quadrilateral Area Formulas", ["Zhiqin Lu"], "public/images/topic31.png", "topics/topic31"),
         new Topic("Monge's Theorem", ["Mai Nguyen"], "public/images/topic32.png", "topics/topic32"),
         new Topic("Isodynamic Point", [], "public/images/topic33.png", "topics/topic33"),
@@ -52,6 +52,7 @@
         new Topic("Trilinear Coordinate System", ["Natasha Xiao"], "public/images/topic37.png", "topics/topic37"),
         new Topic("Routh's Theorem", ["Yue Chu"], "public/images/topic38.png", "topics/topic38"),
         new Topic("Monge's Problem", ["Mai Nguyen"], "public/images/topic39.png", "topics/topic39"),
+        new Topic("Steiner–Lehmus' Theorem", [""], "public/images/topic40.png", "topics/topic40"),
     ]
 
     const app = Vue.createApp({
