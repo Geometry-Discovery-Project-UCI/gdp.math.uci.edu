@@ -296,11 +296,17 @@
           .catch(() => {
             this.hasPdf = false;
           });
+        document
+          .getElementById("main-content")
+          .scrollTo({ top: 0, behavior: "smooth" });
       },
       showThisTopic(thisTopic) {
         return thisTopic.title
           .toLowerCase()
           .includes(this.searchKeywords.toLowerCase());
+      },
+      scrollNavToTop() {
+        document.querySelector("nav").scrollTo({ top: 0, behavior: "smooth" });
       },
     },
   });
