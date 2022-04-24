@@ -60,7 +60,8 @@
                 topics: topics,
                 rawHtml: "",
                 topic: null,
-                hasPdf: false
+                hasPdf: false,
+                searchKeywords: "",
             }
         },
         methods: {
@@ -90,9 +91,12 @@
                 }).catch(() => {
                     this.hasPdf = false;
                 });
+            },
+            showThisTopic(thisTopic) {
+                return thisTopic.title.toLowerCase().includes(this.searchKeywords.toLowerCase())
             }
         }
     });
 
-    app.mount("#wrapper");
+    app.mount("body");
 }
