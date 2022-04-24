@@ -12,7 +12,8 @@ body {
 }
 
 header {
-    padding: 12px 0px 12px 24px;
+    margin: 0px;
+    padding: 8px;
     background-color: antiquewhite;
     text-align: center;
 }
@@ -25,12 +26,14 @@ header {
     display: flex;
     flex-direction: row;
     overflow: hidden;
+    align-items: stretch
 }
 
 nav {
     flex: 1;
     padding: 0px;
     overflow-y: auto;
+    border-right: 1px solid lightgray;
 }
 
 nav::-webkit-scrollbar {
@@ -61,56 +64,17 @@ nav::-webkit-scrollbar {
 
 #topic-list {
     margin: 0px;
-    margin-right: 6px;
 }
 
 main {
     flex: 5;
-    border-left: 1px solid lightgray;
-}
-
-@media (max-width: 1536px) {
-    main {
-        flex: 4
-    }
-}
-
-@media (max-width: 1280px) {
-    main {
-        flex: 3
-    }
-}
-
-@media (max-width: 720px) {
-    .topic-image {
-        display: none;
-    }
-
-    main svg {
-        display: none;
-    }
-
-    .canvas-container {
-        display: none;
-    }
-
-    #screen-size-warning {
-        display: block;
-        margin-top: 6px;
-        margin-bottom: 0px;
-    }
+    margin-bottom: 12px;
 }
 
 #main-content {
     height: 100%;
-    width: 95%;
-    margin-left: 12px;
-    padding-top: 0px;
     overflow-y: auto;
-}
-
-#main-content>h1 {
-    margin-top: 12px;
+    padding: 12px;
 }
 
 #main-content::-webkit-scrollbar {
@@ -120,12 +84,8 @@ main {
 .topic-image {
     width: 100%;
     height: 50%;
-    margin-top: 12px;
+    margin-top: 2px;
 }
-
-/*
- * The above beautifies everything :)
- */
 
 .topic {
     cursor: pointer;
@@ -133,6 +93,7 @@ main {
 
 #topics li {
     padding: 6px;
+    border-radius: 12px;
 }
 
 #topics li:hover {
@@ -164,26 +125,71 @@ header>h2 {
     margin: 0px;
 }
 
-div#topics h3 {
-    font-size: 22px;
-    font-style: normal;
+#main-content h1 {
+    margin: 0px;
+}
+
+#topics {
+    margin: 0px 12px;
+}
+
+#topics h3 {
+    font-size: 24px;
     font-weight: 400;
     margin: 0px;
-    margin-left: 12px;
 }
 
-ol {
-    line-height: 24px;
+#topics ol {
+    padding-left: 24px;
 }
 
-nav li {
-    border-radius: 12px;
-}
-
-#main-content canvas {
+.canvas-container {
     border: 1px solid #ccc;
+    margin-bottom: 6px;
 }
 
-#main-content li {
-    margin-bottom: 12px;
+/* The following makes the page responsive : ) */
+
+@media (max-width: 1536px) {
+    main {
+        flex: 4
+    }
+}
+
+@media (max-width: 1280px) {
+    main {
+        flex: 3
+    }
+}
+
+@media (max-width: 720px) {
+    main {
+        flex: 2
+    }
+
+    .topic-image {
+        display: none;
+    }
+
+    main svg {
+        display: none;
+    }
+
+    .canvas-container {
+        display: none;
+    }
+
+    #screen-size-warning {
+        display: block;
+        margin-top: 6px;
+        margin-bottom: 0px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    header h2 {
+        font-size: 18px;
+    }
 }
