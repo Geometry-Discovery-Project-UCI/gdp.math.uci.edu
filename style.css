@@ -1,7 +1,6 @@
 html,
 body {
-    height: 100%;
-    min-height: 100%;
+    max-height: 100vh;
     margin: 0;
     font-family: 'Open Sans', sans-serif;
 }
@@ -9,74 +8,111 @@ body {
 #wrapper {
     display: flex;
     flex-direction: column;
-    max-height: 100%;
+    max-height: 100vh;
 }
 
 header {
-    flex: 1;
-    padding: 24px 0px 24px 48px;
+    margin: 0px;
+    padding: 8px;
     background-color: antiquewhite;
+    text-align: center;
+}
+
+header:hover {
+    cursor: pointer;
+}
+
+#screen-size-warning {
+    display: none;
 }
 
 #app-wrapper {
-    flex: 6;
     display: flex;
     flex-direction: row;
     overflow: hidden;
+    align-items: stretch
 }
 
 nav {
     flex: 1;
-    padding: 0px 18px 12px 12px;
-    border-right: 1px solid lightgray;
+    padding: 0px;
+    overflow-x: hidden;
     overflow-y: auto;
+    border-right: 1px solid lightgray;
 }
 
 nav::-webkit-scrollbar {
     display: none;
 }
 
+#search-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 8px;
+    position: sticky;
+    top: 0px
+}
+
+#search-tip {
+    flex: 1;
+}
+
+#search-tip {
+    height: 16px;
+}
+
+#search-tip svg {
+    height: 85%;
+}
+
+#search-text {
+    flex: 11;
+    width: 90%;
+}
+
+#topic-list {
+    margin: 0px;
+}
+
+#back-to-top-wrapper {
+    width: 36px;
+    position: sticky;
+    bottom: -12px;
+    opacity: 0%;
+    left: 12px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
 main {
     flex: 5;
-}
-
-@media (max-width: 1536px) {
-    main {
-        flex: 3
-    }
-}
-
-
-@media (max-width: 1024px) {
-    main {
-        flex: 2
-    }
+    margin-bottom: 12px;
 }
 
 #main-content {
     height: 100%;
-    width: 100%;
-    padding-top: 0px;
-    padding-left: 24px;
     overflow-y: auto;
+    padding: 12px;
+}
+
+#main-content::-webkit-scrollbar {
+    display: none;
 }
 
 .topic-image {
-    width: 196px;
-    height: 128px;
-    margin-top: 12px;
+    width: 100%;
+    height: 50%;
+    margin-top: 2px;
 }
-
-/*
- * The above beautifies everything :)
- */
 
 .topic {
     cursor: pointer;
 }
 
 #topics li {
-    padding: 12px;
+    padding: 6px;
+    border-radius: 12px;
 }
 
 #topics li:hover {
@@ -108,30 +144,75 @@ header>h2 {
     margin: 0px;
 }
 
-div#topics h3 {
-    font-size: 22px;
-    font-style: normal;
+#main-content h1 {
+    margin: 0px;
+}
+
+#topics {
+    margin: 0px 12px;
+}
+
+#topics h3 {
+    font-size: 24px;
     font-weight: 400;
-    line-height: 24px;
-    margin-left: 20px;
-    margin-top: 24px;
-    margin-bottom: 8px;
+    margin: 0px;
 }
 
-ol {
-    margin-top: 0px;
-    margin-left: 12px;
-    line-height: 24px;
+#topics ul {
+    padding-left: 24px;
 }
 
-li {
-    border-radius: 12px;
-}
-
-#main-content canvas {
+.canvas-container {
     border: 1px solid #ccc;
+    margin-bottom: 6px;
 }
 
-#main-content li {
-    margin-bottom: 12px;
+/* The following makes the page responsive : ) */
+
+@media (max-width: 1536px) {
+    main {
+        flex: 4
+    }
+}
+
+@media (max-width: 1280px) {
+    main {
+        flex: 3
+    }
+}
+
+@media (max-width: 720px) {
+    main {
+        flex: 2
+    }
+
+    .topic-image {
+        display: none;
+    }
+
+    main svg {
+        display: none;
+    }
+
+    .canvas-container {
+        display: none;
+    }
+
+    #screen-size-warning {
+        display: block;
+        margin-top: 6px;
+        margin-bottom: 0px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    header h2 {
+        font-size: 18px;
+    }
+
+    #topics ul {
+        padding-left: 14px;
+    }
 }

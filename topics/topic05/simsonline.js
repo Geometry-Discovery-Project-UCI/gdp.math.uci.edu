@@ -8,9 +8,9 @@
   const makeString = (arr) => {
     return `${arr[0][0]},${arr[0][1]} ${arr[1][0]},${arr[1][1]} ${arr[2][0]},${arr[2][1]}`;
   };
-  let pA = [xx + Math.cos(pi / 6) * radius, yy + Math.sin(pi / 6) * radius];
-  let pB = [xx - Math.cos(pi / 6) * radius, yy + Math.sin(pi / 6) * radius];
-  let pC = [xx - Math.cos(pi / 3) * radius, yy - Math.sin(pi / 3) * radius];
+  const pA = [xx + Math.cos(pi / 6) * radius, yy + Math.sin(pi / 6) * radius];
+  const pB = [xx - Math.cos(pi / 6) * radius, yy + Math.sin(pi / 6) * radius];
+  const pC = [xx - Math.cos(pi / 3) * radius, yy - Math.sin(pi / 3) * radius];
   const points = [pA, pB, pC];
 
   mAB = (pA[1] - pA[1]) / (pB[0] - pA[0]);
@@ -18,12 +18,10 @@
   mAC = (pA[1] - pC[1]) / (pA[0] - pC[0]);
 
   const tri = document.querySelector("#tri_simsonline");
-  const cir = document.querySelector("#ptoCircle_simsonline");
   const line0 = document.querySelector("#line0_simsonline");
   const line1 = document.querySelector("#line1_simsonline");
   const line2 = document.querySelector("#line2_simsonline");
   const line3 = document.querySelector("#line3_simsonline");
-  const line4 = document.querySelector("#line4_simsonline");
   const lineE = document.querySelector("#lineExtend_simsonline");
   const lineE2 = document.querySelector("#lineExtend2_simsonline");
   const raA = document.querySelector("#rightAngleA_simsonline");
@@ -36,9 +34,9 @@
   const letterP = document.querySelector("#letterP_simsonline");
 
   const moveMouse = (p) => {
-    let cosx =
+    const cosx =
       (p.x - xx) / Math.sqrt((p.x - xx) * (p.x - xx) + (p.y - yy) * (p.y - yy));
-    let sinx =
+    const sinx =
       (p.y - yy) / Math.sqrt((p.x - xx) * (p.x - xx) + (p.y - yy) * (p.y - yy));
 
     p.x = xx + radius * cosx;
@@ -55,22 +53,22 @@
       makeString([points[0], points[1], points[2]])
     );
     p1 = [p.x, pA[1]];
-    //.log([p.x, p.y], pA, pB);
-    let pAi = projectPoint2Line([p.x, p.y], pA, pC);
+    // .log([p.x, p.y], pA, pB);
+    const pAi = projectPoint2Line([p.x, p.y], pA, pC);
 
     mAi = (pAi[1] - p1[1]) / (pAi[0] - p1[0]);
 
     drawLine(pAi, [p.x, p.y], line2);
     drawLine(p1, [p.x, p.y], line0);
-    let pBi = projectPoint2Line([p.x, p.y], pB, pC);
-    //drawLine(p1, pBi, line3); 
-    //drawLine(p1, pAi, line4);
+    const pBi = projectPoint2Line([p.x, p.y], pB, pC);
+    // drawLine(p1, pBi, line3);
+    // drawLine(p1, pAi, line4);
     drawFullLine(p1, findSlope(p1, pAi), line3);
 
     drawLine(pBi, [p.x, p.y], line1);
 
-    let theta = Math.atan(-1 / mBC);
-    let dist = distToLine([p.x, p.y], pC, pA);
+    const theta = Math.atan(-1 / mBC);
+    const dist = distToLine([p.x, p.y], pC, pA);
     p2 = [p.x - dist * Math.cos(theta), p.y - dist * Math.sin(theta)];
 
     // drawFullLine(p2, findSlope(p1, p2), line3);
@@ -93,23 +91,37 @@
     letterP.setAttribute("y", p.y - 10);
     letterP.setAttribute("font-size", "1.5rem");
 
-    let section = pedalPoint(pC, pB, pA, [p.x, p.y]);
-    let pP = [p.x, p.y];
-    let disToA = findDistance(pA, pP);
-    let disToB = findDistance(pB, pP);
-    let disToC = findDistance(pC, pP);
-    let tBC = Math.atan(mBC);
-    let tAC = Math.atan(mAC);
+    const section = pedalPoint(pC, pB, pA, [p.x, p.y]);
+    const tBC = Math.atan(mBC);
+    const tAC = Math.atan(mAC);
 
     if (section == 2) {
       drawLine(pC, pBi, lineE);
       drawLine(pA, p1, lineE2);
       raB.setAttribute("x", pBi[0]);
       raB.setAttribute("y", pBi[1]);
-      raB.setAttribute("transform", "rotate(" + String(radiansToDegress(tBC)) + " " + String(pBi[0]) + " " + String(pBi[1]) + ")");
+      raB.setAttribute(
+        "transform",
+        "rotate(" +
+          String(radiansToDegress(tBC)) +
+          " " +
+          String(pBi[0]) +
+          " " +
+          String(pBi[1]) +
+          ")"
+      );
       raC.setAttribute("x", pAi[0]);
       raC.setAttribute("y", pAi[1] - 8);
-      raC.setAttribute("transform", "rotate(" + String(radiansToDegress(tAC)) + " " + String(pAi[0]) + " " + String(pAi[1]) + ")");
+      raC.setAttribute(
+        "transform",
+        "rotate(" +
+          String(radiansToDegress(tAC)) +
+          " " +
+          String(pAi[0]) +
+          " " +
+          String(pAi[1]) +
+          ")"
+      );
     }
 
     if (section == 4) {
@@ -117,11 +129,29 @@
       drawLine(pA, p1, lineE2);
       raC.setAttribute("x", pAi[0]);
       raC.setAttribute("y", pAi[1]);
-      raC.setAttribute("transform", "rotate(" + String(radiansToDegress(tAC)) + " " + String(pAi[0]) + " " + String(pAi[1]) + ")");
+      raC.setAttribute(
+        "transform",
+        "rotate(" +
+          String(radiansToDegress(tAC)) +
+          " " +
+          String(pAi[0]) +
+          " " +
+          String(pAi[1]) +
+          ")"
+      );
 
       raB.setAttribute("x", pBi[0]);
       raB.setAttribute("y", pBi[1]);
-      raB.setAttribute("transform", "rotate(" + String(radiansToDegress(tBC)) + " " + String(pBi[0]) + " " + String(pBi[1]) + ")");
+      raB.setAttribute(
+        "transform",
+        "rotate(" +
+          String(radiansToDegress(tBC)) +
+          " " +
+          String(pBi[0]) +
+          " " +
+          String(pBi[1]) +
+          ")"
+      );
     }
 
     if (section == 6) {
@@ -129,14 +159,35 @@
       drawLine(pB, p1, lineE2);
       raC.setAttribute("x", pAi[0]);
       raC.setAttribute("y", pAi[1]);
-      raC.setAttribute("transform", "rotate(" + String(radiansToDegress(tAC)) + " " + String(pAi[0]) + " " + String(pAi[1]) + ")");
+      raC.setAttribute(
+        "transform",
+        "rotate(" +
+          String(radiansToDegress(tAC)) +
+          " " +
+          String(pAi[0]) +
+          " " +
+          String(pAi[1]) +
+          ")"
+      );
 
       raB.setAttribute("x", pBi[0] - 8);
       raB.setAttribute("y", pBi[1] - 8);
-      raB.setAttribute("transform", "rotate(" + String(radiansToDegress(tBC)) + " " + String(pBi[0]) + " " + String(pBi[1]) + ")");
+      raB.setAttribute(
+        "transform",
+        "rotate(" +
+          String(radiansToDegress(tBC)) +
+          " " +
+          String(pBi[0]) +
+          " " +
+          String(pBi[1]) +
+          ")"
+      );
     }
-  }
-  let p = new DOMPoint(xx - Math.cos(pi * 5 / 9) * radius, yy - Math.sin(pi / 9) * radius);
+  };
+  let p = new DOMPoint(
+    xx - Math.cos((pi * 5) / 9) * radius,
+    yy - Math.sin(pi / 9) * radius
+  );
   moveMouse(p);
   ptoAngles = [1.4, 3.4, 5, 6];
 

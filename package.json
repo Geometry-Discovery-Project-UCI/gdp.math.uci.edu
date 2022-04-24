@@ -1,0 +1,28 @@
+{
+  "name": "homepage",
+  "version": "1.0.0",
+  "description": "The Geometry Discovery Project - University of California, Irvine",
+  "main": "main.js",
+  "scripts": {
+    "fix": "eslint --fix .",
+    "lint": "eslint --config .eslintrc.json --ext .js ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Geometry-Discovery-Project/homepage.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Geometry-Discovery-Project/homepage/issues"
+  },
+  "homepage": "https://github.com/Geometry-Discovery-Project/homepage#readme",
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.2",
+    "prettier-eslint": "^14.0.1"
+  }
+}
