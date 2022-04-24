@@ -94,5 +94,5 @@
         }
     });
 
-    app.mount("#wrapper");
+    app.mount("body");
 }
