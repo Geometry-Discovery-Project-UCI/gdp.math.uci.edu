@@ -15,6 +15,12 @@
         "ecmaVersion": "latest"
     },
     "rules": {
-        "require-jsdoc": "off"
+        "require-jsdoc": "off",
+        "prettier/prettier": [
+            "error",
+            {
+                "endOfLine": "auto"
+            }
+        ]
     }
 }
