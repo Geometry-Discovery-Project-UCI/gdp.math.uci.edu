@@ -78,13 +78,11 @@ nav::-webkit-scrollbar {
 #back-to-top-wrapper {
     width: 36px;
     position: sticky;
-    bottom: -100px;
-    left: 80%;
-    transition: 0.5s;
-}
-
-#back-to-top-wrapper {
+    bottom: -12px;
+    opacity: 0%;
+    left: 12px;
     cursor: pointer;
+    transition: 0.5s;
 }
 
 main {
@@ -160,7 +158,7 @@ header>h2 {
     margin: 0px;
 }
 
-#topics ol {
+#topics ul {
     padding-left: 24px;
 }
 
@@ -214,7 +212,7 @@ header>h2 {
         font-size: 18px;
     }
 
-    #topics ol {
-        padding-left: 18px;
+    #topics ul {
+        padding-left: 14px;
     }
 }

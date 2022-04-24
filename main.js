@@ -319,13 +319,19 @@
 
   app.mount("body");
 
+  const header = document.querySelector("header");
   const nav = document.querySelector("nav");
   const navBackToTop = document.getElementById("back-to-top-wrapper");
   nav.addEventListener("scroll", () => {
+    const offset = header.clientHeight + nav.clientHeight - window.innerHeight;
+    console.log(offset);
+    const y = 12 + offset;
     if (nav.scrollTop >= 20) {
-      navBackToTop.style.bottom = "12px";
+      navBackToTop.style.opacity = "100%";
+      navBackToTop.style.bottom = `${y}px`;
     } else {
-      navBackToTop.style.bottom = "-100px";
+      navBackToTop.style.opacity = "0%";
+      navBackToTop.style.bottom = `-${y}px`;
     }
   });
 }
