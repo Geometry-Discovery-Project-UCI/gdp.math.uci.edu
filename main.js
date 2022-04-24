@@ -90,9 +90,6 @@
                 }).catch(() => {
                     this.hasPdf = false;
                 });
-                const http = new XMLHttpRequest();
-                http.open('HEAD', topic.pdfUrl, false);
-                http.send();
             }
         }
     });
