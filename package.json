@@ -4,7 +4,8 @@
   "description": "The Geometry Discovery Project - University of California, Irvine",
   "main": "main.js",
   "scripts": {
-    "fix": "eslint --fix ."
+    "fix": "eslint --fix .",
+    "lint": "eslint --config .eslintrc.json --ext .js ."
   },
   "repository": {
     "type": "git",
