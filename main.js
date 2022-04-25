@@ -190,7 +190,7 @@
     ),
     new Topic(
       "Taylor Circle",
-      [],
+      ["Jimena Isabel Razo"],
       "public/images/topic30.png",
       "topics/topic30"
     ),
@@ -247,6 +247,12 @@
       ["Mai Nguyen"],
       "public/images/topic39.png",
       "topics/topic39"
+    ),
+    new Topic(
+      "Steiner-Lehmus' Theorem",
+      [],
+      "public/images/topic40.png",
+      "topics/topic40"
     ),
   ];
 

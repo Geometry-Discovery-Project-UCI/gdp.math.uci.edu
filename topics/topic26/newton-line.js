@@ -9,6 +9,7 @@ const CANVAS_WIDTH = 500;
 // Creates line and label objects
 const diagAC = makeLine();
 const diagBD = makeLine();
+const diagEF = makeLine();
 
 const newtonLine = makeLine(); // line MN
 
@@ -16,7 +17,6 @@ const lineBE = makeLine();
 const lineCE = makeLine();
 const lineBF = makeLine();
 const lineAF = makeLine();
-const lineEF = makeLine();
 
 const aLabel = makeLabel("A");
 const bLabel = makeLabel("B");
@@ -234,12 +234,12 @@ const quadrilateral = makeMovablePolygon(
 
     // Update the line coordinates
     // that connects the two intersection points E,F
-    lineEF.set({
+    diagEF.set({
       x1: pointE.x - leftOffset,
       y1: pointE.y - topOffset,
       x2: pointF.x - leftOffset,
       y2: pointF.y - topOffset,
-      strokeWidth: 1.5,
+      stroke: "gray",
     });
 
     // Find the coordinates and update the label for points M, N, L
@@ -309,6 +309,7 @@ const quadrilateral = makeMovablePolygon(
 
 canvas.add(diagAC);
 canvas.add(diagBD);
+canvas.add(diagEF);
 
 canvas.add(newtonLine);
 
@@ -316,7 +317,6 @@ canvas.add(lineBE);
 canvas.add(lineCE);
 canvas.add(lineAF);
 canvas.add(lineBF);
-canvas.add(lineEF);
 
 canvas.add(aLabel);
 canvas.add(bLabel);
