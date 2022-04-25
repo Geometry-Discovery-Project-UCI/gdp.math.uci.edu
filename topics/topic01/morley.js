@@ -1,93 +1,181 @@
 {
-  const svg = document.querySelector("#tri-app-morley");
-  const tri1 = document.querySelector("#tri-morley1");
-  const tri2 = document.querySelector("#tri-morley2");
-  const letterA = document.querySelector("#letterA_morley");
-  const letterB = document.querySelector("#letterB_morley");
-  const letterC = document.querySelector("#letterC_morley");
-  const letterAp = document.querySelector("#letterAP_morley");
-  const letterBp = document.querySelector("#letterBP_morley");
-  const letterCp = document.querySelector("#letterCP_morley");
-  const line1 = document.getElementById("line1_morley");
-  const line2 = document.getElementById("line2_morley");
-  const line3 = document.getElementById("line3_morley");
-  const line4 = document.getElementById("line4_morley");
-  const line5 = document.getElementById("line5_morley");
-  const line6 = document.getElementById("line6_morley");
-
-  function getD(A, B, C, flag) {
-    let v1 = C.sub(B);
-    const v2 = A.sub(B);
-    let a1 = v1.angleBetween(v2);
-    a1 = flag * a1;
-    v1 = v1.rotate(a1 / 3);
-
-    let v3 = B.sub(C);
-    const v4 = A.sub(C);
-    let a2 = v3.angleBetween(v4);
-    a2 = flag * a2;
-    v3 = v3.rotate(-a2 / 3);
-
-    return getLineIntersection(B, v1, C, v3);
-  }
-
-  pA = [423, 360];
-  pB = [76, 360];
-  letterC.setAttribute("x", pA[0] + 5);
-  letterC.setAttribute("y", pA[1] + 5);
-  letterB.setAttribute("x", pB[0] - 15);
-  letterB.setAttribute("y", pB[1] + 5);
-  const morley = (p) => {
-    const pC = [p.x, p.y];
-    p = [166, 51];
-    const points = [pA, pB, pC];
-    tri1.setAttributeNS(null, "points", makeString(points));
-
-    letterA.setAttribute("x", pC[0]);
-    letterA.setAttribute("y", pC[1] - 5);
-    const A = new Vector(pA[0], pA[1]);
-    const B = new Vector(pB[0], pB[1]);
-    const C = new Vector(pC[0], pC[1]);
-
-    if (pC[1] > pA[1]) {
-      flag = -1;
-    } else {
-      flag = 1;
-    }
-
-    const Cprime = getD(C, A, B, flag);
-    const Bprime = getD(B, C, A, flag);
-    const Aprime = getD(A, B, C, flag);
-    const cP = [Cprime.x, Cprime.y];
-    const bP = [Bprime.x, Bprime.y];
-    const aP = [Aprime.x, Aprime.y];
-    drawLine(cP, pB, line1);
-    drawLine(aP, pB, line2);
-    drawLine(cP, pA, line3);
-    drawLine(bP, pA, line4);
-    drawLine(aP, pC, line5);
-    drawLine(bP, pC, line6);
-    letterAp.setAttribute("x", cP[0]);
-    letterAp.setAttribute("y", cP[1]);
-    letterBp.setAttribute("x", bP[0]);
-    letterBp.setAttribute("y", bP[1]);
-    letterCp.setAttribute("x", aP[0]);
-    letterCp.setAttribute("y", aP[1]);
-    const primePoints = [
-      [Cprime.x, Cprime.y],
-      [Bprime.x, Bprime.y],
-      [Aprime.x, Aprime.y],
-    ];
-    tri2.setAttributeNS(null, "points", makeString(primePoints));
-  };
-
-  morley(new Vector(166, 51));
-
-  svg.addEventListener("mousemove", (event) => {
-    let p = new DOMPoint(event.clientX, event.clientY);
-
-    p = p.matrixTransform(svg.getScreenCTM().inverse());
-
-    morley(p);
+  const canvas = new fabric.Canvas("morley-canvas", {
+    selection: false,
   });
+
+  const ABprime = makeLine(null, null, null, "purple");
+  const ACprime = makeLine(null, null, null, "purple");
+  const BCprime = makeLine(null, null, null, "purple");
+  const BAprime = makeLine(null, null, null, "purple");
+  const CAprime = makeLine(null, null, null, "purple");
+  const CBprime = makeLine(null, null, null, "purple");
+  const AprimeBprime = makeLine(null, null, null, "red");
+  const BprimeCprime = makeLine(null, null, null, "red");
+  const CprimeAprime = makeLine(null, null, null, "red");
+
+  // vertexes
+  const aLabel = makeLabel("A");
+  const bLabel = makeLabel("B");
+  const cLabel = makeLabel("C");
+  const aprimeLabel = makeLabel("A'", 18);
+  const bprimeLabel = makeLabel("B'", 18);
+  const cprimeLabel = makeLabel("C'", 18);
+
+  const triangle = makeMovablePolygon(
+    [
+      {
+        x: 187,
+        y: 75,
+      },
+      {
+        x: 75,
+        y: 375,
+      },
+      {
+        x: 375,
+        y: 375,
+      },
+    ],
+    function (coords) {
+      aLabel.set({
+        left: coords[0].x,
+        top: coords[0].y - 30,
+      });
+      bLabel.set({
+        left: coords[1].x - 15,
+        top: coords[1].y,
+      });
+      cLabel.set({
+        left: coords[2].x + 5,
+        top: coords[2].y,
+      });
+
+      const angles = calculateThreeAngles(coords[0], coords[1], coords[2]);
+
+      const aprime = trilinearToCartesian(
+        coords[0],
+        coords[1],
+        coords[2],
+        1,
+        2 * Math.cos(angles.z / 3),
+        2 * Math.cos(angles.y / 3)
+      );
+      const bprime = trilinearToCartesian(
+        coords[0],
+        coords[1],
+        coords[2],
+        2 * Math.cos(angles.z / 3),
+        1,
+        2 * Math.cos(angles.x / 3)
+      );
+      const cprime = trilinearToCartesian(
+        coords[0],
+        coords[1],
+        coords[2],
+        2 * Math.cos(angles.y / 3),
+        2 * Math.cos(angles.x / 3),
+        1
+      );
+
+      aprimeLabel.set({
+        left: aprime.x - 8,
+        top: aprime.y,
+      });
+
+      bprimeLabel.set({
+        left: bprime.x + 5,
+        top: bprime.y - 15,
+      });
+
+      cprimeLabel.set({
+        left: cprime.x - 17,
+        top: cprime.y - 17,
+      });
+
+      BAprime.set(
+        {
+          x1: coords[1].x,
+          y1: coords[1].y,
+          x2: aprime.x,
+          y2: aprime.y,
+        },
+        { stroke: "red" }
+      );
+
+      BCprime.set({
+        x1: coords[1].x,
+        y1: coords[1].y,
+        x2: cprime.x,
+        y2: cprime.y,
+      });
+
+      ABprime.set({
+        x1: coords[0].x,
+        y1: coords[0].y,
+        x2: bprime.x,
+        y2: bprime.y,
+      });
+
+      ACprime.set({
+        x1: coords[0].x,
+        y1: coords[0].y,
+        x2: cprime.x,
+        y2: cprime.y,
+      });
+
+      CAprime.set({
+        x1: coords[2].x,
+        y1: coords[2].y,
+        x2: aprime.x,
+        y2: aprime.y,
+      });
+
+      CBprime.set({
+        x1: coords[2].x,
+        y1: coords[2].y,
+        x2: bprime.x,
+        y2: bprime.y,
+      });
+
+      BprimeCprime.set({
+        x1: bprime.x,
+        y1: bprime.y,
+        x2: cprime.x,
+        y2: cprime.y,
+      });
+
+      CprimeAprime.set({
+        x1: cprime.x,
+        y1: cprime.y,
+        x2: aprime.x,
+        y2: aprime.y,
+      });
+
+      AprimeBprime.set({
+        x1: aprime.x,
+        y1: aprime.y,
+        x2: bprime.x,
+        y2: bprime.y,
+      });
+    }
+  );
+  canvas.add(triangle);
+
+  canvas.add(aLabel);
+  canvas.add(bLabel);
+  canvas.add(cLabel);
+
+  canvas.add(BAprime);
+  canvas.add(BCprime);
+  canvas.add(CAprime);
+  canvas.add(CBprime);
+  canvas.add(ABprime);
+  canvas.add(ACprime);
+  canvas.add(CprimeAprime);
+  canvas.add(BprimeCprime);
+  canvas.add(AprimeBprime);
+
+  canvas.add(aprimeLabel);
+  canvas.add(bprimeLabel);
+  canvas.add(cprimeLabel);
 }

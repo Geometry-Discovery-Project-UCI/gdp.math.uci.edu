@@ -118,3 +118,70 @@ function calculateSlope(pt1, pt2) {
     return NaN;
   }
 }
+
+// Angles of a triangle
+
+function calculateThreeAngles(A, B, C) {
+  const c = calculateDistanceBetweenTwoPoints(A, B);
+  const b = calculateDistanceBetweenTwoPoints(A, C);
+  const a = calculateDistanceBetweenTwoPoints(B, C);
+
+  return {
+    x: Math.acos((b ** 2 + c ** 2 - a ** 2) / 2 / b / c),
+    y: Math.acos((a ** 2 + c ** 2 - b ** 2) / 2 / a / c),
+    z: Math.acos((b ** 2 + a ** 2 - c ** 2) / 2 / b / a),
+  };
+}
+
+// Convertion of Trilinear coordinate system to Cartesian coordinate system
+// https://en.wikipedia.org/wiki/Trilinear_coordinates
+//
+// In the following fuction, A,B,C are the vertexes of a triangle. x:y:z is the trilinear coordinates of a point.
+// The function returns the Cartesain coordinates of that point.
+
+// Common trilinear coordinates of the triangle centers
+// Incenter             --     1:1:1       Excenter   --   -1:1:1  1:-1:1   1:1:-1
+// Centriod             --     a^{-1}:b^{-1}:c^{-1}=csc A: csc B: csc C
+// Circumcenter         --     cos A: cos B: cos C
+// Orthocenter          --     sec A: sec B: sec C
+// Nine-point center    --     cos (B-C):cos(C-A):cos(A-B)
+// Symmedian point      --     a:b:c=sin A:sin B:sin C
+// Gergonne point       --     (sec A/2)^2:(sec B/2)^2:(sec C/2)^2
+// Nagal point          --     (csc A/2)^2:(csc B/2)^2:(csc C/2)^2
+
+function trilinearToCartesian(A, B, C, a, b, c) {
+  const AB = calculateDistanceBetweenTwoPoints(A, B);
+  const CA = calculateDistanceBetweenTwoPoints(A, C);
+  const BC = calculateDistanceBetweenTwoPoints(B, C);
+
+  return {
+    x:
+      (a * BC * A.x + b * CA * B.x + c * AB * C.x) / (c * AB + b * CA + a * BC),
+    y:
+      (a * BC * A.y + b * CA * B.y + c * AB * C.y) / (c * AB + b * CA + a * BC),
+  };
+}
+
+// Conversion of Cartesian coordinate system to Trilinear coordinate system
+// By the defintion of trilinear coordinates, they are signed distances to three sides, but need to be calibrated by the orientation.
+
+function cartesianToTrilinear(A, B, C, P) {
+  return {
+    x:
+      calculateSignedDistanceFromPointToLine(P, B, C) *
+      Math.sign(calculateSignedDistanceFromPointToLine(A, B, C)),
+    y:
+      calculateSignedDistanceFromPointToLine(P, A, C) *
+      Math.sign(calculateSignedDistanceFromPointToLine(B, A, C)),
+    z:
+      calculateSignedDistanceFromPointToLine(P, A, B) *
+      Math.sign(calculateSignedDistanceFromPointToLine(C, B, A)),
+  };
+}
+
+// Singed distance, whose absolte value is the distance of a point to a line.
+
+function calculateSignedDistanceFromPointToLine(pt, v, w) {
+  const ab = Math.sqrt((w[2] - v[2]) ** 2 + (w[1] - v[1]) ** 2);
+  return ((w[2] - v[2]) * (pt[1] - v[1]) - (w[1] - v[1]) * (pt[2] - v[2])) / ab;
+}
