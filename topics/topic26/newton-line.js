@@ -235,11 +235,11 @@ const quadrilateral = makeMovablePolygon(
     // Update the line coordinates
     // that connects the two intersection points E,F
     diagEF.set({
-        x1: pointE.x - leftOffset,
-        y1: pointE.y - topOffset,
-        x2: pointF.x - leftOffset,
-        y2: pointF.y - topOffset,
-        stroke: "gray"
+      x1: pointE.x - leftOffset,
+      y1: pointE.y - topOffset,
+      x2: pointF.x - leftOffset,
+      y2: pointF.y - topOffset,
+      stroke: "gray",
     });
 
     // Find the coordinates and update the label for points M, N, L
@@ -317,7 +317,6 @@ canvas.add(lineBE);
 canvas.add(lineCE);
 canvas.add(lineAF);
 canvas.add(lineBF);
-
 
 canvas.add(aLabel);
 canvas.add(bLabel);

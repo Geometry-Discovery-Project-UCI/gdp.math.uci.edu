@@ -83,12 +83,7 @@
       "public/images/topic11.png",
       "topics/topic11"
     ),
-    new Topic(
-      "Euler Line", 
-      [], 
-      "public/images/topic12.png", 
-      "topics/topic12"
-    ),
+    new Topic("Euler Line", [], "public/images/topic12.png", "topics/topic12"),
     new Topic(
       "Nine-point Circle",
       [],
