@@ -17,6 +17,7 @@
       const topicNumber = pageUrl.split("/")[1];
       this.pdfUrl = `${pageUrl}/${topicNumber}.pdf`;
       this.scripts = scripts?.map((script) => `${pageUrl}/${script}`);
+      this.topicNumber = pageUrl.split("/")[1].split("topic")[1];
     }
   }
 
@@ -24,7 +25,7 @@
     new Topic(
       "Morley's Miracle",
       ["Zhiqin Lu"],
-      ["Zhiqin Lu", "Melissa Yu"],
+      ["Melissa Yu"],
       "public/images/topic01.png",
       "topics/topic01",
       ["morley.js"]
@@ -363,9 +364,14 @@
           .scrollTo({ top: 0, behavior: "smooth" });
       },
       showThisTopic(thisTopic) {
-        return thisTopic.title
-          .toLowerCase()
-          .includes(this.searchKeywords.toLowerCase());
+        return (
+          thisTopic.title
+            .toLowerCase()
+            .includes(this.searchKeywords.toLowerCase()) ||
+          thisTopic.topicNumber
+            .toLowerCase()
+            .includes(this.searchKeywords.toLowerCase())
+        );
       },
       scrollNavToTop() {
         document.querySelector("nav").scrollTo({ top: 0, behavior: "smooth" });

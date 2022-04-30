@@ -59,15 +59,17 @@
                         <li v-for="topic in topics" @click="reloadMainContent(topic)" class="topic"
                             v-show="showThisTopic(topic)">
                             <div>
-                                <span>{{ topic.title }}</span>
+                                <span><b>Topic {{ topic.topicNumber }}.</b> {{ topic.title }}</span>
                                 <div class="topic-wrapper">
                                     <div>
                                         <img :src="topic.imageUrl" :alt="topic.title" class="topic-image">
                                     </div>
                                 </div>
                             </div>
+                            <hr />
                         </li>
                     </ul>
+                    <div style="text-align: center;">You've reached the end ❤️<div>
                 </div>
                 <div id="back-to-top-wrapper" @click="scrollNavToTop">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
