@@ -82,17 +82,19 @@
                 <div id="main-content">
                     <h1>{{ topic?.title || 'Welcome!' }}</h1>
                     <span v-if="topic">
-                        <h3>Contributors: {{ topic.authors.join(", ") }}</h3>
-                        <div>Resources:</div>
+                        <h3 style="margin-top: 6px;" v-if="topic.essayContributors.length > 0">Essay Contributors: {{
+                            topic.essayContributors.join(", ") }}</h3>
+                        <h3 v-if="topic.animationContributors.length > 0">Animation Contributors: {{
+                            topic.animationContributors.join(", ") }}</h3>
+                        <div style="margin-top: 6px;">Resources:</div>
                         <ul>
-                            <li v-if="hasPdf"><a :href="topic.pdfUrl">Reading</a></li>
+                            <li v-if="hasPdf"><a :href="topic.pdfUrl">Essay PDF (Click to preview/download)</a></li>
                             <li v-else>Reading comming soon...</li>
                             <span v-html="rawHtml"></span>
                         </ul>
                     </span>
                     <div v-else>
                         <p>Click on any topic on the left to start!</p>
-
                         <div id="contributors">
                             <h3>Contributors:</h3>
                             <ol>
@@ -142,8 +144,6 @@
                                 </li>
                             </ol>
                         </div>
-
-
 
                         <div id="credits">
                             <h3>Credits</h3>
