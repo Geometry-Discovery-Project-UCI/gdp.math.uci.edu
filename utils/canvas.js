@@ -141,3 +141,16 @@ function makeCircle(radius, center, fill, stroke) {
     stroke: stroke || 1,
   });
 }
+
+function makeMovablePoint(pt) {
+  return new fabric.Circle({
+    left: pt.x,
+    top: pt.y,
+    hasControls: false,
+    hasborders: false,
+    evented: true,
+    radius: 5,
+    fill: "blue",
+    stroke: 0,
+  });
+}
