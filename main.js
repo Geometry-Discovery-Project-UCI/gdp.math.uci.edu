@@ -33,9 +33,10 @@
     new Topic(
       "Ceva's and Menelaus' Theorems",
       ["Zhiqin Lu", "Xianfu Liu"],
-      [],
+      ["Mai Nguyen"],
       "public/images/topic02.png",
-      "topics/topic02"
+      "topics/topic02",
+      ["ceva-theorem.js"]
     ),
     new Topic(
       "Five Triangle Centers",
@@ -113,9 +114,10 @@
     new Topic(
       "Nine-point Circle",
       [],
-      [],
+      ["Mai Nguyen"],
       "public/images/topic13.png",
-      "topics/topic13"
+      "topics/topic13",
+      ["nine-point-circle.js"]
     ),
     new Topic(
       "Fermat Point",
