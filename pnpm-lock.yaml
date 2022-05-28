@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   eslint: ^8.14.0
@@ -12,7 +12,7 @@ devDependencies:
   eslint: 8.14.0
   eslint-config-google: 0.14.0_eslint@8.14.0
   eslint-config-prettier: 8.5.0_eslint@8.14.0
-  eslint-plugin-prettier: 4.0.0_665eb419c9d7860ca0c224f7f6dcdace
+  eslint-plugin-prettier: 4.0.0_mzpligoj26dazigcet37nxg2zy
   prettier: 2.6.2
   prettier-eslint: 14.0.1
 
@@ -71,7 +71,7 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@typescript-eslint/parser/5.20.0_eslint@8.14.0+typescript@4.6.3:
+  /@typescript-eslint/parser/5.20.0_5wsz2tb7zzudmaqxfve53vbauu:
     resolution: {integrity: sha512-UWKibrCZQCYvobmu3/N8TWbEeo/EPQbS41Ux1F9XqPzGuV7pfg6n50ZrFo6hryynD8qOTTfLHtHjjdQtxJ0h/w==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -342,7 +342,7 @@ packages:
       eslint: 8.14.0
     dev: true
 
-  /eslint-plugin-prettier/4.0.0_665eb419c9d7860ca0c224f7f6dcdace:
+  /eslint-plugin-prettier/4.0.0_mzpligoj26dazigcet37nxg2zy:
     resolution: {integrity: sha512-98MqmCJ7vJodoQK359bqQWaxOE0CS8paAz/GgjaZLyex4TTk3g9HugoO89EqWCrFiOqn9EVvcoo7gZzONCWVwQ==}
     engines: {node: '>=6.0.0'}
     peerDependencies:
@@ -773,7 +773,7 @@ packages:
     resolution: {integrity: sha512-crsXH/dZ2uWxUZI43md0euicqGAJcojUamdMHJolotF/+BV8g2ULKpisiROGCvQXWtjNF869qFElcqnvO6fZdQ==}
     engines: {node: '>=10.0.0'}
     dependencies:
-      '@typescript-eslint/parser': 5.20.0_eslint@8.14.0+typescript@4.6.3
+      '@typescript-eslint/parser': 5.20.0_5wsz2tb7zzudmaqxfve53vbauu
       common-tags: 1.8.2
       dlv: 1.1.3
       eslint: 8.14.0
