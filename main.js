@@ -163,7 +163,7 @@
     ),
     new Topic(
       "Miquel Point",
-      [],
+      ["Zhiqin Lu", "Shiyi Lyu"],
       [],
       "public/images/topic20.png",
       "topics/topic20"
@@ -220,7 +220,7 @@
     ),
     new Topic(
       "Davis' Theorem",
-      [],
+      ["Wenjing Lin"],
       [],
       "public/images/topic28.png",
       "topics/topic28"
