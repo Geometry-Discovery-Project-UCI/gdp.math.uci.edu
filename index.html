@@ -26,6 +26,8 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"
         integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"
         crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="http://tikzjax.com/v1/fonts.css">
+    <script defer src="http://tikzjax.com/v1/tikzjax.js"></script>
     <script defer src="main.js"></script>
     <script src="utils/canvas.js"></script>
     <script src="utils/geoutil.js"></script>
@@ -176,6 +178,11 @@
                                 </li>
                             </ol>
                         </div>
+                        <script type="text/tikz">
+                            \begin{tikzpicture}
+                                \draw (0,0) circle (1in);
+                            \end{tikzpicture}
+                        </script>
                     </div>
                 </div>
             </main>
