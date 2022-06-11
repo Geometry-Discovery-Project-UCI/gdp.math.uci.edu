@@ -1,84 +1,88 @@
 import { Contributor, Topic } from '@/types';
 
-export const UC_IRVINE = 'UC Irvine';
-export const UC_SAN_DIEGO = 'UC San Diego';
+export enum Institute {
+  UCIrvine = 'UC Irvine',
+  UCSanDiego = 'UC San Diego'
+}
 
+// TODO(Kiyo5hi): Use enum for contributors
+// Knwon issue: https://github.com/microsoft/TypeScript/issues/40793
 export const ZHIQIN_LU: Contributor = {
   name: 'Zhiqin Lu',
   email: 'zlu@uci.edu',
-  institute: UC_IRVINE,
+  institute: Institute.UCIrvine,
 };
 
 export const CHRISTOPHER_DAVIS: Contributor = {
   name: 'Christopher Davis',
   email: 'daviscj@uci.edu',
-  institute: UC_IRVINE,
+  institute: Institute.UCIrvine,
 };
 
 export const XIANFU_LIU: Contributor = {
   name: 'Xianfu Liu',
   email: 'xianful@uci.edu',
-  institute: UC_IRVINE,
+  institute: Institute.UCIrvine,
 };
 
 export const YUE_CHU: Contributor = {
   name: 'Yue Chu',
   email: 'chuy13@uci.edu',
-  institute: UC_IRVINE,
+  institute: Institute.UCIrvine,
 };
 
 export const XINXI_GUO: Contributor = {
   name: 'Xinxi Guo',
   email: 'x6guo@ucsd.edu',
-  institute: UC_SAN_DIEGO,
+  institute: Institute.UCSanDiego,
 };
 
 export const WENJING_LIN: Contributor = {
   name: 'Wenjing Lin',
   email: 'wenjinl8@uci.edu',
-  institute: UC_IRVINE,
+  institute: Institute.UCIrvine,
 };
 
 export const SHIYI_LYU: Contributor = {
   name: 'Shiyi Lyu',
   email: 'slyu6@uci.edu',
-  institute: UC_IRVINE,
+  institute: Institute.UCIrvine,
 };
 
 export const MAI_NGUYEN: Contributor = {
   name: 'Mai Nguyen',
   email: 'main5@uci.edu',
-  institute: UC_IRVINE,
+  institute: Institute.UCIrvine,
 };
 
 export const YUFEI_REN: Contributor = {
   name: 'Yufei Ren',
   email: 'yufeir@uci.edu',
-  institute: UC_IRVINE,
+  institute: Institute.UCIrvine,
 };
 
 export const JIMENA_ISABEL_RAZO: Contributor = {
   name: 'Jimena Isabel Razo',
   email: 'razoji@uci.edu',
-  institute: UC_IRVINE,
+  institute: Institute.UCIrvine,
 };
 
 export const SATYAKI_SARKAR: Contributor = {
   name: 'Satyaki Sarkar',
   email: 'satyakis@uci.edu',
-  institute: UC_IRVINE,
+  institute: Institute.UCIrvine,
 };
 
 export const STEPHANIE_WANG: Contributor = {
   name: 'Stephanie Wang',
   email: 'stephjw1@uci.edu',
-  institute: UC_IRVINE,
+  institute: Institute.UCIrvine,
 };
 
 export const NATASHA_XIAO: Contributor = {
   name: 'Natasha Xiao',
   email: 'jxiao12@uci.edu',
-  institute: UC_IRVINE,
+  institute: Institute.UCIrvine,
 };
 
 export const FELIX_YU: Contributor = {
@@ -94,7 +98,7 @@ export const MELISSA_YU: Contributor = {
 export const DAWEI_LIU: Contributor = {
   name: 'Dawei Liu',
   email: 'daweil7@uci.edu',
-  institute: UC_IRVINE,
+  institute: Institute.UCIrvine,
 };
 
 export const contributors: Array<Contributor> = [
@@ -536,5 +540,22 @@ export const topics: Array<Topic> = [
     essay: 'pdfs/topic40.pdf',
     animationContributors: [],
     essayContributors: [],
+  },
+];
+
+export const indexTopicMap: Map<number, Topic> = new Map(
+  topics.map((topic) => [topic.index, topic]),
+);
+
+export const otherImages: Array<{ title: string, image: string }> = [
+  {
+    title: '2022 Spring GDP Group',
+    image: 'images/group/2022-Spring-199C-1.jpg',
+  }, {
+    title: '2022 Spring GDP Group',
+    image: 'images/group/2022-Spring-199C-2.jpg',
+  }, {
+    title: '2022 Winter GDP Group',
+    image: 'images/group/2022-Winter-199B.jpg',
   },
 ];

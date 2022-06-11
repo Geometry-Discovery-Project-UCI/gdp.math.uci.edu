@@ -1,6 +1,6 @@
 <template>
   <Suspense>
-    <LayoutView />
+    <Component :is="layout" />
   </Suspense>
 </template>
 
@@ -14,12 +14,21 @@
 </style>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import LayoutView from '@/views/LayoutView.vue';
+import { Layout } from "ant-design-vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  components: {
-    LayoutView,
+  computed: {
+    layout() {
+      return (this.$route.meta.layout || Layout.Sider)
+    }
   },
-});
+})
 </script>
+
+<style>
+canvas {
+  border: 1px solid #ccc;
+  margin-bottom: 6px;
+}
+</style>

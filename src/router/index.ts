@@ -4,11 +4,13 @@ import TopicsView from '@/views/TopicsView.vue';
 import ContributorsView from '@/views/ContributorsView.vue';
 import OthersView from '@/views/OthersView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
+import GdpTopic01View from '@/views/topics/GdpTopic01View.vue';
 import { RouteProps } from '@/types';
 import {
   BookOutlined, HomeOutlined,
   UserOutlined, TagOutlined,
 } from '@ant-design/icons-vue';
+import { Layout } from '@/consts';
 
 export const routesProps: Array<RouteProps> = [
   {
@@ -40,12 +42,19 @@ export const routesProps: Array<RouteProps> = [
     name: 'notFound',
     component: NotFoundView,
   },
+  {
+    path: '/topic/1',
+    name: 'topic01',
+    component: GdpTopic01View,
+    layout: Layout.NoSider
+  },
 ];
 
 const routes = routesProps.map((routeProp) => ({
   path: routeProp.path,
   name: routeProp.name,
   component: routeProp.component,
+  meta: { layout: routeProp.layout || Layout.Sider }
 }));
 
 const router = createRouter({

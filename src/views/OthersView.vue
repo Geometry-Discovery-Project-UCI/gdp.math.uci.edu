@@ -2,23 +2,22 @@
   <ATypographyTitle :level="1">Others</ATypographyTitle>
   <ATypographyParagraph>Some extra information about geometry and us.</ATypographyParagraph>
 
-  <AList itenLayout="horizontal" :dataSource="materials"
-    :grid="{ gutter: 16, xs: 1, sm: 1, md: 2, lg: 3, xl: 4, xxl: 5, xxxl: 7 }">
+  <AList itenLayout="horizontal" :dataSource="materials" :grid="defaultGridParams">
     <template #renderItem="{ item: material }">
       <AListItem>
         <ACard :title="material.name">
           <AList itemLayout="horizontal" :dataSource="material.data">
             <template #renderItem="{ item: content }">
               <AListItem>
-                <div>
-                  <a :href="content.uri" target="_blank">
+                <ATypographyText>
+                  <ATypographyLink :href="content.uri" target="_blank">
                     <ASpace>
                       <LinkOutlined />
                       <span>{{ content.name }}</span>
                     </ASpace>
-                  </a>
-                  <span v-if="content.author"> by {{ content.author }}</span>
-                </div>
+                  </ATypographyLink>
+                  <ATypographyText v-if="content.author"> by {{ content.author }}</ATypographyText>
+                </ATypographyText>
               </AListItem>
             </template>
           </AList>
@@ -26,17 +25,34 @@
       </AListItem>
     </template>
   </AList>
+
+  <ATypographyTitle :level="2">GDP Group</ATypographyTitle>
+  <AList itenLayout="horizontal" :dataSource="otherImages" :grid="defaultGridParams">
+    <template #renderItem="{ item: image }">
+      <AListItem :style="{
+        textAlign: 'center',
+      }">
+        <AImage :src="image.image" />
+        <ATypographyText>{{ image.title }}</ATypographyText>
+      </AListItem>
+    </template>
+  </AList>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { otherEssays, otherLinks } from '@/data';
+import { otherEssays, otherLinks, otherImages } from '@/data';
 import { LinkOutlined } from '@ant-design/icons-vue';
+import { defaultGridParams } from '@/consts';
 
 export default defineComponent({
-  name: 'HomeView',
   components: {
     LinkOutlined,
+  },
+  setup() {
+    return {
+      defaultGridParams,
+    };
   },
   data() {
     return {
@@ -47,6 +63,7 @@ export default defineComponent({
         name: 'Links',
         data: otherLinks,
       }],
+      otherImages,
     };
   },
 });

@@ -1,3 +1,4 @@
+import { Layout } from '@/consts';
 import { AntdIconProps } from '@ant-design/icons-vue/lib/components/AntdIcon';
 import { Component } from 'vue';
 
@@ -6,6 +7,7 @@ export interface RouteProps {
   name: string
   icon?: Component<AntdIconProps>
   component: Component
+  layout?: Layout
 }
 
 export interface Contributor {
@@ -21,4 +23,9 @@ export interface Topic {
   essay?: string
   animationContributors: Array<Contributor>
   essayContributors: Array<Contributor>
+}
+
+export interface TopicRouteProps {
+  index: number
+  component: Component
 }
