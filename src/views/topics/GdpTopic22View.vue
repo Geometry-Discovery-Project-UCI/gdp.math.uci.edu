@@ -14,9 +14,6 @@ export default defineComponent(
         setup() {
             return { topic };
         },
-        mounted() {
-
-        }
     },
 );
 </script>
