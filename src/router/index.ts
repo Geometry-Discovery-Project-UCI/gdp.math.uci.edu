@@ -139,7 +139,7 @@ export const routesProps: Array<RouteProps> = [
   {
       path: '/topic/37',
       name: 'topic37',
-      component: GdpTopic33View,
+      component: GdpTopic37View,
       layout: Layout.NoSider
   },
   {
@@ -157,7 +157,7 @@ export const routesProps: Array<RouteProps> = [
   {
       path: '/topic/40',
       name: 'topic40',
-      component: GdpTopic33View,
+      component: GdpTopic40View,
       layout: Layout.NoSider
   },
 ];
