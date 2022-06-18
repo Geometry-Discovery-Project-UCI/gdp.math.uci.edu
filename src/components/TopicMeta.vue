@@ -1,19 +1,12 @@
 <template>
   <ATypographyTitle :level="1">{{ topic.name }}</ATypographyTitle>
 
-  <ATypographyTitle :level="4">Contributors</ATypographyTitle>
-  <ul>
-    <li>
-      <ATypographyTitle :level="5" v-if="topic.essayContributors?.length > 0">
-        Essay Contributors: {{ topic.essayContributors.map((t) => (t.name)).join(', ') }}
-      </ATypographyTitle>
-    </li>
-    <li>
-      <ATypographyTitle :level="5" v-if="topic.animationContributors?.length > 0">
-        Animation Contributors: {{ topic.animationContributors.map((t) => (t.name)).join(', ') }}
-      </ATypographyTitle>
-    </li>
-  </ul>
+  <ATypographyTitle :level="5" v-if="topic.essayContributors?.length > 0">
+    Essay Contributors: {{ topic.essayContributors.map((t) => (t.name)).join(', ') }}
+  </ATypographyTitle>
+  <ATypographyTitle :level="5" v-if="topic.animationContributors?.length > 0">
+    Animation Contributors: {{ topic.animationContributors.map((t) => (t.name)).join(', ') }}
+  </ATypographyTitle>
 
   <ATypographyTitle :level="4">Readings</ATypographyTitle>
   <ATypographyLink :href="topic.essay" v-if="topic.essay?.length > 0">

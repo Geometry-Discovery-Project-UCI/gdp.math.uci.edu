@@ -18,8 +18,10 @@ import { routesProps } from '@/router';
 import MenuItem from '@/components/MenuItem.vue';
 import { useRouter } from 'vue-router';
 
-await useRouter().isReady();
-const routeName = useRouter().currentRoute.value.name as string;
-
-const selectedKey = ref<Array<string>>([routeName]);
+const router = useRouter()
+await router.isReady()
+const selectedKey = ref<Array<string>>([router.currentRoute.value.name as string]);
+router.afterEach((to) => {
+  selectedKey.value = [to.name as string];
+});
 </script>
