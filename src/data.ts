@@ -8,6 +8,12 @@ export enum Institute {
 // TODO(Kiyo5hi): Use enum for contributors
 // Knwon issue: https://github.com/microsoft/TypeScript/issues/40793
 
+export const YI_CHEN: Contributor = {
+  name: 'Yi Chen',
+  email: 'yic40@uci.edu',
+  institute: Institute.UCIrvine,
+};
+
 export const YUE_CHU: Contributor = {
   name: 'Yue Chu',
   email: 'chuy13@uci.edu',
@@ -32,15 +38,39 @@ export const JIAMING_FENG: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const BIN_GUO: Contributor = {
+  name: 'Bin Guo',
+  email: 'bing3@uci.edu',
+  institute: Institute.UCSanDiego,
+};
+
 export const XINXI_GUO: Contributor = {
   name: 'Xinxi Guo',
   email: 'x6guo@ucsd.edu',
   institute: Institute.UCSanDiego,
 };
 
+export const VINNIE_HSIA: Contributor = {
+  name: 'Vinnie Hsia',
+  email: 'hsiat1@uci.edu',
+  institute: Institute.UCSanDiego,
+};
+
+export const JIANLIN_LI: Contributor = {
+  name: 'Jianlin Li',
+  email: 'yixual44@uci.edu',
+  institute: Institute.UCSanDiego,
+};
+
 export const TONGTONG_LI: Contributor = {
   name: 'Tongtong Li',
   email: 'tongtl3@uci.edu',
+  institute: Institute.UCSanDiego,
+};
+
+export const YIXUAN_LI: Contributor = {
+  name: 'Yixuan Li',
+  email: 'yixual44@uci.edu',
   institute: Institute.UCSanDiego,
 };
 
@@ -128,6 +158,13 @@ export const NATASHA_XIAO: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const ZEJIN_XU: Contributor = {
+  name: 'Zejin Xu',
+  email: 'zejinx@uci.edu',
+  institute: Institute.UCIrvine,
+};
+
+
 export const FELIX_YU: Contributor = {
   name: 'Felix Yu',
   email: 'felixyu2627@gmail.com',
@@ -147,6 +184,7 @@ export const contributors: Array<Contributor> = [
   RUOYING_DENG,
   JIAMING_FENG,
   XINXI_GUO,
+  VINNIE_HSIA,
   TONGTONG_LI,
   WENJING_LIN,
   SHIYI_LYU,
