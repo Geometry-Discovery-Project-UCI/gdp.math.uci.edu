@@ -1,3 +1,42 @@
+// function to find feet of triangle's altitudes
+export function getPedalPoint(from, toA, toB) {
+  const targetLinEq = solveLinearEquation(toA, toB);
+  const heightLinEq = solvePerpendicularLineEquation(targetLinEq.m, from);
+  return calculateLineIntersectInLinearEquation(
+    targetLinEq.m,
+    targetLinEq.b,
+    heightLinEq.m,
+    heightLinEq.b
+  );
+}
+
+export function calculateCircumcenter(A, B, C) {
+  const midPointAB = calculateMidpoint(A, B);
+  const lineAB = solveLinearEquation(A, B);
+  const perpendicularBisectorAB = solvePerpendicularLineEquation(lineAB.m, midPointAB);
+
+  const midPointAC = calculateMidpoint(A, C);
+  const lineAC = solveLinearEquation(A, C);
+  const perpendicularBisectorAC = solvePerpendicularLineEquation(lineAC.m, midPointAC);
+
+  return calculateLineIntersectInLinearEquation(
+    perpendicularBisectorAB.m,
+    perpendicularBisectorAB.b,
+    perpendicularBisectorAC.m,
+    perpendicularBisectorAC.b
+  );
+}
+
+export function calculateOrthocenter(A, B, C) {
+  const lineBC = solveLinearEquation(B, C);
+  const heightBC = solvePerpendicularLineEquation(lineBC.m, A);
+
+  const lineAB = solveLinearEquation(A, B);
+  const heightAB = solvePerpendicularLineEquation(lineAB.m, C);
+
+  return calculateLineIntersectInLinearEquation(heightBC.m, heightBC.b, heightAB.m, heightAB.b);
+}
+
 export function calculateMidpoint(p1, p2) {
   return {
     x: (p1.x + p2.x) / 2,
@@ -16,8 +55,7 @@ export function calculateLineIntersectInPoints(line1, line2, isVector) {
     return null;
   }
   denominator =
-    (line2.y2 - line2.y1) * (line1.x2 - line1.x1) -
-    (line2.x2 - line2.x1) * (line1.y2 - line1.y1);
+    (line2.y2 - line2.y1) * (line1.x2 - line1.x1) - (line2.x2 - line2.x1) * (line1.y2 - line1.y1);
 
   // Lines are parallel
   if (denominator === -1) {
@@ -153,10 +191,8 @@ export function trilinearToCartesian(A, B, C, a, b, c) {
   const BC = calculateDistanceBetweenTwoPoints(B, C);
 
   return {
-    x:
-      (a * BC * A.x + b * CA * B.x + c * AB * C.x) / (c * AB + b * CA + a * BC),
-    y:
-      (a * BC * A.y + b * CA * B.y + c * AB * C.y) / (c * AB + b * CA + a * BC),
+    x: (a * BC * A.x + b * CA * B.x + c * AB * C.x) / (c * AB + b * CA + a * BC),
+    y: (a * BC * A.y + b * CA * B.y + c * AB * C.y) / (c * AB + b * CA + a * BC),
   };
 }
 
