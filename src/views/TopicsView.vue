@@ -1,14 +1,18 @@
 <template>
   <ATypographyTitle :level="1">Topics</ATypographyTitle>
-  <AList itenLayout="horizontal" :dataSource="topics" :grid="defaultGridParams">
+  <AList itemLayout="horizontal" :dataSource="topics" :grid="defaultGridParams">
     <template #renderItem="{ item: topic }">
       <AListItem>
         <ACard hoverable>
           <template #cover>
-            <AImage class="topic-image" :src="topic.snapshot" :alt="topic.name" height="21vh" />
+            <AImage class="topic-image" :src="topic.snapshot" :alt="topic.name" height="22vh" />
           </template>
           <ACardMeta :title="`Topic ${topic.index}`">
-            <template #description>{{ topic.name }}</template>
+            <template #description>
+              <div style="height: 3rem">
+                {{ topic.name }}
+              </div>
+            </template>
           </ACardMeta>
           <template #actions>
             <RouterLink :to="`/topic/${topic.index}`" target="_blank">
