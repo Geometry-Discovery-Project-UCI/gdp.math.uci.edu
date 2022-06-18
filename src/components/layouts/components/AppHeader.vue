@@ -1,6 +1,6 @@
 <template>
-  <RouterLink to="/">
-    <ALayoutHeader>
+  <ALayoutHeader>
+    <RouterLink to="/">
       <ASpace>
         <GdpLogo :width="36" :height="36" :preview="false" />
         <span :style="{
@@ -8,8 +8,8 @@
           fontSize: '18px',
         }">Geometry Discovery Project @ UCI</span>
       </ASpace>
-    </ALayoutHeader>
-  </RouterLink>
+    </RouterLink>
+  </ALayoutHeader>
 </template>
 
 <script setup lang="ts">
