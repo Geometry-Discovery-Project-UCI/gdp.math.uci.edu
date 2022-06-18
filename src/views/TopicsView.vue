@@ -5,7 +5,7 @@
       <AListItem>
         <ACard hoverable>
           <template #cover>
-            <AImage class="topic-image" :src="topic.snapshot" :alt="topic.name" />
+            <AImage class="topic-image" :src="topic.snapshot" :alt="topic.name" height="21vh" />
           </template>
           <ACardMeta :title="`Topic ${topic.index}`">
             <template #description>{{ topic.name }}</template>
