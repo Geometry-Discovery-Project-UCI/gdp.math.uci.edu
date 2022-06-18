@@ -6,8 +6,7 @@
 import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
-
-const topic = indexTopicMap.get(17) as Topic;
+const topic = indexTopicMap.get(9) as Topic;
 
 export default defineComponent({
   setup() {
