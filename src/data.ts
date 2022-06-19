@@ -7,9 +7,10 @@ export enum Institute {
 
 // TODO(Kiyo5hi): Use enum for contributors
 // Knwon issue: https://github.com/microsoft/TypeScript/issues/40793
-export const ZHIQIN_LU: Contributor = {
-  name: 'Zhiqin Lu',
-  email: 'zlu@uci.edu',
+
+export const YUE_CHU: Contributor = {
+  name: 'Yue Chu',
+  email: 'chuy13@uci.edu',
   institute: Institute.UCIrvine,
 };
 
@@ -19,15 +20,15 @@ export const CHRISTOPHER_DAVIS: Contributor = {
   institute: Institute.UCIrvine,
 };
 
-export const XIANFU_LIU: Contributor = {
-  name: 'Xianfu Liu',
-  email: 'xianful@uci.edu',
+export const RUOYING_DENG: Contributor = {
+  name: 'Ruoying Deng',
+  email: 'ruoyind1@uci.edu',
   institute: Institute.UCIrvine,
 };
 
-export const YUE_CHU: Contributor = {
-  name: 'Yue Chu',
-  email: 'chuy13@uci.edu',
+export const JIAMING_FENG: Contributor = {
+  name: 'Jiaming Feng',
+  email: 'jiamif3@uci.edu',
   institute: Institute.UCIrvine,
 };
 
@@ -37,9 +38,33 @@ export const XINXI_GUO: Contributor = {
   institute: Institute.UCSanDiego,
 };
 
+export const TONGTONG_LI: Contributor = {
+  name: 'Tongtong Li',
+  email: 'tongtl3@uci.edu',
+  institute: Institute.UCSanDiego,
+};
+
 export const WENJING_LIN: Contributor = {
   name: 'Wenjing Lin',
   email: 'wenjinl8@uci.edu',
+  institute: Institute.UCIrvine,
+};
+
+export const DAWEI_LIU: Contributor = {
+  name: 'Dawei Liu',
+  email: 'daweil7@uci.edu',
+  institute: Institute.UCIrvine,
+};
+
+export const XIANFU_LIU: Contributor = {
+  name: 'Xianfu Liu',
+  email: 'xianful@uci.edu',
+  institute: Institute.UCIrvine,
+};
+
+export const ZHIQIN_LU: Contributor = {
+  name: 'Zhiqin Lu',
+  email: 'zlu@uci.edu',
   institute: Institute.UCIrvine,
 };
 
@@ -49,15 +74,15 @@ export const SHIYI_LYU: Contributor = {
   institute: Institute.UCIrvine,
 };
 
-export const MAI_NGUYEN: Contributor = {
-  name: 'Mai Nguyen',
-  email: 'main5@uci.edu',
+export const RUSSELL_MARASIGAN: Contributor = {
+  name: 'Russell Marasigan',
+  email: 'marasigr@uci.edu',
   institute: Institute.UCIrvine,
 };
 
-export const YUFEI_REN: Contributor = {
-  name: 'Yufei Ren',
-  email: 'yufeir@uci.edu',
+export const MAI_NGUYEN: Contributor = {
+  name: 'Mai Nguyen',
+  email: 'main5@uci.edu',
   institute: Institute.UCIrvine,
 };
 
@@ -67,9 +92,27 @@ export const JIMENA_ISABEL_RAZO: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const YUFEI_REN: Contributor = {
+  name: 'Yufei Ren',
+  email: 'yufeir@uci.edu',
+  institute: Institute.UCIrvine,
+};
+
 export const SATYAKI_SARKAR: Contributor = {
   name: 'Satyaki Sarkar',
   email: 'satyakis@uci.edu',
+  institute: Institute.UCIrvine,
+};
+
+export const MINGYU_SHI: Contributor = {
+  name: 'Mingyu Shi',
+  email: 'mingyus3@uci.edu',
+  institute: Institute.UCIrvine,
+};
+
+export const CHUXIANGBO_WANG: Contributor = {
+  name: 'Chuxiangbo Wang',
+  email: 'chuxianw@uci.edu',
   institute: Institute.UCIrvine,
 };
 
@@ -95,23 +138,24 @@ export const MELISSA_YU: Contributor = {
   email: 'melissajiayu@gmail.com',
 };
 
-export const DAWEI_LIU: Contributor = {
-  name: 'Dawei Liu',
-  email: 'daweil7@uci.edu',
-  institute: Institute.UCIrvine,
-};
 
 export const contributors: Array<Contributor> = [
   ZHIQIN_LU,
   CHRISTOPHER_DAVIS,
   XIANFU_LIU,
   YUE_CHU,
+  RUOYING_DENG,
+  JIAMING_FENG,
   XINXI_GUO,
+  TONGTONG_LI,
   WENJING_LIN,
   SHIYI_LYU,
+  RUSSELL_MARASIGAN,
   MAI_NGUYEN,
   JIMENA_ISABEL_RAZO,
   SATYAKI_SARKAR,
+  MINGYU_SHI,
+  CHUXIANGBO_WANG,
   STEPHANIE_WANG,
   NATASHA_XIAO,
   FELIX_YU,
@@ -282,17 +326,20 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic12.png',
     essay: 'pdfs/topic12.pdf',
     animationContributors: [],
-    essayContributors: [],
+    essayContributors: [
+      CHUXIANGBO_WANG,
+    ],
   },
   {
     name: 'Nine-point Circle',
     index: 13,
     snapshot: 'images/snapshots/topic13.png',
     essay: 'pdfs/topic13.pdf',
-    animationContributors: [
+    animationContributors: [],
+    essayContributors: [
+      RUSSELL_MARASIGAN,
       MAI_NGUYEN,
     ],
-    essayContributors: [],
   },
   {
     name: 'Fermat Point',
@@ -385,7 +432,9 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic24.png',
     essay: 'pdfs/topic24.pdf',
     animationContributors: [],
-    essayContributors: [],
+    essayContributors: [
+      RUOYING_DENG,
+    ],
   },
   {
     name: 'Brocard Points',
@@ -404,7 +453,7 @@ export const topics: Array<Topic> = [
       MAI_NGUYEN,
     ],
     essayContributors: [
-      ZHIQIN_LU,
+      MINGYU_SHI,
     ],
   },
   {
@@ -501,7 +550,9 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic36.png',
     essay: 'pdfs/topic36.pdf',
     animationContributors: [],
-    essayContributors: [],
+    essayContributors: [
+      JIAMING_FENG,
+    ],
   },
   {
     name: 'Trilinear Coordinate System',
@@ -539,7 +590,9 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic40.png',
     essay: 'pdfs/topic40.pdf',
     animationContributors: [],
-    essayContributors: [],
+    essayContributors: [
+      TONGTONG_LI,
+    ],
   },
 ];
 
