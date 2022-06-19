@@ -13,6 +13,14 @@ import GdpTopic21View from '@/views/topics/GdpTopic21View.vue';
 import GdpTopic22View from '@/views/topics/GdpTopic22View.vue';
 import GdpTopic23View from '@/views/topics/GdpTopic23View.vue';
 import GdpTopic24View from '@/views/topics/GdpTopic24View.vue';
+import GdpTopic33View from '@/views/topics/GdpTopic33View.vue';
+import GdpTopic34View from '@/views/topics/GdpTopic34View.vue';
+import GdpTopic35View from '@/views/topics/GdpTopic35View.vue';
+import GdpTopic36View from '@/views/topics/GdpTopic36View.vue';
+import GdpTopic37View from '@/views/topics/GdpTopic37View.vue';
+import GdpTopic38View from '@/views/topics/GdpTopic38View.vue';
+import GdpTopic39View from '@/views/topics/GdpTopic39View.vue';
+import GdpTopic40View from '@/views/topics/GdpTopic40View.vue';
 import { RouteProps } from '@/types';
 import {
   BookOutlined, HomeOutlined,
@@ -103,6 +111,54 @@ export const routesProps: Array<RouteProps> = [
     name: 'topic24',
     component: GdpTopic24View,
     layout: Layout.NoSider
+  },
+  {
+    path: '/topic/33',
+    name: 'topic33',
+    component: GdpTopic33View,
+    layout: Layout.NoSider
+  },
+  {
+      path: '/topic/34',
+      name: 'topic34',
+      component: GdpTopic34View,
+      layout: Layout.NoSider
+  },
+  {
+      path: '/topic/35',
+      name: 'topic35',
+      component: GdpTopic35View,
+      layout: Layout.NoSider
+  },
+  {
+      path: '/topic/36',
+      name: 'topic36',
+      component: GdpTopic36View,
+      layout: Layout.NoSider
+  },
+  {
+      path: '/topic/37',
+      name: 'topic37',
+      component: GdpTopic37View,
+      layout: Layout.NoSider
+  },
+  {
+      path: '/topic/38',
+      name: 'topic38',
+      component: GdpTopic38View,
+      layout: Layout.NoSider
+  },
+  {
+      path: '/topic/39',
+      name: 'topic39',
+      component: GdpTopic39View,
+      layout: Layout.NoSider
+  },
+  {
+      path: '/topic/40',
+      name: 'topic40',
+      component: GdpTopic40View,
+      layout: Layout.NoSider
   },
 ];
 
