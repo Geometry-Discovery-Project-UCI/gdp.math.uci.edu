@@ -22,6 +22,14 @@ import GdpTopic21View from '@/views/topics/GdpTopic21View.vue';
 import GdpTopic22View from '@/views/topics/GdpTopic22View.vue';
 import GdpTopic23View from '@/views/topics/GdpTopic23View.vue';
 import GdpTopic24View from '@/views/topics/GdpTopic24View.vue';
+import GdpTopic25View from '@/views/topics/GdpTopic25View.vue';
+import GdpTopic26View from '@/views/topics/GdpTopic26View.vue';
+import GdpTopic27View from '@/views/topics/GdpTopic27View.vue';
+import GdpTopic28View from '@/views/topics/GdpTopic28View.vue';
+import GdpTopic29View from '@/views/topics/GdpTopic29View.vue';
+import GdpTopic30View from '@/views/topics/GdpTopic30View.vue';
+import GdpTopic31View from '@/views/topics/GdpTopic31View.vue';
+import GdpTopic42View from '@/views/topics/GdpTopic32View.vue';
 import GdpTopic33View from '@/views/topics/GdpTopic33View.vue';
 import GdpTopic34View from '@/views/topics/GdpTopic34View.vue';
 import GdpTopic35View from '@/views/topics/GdpTopic35View.vue';
@@ -176,52 +184,100 @@ export const routesProps: Array<RouteProps> = [
     layout: Layout.NoSider,
   },
   {
+    path: '/topic/25',
+    name: 'topic25',
+    component: GdpTopic25View,
+    layout: Layout.NoSider
+  },
+  {
+    path: '/topic/26',
+    name: 'topic26',
+    component: GdpTopic26View,
+    layout: Layout.NoSider
+  },
+  {
+    path: '/topic/27',
+    name: 'topic27',
+    component: GdpTopic27View,
+    layout: Layout.NoSider
+  },
+  {
+    path: '/topic/28',
+    name: 'topic28',
+    component: GdpTopic28View,
+    layout: Layout.NoSider
+  },
+  {
+    path: '/topic/29',
+    name: 'topic29',
+    component: GdpTopic29View,
+    layout: Layout.NoSider
+  },
+  {
+    path: '/topic/30',
+    name: 'topic30',
+    component: GdpTopic30View,
+    layout: Layout.NoSider
+  },
+  {
+    path: '/topic/31',
+    name: 'topic31',
+    component: GdpTopic31View,
+    layout: Layout.NoSider
+  },
+  {
+    path: '/topic/32',
+    name: 'topic32',
+    component: GdpTopic32View,
+    layout: Layout.NoSider
+  },
+  {
     path: '/topic/33',
     name: 'topic33',
     component: GdpTopic33View,
     layout: Layout.NoSider
   },
   {
-      path: '/topic/34',
-      name: 'topic34',
-      component: GdpTopic34View,
-      layout: Layout.NoSider
+    path: '/topic/34',
+    name: 'topic34',
+    component: GdpTopic34View,
+    layout: Layout.NoSider
   },
   {
-      path: '/topic/35',
-      name: 'topic35',
-      component: GdpTopic35View,
-      layout: Layout.NoSider
+    path: '/topic/35',
+    name: 'topic35',
+    component: GdpTopic35View,
+    layout: Layout.NoSider
   },
   {
-      path: '/topic/36',
-      name: 'topic36',
-      component: GdpTopic36View,
-      layout: Layout.NoSider
+    path: '/topic/36',
+    name: 'topic36',
+    component: GdpTopic36View,
+    layout: Layout.NoSider
   },
   {
-      path: '/topic/37',
-      name: 'topic37',
-      component: GdpTopic37View,
-      layout: Layout.NoSider
+    path: '/topic/37',
+    name: 'topic37',
+    component: GdpTopic37View,
+    layout: Layout.NoSider
   },
   {
-      path: '/topic/38',
-      name: 'topic38',
-      component: GdpTopic38View,
-      layout: Layout.NoSider
+    path: '/topic/38',
+    name: 'topic38',
+    component: GdpTopic38View,
+    layout: Layout.NoSider
   },
   {
-      path: '/topic/39',
-      name: 'topic39',
-      component: GdpTopic39View,
-      layout: Layout.NoSider
+    path: '/topic/39',
+    name: 'topic39',
+    component: GdpTopic39View,
+    layout: Layout.NoSider
   },
   {
-      path: '/topic/40',
-      name: 'topic40',
-      component: GdpTopic40View,
-      layout: Layout.NoSider
+    path: '/topic/40',
+    name: 'topic40',
+    component: GdpTopic40View,
+    layout: Layout.NoSider
   },
 ];
 
