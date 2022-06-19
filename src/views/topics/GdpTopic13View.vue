@@ -7,7 +7,7 @@
   </ATypographyParagraph>
   <div id="morley-wrapper">
     <ATypographyTitle :level="4">Animated Nine-Point Circle</ATypographyTitle>
-    <canvas id="morley-canvas" width="500" height="500" />
+    <canvas id="nine-point-circle-canvas" width="500" height="500" />
   </div>
 </template>
 
