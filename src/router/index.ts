@@ -4,7 +4,13 @@ import ContributorsView from '@/views/ContributorsView.vue';
 import OthersView from '@/views/OthersView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
 import GdpTopic01View from '@/views/topics/GdpTopic01View.vue';
+import GdpTopic02View from '@/views/topics/GdpTopic02View.vue';
+import GdpTopic03View from '@/views/topics/GdpTopic03View.vue';
+import GdpTopic04View from '@/views/topics/GdpTopic04View.vue';
+import GdpTopic05View from '@/views/topics/GdpTopic05View.vue';
 import GdpTopic06View from '@/views/topics/GdpTopic06View.vue';
+import GdpTopic07View from '@/views/topics/GdpTopic07View.vue';
+import GdpTopic08View from '@/views/topics/GdpTopic08View.vue';
 import GdpTopic09View from "@/views/topics/GdpTopic09View.vue";
 import GdpTopic10View from "@/views/topics/GdpTopic10View.vue";
 import GdpTopic11View from "@/views/topics/GdpTopic11View.vue";
@@ -64,6 +70,42 @@ export const routesProps: Array<RouteProps> = [
     path: "/topic/1",
     name: "topic01",
     component: GdpTopic01View,
+    layout: Layout.NoSider,
+  },
+  {
+    path: "/topic/2",
+    name: "topic02",
+    component: GdpTopic02View,
+    layout: Layout.NoSider,
+  },
+  {
+    path: "/topic/3",
+    name: "topic03",
+    component: GdpTopic03View,
+    layout: Layout.NoSider,
+  },
+  {
+    path: "/topic/4",
+    name: "topic04",
+    component: GdpTopic04View,
+    layout: Layout.NoSider,
+  },
+  {
+    path: "/topic/5",
+    name: "topic05",
+    component: GdpTopic05View,
+    layout: Layout.NoSider,
+  },
+  {
+    path: "/topic/7",
+    name: "topic07",
+    component: GdpTopic07View,
+    layout: Layout.NoSider,
+  },
+  {
+    path: "/topic/8",
+    name: "topic08",
+    component: GdpTopic08View,
     layout: Layout.NoSider,
   },
   {
