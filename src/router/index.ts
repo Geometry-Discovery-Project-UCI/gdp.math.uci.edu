@@ -1,10 +1,11 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import HomeView from "@/views/HomeView.vue";
-import TopicsView from "@/views/TopicsView.vue";
-import ContributorsView from "@/views/ContributorsView.vue";
-import OthersView from "@/views/OthersView.vue";
-import NotFoundView from "@/views/NotFoundView.vue";
-import GdpTopic01View from "@/views/topics/GdpTopic01View.vue";
+import { createRouter, createWebHashHistory } from 'vue-router';
+import HomeView from '@/views/HomeView.vue';
+import TopicsView from '@/views/TopicsView.vue';
+import ContributorsView from '@/views/ContributorsView.vue';
+import OthersView from '@/views/OthersView.vue';
+import NotFoundView from '@/views/NotFoundView.vue';
+import GdpTopic01View from '@/views/topics/GdpTopic01View.vue';
+import GdpTopic06View from '@/views/topics/GdpTopic06View.vue';
 import GdpTopic09View from "@/views/topics/GdpTopic09View.vue";
 import GdpTopic10View from "@/views/topics/GdpTopic10View.vue";
 import GdpTopic11View from "@/views/topics/GdpTopic11View.vue";
@@ -13,17 +14,28 @@ import GdpTopic13View from "@/views/topics/GdpTopic13View.vue";
 import GdpTopic14View from "@/views/topics/GdpTopic14View.vue";
 import GdpTopic15View from "@/views/topics/GdpTopic15View.vue";
 import GdpTopic16View from "@/views/topics/GdpTopic16View.vue";
-import GdpTopic17View from "@/views/topics/GdpTopic17View.vue";
-import GdpTopic18View from "@/views/topics/GdpTopic18View.vue";
-import GdpTopic19View from "@/views/topics/GdpTopic19View.vue";
-import GdpTopic20View from "@/views/topics/GdpTopic20View.vue";
-import GdpTopic21View from "@/views/topics/GdpTopic21View.vue";
-import GdpTopic22View from "@/views/topics/GdpTopic22View.vue";
-import GdpTopic23View from "@/views/topics/GdpTopic23View.vue";
-import GdpTopic24View from "@/views/topics/GdpTopic24View.vue";
-import { RouteProps } from "@/types";
-import { BookOutlined, HomeOutlined, UserOutlined, TagOutlined } from "@ant-design/icons-vue";
-import { Layout } from "@/consts";
+import GdpTopic17View from '@/views/topics/GdpTopic17View.vue';
+import GdpTopic18View from '@/views/topics/GdpTopic18View.vue';
+import GdpTopic19View from '@/views/topics/GdpTopic19View.vue';
+import GdpTopic20View from '@/views/topics/GdpTopic20View.vue';
+import GdpTopic21View from '@/views/topics/GdpTopic21View.vue';
+import GdpTopic22View from '@/views/topics/GdpTopic22View.vue';
+import GdpTopic23View from '@/views/topics/GdpTopic23View.vue';
+import GdpTopic24View from '@/views/topics/GdpTopic24View.vue';
+import GdpTopic33View from '@/views/topics/GdpTopic33View.vue';
+import GdpTopic34View from '@/views/topics/GdpTopic34View.vue';
+import GdpTopic35View from '@/views/topics/GdpTopic35View.vue';
+import GdpTopic36View from '@/views/topics/GdpTopic36View.vue';
+import GdpTopic37View from '@/views/topics/GdpTopic37View.vue';
+import GdpTopic38View from '@/views/topics/GdpTopic38View.vue';
+import GdpTopic39View from '@/views/topics/GdpTopic39View.vue';
+import GdpTopic40View from '@/views/topics/GdpTopic40View.vue';
+import { RouteProps } from '@/types';
+import {
+  BookOutlined, HomeOutlined,
+  UserOutlined, TagOutlined,
+} from '@ant-design/icons-vue';
+import { Layout } from '@/consts';
 
 export const routesProps: Array<RouteProps> = [
   {
@@ -60,6 +72,12 @@ export const routesProps: Array<RouteProps> = [
     name: "topic01",
     component: GdpTopic01View,
     layout: Layout.NoSider,
+  },
+  {
+    path: '/topic/6',
+    name: 'topic06',
+    component: GdpTopic06View,
+    layout: Layout.NoSider
   },
   {
     path: "/topic/09",
@@ -156,6 +174,54 @@ export const routesProps: Array<RouteProps> = [
     name: "topic24",
     component: GdpTopic24View,
     layout: Layout.NoSider,
+  },
+  {
+    path: '/topic/33',
+    name: 'topic33',
+    component: GdpTopic33View,
+    layout: Layout.NoSider
+  },
+  {
+      path: '/topic/34',
+      name: 'topic34',
+      component: GdpTopic34View,
+      layout: Layout.NoSider
+  },
+  {
+      path: '/topic/35',
+      name: 'topic35',
+      component: GdpTopic35View,
+      layout: Layout.NoSider
+  },
+  {
+      path: '/topic/36',
+      name: 'topic36',
+      component: GdpTopic36View,
+      layout: Layout.NoSider
+  },
+  {
+      path: '/topic/37',
+      name: 'topic37',
+      component: GdpTopic37View,
+      layout: Layout.NoSider
+  },
+  {
+      path: '/topic/38',
+      name: 'topic38',
+      component: GdpTopic38View,
+      layout: Layout.NoSider
+  },
+  {
+      path: '/topic/39',
+      name: 'topic39',
+      component: GdpTopic39View,
+      layout: Layout.NoSider
+  },
+  {
+      path: '/topic/40',
+      name: 'topic40',
+      component: GdpTopic40View,
+      layout: Layout.NoSider
   },
 ];
 
