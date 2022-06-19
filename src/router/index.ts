@@ -5,6 +5,7 @@ import ContributorsView from '@/views/ContributorsView.vue';
 import OthersView from '@/views/OthersView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
 import GdpTopic01View from '@/views/topics/GdpTopic01View.vue';
+import GdpTopic06View from '@/views/topics/GdpTopic06View.vue';
 import GdpTopic17View from '@/views/topics/GdpTopic17View.vue';
 import GdpTopic18View from '@/views/topics/GdpTopic18View.vue';
 import GdpTopic19View from '@/views/topics/GdpTopic19View.vue';
@@ -62,6 +63,12 @@ export const routesProps: Array<RouteProps> = [
     path: '/topic/1',
     name: 'topic01',
     component: GdpTopic01View,
+    layout: Layout.NoSider
+  },
+  {
+    path: '/topic/6',
+    name: 'topic06',
+    component: GdpTopic06View,
     layout: Layout.NoSider
   },
   {
