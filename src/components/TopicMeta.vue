@@ -9,7 +9,7 @@
   </ATypographyTitle>
 
   <ATypographyTitle :level="4">Readings</ATypographyTitle>
-  <ATypographyLink :href="topic.essay" v-if="topic.essay?.length > 0">
+  <ATypographyLink :href="topic.essay" v-if="topic.essay?.length > 0" target="_blank">
     Essay PDF (Click to preview/download)
   </ATypographyLink>
   <ATypographyText v-else>Essay comming soon...</ATypographyText>

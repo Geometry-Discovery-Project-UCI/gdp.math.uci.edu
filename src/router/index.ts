@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import HomeView from '@/views/HomeView.vue';
 import TopicsView from '@/views/TopicsView.vue';
 import ContributorsView from '@/views/ContributorsView.vue';
 import OthersView from '@/views/OthersView.vue';
@@ -32,20 +31,13 @@ import GdpTopic39View from '@/views/topics/GdpTopic39View.vue';
 import GdpTopic40View from '@/views/topics/GdpTopic40View.vue';
 import { RouteProps } from '@/types';
 import {
-  BookOutlined, HomeOutlined,
-  UserOutlined, TagOutlined,
+  BookOutlined, UserOutlined, TagOutlined,
 } from '@ant-design/icons-vue';
 import { Layout } from '@/consts';
 
 export const routesProps: Array<RouteProps> = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
-    icon: HomeOutlined,
-  },
-  {
-    path: "/topics",
     name: "topics",
     component: TopicsView,
     icon: BookOutlined,
@@ -183,46 +175,46 @@ export const routesProps: Array<RouteProps> = [
     layout: Layout.NoSider
   },
   {
-      path: '/topic/34',
-      name: 'topic34',
-      component: GdpTopic34View,
-      layout: Layout.NoSider
+    path: '/topic/34',
+    name: 'topic34',
+    component: GdpTopic34View,
+    layout: Layout.NoSider
   },
   {
-      path: '/topic/35',
-      name: 'topic35',
-      component: GdpTopic35View,
-      layout: Layout.NoSider
+    path: '/topic/35',
+    name: 'topic35',
+    component: GdpTopic35View,
+    layout: Layout.NoSider
   },
   {
-      path: '/topic/36',
-      name: 'topic36',
-      component: GdpTopic36View,
-      layout: Layout.NoSider
+    path: '/topic/36',
+    name: 'topic36',
+    component: GdpTopic36View,
+    layout: Layout.NoSider
   },
   {
-      path: '/topic/37',
-      name: 'topic37',
-      component: GdpTopic37View,
-      layout: Layout.NoSider
+    path: '/topic/37',
+    name: 'topic37',
+    component: GdpTopic37View,
+    layout: Layout.NoSider
   },
   {
-      path: '/topic/38',
-      name: 'topic38',
-      component: GdpTopic38View,
-      layout: Layout.NoSider
+    path: '/topic/38',
+    name: 'topic38',
+    component: GdpTopic38View,
+    layout: Layout.NoSider
   },
   {
-      path: '/topic/39',
-      name: 'topic39',
-      component: GdpTopic39View,
-      layout: Layout.NoSider
+    path: '/topic/39',
+    name: 'topic39',
+    component: GdpTopic39View,
+    layout: Layout.NoSider
   },
   {
-      path: '/topic/40',
-      name: 'topic40',
-      component: GdpTopic40View,
-      layout: Layout.NoSider
+    path: '/topic/40',
+    name: 'topic40',
+    component: GdpTopic40View,
+    layout: Layout.NoSider
   },
 ];
 
