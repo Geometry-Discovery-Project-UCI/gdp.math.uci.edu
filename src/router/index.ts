@@ -29,7 +29,7 @@ import GdpTopic28View from '@/views/topics/GdpTopic28View.vue';
 import GdpTopic29View from '@/views/topics/GdpTopic29View.vue';
 import GdpTopic30View from '@/views/topics/GdpTopic30View.vue';
 import GdpTopic31View from '@/views/topics/GdpTopic31View.vue';
-import GdpTopic42View from '@/views/topics/GdpTopic32View.vue';
+import GdpTopic32View from '@/views/topics/GdpTopic32View.vue';
 import GdpTopic33View from '@/views/topics/GdpTopic33View.vue';
 import GdpTopic34View from '@/views/topics/GdpTopic34View.vue';
 import GdpTopic35View from '@/views/topics/GdpTopic35View.vue';
