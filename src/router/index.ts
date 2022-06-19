@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import HomeView from '@/views/HomeView.vue';
 import TopicsView from '@/views/TopicsView.vue';
 import ContributorsView from '@/views/ContributorsView.vue';
 import OthersView from '@/views/OthersView.vue';
@@ -40,20 +39,13 @@ import GdpTopic39View from '@/views/topics/GdpTopic39View.vue';
 import GdpTopic40View from '@/views/topics/GdpTopic40View.vue';
 import { RouteProps } from '@/types';
 import {
-  BookOutlined, HomeOutlined,
-  UserOutlined, TagOutlined,
+  BookOutlined, UserOutlined, TagOutlined,
 } from '@ant-design/icons-vue';
 import { Layout } from '@/consts';
 
 export const routesProps: Array<RouteProps> = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
-    icon: HomeOutlined,
-  },
-  {
-    path: "/topics",
     name: "topics",
     component: TopicsView,
     icon: BookOutlined,
@@ -74,6 +66,7 @@ export const routesProps: Array<RouteProps> = [
     path: "/:pathMatch(.*)*",
     name: "notFound",
     component: NotFoundView,
+    layout: Layout.NoSider
   },
   {
     path: "/topic/1",
@@ -88,7 +81,7 @@ export const routesProps: Array<RouteProps> = [
     layout: Layout.NoSider
   },
   {
-    path: "/topic/09",
+    path: "/topic/9",
     name: "topic09",
     component: GdpTopic09View,
     layout: Layout.NoSider,
