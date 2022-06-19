@@ -1,10 +1,5 @@
 <template>
     <TopicMeta :topic="topic" />
-    <ATypographyParagraph>
-    The Nine-Point Circle of any triangle is defined by these nine concyclic points: the 3 midpoints
-    of each side of the triangle; the 3 feet of each altitude; the 3 midpoints of the line segments
-    between the orthocenter and each vertex of the triangle.
-  </ATypographyParagraph>
   <div id="morley-wrapper">
     <ATypographyTitle :level="4">Animated Newton Line</ATypographyTitle>
     <canvas id="newton-line-canvas" width="500" height="500" />
