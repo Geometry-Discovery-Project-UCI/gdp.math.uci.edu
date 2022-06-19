@@ -66,6 +66,7 @@ export const routesProps: Array<RouteProps> = [
     path: "/:pathMatch(.*)*",
     name: "notFound",
     component: NotFoundView,
+    layout: Layout.NoSider
   },
   {
     path: "/topic/1",
@@ -80,7 +81,7 @@ export const routesProps: Array<RouteProps> = [
     layout: Layout.NoSider
   },
   {
-    path: "/topic/09",
+    path: "/topic/9",
     name: "topic09",
     component: GdpTopic09View,
     layout: Layout.NoSider,
