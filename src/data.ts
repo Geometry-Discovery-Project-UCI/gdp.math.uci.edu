@@ -41,7 +41,7 @@ export const JIAMING_FENG: Contributor = {
 export const BIN_GUO: Contributor = {
   name: 'Bin Guo',
   email: 'bing3@uci.edu',
-  institute: Institute.UCSanDiego,
+  institute: Institute.UCIrvine,
 };
 
 export const XINXI_GUO: Contributor = {
@@ -53,25 +53,25 @@ export const XINXI_GUO: Contributor = {
 export const VINNIE_HSIA: Contributor = {
   name: 'Vinnie Hsia',
   email: 'hsiat1@uci.edu',
-  institute: Institute.UCSanDiego,
+  institute: Institute.UCIrvine,
 };
 
 export const JIANLIN_LI: Contributor = {
   name: 'Jianlin Li',
   email: 'yixual44@uci.edu',
-  institute: Institute.UCSanDiego,
+  institute: Institute.UCIrvine,
 };
 
 export const TONGTONG_LI: Contributor = {
   name: 'Tongtong Li',
   email: 'tongtl3@uci.edu',
-  institute: Institute.UCSanDiego,
+  institute: Institute.UCIrvine,
 };
 
 export const YIXUAN_LI: Contributor = {
   name: 'Yixuan Li',
   email: 'yixual44@uci.edu',
-  institute: Institute.UCSanDiego,
+  institute: Institute.UCIrvine,
 };
 
 export const WENJING_LIN: Contributor = {
@@ -183,19 +183,24 @@ export const contributors: Array<Contributor> = [
   YUE_CHU,
   RUOYING_DENG,
   JIAMING_FENG,
+  BIN_GUO,
   XINXI_GUO,
   VINNIE_HSIA,
+  JIANLIN_LI,
   TONGTONG_LI,
+  YIXUAN_LI
   WENJING_LIN,
   SHIYI_LYU,
   RUSSELL_MARASIGAN,
   MAI_NGUYEN,
   JIMENA_ISABEL_RAZO,
+  YUFEI_REN,
   SATYAKI_SARKAR,
   MINGYU_SHI,
   CHUXIANGBO_WANG,
   STEPHANIE_WANG,
   NATASHA_XIAO,
+  ZEJIN_XU,
   FELIX_YU,
   MELISSA_YU,
 ];
