@@ -188,7 +188,7 @@ export const contributors: Array<Contributor> = [
   VINNIE_HSIA,
   JIANLIN_LI,
   TONGTONG_LI,
-  YIXUAN_LI
+  YIXUAN_LI,
   WENJING_LIN,
   SHIYI_LYU,
   RUSSELL_MARASIGAN,
