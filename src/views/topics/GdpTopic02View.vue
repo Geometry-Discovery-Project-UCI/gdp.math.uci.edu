@@ -1,11 +1,11 @@
 <template>
   <TopicMeta :topic="topic" />
   <ATypographyParagraph>
-   Topic 2 TEST
+
   </ATypographyParagraph>
-  <div id="morley-wrapper">
+  <div id="ceva-theorem-wrapper">
     <ATypographyTitle :level="4">Animated Ceva Theorem</ATypographyTitle>
-    <canvas id="nine-point-circle-canvas" width="500" height="500" />
+    <canvas id="ceva-theorem-canvas" width="500" height="500" />
   </div>
 </template>
 
