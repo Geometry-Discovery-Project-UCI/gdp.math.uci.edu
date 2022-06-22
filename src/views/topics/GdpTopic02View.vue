@@ -1,10 +1,8 @@
 <template>
   <TopicMeta :topic="topic" />
-<!--  <ATypographyParagraph>-->
-<!--    The Nine-Point Circle of any triangle is defined by these nine concyclic points: the 3 midpoints-->
-<!--    of each side of the triangle; the 3 feet of each altitude; the 3 midpoints of the line segments-->
-<!--    between the orthocenter and each vertex of the triangle.-->
-<!--  </ATypographyParagraph>-->
+  <ATypographyParagraph>
+   Topic 2 TEST
+  </ATypographyParagraph>
   <div id="morley-wrapper">
     <ATypographyTitle :level="4">Animated Ceva Theorem</ATypographyTitle>
     <canvas id="nine-point-circle-canvas" width="500" height="500" />
@@ -15,7 +13,7 @@
 import { defineComponent } from 'vue';
 import { indexTopicMap } from '@/data';
 import { Topic } from '@/types';
-import fabric from 'fabric/fabric-impl';
+import {fabric} from 'fabric';
 import {makeCircle, makeLabel, makeLine, makeMovablePoint } from '@/utils/canvas';
 import {calculateDistanceBetweenTwoPoints, calculateLineIntersectInLinearEquation, solveLinearEquation } from '@/utils/geometry';
 const topic = indexTopicMap.get(2) as Topic;
@@ -92,23 +90,24 @@ export default defineComponent(
     // function to find points D,E,F and draw lines that depends on coordinates of point P
       function movePointP() {
         // find slope and intercept of the line segments from vertices to point P
-        const lineAP = solveLinearEquation(triangle.points[0], {
+        const points = triangle.points as Array<fabric.Point>;
+        const lineAP = solveLinearEquation(points[0], {
           x: pointP.left,
           y: pointP.top,
         });
-        const lineBP = solveLinearEquation(triangle.points[1], {
+        const lineBP = solveLinearEquation(points[1], {
           x: pointP.left,
           y: pointP.top,
         });
-        const lineCP = solveLinearEquation(triangle.points[2], {
+        const lineCP = solveLinearEquation(points[2], {
           x: pointP.left,
           y: pointP.top,
         });
 
         // find slope and intercept of the line segments between the vertices
-        const lineAB = solveLinearEquation(triangle.points[0], triangle.points[1]);
-        const lineBC = solveLinearEquation(triangle.points[1], triangle.points[2]);
-        const lineAC = solveLinearEquation(triangle.points[0], triangle.points[2]);
+        const lineAB = solveLinearEquation(points[0], points[1]);
+        const lineBC = solveLinearEquation(points[1], points[2]);
+        const lineAC = solveLinearEquation(points[0], points[2]);
 
         // calculate intersection points D,E,F
         const pointD = calculateLineIntersectInLinearEquation(
@@ -134,24 +133,24 @@ export default defineComponent(
 
         // draw lines from vertices to points D,E,F
         lineAD.set({
-          x1: triangle.points[0].x,
-          y1: triangle.points[0].y,
+          x1: points[0].x,
+          y1: points[0].y,
           x2: pointD.x,
           y2: pointD.y,
           stroke: "black",
         });
 
         lineBE.set({
-          x1: triangle.points[1].x,
-          y1: triangle.points[1].y,
+          x1: points[1].x,
+          y1: points[1].y,
           x2: pointE.x,
           y2: pointE.y,
           stroke: "black",
         });
 
         lineCF.set({
-          x1: triangle.points[2].x,
-          y1: triangle.points[2].y,
+          x1: points[2].x,
+          y1: points[2].y,
           x2: pointF.x,
           y2: pointF.y,
           stroke: "black",
@@ -159,20 +158,20 @@ export default defineComponent(
 
         // set coordinates for the labels
         aLabel.set({
-          left: triangle.points[0].x - 5,
-          top: triangle.points[0].y - 30,
+          left: points[0].x - 5,
+          top: points[0].y - 30,
           fontSize: 20,
         });
 
         bLabel.set({
-          left: triangle.points[1].x - 10,
-          top: triangle.points[1].y + 10,
+          left: points[1].x - 10,
+          top: points[1].y + 10,
           fontSize: 20,
         });
 
         cLabel.set({
-          left: triangle.points[2].x + 10,
-          top: triangle.points[2].y + 10,
+          left: points[2].x + 10,
+          top: points[2].y + 10,
           fontSize: 20,
         });
 
@@ -195,8 +194,8 @@ export default defineComponent(
         });
 
         pLabel.set({
-          left: pointP.left - 25,
-          top: pointP.top - 10,
+          left: pointP.left as number - 25,
+          top: pointP.top as number - 10,
           fontSize: 18,
         });
 
@@ -224,17 +223,17 @@ export default defineComponent(
 
         // calculate values for text
         const distBD =
-          calculateDistanceBetweenTwoPoints(triangle.points[1], pointD) / 100;
+          calculateDistanceBetweenTwoPoints(points[1], pointD) / 100;
         const distDC =
-          calculateDistanceBetweenTwoPoints(triangle.points[2], pointD) / 100;
+          calculateDistanceBetweenTwoPoints(points[2], pointD) / 100;
         const distCE =
-          calculateDistanceBetweenTwoPoints(triangle.points[2], pointE) / 100;
+          calculateDistanceBetweenTwoPoints(points[2], pointE) / 100;
         const distEA =
-          calculateDistanceBetweenTwoPoints(triangle.points[0], pointE) / 100;
+          calculateDistanceBetweenTwoPoints(points[0], pointE) / 100;
         const distAF =
-          calculateDistanceBetweenTwoPoints(triangle.points[0], pointF) / 100;
+          calculateDistanceBetweenTwoPoints(points[0], pointF) / 100;
         const distFB =
-          calculateDistanceBetweenTwoPoints(triangle.points[1], pointF) / 100;
+          calculateDistanceBetweenTwoPoints(points[1], pointF) / 100;
 
         // update values for text
         const valueList = [
