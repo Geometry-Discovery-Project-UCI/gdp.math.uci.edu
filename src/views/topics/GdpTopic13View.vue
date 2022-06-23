@@ -7,7 +7,7 @@
   </ATypographyParagraph>
   <div id="morley-wrapper">
     <ATypographyTitle :level="4">Animated Nine-Point Circle</ATypographyTitle>
-    <canvas id="morley-canvas" width="500" height="500" />
+    <canvas id="nine-point-circle-canvas" width="500" height="500" />
   </div>
 </template>
 
@@ -37,16 +37,13 @@ export default defineComponent({
     const heightOnAB = makeLine();
     const heightOnBC = makeLine();
     const heightOnAC = makeLine();
-
     const lineAJ = makeLine();
     const lineAK = makeLine();
     const lineBI = makeLine();
     const lineBK = makeLine();
     const lineCI = makeLine();
     const lineCJ = makeLine();
-
     const ninePointCircle = makeCircle();
-
     const aLabel = makeLabel("A");
     const bLabel = makeLabel("B");
     const cLabel = makeLabel("C");
@@ -103,7 +100,6 @@ export default defineComponent({
           left: coords[2].x + 10,
           top: coords[2].y,
         });
-
         // calculate the coordinates for the feet of the triangle's vertices
         const pedalPointOnBC = getPedalPoint(coords[0], coords[1], coords[2]);
         const pedalPointOnAC = getPedalPoint(coords[1], coords[0], coords[2]);
@@ -205,7 +201,6 @@ export default defineComponent({
         const midPointOA = calculateMidpoint(coords[0], orthocenter);
         const midPointOB = calculateMidpoint(coords[1], orthocenter);
         const midPointOC = calculateMidpoint(coords[2], orthocenter);
-
         // calculate radius of nine-point circle
         const radius = calculateDistanceBetweenTwoPoints(center, midPointBC);
 
@@ -367,12 +362,10 @@ export default defineComponent({
     canvas.add(mLabel);
     canvas.add(nLabel);
     canvas.add(oLabel);
-
     canvas.add(heightOnAB);
     canvas.add(heightOnBC);
     canvas.add(heightOnAC);
     canvas.add(ninePointCircle);
-
     canvas.add(dNode);
     canvas.add(eNode);
     canvas.add(fNode);
@@ -383,7 +376,6 @@ export default defineComponent({
     canvas.add(mNode);
     canvas.add(nNode);
     canvas.add(oNode);
-
     canvas.add(lineAJ);
     canvas.add(lineAK);
     canvas.add(lineBI);
