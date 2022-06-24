@@ -33,7 +33,6 @@ export default defineComponent({
     const canvas = new fabric.Canvas('nine-point-circle-canvas', {
       selection: false,
     });
-
     const heightOnAB = makeLine();
     const heightOnBC = makeLine();
     const heightOnAC = makeLine();
@@ -57,7 +56,6 @@ export default defineComponent({
     const mLabel = makeLabel('M');
     const nLabel = makeLabel('N');
     const oLabel = makeLabel('O');
-
     const dNode = makeCircle();
     const eNode = makeCircle();
     const fNode = makeCircle();
@@ -68,7 +66,6 @@ export default defineComponent({
     const mNode = makeCircle();
     const nNode = makeCircle();
     const oNode = makeCircle();
-
     // create triangle
     const triangle = makeMovablePolygon(
       [
@@ -85,7 +82,6 @@ export default defineComponent({
           y: 400,
         },
       ],
-
       // set label for triangle's vertices
       function (coords: Array<fabric.Point>) {
         aLabel.set({
@@ -104,7 +100,6 @@ export default defineComponent({
         const pedalPointOnBC = getPedalPoint(coords[0], coords[1], coords[2]);
         const pedalPointOnAC = getPedalPoint(coords[1], coords[0], coords[2]);
         const pedalPointOnAB = getPedalPoint(coords[2], coords[0], coords[1]);
-
         // set line coordinates for three altitudes
         if (pedalPointOnAB.y < coords[0].y) {
           lineAJ.set({
@@ -124,7 +119,6 @@ export default defineComponent({
             stroke: 'red',
           });
         }
-
         if (pedalPointOnBC.x < coords[1].x) {
           lineBI.set({
             x1: coords[1].x,
@@ -143,7 +137,6 @@ export default defineComponent({
             stroke: 'red',
           });
         }
-
         if (pedalPointOnAC.x > coords[2].x) {
           lineCI.set({
             x1: coords[2].x,
@@ -162,7 +155,6 @@ export default defineComponent({
             stroke: 'red',
           });
         }
-
         heightOnBC.set({
           x1: coords[0].x,
           y1: coords[0].y,
@@ -170,7 +162,6 @@ export default defineComponent({
           y2: pedalPointOnBC.y,
           stroke: 'red',
         });
-
         heightOnAC.set({
           x1: coords[1].x,
           y1: coords[1].y,
@@ -178,7 +169,6 @@ export default defineComponent({
           y2: pedalPointOnAC.y,
           stroke: 'red',
         });
-
         heightOnAB.set({
           x1: coords[2].x,
           y1: coords[2].y,
@@ -186,24 +176,20 @@ export default defineComponent({
           y2: pedalPointOnAB.y,
           stroke: 'red',
         });
-
         // calculate three centers of the triangle
         const circumcenter = calculateCircumcenter(coords[0], coords[1], coords[2]);
         const orthocenter = calculateOrthocenter(coords[0], coords[1], coords[2]);
         const center = calculateMidpoint(circumcenter, orthocenter);
-
         // calculate midpoints of three sides of triangle
         const midPointAB = calculateMidpoint(coords[0], coords[1]);
         const midPointBC = calculateMidpoint(coords[1], coords[2]);
         const midPointAC = calculateMidpoint(coords[0], coords[2]);
-
         // calculate midpoints of the segment from the orthocenter to the vertex
         const midPointOA = calculateMidpoint(coords[0], orthocenter);
         const midPointOB = calculateMidpoint(coords[1], orthocenter);
         const midPointOC = calculateMidpoint(coords[2], orthocenter);
         // calculate radius of nine-point circle
         const radius = calculateDistanceBetweenTwoPoints(center, midPointBC);
-
         // set values for nine-point circle
         ninePointCircle.set({
           originX: 'center',
@@ -214,130 +200,110 @@ export default defineComponent({
           stroke: 'green',
           strokeWidth: 2,
         });
-
         dLabel.set({
           left: midPointBC.x - 3,
           top: midPointBC.y + 5,
           fontSize: 18,
         });
-
         eLabel.set({
           left: midPointAC.x + 10,
           top: midPointAC.y - 15,
           fontSize: 18,
         });
-
         fLabel.set({
           left: midPointAB.x - 23,
           top: midPointAB.y - 15,
           fontSize: 18,
         });
-
         iLabel.set({
           left: pedalPointOnBC.x - 5,
           top: pedalPointOnBC.y + 5,
           fontSize: 18,
         });
-
         jLabel.set({
           left: pedalPointOnAC.x + 10,
           top: pedalPointOnAC.y - 15,
           fontSize: 18,
         });
-
         kLabel.set({
           left: pedalPointOnAB.x - 23,
           top: pedalPointOnAB.y - 15,
           fontSize: 18,
         });
-
         lLabel.set({
           left: midPointOA.x + 5,
           top: midPointOA.y + 5,
           fontSize: 18,
         });
-
         mLabel.set({
           left: midPointOB.x - 7,
           top: midPointOB.y + 7,
           fontSize: 18,
         });
-
         nLabel.set({
           left: midPointOC.x - 10,
           top: midPointOC.y - 25,
           fontSize: 18,
         });
-
         oLabel.set({
           left: orthocenter.x + 3,
           top: orthocenter.y + 5,
           fontSize: 18,
         });
-
         dNode.set({
           left: midPointBC.x - 0.75 * 3,
           top: midPointBC.y - 0.75 * 3,
           radius: 2,
           fill: 'blacks',
         });
-
         eNode.set({
           left: midPointAC.x - 0.75 * 3,
           top: midPointAC.y - 0.75 * 3,
           radius: 2,
           fill: 'blacks',
         });
-
         fNode.set({
           left: midPointAB.x - 0.75 * 3,
           top: midPointAB.y - 0.75 * 3,
           radius: 2,
           fill: 'blacks',
         });
-
         iNode.set({
           left: pedalPointOnBC.x - 0.75 * 3,
           top: pedalPointOnBC.y - 0.75 * 3,
           radius: 2,
           fill: 'blacks',
         });
-
         jNode.set({
           left: pedalPointOnAC.x - 0.75 * 3,
           top: pedalPointOnAC.y - 0.75 * 3,
           radius: 2,
           fill: 'blacks',
         });
-
         kNode.set({
           left: pedalPointOnAB.x - 0.75 * 3,
           top: pedalPointOnAB.y - 0.75 * 3,
           radius: 2,
           fill: 'blacks',
         });
-
         lNode.set({
           left: midPointOA.x - 0.75 * 3,
           top: midPointOA.y - 0.75 * 3,
           radius: 2,
           fill: 'blacks',
         });
-
         mNode.set({
           left: midPointOB.x - 0.75 * 3,
           top: midPointOB.y - 0.75 * 3,
           radius: 2,
           fill: 'blacks',
         });
-
         nNode.set({
           left: midPointOC.x - 0.75 * 3,
           top: midPointOC.y - 0.75 * 3,
           radius: 2,
           fill: 'blacks',
         });
-
         oNode.set({
           left: orthocenter.x - 0.75 * 3,
           top: orthocenter.y - 0.75 * 3,
@@ -347,7 +313,6 @@ export default defineComponent({
         });
       }
     );
-
     canvas.add(triangle);
     canvas.add(aLabel);
     canvas.add(bLabel);
