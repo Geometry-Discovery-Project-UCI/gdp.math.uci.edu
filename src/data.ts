@@ -2,7 +2,7 @@ import { Contributor, Topic } from '@/types';
 
 export enum Institute {
   UCIrvine = 'UC Irvine',
-  UCSanDiego = 'UC San Diego'
+  UCSanDiego = 'UC San Diego',
 }
 
 // TODO(Kiyo5hi): Use enum for contributors
@@ -58,7 +58,7 @@ export const VINNIE_HSIA: Contributor = {
 
 export const JIANLIN_LI: Contributor = {
   name: 'Jianlin Li',
-  email: 'yixual44@uci.edu',
+  email: 'jianlil2@uci.edu',
   institute: Institute.UCIrvine,
 };
 
@@ -164,7 +164,6 @@ export const ZEJIN_XU: Contributor = {
   institute: Institute.UCIrvine,
 };
 
-
 export const FELIX_YU: Contributor = {
   name: 'Felix Yu',
   email: 'felixyu2627@gmail.com',
@@ -174,7 +173,6 @@ export const MELISSA_YU: Contributor = {
   name: 'Melissa Yu',
   email: 'melissajiayu@gmail.com',
 };
-
 
 export const contributors: Array<Contributor> = [
   ZHIQIN_LU,
@@ -205,7 +203,7 @@ export const contributors: Array<Contributor> = [
   MELISSA_YU,
 ];
 
-export const otherEssays: Array<{ name: string, uri: string }> = [
+export const otherEssays: Array<{ name: string; uri: string }> = [
   {
     name: 'The 20 degree questions',
     uri: 'pdfs/twenty-one.pdf',
@@ -216,7 +214,7 @@ export const otherEssays: Array<{ name: string, uri: string }> = [
   },
 ];
 
-export const otherLinks: Array<{ name: string, uri: string, author?: string }> = [
+export const otherLinks: Array<{ name: string; uri: string; author?: string }> = [
   {
     name: 'Geometry Unbound',
     uri: 'https://kskedlaya.org/geometryunbound/',
@@ -243,38 +241,24 @@ export const topics: Array<Topic> = [
     index: 1,
     snapshot: 'images/snapshots/topic01.png',
     essay: 'pdfs/topic01.pdf',
-    animationContributors: [
-      MELISSA_YU,
-    ],
-    essayContributors: [
-      ZHIQIN_LU,
-    ],
+    animationContributors: [MELISSA_YU],
+    essayContributors: [ZHIQIN_LU],
   },
   {
     name: "Ceva's and Menelaus' Theorems",
     index: 2,
     snapshot: 'images/snapshots/topic02.png',
     essay: 'pdfs/topic02.pdf',
-    animationContributors: [
-      MAI_NGUYEN,
-    ],
-    essayContributors: [
-      ZHIQIN_LU,
-      XIANFU_LIU,
-    ],
+    animationContributors: [MAI_NGUYEN],
+    essayContributors: [ZHIQIN_LU, XIANFU_LIU],
   },
   {
     name: 'Five Triangle Centers',
     index: 3,
     snapshot: 'images/snapshots/topic03.png',
     essay: 'pdfs/topic03.pdf',
-    animationContributors: [
-      XINXI_GUO,
-    ],
-    essayContributors: [
-      ZHIQIN_LU,
-      SHIYI_LYU,
-    ],
+    animationContributors: [XINXI_GUO],
+    essayContributors: [ZHIQIN_LU, SHIYI_LYU],
   },
   {
     name: 'Erdős-Mordell Inequality',
@@ -282,22 +266,15 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic04.png',
     essay: 'pdfs/topic04.pdf',
     animationContributors: [],
-    essayContributors: [
-      ZHIQIN_LU,
-    ],
+    essayContributors: [ZHIQIN_LU],
   },
   {
     name: 'Simson Line',
     index: 5,
     snapshot: 'images/snapshots/topic05.png',
     essay: 'pdfs/topic05.pdf',
-    animationContributors: [
-      MELISSA_YU,
-    ],
-    essayContributors: [
-      ZHIQIN_LU,
-      SHIYI_LYU,
-    ],
+    animationContributors: [MELISSA_YU],
+    essayContributors: [ZHIQIN_LU, SHIYI_LYU],
   },
   {
     name: 'Pascal and Brainchon Theorems',
@@ -305,23 +282,15 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic06.png',
     essay: 'pdfs/topic06.pdf',
     animationContributors: [],
-    essayContributors: [
-      ZHIQIN_LU,
-      XIANFU_LIU,
-    ],
+    essayContributors: [ZHIQIN_LU, XIANFU_LIU],
   },
   {
     name: 'Isogonal Conjugate and Isotomic Conjugate Points',
     index: 7,
     snapshot: 'images/snapshots/topic07.png',
     essay: 'pdfs/topic07.pdf',
-    animationContributors: [
-      MELISSA_YU,
-    ],
-    essayContributors: [
-      ZHIQIN_LU,
-      SHIYI_LYU,
-    ],
+    animationContributors: [MELISSA_YU],
+    essayContributors: [ZHIQIN_LU, SHIYI_LYU],
   },
   {
     name: 'Gergonne and Nagel Points',
@@ -337,9 +306,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic09.png',
     essay: 'pdfs/topic09.pdf',
     animationContributors: [],
-    essayContributors: [
-      ZHIQIN_LU,
-    ],
+    essayContributors: [ZHIQIN_LU],
   },
   {
     name: "Ptolemy Theorem's and Kelvin Transform",
@@ -347,11 +314,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic10.png',
     essay: 'pdfs/topic10.pdf',
     animationContributors: [],
-    essayContributors: [
-      ZHIQIN_LU,
-      FELIX_YU,
-      XIANFU_LIU,
-    ],
+    essayContributors: [ZHIQIN_LU, FELIX_YU, XIANFU_LIU],
   },
   {
     name: 'Dual Triangles',
@@ -359,9 +322,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic11.png',
     essay: 'pdfs/topic11.pdf',
     animationContributors: [],
-    essayContributors: [
-      ZHIQIN_LU,
-    ],
+    essayContributors: [ZHIQIN_LU],
   },
   {
     name: 'Euler Line',
@@ -369,9 +330,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic12.png',
     essay: 'pdfs/topic12.pdf',
     animationContributors: [],
-    essayContributors: [
-      CHUXIANGBO_WANG,
-    ],
+    essayContributors: [CHUXIANGBO_WANG],
   },
   {
     name: 'Nine-point Circle',
@@ -379,10 +338,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic13.png',
     essay: 'pdfs/topic13.pdf',
     animationContributors: [],
-    essayContributors: [
-      RUSSELL_MARASIGAN,
-      MAI_NGUYEN,
-    ],
+    essayContributors: [RUSSELL_MARASIGAN, MAI_NGUYEN],
   },
   {
     name: 'Fermat Point',
@@ -414,9 +370,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic17.png',
     essay: 'pdfs/topic17.pdf',
     animationContributors: [],
-    essayContributors: [
-      ZHIQIN_LU,
-    ],
+    essayContributors: [ZHIQIN_LU],
   },
   {
     name: 'Lemoine Line',
@@ -440,10 +394,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic20.png',
     essay: 'pdfs/topic20.pdf',
     animationContributors: [],
-    essayContributors: [
-      ZHIQIN_LU,
-      SHIYI_LYU,
-    ],
+    essayContributors: [ZHIQIN_LU, SHIYI_LYU],
   },
   {
     name: "Maclaurin's Theorem",
@@ -475,9 +426,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic24.png',
     essay: 'pdfs/topic24.pdf',
     animationContributors: [],
-    essayContributors: [
-      RUOYING_DENG,
-    ],
+    essayContributors: [RUOYING_DENG],
   },
   {
     name: 'Brocard Points',
@@ -492,12 +441,8 @@ export const topics: Array<Topic> = [
     index: 26,
     snapshot: 'images/snapshots/topic26.png',
     essay: 'pdfs/topic26.pdf',
-    animationContributors: [
-      MAI_NGUYEN,
-    ],
-    essayContributors: [
-      MINGYU_SHI,
-    ],
+    animationContributors: [MAI_NGUYEN],
+    essayContributors: [MINGYU_SHI],
   },
   {
     name: "Brahmagupta's Theorem",
@@ -505,9 +450,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic27.png',
     essay: 'pdfs/topic27.pdf',
     animationContributors: [],
-    essayContributors: [
-      SATYAKI_SARKAR,
-    ],
+    essayContributors: [SATYAKI_SARKAR],
   },
   {
     name: "Davis' Theorem",
@@ -515,18 +458,14 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic28.png',
     essay: 'pdfs/topic28.pdf',
     animationContributors: [],
-    essayContributors: [
-      WENJING_LIN,
-    ],
+    essayContributors: [WENJING_LIN],
   },
   {
     name: 'Tucker Circles',
     index: 29,
     snapshot: 'images/snapshots/topic29.png',
     essay: 'pdfs/topic29.pdf',
-    animationContributors: [
-      ZHIQIN_LU,
-    ],
+    animationContributors: [ZHIQIN_LU],
     essayContributors: [],
   },
   {
@@ -535,9 +474,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic30.png',
     essay: 'pdfs/topic30.pdf',
     animationContributors: [],
-    essayContributors: [
-      JIMENA_ISABEL_RAZO,
-    ],
+    essayContributors: [JIMENA_ISABEL_RAZO],
   },
   {
     name: 'Quadrilateral Area Formulas',
@@ -545,9 +482,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic31.png',
     essay: 'pdfs/topic31.pdf',
     animationContributors: [],
-    essayContributors: [
-      ZHIQIN_LU,
-    ],
+    essayContributors: [ZHIQIN_LU],
   },
   {
     name: "Monge's Theorem",
@@ -555,9 +490,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic32.png',
     essay: 'pdfs/topic32.pdf',
     animationContributors: [],
-    essayContributors: [
-      MAI_NGUYEN,
-    ],
+    essayContributors: [MAI_NGUYEN],
   },
   {
     name: 'Isodynamic Point',
@@ -573,9 +506,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic34.png',
     essay: 'pdfs/topic34.pdf',
     animationContributors: [],
-    essayContributors: [
-      YUFEI_REN,
-    ],
+    essayContributors: [YUFEI_REN],
   },
   {
     name: "Pappus' Area Theorem",
@@ -583,9 +514,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic35.png',
     essay: 'pdfs/topic35.pdf',
     animationContributors: [],
-    essayContributors: [
-      DAWEI_LIU,
-    ],
+    essayContributors: [DAWEI_LIU],
   },
   {
     name: 'Projective Harmonic Conjugate',
@@ -593,9 +522,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic36.png',
     essay: 'pdfs/topic36.pdf',
     animationContributors: [],
-    essayContributors: [
-      JIAMING_FENG,
-    ],
+    essayContributors: [JIAMING_FENG],
   },
   {
     name: 'Trilinear Coordinate System',
@@ -603,9 +530,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic37.png',
     essay: 'pdfs/topic37.pdf',
     animationContributors: [],
-    essayContributors: [
-      NATASHA_XIAO,
-    ],
+    essayContributors: [NATASHA_XIAO],
   },
   {
     name: "Routh's Theorem",
@@ -613,9 +538,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic38.png',
     essay: 'pdfs/topic38.pdf',
     animationContributors: [],
-    essayContributors: [
-      YUE_CHU,
-    ],
+    essayContributors: [YUE_CHU],
   },
   {
     name: "Monge's Problem",
@@ -623,9 +546,7 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic39.png',
     essay: 'pdfs/topic39.pdf',
     animationContributors: [],
-    essayContributors: [
-      MAI_NGUYEN,
-    ],
+    essayContributors: [MAI_NGUYEN],
   },
   {
     name: "Steiner-Lehmus' Theorem",
@@ -633,24 +554,24 @@ export const topics: Array<Topic> = [
     snapshot: 'images/snapshots/topic40.png',
     essay: 'pdfs/topic40.pdf',
     animationContributors: [],
-    essayContributors: [
-      TONGTONG_LI,
-    ],
+    essayContributors: [TONGTONG_LI],
   },
 ];
 
 export const indexTopicMap: Map<number, Topic> = new Map(
-  topics.map((topic) => [topic.index, topic]),
+  topics.map((topic) => [topic.index, topic])
 );
 
-export const otherImages: Array<{ title: string, image: string }> = [
+export const otherImages: Array<{ title: string; image: string }> = [
   {
     title: '2022 Spring GDP Group',
     image: 'images/group/2022-Spring-199C-1.jpg',
-  }, {
+  },
+  {
     title: '2022 Spring GDP Group',
     image: 'images/group/2022-Spring-199C-2.jpg',
-  }, {
+  },
+  {
     title: '2022 Winter GDP Group',
     image: 'images/group/2022-Winter-199B.jpg',
   },
