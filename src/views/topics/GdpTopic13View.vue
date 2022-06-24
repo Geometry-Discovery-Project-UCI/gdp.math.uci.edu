@@ -12,25 +12,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { indexTopicMap } from "@/data";
-import { Topic } from "@/types";
-import { fabric } from "fabric";
-import { makeLine, makeLabel, makeCircle, makeMovablePolygon } from "@/utils/canvas";
+import { defineComponent } from 'vue';
+import { indexTopicMap } from '@/data';
+import { Topic } from '@/types';
+import { fabric } from 'fabric';
+import { makeLine, makeLabel, makeCircle, makeMovablePolygon } from '@/utils/canvas';
 import {
   getPedalPoint,
   calculateCircumcenter,
   calculateMidpoint,
   calculateOrthocenter,
   calculateDistanceBetweenTwoPoints,
-} from "@/utils/geometry";
+} from '@/utils/geometry';
 const topic = indexTopicMap.get(13) as Topic;
 export default defineComponent({
   setup() {
     return { topic };
   },
   mounted() {
-    const canvas = new fabric.Canvas("nine-point-circle-canvas", {
+    const canvas = new fabric.Canvas('nine-point-circle-canvas', {
       selection: false,
     });
 
@@ -44,19 +44,19 @@ export default defineComponent({
     const lineCI = makeLine();
     const lineCJ = makeLine();
     const ninePointCircle = makeCircle();
-    const aLabel = makeLabel("A");
-    const bLabel = makeLabel("B");
-    const cLabel = makeLabel("C");
-    const dLabel = makeLabel("D");
-    const eLabel = makeLabel("E");
-    const fLabel = makeLabel("F");
-    const iLabel = makeLabel("I");
-    const jLabel = makeLabel("J");
-    const kLabel = makeLabel("K");
-    const lLabel = makeLabel("L");
-    const mLabel = makeLabel("M");
-    const nLabel = makeLabel("N");
-    const oLabel = makeLabel("O");
+    const aLabel = makeLabel('A');
+    const bLabel = makeLabel('B');
+    const cLabel = makeLabel('C');
+    const dLabel = makeLabel('D');
+    const eLabel = makeLabel('E');
+    const fLabel = makeLabel('F');
+    const iLabel = makeLabel('I');
+    const jLabel = makeLabel('J');
+    const kLabel = makeLabel('K');
+    const lLabel = makeLabel('L');
+    const mLabel = makeLabel('M');
+    const nLabel = makeLabel('N');
+    const oLabel = makeLabel('O');
 
     const dNode = makeCircle();
     const eNode = makeCircle();
@@ -113,7 +113,7 @@ export default defineComponent({
             x2: pedalPointOnAC.x,
             y2: pedalPointOnAC.y,
             strokeDashArray: [5, 5],
-            stroke: "red",
+            stroke: 'red',
           });
           lineAK.set({
             x1: coords[0].x,
@@ -121,7 +121,7 @@ export default defineComponent({
             x2: pedalPointOnAB.x,
             y2: pedalPointOnAB.y,
             strokeDashArray: [5, 5],
-            stroke: "red",
+            stroke: 'red',
           });
         }
 
@@ -132,7 +132,7 @@ export default defineComponent({
             x2: pedalPointOnBC.x,
             y2: pedalPointOnBC.y,
             strokeDashArray: [5, 5],
-            stroke: "red",
+            stroke: 'red',
           });
           lineBK.set({
             x1: coords[1].x,
@@ -140,7 +140,7 @@ export default defineComponent({
             x2: pedalPointOnAB.x,
             y2: pedalPointOnAB.y,
             strokeDashArray: [5, 5],
-            stroke: "red",
+            stroke: 'red',
           });
         }
 
@@ -151,7 +151,7 @@ export default defineComponent({
             x2: pedalPointOnBC.x,
             y2: pedalPointOnBC.y,
             strokeDashArray: [5, 5],
-            stroke: "red",
+            stroke: 'red',
           });
           lineCJ.set({
             x1: coords[2].x,
@@ -159,7 +159,7 @@ export default defineComponent({
             x2: pedalPointOnAC.x,
             y2: pedalPointOnAC.y,
             strokeDashArray: [5, 5],
-            stroke: "red",
+            stroke: 'red',
           });
         }
 
@@ -168,7 +168,7 @@ export default defineComponent({
           y1: coords[0].y,
           x2: pedalPointOnBC.x,
           y2: pedalPointOnBC.y,
-          stroke: "red",
+          stroke: 'red',
         });
 
         heightOnAC.set({
@@ -176,7 +176,7 @@ export default defineComponent({
           y1: coords[1].y,
           x2: pedalPointOnAC.x,
           y2: pedalPointOnAC.y,
-          stroke: "red",
+          stroke: 'red',
         });
 
         heightOnAB.set({
@@ -184,7 +184,7 @@ export default defineComponent({
           y1: coords[2].y,
           x2: pedalPointOnAB.x,
           y2: pedalPointOnAB.y,
-          stroke: "red",
+          stroke: 'red',
         });
 
         // calculate three centers of the triangle
@@ -206,12 +206,12 @@ export default defineComponent({
 
         // set values for nine-point circle
         ninePointCircle.set({
-          originX: "center",
-          originY: "center",
+          originX: 'center',
+          originY: 'center',
           left: center.x,
           top: center.y,
           radius: radius,
-          stroke: "green",
+          stroke: 'green',
           strokeWidth: 2,
         });
 
@@ -279,71 +279,71 @@ export default defineComponent({
           left: midPointBC.x - 0.75 * 3,
           top: midPointBC.y - 0.75 * 3,
           radius: 2,
-          fill: "blacks",
+          fill: 'blacks',
         });
 
         eNode.set({
           left: midPointAC.x - 0.75 * 3,
           top: midPointAC.y - 0.75 * 3,
           radius: 2,
-          fill: "blacks",
+          fill: 'blacks',
         });
 
         fNode.set({
           left: midPointAB.x - 0.75 * 3,
           top: midPointAB.y - 0.75 * 3,
           radius: 2,
-          fill: "blacks",
+          fill: 'blacks',
         });
 
         iNode.set({
           left: pedalPointOnBC.x - 0.75 * 3,
           top: pedalPointOnBC.y - 0.75 * 3,
           radius: 2,
-          fill: "blacks",
+          fill: 'blacks',
         });
 
         jNode.set({
           left: pedalPointOnAC.x - 0.75 * 3,
           top: pedalPointOnAC.y - 0.75 * 3,
           radius: 2,
-          fill: "blacks",
+          fill: 'blacks',
         });
 
         kNode.set({
           left: pedalPointOnAB.x - 0.75 * 3,
           top: pedalPointOnAB.y - 0.75 * 3,
           radius: 2,
-          fill: "blacks",
+          fill: 'blacks',
         });
 
         lNode.set({
           left: midPointOA.x - 0.75 * 3,
           top: midPointOA.y - 0.75 * 3,
           radius: 2,
-          fill: "blacks",
+          fill: 'blacks',
         });
 
         mNode.set({
           left: midPointOB.x - 0.75 * 3,
           top: midPointOB.y - 0.75 * 3,
           radius: 2,
-          fill: "blacks",
+          fill: 'blacks',
         });
 
         nNode.set({
           left: midPointOC.x - 0.75 * 3,
           top: midPointOC.y - 0.75 * 3,
           radius: 2,
-          fill: "blacks",
+          fill: 'blacks',
         });
 
         oNode.set({
           left: orthocenter.x - 0.75 * 3,
           top: orthocenter.y - 0.75 * 3,
           radius: 2,
-          fill: "red",
-          stroke: "red",
+          fill: 'red',
+          stroke: 'red',
         });
       }
     );

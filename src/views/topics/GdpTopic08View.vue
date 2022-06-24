@@ -6,12 +6,12 @@
 import { defineComponent } from 'vue';
 import { indexTopicMap } from '@/data';
 import { Topic } from '@/types';
-
-const topic = indexTopicMap.get(17) as Topic;
-
-export default defineComponent({
-  setup() {
-    return { topic };
+const topic = indexTopicMap.get(8) as Topic;
+export default defineComponent(
+  {
+    setup() {
+      return { topic };
+    },
   },
-});
+);
 </script>
