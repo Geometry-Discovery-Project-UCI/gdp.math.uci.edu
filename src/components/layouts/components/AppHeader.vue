@@ -2,7 +2,7 @@
   <ALayoutHeader>
     <RouterLink to="/">
       <ASpace>
-        <GdpLogo :width="36" :height="36" :preview="false" />
+        <GdpLogo :width="36" :height="36" :preview="false" :isLight="true" />
         <span :style="{
           color: '#fff',
           fontSize: '18px',

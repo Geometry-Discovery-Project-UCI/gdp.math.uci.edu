@@ -319,7 +319,7 @@ export default defineComponent(
       });
 
       const signCoords = [27, 87];
-      signCoords.forEach((signCoord, i) => {
+      signCoords.forEach((signCoord) => {
         canvas.add(
           new fabric.Text("____  ____  ____", {
             left: 330,
