@@ -1,6 +1,6 @@
 <template>
   <TopicMeta :topic="topic" />
-  <div id="morley-wrapper">
+  <div id="euler-line-wrapper">
     <ATypographyTitle :level="4">Animated Euler Line</ATypographyTitle>
     <canvas id="euler-line-canvas" width="500" height="500" />
   </div>
@@ -34,7 +34,7 @@ export default defineComponent({
         hasBorders: false,
         evented: false,
         radius: radius || 1,
-        fill: fill || "black",
+        fill: fill || "transparent",
       });
     }
 
@@ -74,9 +74,9 @@ export default defineComponent({
       });
     }
 
-    const vertexA = createCircle(200, 150).set({ evented: true });
-    const vertexB = createCircle(75, 350).set({ evented: true });
-    const vertexC = createCircle(400, 350).set({ evented: true });
+    const vertexA = createCircle(200, 150, 10).set({ evented: true });
+    const vertexB = createCircle(75, 350, 10).set({ evented: true });
+    const vertexC = createCircle(400, 350, 10).set({ evented: true });
 
     const triangle = createPolygon();
     const midPointTriangle = createPolygon();
@@ -101,6 +101,10 @@ export default defineComponent({
     const auxiliaryLineAB = createLine([], "blue");
     const auxiliaryLineBC = createLine([], "blue");
     const auxiliaryLineAC = createLine([], "blue");
+
+    const extendedLineAH = createLine([], "blue");
+    const extendedLineBH = createLine([], "blue");
+    const extendedLineCH = createLine([], "blue");
 
     const aLabel = createLabel("A");
     const bLabel = createLabel("B");
@@ -262,6 +266,25 @@ export default defineComponent({
         y2: pedalPointOnAC.y,
       });
 
+      extendedLineAH.set({
+        x1: vertices[0].x,
+        y1: vertices[0].y,
+        x2: orthocenter.x,
+        y2: orthocenter.y,
+      });
+      extendedLineBH.set({
+        x1: vertices[1].x,
+        y1: vertices[1].y,
+        x2: orthocenter.x,
+        y2: orthocenter.y,
+      });
+      extendedLineCH.set({
+        x1: vertices[2].x,
+        y1: vertices[2].y,
+        x2: orthocenter.x,
+        y2: orthocenter.y,
+      });
+
       auxiliaryLineAB.set({
         x1: vertices[0].x,
         y1: vertices[0].y,
@@ -289,15 +312,14 @@ export default defineComponent({
         left: circumcenter.x,
         top: circumcenter.y,
         radius: circumCircleRadius,
-        fill: "transparent",
         strokeDashArray: [5, 5],
         stroke: "purple"
       });
 
       const eulerLineLinearEquation = solveLinearEquation(orthocenter, circumcenter);
       eulerLine.set({
-        x1: 0,
-        y1: eulerLineLinearEquation.b,
+        x1: -canvas.getWidth(),
+        y1: -eulerLineLinearEquation.m * canvas.getWidth() + eulerLineLinearEquation.b,
         x2: canvas.getWidth(),
         y2: eulerLineLinearEquation.m * canvas.getWidth() + eulerLineLinearEquation.b,
       });
@@ -324,6 +346,9 @@ export default defineComponent({
     canvas.add(heightOnAB);
     canvas.add(heightOnBC);
     canvas.add(heightOnAC);
+    canvas.add(extendedLineAH);
+    canvas.add(extendedLineBH);
+    canvas.add(extendedLineCH);
     canvas.add(circumCircle)
     canvas.add(aLabel);
     canvas.add(bLabel);
