@@ -1,5 +1,8 @@
 <template>
   <TopicMeta :topic="topic" />
+  <ATypographyParagraph>
+
+  </ATypographyParagraph>
   <div id="euler-line-wrapper">
     <ATypographyTitle :level="4">Animated Euler Line</ATypographyTitle>
     <canvas id="euler-line-canvas" width="500" height="500" />
@@ -11,7 +14,7 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
-import { calculateCircumcenter, calculateDistanceBetweenTwoPoints, calculateMidpoint, calculateOrthocenter, calculateThreeAngles, getPedalPoint, solveLinearEquation, trilinearToCartesian } from "@/utils/geometry";
+import { calculateMidpoint, calculateThreeAngles, getPedalPoint, solveLinearEquation, trilinearToCartesian } from "@/utils/geometry";
 
 const topic = indexTopicMap.get(12) as Topic;
 
@@ -143,9 +146,9 @@ export default defineComponent({
         top: vertices[2].y - 5,
       });
 
-      const midPointAB = calculateMidpoint(vertices[0], vertices[1]);
-      const midPointBC = calculateMidpoint(vertices[1], vertices[2]);
-      const midPointAC = calculateMidpoint(vertices[0], vertices[2]);
+      const midPointAB = vertices[0].midPointFrom(vertices[1]);
+      const midPointBC = vertices[1].midPointFrom(vertices[2]);
+      const midPointAC = vertices[0].midPointFrom(vertices[2]);
       midPointTriangle.set({
         points: [
           new fabric.Point(midPointAB.x, midPointAB.y),
@@ -167,9 +170,9 @@ export default defineComponent({
         top: midPointAC.y - 15,
       });
 
-      const circumcenter = calculateCircumcenter(vertices[0], vertices[1], vertices[2]);
-      const orthocenter = calculateOrthocenter(vertices[0], vertices[1], vertices[2]);
       const angles = calculateThreeAngles(vertices[0], vertices[1], vertices[2]);
+      const circumcenter = trilinearToCartesian(vertices[0], vertices[1], vertices[2], Math.cos(angles.x), Math.cos(angles.y), Math.cos(angles.z));
+      const orthocenter = trilinearToCartesian(vertices[0], vertices[1], vertices[2], 1 / Math.cos(angles.x), 1 / Math.cos(angles.y), 1 / Math.cos(angles.z));
       const centroid = trilinearToCartesian(vertices[0], vertices[1], vertices[2], 1 / Math.sin(angles.x), 1 / Math.sin(angles.y), 1 / Math.sin(angles.z));
       const ninePointCenter = trilinearToCartesian(vertices[0], vertices[1], vertices[2], Math.cos(angles.y - angles.z), Math.cos(angles.z - angles.x), Math.cos(angles.x - angles.y));
 
@@ -307,7 +310,7 @@ export default defineComponent({
         strokeDashArray: [5, 5],
       });
 
-      const circumCircleRadius = calculateDistanceBetweenTwoPoints(vertices[0], circumcenter);
+      const circumCircleRadius = vertices[0].distanceFrom(circumcenter);
       circumCircle.set({
         left: circumcenter.x,
         top: circumcenter.y,
