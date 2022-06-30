@@ -14,7 +14,7 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
-import { calculateMidpoint, calculateThreeAngles, getPedalPoint, solveLinearEquation, trilinearToCartesian } from "@/utils/geometry";
+import { calculateThreeAngles, getPedalPoint, solveLinearEquation, trilinearToCartesian } from "@/utils/geometry";
 
 const topic = indexTopicMap.get(12) as Topic;
 
@@ -122,6 +122,7 @@ export default defineComponent({
 
     const circumCircle = createCircle();
     const eulerLine = createLine([], "orange", 3);
+    const debugLine = createLine();
 
     function moveVertices() {
       const vertices = [
@@ -129,6 +130,11 @@ export default defineComponent({
         new fabric.Point(vertexB.left as number, vertexB.top as number),
         new fabric.Point(vertexC.left as number, vertexC.top as number),
       ]
+
+      //debug
+      console.log("A:", vertices[0]);
+      console.log("B:", vertices[1]);
+      console.log("C:", vertices[2]);
 
       triangle.set({
         points: vertices,
@@ -175,6 +181,12 @@ export default defineComponent({
       const orthocenter = trilinearToCartesian(vertices[0], vertices[1], vertices[2], 1 / Math.cos(angles.x), 1 / Math.cos(angles.y), 1 / Math.cos(angles.z));
       const centroid = trilinearToCartesian(vertices[0], vertices[1], vertices[2], 1 / Math.sin(angles.x), 1 / Math.sin(angles.y), 1 / Math.sin(angles.z));
       const ninePointCenter = trilinearToCartesian(vertices[0], vertices[1], vertices[2], Math.cos(angles.y - angles.z), Math.cos(angles.z - angles.x), Math.cos(angles.x - angles.y));
+
+      //debug
+      console.log("Circumcenter(O):", circumcenter);
+      console.log("Orthocenter(H):", orthocenter);
+      console.log("Centroid(G):", centroid);
+      console.log("NinePointCenter(N):", ninePointCenter);
 
       oNode.set({
         left: circumcenter.x,
@@ -326,6 +338,24 @@ export default defineComponent({
         x2: canvas.getWidth(),
         y2: eulerLineLinearEquation.m * canvas.getWidth() + eulerLineLinearEquation.b,
       });
+      // debug
+      console.log("Canvas width:", canvas.getWidth());
+      console.log("Euler line slope:", eulerLineLinearEquation.m);
+      console.log("Euler line intercept:", eulerLineLinearEquation.b);
+      console.log("Is coordinate y calculated by euler line same as circumcenter.y?", Math.abs(eulerLineLinearEquation.m * circumcenter.x + eulerLineLinearEquation.b - circumcenter.y) < 0.0001);
+      console.log("Is coordinate y calculated by euler line same as orthocenter.y?", Math.abs(eulerLineLinearEquation.m * orthocenter.x + eulerLineLinearEquation.b - orthocenter.y) < 0.0001);
+      console.log("Is coordinate y calculated by euler line same as centroid.y?", Math.abs(eulerLineLinearEquation.m * centroid.x + eulerLineLinearEquation.b - centroid.y) < 0.0001);
+      console.log("Is coordinate y calculated by euler line same as ninePointCenter.y?", Math.abs(eulerLineLinearEquation.m * ninePointCenter.x + eulerLineLinearEquation.b - ninePointCenter.y) < 0.0001);
+
+      // debug
+      debugLine.set({
+        x1: circumcenter.x,
+        y1: circumcenter.y,
+        x2: orthocenter.x,
+        y2: orthocenter.y,
+        stroke: "brown",
+        strokeWidth: 2,
+      });
     }
 
     moveVertices();
@@ -360,6 +390,7 @@ export default defineComponent({
     canvas.add(qLabel);
     canvas.add(rLabel);
     canvas.add(eulerLine);
+    canvas.add(debugLine); //debug
     canvas.add(oNode);
     canvas.add(hNode);
     canvas.add(gNode);
