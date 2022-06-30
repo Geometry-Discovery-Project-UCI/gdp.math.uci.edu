@@ -342,10 +342,10 @@ export default defineComponent({
       console.log("Canvas width:", canvas.getWidth());
       console.log("Euler line slope:", eulerLineLinearEquation.m);
       console.log("Euler line intercept:", eulerLineLinearEquation.b);
-      console.log("Is coordinate y calculated by euler line same as circumcenter.y?", Math.abs(eulerLineLinearEquation.m * circumcenter.x + eulerLineLinearEquation.b - circumcenter.y) < 0.0001);
-      console.log("Is coordinate y calculated by euler line same as orthocenter.y?", Math.abs(eulerLineLinearEquation.m * orthocenter.x + eulerLineLinearEquation.b - orthocenter.y) < 0.0001);
-      console.log("Is coordinate y calculated by euler line same as centroid.y?", Math.abs(eulerLineLinearEquation.m * centroid.x + eulerLineLinearEquation.b - centroid.y) < 0.0001);
-      console.log("Is coordinate y calculated by euler line same as ninePointCenter.y?", Math.abs(eulerLineLinearEquation.m * ninePointCenter.x + eulerLineLinearEquation.b - ninePointCenter.y) < 0.0001);
+      console.log("Is coordinate y calculated by euler line same as circumcenter.y?", Math.abs(eulerLineLinearEquation.m * circumcenter.x + eulerLineLinearEquation.b - circumcenter.y) < Number.EPSILON * 10e6);
+      console.log("Is coordinate y calculated by euler line same as orthocenter.y?", Math.abs(eulerLineLinearEquation.m * orthocenter.x + eulerLineLinearEquation.b - orthocenter.y) < Number.EPSILON * 10e6);
+      console.log("Is coordinate y calculated by euler line same as centroid.y?", Math.abs(eulerLineLinearEquation.m * centroid.x + eulerLineLinearEquation.b - centroid.y) < Number.EPSILON * 10e6);
+      console.log("Is coordinate y calculated by euler line same as ninePointCenter.y?", Math.abs(eulerLineLinearEquation.m * ninePointCenter.x + eulerLineLinearEquation.b - ninePointCenter.y) < Number.EPSILON * 10e6);
 
       // debug
       debugLine.set({
