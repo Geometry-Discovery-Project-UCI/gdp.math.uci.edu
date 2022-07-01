@@ -3,23 +3,20 @@
   <AList itemLayout="horizontal" :dataSource="topics" :grid="defaultGridParams">
     <template #renderItem="{ item: topic }">
       <AListItem>
-        <ACard hoverable>
-          <template #cover>
-            <AImage class="topic-image" :src="topic.snapshot" :alt="topic.name" height="22vh" />
-          </template>
-          <ACardMeta :title="`Topic ${topic.index}`">
-            <template #description>
-              <div style="height: 3rem">
-                {{ topic.name }}
-              </div>
+        <RouterLink :to="`/topic/${topic.index}`" target="_blank">
+          <ACard hoverable>
+            <template #cover>
+              <AImage class="topic-image" :src="topic.snapshot" :alt="topic.name" height="22vh" :preview="false" />
             </template>
-          </ACardMeta>
-          <template #actions>
-            <RouterLink :to="`/topic/${topic.index}`" target="_blank">
-              Details
-            </RouterLink>
-          </template>
-        </ACard>
+            <ACardMeta :title="`Topic ${topic.index}`">
+              <template #description>
+                <div style="height: 3rem">
+                  {{ topic.name }}
+                </div>
+              </template>
+            </ACardMeta>
+          </ACard>
+        </RouterLink>
       </AListItem>
     </template>
   </AList>
