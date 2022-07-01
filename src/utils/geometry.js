@@ -54,7 +54,7 @@ export function calculateLineIntersectInPoints(line1, line2, isVector) {
   ) {
     return null;
   }
-  denominator =
+  const denominator =
     (line2.y2 - line2.y1) * (line1.x2 - line1.x1) - (line2.x2 - line2.x1) * (line1.y2 - line1.y1);
 
   // Lines are parallel
@@ -102,7 +102,7 @@ export function calculateIncenter(A, B, C) {
 }
 
 export function solveLinearEquation(pt1, pt2) {
-  const m = (1 * (pt2.y - pt1.y)) / (pt2.x - pt1.x);
+  const m = ((pt2.y - pt1.y)) / (pt2.x - pt1.x);
   const b = pt1.y - m * pt1.x;
   return {
     m,
@@ -148,7 +148,7 @@ export function calculateDistanceFromPointToLine(pt, line) {
 }
 
 export function calculateSlope(pt1, pt2) {
-  if (pt1.x != pt2.x) {
+  if (pt1.x !== pt2.x) {
     return (pt2.y - pt1.y) / (pt2.x - pt1.x);
   } else {
     return NaN;
