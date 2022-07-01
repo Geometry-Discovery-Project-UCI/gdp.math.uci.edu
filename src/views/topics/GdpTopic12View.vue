@@ -321,12 +321,19 @@ export default defineComponent({
         stroke: "purple"
       });
 
-      const eulerLineLinearEquation = solveLinearEquation(orthocenter, circumcenter);
+      // const eulerLineLinearEquation = solveLinearEquation(orthocenter, circumcenter);
+      const orthocenterPoint = new fabric.Point(orthocenter.x, orthocenter.y);
+      const circumcenterPoint = new fabric.Point(circumcenter.x, circumcenter.y);
+
       eulerLine.set({
-        x1: -canvas.getWidth(),
-        y1: -eulerLineLinearEquation.m * canvas.getWidth() + eulerLineLinearEquation.b,
-        x2: canvas.getWidth(),
-        y2: eulerLineLinearEquation.m * canvas.getWidth() + eulerLineLinearEquation.b,
+        x1: orthocenterPoint.lerp(circumcenterPoint, 1.5).x,
+        y1: orthocenterPoint.lerp(circumcenterPoint, 1.5).y,
+        x2: orthocenterPoint.lerp(circumcenterPoint, -1.5).x,
+        y2: orthocenterPoint.lerp(circumcenterPoint, -1.5).y,
+        // x1: -canvas.getWidth(),
+        // y1: -eulerLineLinearEquation.m * canvas.getWidth() + eulerLineLinearEquation.b,
+        // x2: canvas.getWidth(),
+        // y2: eulerLineLinearEquation.m * canvas.getWidth() + eulerLineLinearEquation.b,
       });
     }
 
