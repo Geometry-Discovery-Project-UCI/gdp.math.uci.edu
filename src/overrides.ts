@@ -8,7 +8,7 @@ declare module 'fabric' {
         }
 
         interface Intersection {
-            intersectLineLine: (a1: Point, a2: Point, b1: Point, b2: Point, isPatched?: boolean) => Intersection
+            intersectLineLine: (a1: Point, a2: Point, b1: Point, b2: Point, isSegment?: boolean) => Intersection
         }
     }
 }
@@ -18,7 +18,7 @@ export function overrides() {
         return this.x * that.x + this.y * that.y;
     }
 
-    fabric.Intersection.prototype.intersectLineLine = function (a1, a2, b1, b2, isPatched = true) {
+    fabric.Intersection.prototype.intersectLineLine = function (a1, a2, b1, b2, isSegment = false) {
         let result: fabric.Intersection;
         const uaT = (b2.x - b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x),
             ubT = (a2.x - a1.x) * (a1.y - b1.y) - (a2.y - a1.y) * (a1.x - b1.x),
@@ -26,7 +26,7 @@ export function overrides() {
         if (uB !== 0) {
             const ua = uaT / uB,
                 ub = ubT / uB;
-            if (isPatched || 0 <= ua && ua <= 1 && 0 <= ub && ub <= 1) {
+            if (!isSegment || 0 <= ua && ua <= 1 && 0 <= ub && ub <= 1) {
                 result = new fabric.Intersection('Intersection');
                 result.appendPoint(new fabric.Point(a1.x + ua * (a2.x - a1.x), a1.y + ua * (a2.y - a1.y)));
             }
