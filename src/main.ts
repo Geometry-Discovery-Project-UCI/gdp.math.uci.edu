@@ -6,8 +6,10 @@ import { Layout } from '@/consts';
 import SiderLayout from '@/components/layouts/SiderLayout.vue';
 import NoSiderLayout from '@/components/layouts/NoSiderLayout.vue';
 import TopicMeta from '@/components/TopicMeta.vue';
-
 import 'ant-design-vue/dist/antd.css';
+import { overrides } from '@/overrides';
+
+overrides();
 
 createApp(App)
   .component(Layout.Sider, SiderLayout)
