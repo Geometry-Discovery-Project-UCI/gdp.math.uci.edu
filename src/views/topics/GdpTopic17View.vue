@@ -13,7 +13,6 @@ import { Topic } from '@/types';
 import { fabric } from 'fabric';
 import {
   calculateCircumcenter,
-  calculateCentroid,
   trilinearToCartesian,
   calculateThreeAngles,
   calculateSlope,
@@ -329,8 +328,6 @@ export default defineComponent({
         left: symmedianPoint.x - 10,
         top: symmedianPoint.y - 35,
       });
-
-      // define p1, p2 and p3 as the points of the triangle
     }
 
     moveVertices();
