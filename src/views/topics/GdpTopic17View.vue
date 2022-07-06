@@ -322,6 +322,7 @@ export default defineComponent({
         top: lemonieCircleCenter.y,
         radius: lemonieCircleRadius,
         stroke: 'blue',
+        strokeWidth: 2,
       });
     }
 
@@ -351,6 +352,7 @@ export default defineComponent({
     canvas.add(lineP1Q2);
     canvas.add(lineP2Q3);
     canvas.add(lineP3Q1);
+    canvas.add(lemonieCircle);
   },
 });
 </script>

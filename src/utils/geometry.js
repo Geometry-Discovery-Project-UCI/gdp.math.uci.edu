@@ -1,4 +1,4 @@
-export const EPS = .000001;
+export const EPS = 0.000001;
 
 // function to find feet of triangle's altitudes
 export function getPedalPoint(from, toA, toB) {
@@ -15,20 +15,18 @@ export function getPedalPoint(from, toA, toB) {
       x: result.x,
       y: result.y,
     };
-  }
-  else {
+  } else {
     return {
       x: 0,
       y: 0,
     };
-
   }
 }
 
 export function calculateIncenter(A, B, C) {
-   // Centroid         --     1 : 1 : 1
-  const incenter = trilinearToCartesian(A, B, C, 1,1,1);
-  
+  // Centroid         --     1 : 1 : 1
+  const incenter = trilinearToCartesian(A, B, C, 1, 1, 1);
+
   return {
     x: incenter.x,
     y: incenter.y,
@@ -44,16 +42,14 @@ export function calculateCentroid(A, B, C) {
   const centroid = trilinearToCartesian(A, B, C, 1 / a, 1 / b, 1 / c);
   return {
     x: centroid.x,
-    y: centroid.y
-  }
+    y: centroid.y,
+  };
 }
 
-
 export function calculateCircumcenter(A, B, C) {
-  const a = B.distanceFrom(C);
+  const a = calculateDistanceBetweenTwoPoints(B, C);
   const b = calculateDistanceBetweenTwoPoints(A, C);
   const c = calculateDistanceBetweenTwoPoints(A, B);
-
 
   // Circumcenter         --     cos A: cos B: cos C
   const x = (b ** 2 + c ** 2 - a ** 2) / 2 / b / c;
@@ -63,8 +59,8 @@ export function calculateCircumcenter(A, B, C) {
   const circumcenter = trilinearToCartesian(A, B, C, x, y, z);
   return {
     x: circumcenter.x,
-    y: circumcenter.y
-  }
+    y: circumcenter.y,
+  };
 }
 
 export function calculateOrthocenter(A, B, C) {
@@ -80,33 +76,30 @@ export function calculateOrthocenter(A, B, C) {
   if (Math.abs(x) < EPS) {
     var x1 = 1;
     var y1 = 0;
-    var z1 = 0
-  }
-  else {
+    var z1 = 0;
+  } else {
     if (Math.abs(y) < EPS) {
       var x1 = 0;
       var y1 = 1;
-      var z1 = 0
+      var z1 = 0;
     } else {
       if (Math.abs(z) < EPS) {
         var x1 = 0;
         var y1 = 0;
-        var z1 = 1
+        var z1 = 1;
       } else {
         var x1 = 1 / x;
         var y1 = 1 / y;
-        var z1 = 1 / z
+        var z1 = 1 / z;
       }
     }
   }
 
-
   const orthocenter = trilinearToCartesian(A, B, C, x1, y1, z1);
   return {
     x: orthocenter.x,
-    y: orthocenter.y
-  }
-
+    y: orthocenter.y,
+  };
 }
 
 export function calculateMidpoint(p1, p2) {
@@ -116,13 +109,9 @@ export function calculateMidpoint(p1, p2) {
   };
 }
 
-
 export function calculateDistanceBetweenTwoPoints(pt1, pt2) {
   return Math.sqrt(Math.pow(pt1.x - pt2.x, 2) + Math.pow(pt1.y - pt2.y, 2));
 }
-
-
-
 
 export function calculateDistanceFromPointToLine(pt, line) {
   const { m: k, b: b } = solveLinearEquation(
@@ -142,8 +131,6 @@ export function calculateDistanceFromPointToLine(pt, line) {
     y: y,
   });
 }
-
-
 
 // Angles of a triangle
 
@@ -210,10 +197,6 @@ export function calculateSignedDistanceFromPointToLine(pt, v, w) {
   return ((w[2] - v[2]) * (pt[1] - v[1]) - (w[1] - v[1]) * (pt[2] - v[2])) / ab;
 }
 
-
-
-
-
 // The following functions will be obsolete
 
 export function calculateSlope(pt1, pt2) {
@@ -223,7 +206,6 @@ export function calculateSlope(pt1, pt2) {
     return NaN;
   }
 }
-
 
 export function calculateLineIntersectInLinearEquation(m1, b1, m2, b2) {
   const x = (b2 - b1) / (m1 - m2);
@@ -235,7 +217,7 @@ export function calculateLineIntersectInLinearEquation(m1, b1, m2, b2) {
 }
 
 export function solveLinearEquation(pt1, pt2) {
-  const m = ((pt2.y - pt1.y)) / (pt2.x - pt1.x);
+  const m = (pt2.y - pt1.y) / (pt2.x - pt1.x);
   const b = pt1.y - m * pt1.x;
   return {
     m,
@@ -293,10 +275,3 @@ export function calculateLineIntersectInPoints(line1, line2, isVector) {
     y,
   };
 }
-
-
-
-
-
-
-
