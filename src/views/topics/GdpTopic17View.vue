@@ -13,6 +13,7 @@ import { Topic } from '@/types';
 import { fabric } from 'fabric';
 import {
   calculateCircumcenter,
+  calculateCentroid,
   trilinearToCartesian,
   calculateThreeAngles,
   calculateSlope,
@@ -101,7 +102,7 @@ export default defineComponent({
     const triangle = createPolygon();
 
     const dNode = createCircle(0, 0, 2, 'black');
-    const eNode = createCircle(0, 0, 2, 'yellow');
+    const eNode = createCircle(0, 0, 2, 'blown-white');
     const fNode = createCircle(0, 0, 2, 'pink');
     const gNode = createCircle(0, 0, 2, 'green');
     const hNode = createCircle(0, 0, 2, 'blue');
@@ -274,6 +275,28 @@ export default defineComponent({
           left: q3.x - 10,
           top: q3.y - 35,
         });
+
+        const verticesP = [
+          new fabric.Point(dNode.left as number, dNode.top as number),
+          new fabric.Point(fNode.left as number, fNode.top as number),
+          new fabric.Point(hNode.left as number, hNode.top as number),
+        ];
+
+        const lemonieCircleCenter = calculateCircumcenter(verticesP[0], verticesP[1], verticesP[2]);
+        const lemonieCircleRadius = calculateDistanceBetweenTwoPoints(
+          verticesP[0],
+          lemonieCircleCenter
+        );
+
+        lemonieCircle.set({
+          originX: 'center',
+          originY: 'center',
+          left: lemonieCircleCenter.x,
+          top: lemonieCircleCenter.y,
+          radius: lemonieCircleRadius,
+          stroke: 'blue',
+          strokeWidth: 2,
+        });
       }
 
       lineP2Q3.set({
@@ -308,27 +331,12 @@ export default defineComponent({
       });
 
       // define p1, p2 and p3 as the points of the triangle
-      const p1Point = new fabric.Point(dNode.left as number, dNode.top as number);
-      const p2Point = new fabric.Point(fNode.left as number, fNode.top as number);
-      const p3Point = new fabric.Point(hNode.left as number, hNode.top as number);
-
-      // calculate the angles of the triangleP1P2P3
-      const anglesP = calculateThreeAngles(p1Point, p2Point, p3Point);
-
-      const lemonieCircleCenter = calculateCircumcenter(anglesP.x, anglesP.y, anglesP.z);
-      const lemonieCircleRadius = calculateDistanceBetweenTwoPoints(p1Point, lemonieCircleCenter);
-      lemonieCircle.set({
-        left: lemonieCircleCenter.x,
-        top: lemonieCircleCenter.y,
-        radius: lemonieCircleRadius,
-        stroke: 'blue',
-        strokeWidth: 2,
-      });
     }
 
     moveVertices();
     canvas.on('object:moving', moveVertices);
     canvas.add(triangle);
+    canvas.add(lemonieCircle);
     canvas.add(vertexA);
     canvas.add(vertexB);
     canvas.add(vertexC);
@@ -352,7 +360,6 @@ export default defineComponent({
     canvas.add(lineP1Q2);
     canvas.add(lineP2Q3);
     canvas.add(lineP3Q1);
-    canvas.add(lemonieCircle);
   },
 });
 </script>
