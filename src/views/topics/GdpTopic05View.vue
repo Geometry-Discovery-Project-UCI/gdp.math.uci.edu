@@ -239,9 +239,11 @@ export default defineComponent(
 
       tri?.setAttributeNS(null, "points", makeString(points));
 
-      svg?.addEventListener("mousemove", (event) => {
-        p = new DOMPoint(event.clientX, event.clientY);
-        p = p.matrixTransform(svg.getScreenCTM().inverse());
+      const svgEle = svg as SVGGraphicsElement
+      svgEle?.addEventListener("mousemove", (event) => {
+        const e = event as MouseEvent;
+        p = new DOMPoint(e.clientX, e.clientY);
+        p = p.matrixTransform(svgEle.getScreenCTM()?.inverse());
         moveMouse(p);
       });
 
