@@ -100,6 +100,9 @@ export default defineComponent({
         const pedalPointOnBC = getPedalPoint(coords[0], coords[1], coords[2]);
         const pedalPointOnAC = getPedalPoint(coords[1], coords[0], coords[2]);
         const pedalPointOnAB = getPedalPoint(coords[2], coords[0], coords[1]);
+
+   
+
         // set line coordinates for three altitudes
         if (pedalPointOnAB.y < coords[0].y) {
           lineAJ.set({

@@ -7,6 +7,8 @@ declare module 'fabric' {
             dot: (that: Point) => number
         }
 
+        
+
         interface Intersection {
             intersectLineLine: (a1: Point, a2: Point, b1: Point, b2: Point, isSegment?: boolean) => Intersection
         }
@@ -17,6 +19,12 @@ export function overrides() {
     fabric.Point.prototype.dot = function (that) {
         return this.x * that.x + this.y * that.y;
     }
+
+    fabric.Point.prototype.lerp = function (that,t=0.5) {
+          return new fabric.Point(this.x + (that.x - this.x) * t, this.y + (that.y - this.y) * t);
+       
+    }
+
 
     fabric.Intersection.prototype.intersectLineLine = function (a1, a2, b1, b2, isSegment = false) {
         let result: fabric.Intersection;
