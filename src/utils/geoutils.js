@@ -12,15 +12,15 @@ export const CANVAS_HEIGHT = 500;
 
 export const findMidpoint = (pt0, pt1) => {
   return [(pt0[0] + pt1[0]) / 2, (pt0[1] + pt1[1]) / 2];
-};
+}
 
 export const findSlope = (pt0, pt1) => {
-  if (pt0[0] != pt1[0]) {
+  if (pt0[0] !== pt1[0]) {
     return (pt1[1] - pt0[1]) / (pt1[0] - pt0[0]);
   } else {
     return NaN;
   }
-};
+}
 
 export const isInside = (x1, y1, x2, y2, x3, y3, x, y) => {
   const A = area(x1, y1, x2, y2, x3, y3);
@@ -29,7 +29,7 @@ export const isInside = (x1, y1, x2, y2, x3, y3, x, y) => {
   const A3 = area(x1, y1, x2, y2, x, y);
 
   return Math.abs(A - A1 - A2 - A3) <= 0.0000001;
-};
+}
 
 export const findDistance = (pt0, pt1) => {
   return Math.sqrt((pt0[0] - pt1[0]) ** 2 + (pt0[1] - pt1[1]) ** 2);
@@ -72,7 +72,7 @@ export const lineLineIntersection = (A, B, C, D) => {
 
   const determinant = a1 * b2 - a2 * b1;
 
-  if (determinant == 0) {
+  if (determinant === 0) {
     return null;
   } else {
     const x = (b2 * c1 - b1 * c2) / determinant;
