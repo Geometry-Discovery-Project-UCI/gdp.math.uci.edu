@@ -170,26 +170,26 @@ export default defineComponent(
         drawLine(pB, pDB, line9);
 
         const pPN = lineLineIntersection(pC, pDC, pB, pDB);
-        letterPp?.setAttribute("x", pPN[0] + "");
-        letterPp?.setAttribute("y", (pPN[1] - 10) + "");
+        letterPp?.setAttribute("x", pPN![0] + "");
+        letterPp?.setAttribute("y", (pPN![1] - 10) + "");
 
-        letterF?.setAttribute("x", pCN[0] + "");
-        letterF?.setAttribute("y", pCN[1] + 20 + "");
+        letterF?.setAttribute("x", pCN![0] + "");
+        letterF?.setAttribute("y", (pCN![1] + 20) + "");
 
-        letterD?.setAttribute("x", pAN[0] - 20 + "");
-        letterD?.setAttribute("y", pAN[1] + "");
+        letterD?.setAttribute("x", (pAN![0] - 20) + "");
+        letterD?.setAttribute("y", pAN![1] + "");
 
-        letterE?.setAttribute("x", pBN[0] + 20 + "");
-        letterE?.setAttribute("y", pBN[1] + "");
+        letterE?.setAttribute("x", (pBN![0] + 20) + "");
+        letterE?.setAttribute("y", pBN![1] + "");
 
-        letterFp?.setAttribute("x", pDC[0]);
-        letterFp?.setAttribute("y", pDC[1] + 20);
+        letterFp?.setAttribute("x", pDC[0] + "");
+        letterFp?.setAttribute("y", (pDC[1] + 20) + "");
 
-        letterDp?.setAttribute("x", pDA[0] - 20 + "");
-        letterDp?.setAttribute("y", pDA[1]);
+        letterDp?.setAttribute("x", (pDA[0] - 20) + "");
+        letterDp?.setAttribute("y", pDA[1] + "");
 
-        letterEp?.setAttribute("x", pDB[0] + 20);
-        letterEp?.setAttribute("y", pDB[1]);
+        letterEp?.setAttribute("x", (pDB[0] + 20) + "");
+        letterEp?.setAttribute("y", pDB[1] + "");
       };
 
       const pPoint = DOMPoint.fromPoint({
