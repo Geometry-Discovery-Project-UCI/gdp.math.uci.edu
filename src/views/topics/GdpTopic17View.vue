@@ -28,11 +28,12 @@ function calcSlope(pt1: fabric.Point, pt2: fabric.Point): number {
   let k;
 
   if (pt1.x === pt2.x) {
-    return 0;
+    return NaN;
   } else if (Math.abs(a1) < Math.abs(a2)) {
     return (k = (pt1.y - pt2.y) / (pt1.x - pt2.x));
   } else {
-    return (k = (pt1.x - pt2.x) / (pt1.y - pt2.y));
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    return (k = ((pt1.x - pt2.x) / (pt1.y - pt2.y)) * -1);
   }
 }
 
@@ -179,24 +180,22 @@ export default defineComponent({
       console.log("slopeCA", slopeCA);
 
       parallelToBC.set({
-        x1: canvas.getWidth(),
-        y1: slopeBC * (canvas.getWidth() - symmedianPoint.x) + symmedianPoint.y,
-        x2: (canvas.getWidth() - symmedianPoint.y) / slopeBC + symmedianPoint.x,
-        y2: canvas.getWidth(),
+        x1: 0,
+        y1: -slopeBC * symmedianPoint.x + symmedianPoint.y,
+        x2: canvas.getWidth(),
+        y2: slopeBC * (canvas.getWidth() - symmedianPoint.x) + symmedianPoint.y,
       });
-
       parallelToCA.set({
-        x1: canvas.getWidth(),
-        y1: slopeCA * (canvas.getWidth() - symmedianPoint.x) + symmedianPoint.y,
-        x2: (canvas.getWidth() - symmedianPoint.y) / slopeCA + symmedianPoint.x,
-        y2: canvas.getWidth(),
+        x1: 0,
+        y1: -slopeCA * symmedianPoint.x + symmedianPoint.y,
+        x2: canvas.getWidth(),
+        y2: slopeCA * (canvas.getWidth() - symmedianPoint.x) + symmedianPoint.y,
       });
-
       parallelToAB.set({
-        x1: canvas.getWidth(),
-        y1: slopeAB * (canvas.getWidth() - symmedianPoint.x) + symmedianPoint.y,
-        x2: (canvas.getWidth() - symmedianPoint.y) / slopeAB + symmedianPoint.x,
-        y2: canvas.getWidth(),
+        x1: 0,
+        y1: -slopeAB * symmedianPoint.x + symmedianPoint.y,
+        x2: canvas.getWidth(),
+        y2: slopeAB * (canvas.getWidth() - symmedianPoint.x) + symmedianPoint.y,
       });
 
       lineAB.set({
