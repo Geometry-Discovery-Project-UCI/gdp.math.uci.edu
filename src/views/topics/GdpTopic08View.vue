@@ -28,9 +28,7 @@ import {
   calculateIncenter,
   calculateLineIntersectInLinearEquation
 } from '@/utils/geometry';
-
 const topic = indexTopicMap.get(8) as Topic;
-
 export default defineComponent(
   {
     setup() {
@@ -40,36 +38,34 @@ export default defineComponent(
       const canvas = new fabric.Canvas("Gergonne-and-Nagel-Points-canvas", {
         selection: false,
       });
-
       const lineAD = makeLine();
       const lineBE = makeLine();
       const lineCF = makeLine();
-      const lineAI = makeLine();
+      const lineAL = makeLine();
       const lineBJ = makeLine();
       const lineCK = makeLine();
-      const lineAL = makeLine();
-      const lineBL = makeLine();
-      const lineCL = makeLine();
-      const lineAM = makeLine();
-      const lineBM = makeLine();
-      const lineCM = makeLine();
-
+      const lineAG = makeLine();
+      const lineBG = makeLine();
+      const lineCG = makeLine();
+      const lineAN = makeLine();
+      const lineBN = makeLine();
+      const lineCN = makeLine();
       const inscribedCircle = makeCircle();
-
       const aLabel = makeLabel("A");
       const bLabel = makeLabel("B");
       const cLabel = makeLabel("C");
       const dLabel = makeLabel("D");
       const eLabel = makeLabel("E");
       const fLabel = makeLabel("F");
-      const iLabel = makeLabel("I");
+      const lLabel = makeLabel("L");
       const jLabel = makeLabel("J");
       const kLabel = makeLabel("K");
-      const lLabel = makeLabel("L");
-      const mLabel = makeLabel("M");
-
-      const lNode = makeCircle();
-      const mNode = makeCircle();
+      const gLabel = makeLabel("G");
+      const nLabel = makeLabel("N");
+      const iLabel = makeLabel("I");
+      const gNode = makeCircle();
+      const nNode = makeCircle();
+      const iNode = makeCircle();
 
       const triangle = makeMovablePolygon(
         [
@@ -87,24 +83,21 @@ export default defineComponent(
           },
         ],
         function (coords: Array<fabric.Point>) {
-
           const points = triangle.points as Array<fabric.Point>;
           aLabel.set({
             left: coords[0].x,
-            top: coords[0].y - 20,
+            top: coords[0].y - 30,
           });
-
           bLabel.set({
-            left: coords[1].x - 10,
-            top: coords[1].y,
+            left: coords[1].x - 20,
+            top: coords[1].y + 5,
           });
           cLabel.set({
             left: coords[2].x + 10,
             top: coords[2].y,
           });
-
           const angles = calculateThreeAngles(coords[0], coords[1], coords[2]);
-          const pointL = trilinearToCartesian(
+          const pointG = trilinearToCartesian(
             coords[0],
             coords[1],
             coords[2],
@@ -112,8 +105,7 @@ export default defineComponent(
             Math.pow((1 / Math.cos(angles.y / 2)), 2),
             Math.pow((1 / Math.cos(angles.z / 2)), 2)
           )
-
-          const pointM = trilinearToCartesian(
+          const pointN = trilinearToCartesian(
             coords[0],
             coords[1],
             coords[2],
@@ -121,184 +113,172 @@ export default defineComponent(
             Math.pow((1 / Math.sin(angles.y / 2)), 2),
             Math.pow((1 / Math.sin(angles.z / 2)), 2)
           )
+          const pointI = calculateIncenter(coords[0], coords[1], coords[2]);
 
           const lineAB = solveLinearEquation(points[0], points[1]);
           const lineBC = solveLinearEquation(points[1], points[2]);
           const lineAC = solveLinearEquation(points[0], points[2]);
-          const lineAL = solveLinearEquation(points[0], {
-            x: pointL.x,
-            y: pointL.y,
+          const lineAG = solveLinearEquation(points[0], {
+            x: pointG.x,
+            y: pointG.y,
           });
-          const lineBL = solveLinearEquation(points[1], {
-            x: pointL.x,
-            y: pointL.y,
+          const lineBG = solveLinearEquation(points[1], {
+            x: pointG.x,
+            y: pointG.y,
           });
-          const lineCL = solveLinearEquation(points[2], {
-            x: pointL.x,
-            y: pointL.y,
+          const lineCG = solveLinearEquation(points[2], {
+            x: pointG.x,
+            y: pointG.y,
           });
-          const lineAM = solveLinearEquation(points[0], {
-            x: pointM.x,
-            y: pointM.y,
+          const lineAN = solveLinearEquation(points[0], {
+            x: pointN.x,
+            y: pointN.y,
           });
-          const lineBM = solveLinearEquation(points[1], {
-            x: pointM.x,
-            y: pointM.y,
+          const lineBN = solveLinearEquation(points[1], {
+            x: pointN.x,
+            y: pointN.y,
           });
-          const lineCM = solveLinearEquation(points[2], {
-            x: pointM.x,
-            y: pointM.y,
+          const lineCN = solveLinearEquation(points[2], {
+            x: pointN.x,
+            y: pointN.y,
           });
-
           const pointD = calculateLineIntersectInLinearEquation(
-            lineAL.m,
-            lineAL.b,
+            lineAG.m,
+            lineAG.b,
             lineBC.m,
             lineBC.b
           );
-
           const pointE = calculateLineIntersectInLinearEquation(
-            lineBL.m,
-            lineBL.b,
+            lineBG.m,
+            lineBG.b,
             lineAC.m,
             lineAC.b
           );
-
           const pointF = calculateLineIntersectInLinearEquation(
-            lineCL.m,
-            lineCL.b,
+            lineCG.m,
+            lineCG.b,
             lineAB.m,
             lineAB.b
           );
-
-          const pointI = calculateLineIntersectInLinearEquation(
-            lineAM.m,
-            lineAM.b,
+          const pointL = calculateLineIntersectInLinearEquation(
+            lineAN.m,
+            lineAN.b,
             lineBC.m,
             lineBC.b
           );
-
           const pointJ = calculateLineIntersectInLinearEquation(
-            lineBM.m,
-            lineBM.b,
+            lineBN.m,
+            lineBN.b,
             lineAC.m,
             lineAC.b
           );
-
           const pointK = calculateLineIntersectInLinearEquation(
-            lineCM.m,
-            lineCM.b,
+            lineCN.m,
+            lineCN.b,
             lineAB.m,
             lineAB.b
           );
-
           dLabel.set({
             left: pointD.x - 5,
             top: pointD.y + 10,
           });
-
           eLabel.set({
             left: pointE.x + 10,
-            top: pointE.y - 10,
+            top: pointE.y - 20,
           });
-
           fLabel.set({
             left: pointF.x - 23,
             top: pointF.y - 15,
           });
-
-          iLabel.set({
-            left: pointI.x - 5,
-            top: pointI.y + 10,
+          lLabel.set({
+            left: pointL.x - 5,
+            top: pointL.y + 10,
           });
-
           jLabel.set({
             left: pointJ.x + 10,
-            top: pointJ.y - 10,
+            top: pointJ.y - 20,
           });
-
           kLabel.set({
             left: pointK.x - 23,
             top: pointK.y - 15,
           });
-
-          lLabel.set({
-            left: pointL.x + 5,
-            top: pointL.y + 5,
+          gLabel.set({
+            left: pointG.x + 5,
+            top: pointG.y + 5,
           });
-
-          mLabel.set({
-            left: pointM.x + 5,
-            top: pointM.y + 5,
+          nLabel.set({
+            left: pointN.x + 10,
+            top: pointN.y - 13,
           });
-
+          iLabel.set({
+            left: pointI.x + 8,
+            top: pointI.y - 3,
+          });
           lineAD.set({
             x1: points[0].x,
             y1: points[0].y,
             x2: pointD.x,
             y2: pointD.y,
-            stroke: "black",
+            stroke: "blue",
           });
-
           lineBE.set({
             x1: points[1].x,
             y1: points[1].y,
             x2: pointE.x,
             y2: pointE.y,
-            stroke: "black",
+            stroke: "blue",
           });
-
           lineCF.set({
             x1: points[2].x,
             y1: points[2].y,
             x2: pointF.x,
             y2: pointF.y,
-            stroke: "black",
+            stroke: "blue",
           });
-
-          lineAI.set({
+          lineAL.set({
             x1: points[0].x,
             y1: points[0].y,
-            x2: pointI.x,
-            y2: pointI.y,
-            stroke: "black",
+            x2: pointL.x,
+            y2: pointL.y,
+            stroke: "green",
           });
-
           lineBJ.set({
             x1: points[1].x,
             y1: points[1].y,
             x2: pointJ.x,
             y2: pointJ.y,
-            stroke: "black",
+            stroke: "green",
           });
-
           lineCK.set({
             x1: points[2].x,
             y1: points[2].y,
             x2: pointK.x,
             y2: pointK.y,
-            stroke: "black",
+            stroke: "green",
           });
-
-          mNode.set({
-            left: pointM.x - 0.75 * 3,
-            top: pointM.y - 0.75 * 3,
+          nNode.set({
+            left: pointN.x - 0.75 * 3,
+            top: pointN.y - 0.75 * 3,
             radius: 2,
-            fill: "blacks",
+            fill: "green",
           });
-          lNode.set({
-            left: pointL.x - 0.75 * 3,
-            top: pointL.y - 0.75 * 3,
+          gNode.set({
+            left: pointG.x - 0.75 * 3,
+            top: pointG.y - 0.75 * 3,
             radius: 2,
-            fill: "blacks",
+            fill: "blue",
+          });
+          iNode.set({
+            left: pointI.x - 0.75 * 3,
+            top: pointI.y - 0.75 * 3,
+            radius: 2,
+            fill: "Red",
           });
           const inCenter = calculateIncenter(coords[0], coords[1], coords[2]);
-
           const radius = calculateDistanceFromPointToLine(
             inCenter,
             makeLine(coords[1], coords[2])
           );
-
           const centerOfCircle = inscribedCircle.translateToCenterPoint(
             // {
             //   x: incenter.x,
@@ -317,38 +297,34 @@ export default defineComponent(
           });
         }
       );
-
       canvas.add(triangle);
-
       canvas.add(aLabel);
       canvas.add(bLabel);
       canvas.add(cLabel);
       canvas.add(dLabel);
       canvas.add(eLabel);
       canvas.add(fLabel);
-      canvas.add(iLabel);
+      canvas.add(lLabel);
       canvas.add(jLabel);
       canvas.add(kLabel);
-      canvas.add(lLabel);
-      canvas.add(mLabel);
-
+      canvas.add(gLabel);
+      canvas.add(nLabel);
       canvas.add(lineAD);
       canvas.add(lineBE);
       canvas.add(lineCF);
-      canvas.add(lineAI);
+      canvas.add(lineAL);
       canvas.add(lineBJ);
       canvas.add(lineCK);
-      canvas.add(lineAL);
-      canvas.add(lineBL);
-      canvas.add(lineCL);
-      canvas.add(lineAM);
-      canvas.add(lineBM);
-      canvas.add(lineCM);
-
-      canvas.add(mNode);
-      canvas.add(lNode);
-
-
+      canvas.add(lineAG);
+      canvas.add(lineBG);
+      canvas.add(lineCG);
+      canvas.add(lineAN);
+      canvas.add(lineBN);
+      canvas.add(lineCN);
+      canvas.add(nNode);
+      canvas.add(gNode);
+      canvas.add(iNode)
+      canvas.add(iLabel);
       canvas.add(inscribedCircle);
     }
   },
