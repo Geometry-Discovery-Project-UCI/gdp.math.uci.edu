@@ -10,7 +10,9 @@ declare module 'fabric' {
         
 
         interface Intersection {
-            intersectLineLine: (a1: Point, a2: Point, b1: Point, b2: Point, isSegment?: boolean) => Intersection
+            status?: string,
+            points?: Point[],
+            intersectLineLine: (a1: Point, a2: Point, b1: Point, b2: Point, isSegment?: boolean) => Intersection,
         }
     }
 }
@@ -26,7 +28,7 @@ export function overrides() {
     }
 
 
-    fabric.Intersection.prototype.intersectLineLine = function (a1, a2, b1, b2, isSegment = false) {
+    fabric.Intersection.prototype.intersectLineLine = function (a1, a2, b1, b2, isSegment = false): fabric.Intersection {
         let result: fabric.Intersection;
         const uaT = (b2.x - b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x),
             ubT = (a2.x - a1.x) * (a1.y - b1.y) - (a2.y - a1.y) * (a1.x - b1.x),
