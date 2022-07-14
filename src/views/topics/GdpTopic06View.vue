@@ -29,6 +29,8 @@ type Circle = fabric.Circle & {
   downLine?: Array<fabric.Line>,
   crossLines?: Array<fabric.Line>,
   label?: Label,
+  leftBound?: Circle,
+  rightBound?: Circle,
 }
 
 type Line = fabric.Line & {
@@ -171,7 +173,6 @@ export default defineComponent(
       const yLabel = makeLabel("Y", {x: -5, y: 20})
       const zLabel = makeLabel("Z", {x: -30, y: 0})
 
-
       const pointA = makeCircle(50, 400)
       const pointB = makeCircle(250, 400)
       const pointC = makeCircle(450, 400)
@@ -195,7 +196,6 @@ export default defineComponent(
       const cAprime = makeLine(pC, ppA, undefined, "blue")
       const cBprime = makeLine(pC, ppB, undefined, "blue")
 
-      // aBprime.set({x1: 60})
       const pZ = (fabric.Intersection.intersectLineLine(
         pA, ppB, ppA, pB) as Intersection).points![0]
       const pY = (fabric.Intersection.intersectLineLine(
@@ -205,6 +205,15 @@ export default defineComponent(
       const [pointX, pointY, pointZ] = [pX, pY, pZ].map(p => makeCircle(p, undefined, 3))
       log("pointX", pointX)
       setLabelToPoint([zLabel, yLabel, xLabel], [pointZ, pointY, pointX])
+
+      pointA.rightBound = pointB
+      pointB.leftBound = pointA
+      pointB.rightBound = pointC
+      pointC.leftBound = pointB
+      pointPrimeA.rightBound = pointPrimeB
+      pointPrimeB.leftBound = pointPrimeA
+      pointPrimeB.rightBound = pointPrimeC
+      pointPrimeC.leftBound = pointPrimeB
 
       const COLL_OFF_SET = 100
       const collinearLine = makeLine(pZ, pX, 2, "red") as Line
@@ -243,7 +252,14 @@ export default defineComponent(
 
       const onPointMove = (e: IEvent): void => {
         let p = e.target! as Circle
-        if (p.upLine != null) {
+        // Setting the boundaris of the point's position
+        if (p.leftBound && p.left! < p.leftBound.left!) {
+          p.left = p.leftBound.left
+        }
+        if (p.rightBound && p.left! > p.rightBound.left!) {
+          p.left = p.rightBound.left
+        }
+        if (p.upLine) {
           p.top = 400 // Hard-coded for now
         } else {
           p.top = upperLine.m! * p.left! + upperLine.b!
@@ -277,8 +293,6 @@ export default defineComponent(
 
       canvas.on("object:moving", onPointMove)
 
-      // aBprime.controls = 
-
       canvas.add(aLabel, bLabel, cLabel,
         aprimeLabel, bprimeLabel, cprimeLabel, xLabel, yLabel, zLabel)
       canvas.add(...movablePoints)
@@ -286,6 +300,10 @@ export default defineComponent(
       canvas.add(pointX, pointY, pointZ)
       canvas.add(bottomLine, upperLine)
       // const pB = new fabric.Point(90, 100);
+
+      /**
+       * Part two of animation Pascal Theorem
+       */
     },
   },
 );
