@@ -211,7 +211,20 @@ export function calculateSignedDistanceFromPointToLine(pt, v, w) {
 }
 
 
-
+export function polarToCartesian(radius, angle, center, isDegree=true) {
+  if (isDegree) {
+    angle *= (Math.PI / 180)
+  }
+  let res = {
+    x: radius * Math.cos(angle),
+    y: radius * Math.sin(angle)
+  }
+  if (center) {
+    res.x += center.x
+    res.y = center.y - res.y
+  }
+  return res
+}
 
 
 // The following functions will be obsolete
