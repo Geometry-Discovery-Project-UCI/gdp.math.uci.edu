@@ -59,18 +59,65 @@ export default defineComponent({
             });
         }
 
-        const circleA = createCircle(120, 150, 60);
-        const circleB = createCircle(270, 170, 40);
-        const circleC = createCircle(220, 300, 30);
+        const circleA = createCircle(150, 170, 70);
+        const circleB = createCircle(300, 220, 35);
+        const circleC = createCircle(220, 300, 20);
+
+        const nodeAB = createCircle();
+        const nodeBC = createCircle();
+        const nodeAC = createCircle();
 
         const labelA = createLabel("A");
         const labelB = createLabel("B");
         const labelC = createLabel("C");
 
+        function calculateTangentLineIntersection(p1: fabric.Point, r1: number, p2: fabric.Point, r2: number) {
+            const x = (r1 * p2.x - r2 * p1.x) / (r1 - r2);
+            const y = (r1 * p2.y - r2 * p1.y) / (r1 - r2);
+            return new fabric.Point(x, y);
+        }
+
         function changeCircles() {
+            const centers = [
+                new fabric.Point(circleA.left as number, circleA.top as number),
+                new fabric.Point(circleB.left as number, circleB.top as number),
+                new fabric.Point(circleC.left as number, circleC.top as number),
+            ]
             const radiusA = circleA.radius as number;
             const radiusB = circleB.radius as number;
             const radiusC = circleC.radius as number;
+
+            const intersectionAB = calculateTangentLineIntersection(centers[0], radiusA, centers[1], radiusB);
+            const intersectionBC = calculateTangentLineIntersection(centers[1], radiusB, centers[2], radiusC);
+            const intersectionAC = calculateTangentLineIntersection(centers[0], radiusA, centers[2], radiusC);
+            console.log(intersectionAB)
+            console.log(intersectionBC)
+            console.log(intersectionAC)
+
+            nodeAB.set({
+                left: intersectionAB.x,
+                top: intersectionAB.y,
+                hasControls: false,
+                evented: false,
+                radius: 2,
+                fill: "black",
+            });
+            nodeBC.set({
+                left: intersectionBC.x,
+                top: intersectionBC.y,
+                hasControls: false,
+                evented: false,
+                radius: 2,
+                fill: "black",
+            });
+            nodeAC.set({
+                left: intersectionAC.x,
+                top: intersectionAC.y,
+                hasControls: false,
+                evented: false,
+                radius: 2,
+                fill: "black",
+            });
 
             labelA.set({
                 left: circleA.left as number - radiusA - 25,
@@ -96,6 +143,9 @@ export default defineComponent({
         canvas.add(labelA);
         canvas.add(labelB);
         canvas.add(labelC);
+        canvas.add(nodeAB);
+        canvas.add(nodeBC);
+        canvas.add(nodeAC);
     }
 });
 </script>
