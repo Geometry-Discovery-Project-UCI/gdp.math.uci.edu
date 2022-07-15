@@ -15,12 +15,7 @@ import { indexTopicMap } from '@/data';
 import { Topic } from '@/types';
 import {fabric} from "fabric";
 import {makeLabel, makeLine, makeMovablePolygon} from "@/utils/canvas";
-import {
-  calculateLineIntersectInLinearEquation,
-  calculateThreeAngles,
-  solveLinearEquation,
-  trilinearToCartesian
-} from "@/utils/geometry";
+import {calculateThreeAngles, getPedalPoint, trilinearToCartesian} from "@/utils/geometry";
 
 const topic = indexTopicMap.get(30) as Topic;
 
@@ -36,13 +31,15 @@ export default defineComponent(
         const lineAB = makeLine();
         const lineBC = makeLine();
         const lineAC = makeLine();
-        const lineAH = makeLine();
-        const lineBH = makeLine();
-        const lineCH = makeLine();
         const lineAHa = makeLine();
         const lineBHb = makeLine();
         const lineCHc = makeLine();
-
+        const lineHbQa = makeLine();
+        const lineHcPa = makeLine();
+        const lineHaPb = makeLine();
+        const lineHcQb = makeLine();
+        const lineHbPc = makeLine();
+        const lineHaQc = makeLine();
 
         const aLabel = makeLabel("A");
         const bLabel = makeLabel("B");
@@ -51,6 +48,12 @@ export default defineComponent(
         const HALabel = makeLabel("Ha");
         const HBLabel = makeLabel("Hb");
         const HCLabel = makeLabel("Hc");
+        const QALabel = makeLabel("Qa");
+        const PALabel = makeLabel("Pa")
+        const QBLabel = makeLabel("Qb");
+        const PBLabel = makeLabel("Pb")
+        const QCLabel = makeLabel("Qc");
+        const PCLabel = makeLabel("Pc")
 
         const triangle = makeMovablePolygon(
           [
@@ -78,7 +81,7 @@ export default defineComponent(
               top: coords[1].y + 5,
             });
             cLabel.set({
-              left: coords[2].x + 10,
+              left: coords[2].x + 5,
               top: coords[2].y,
             });
 
@@ -99,96 +102,136 @@ export default defineComponent(
               top: pointH.y
             })
 
-            // Three lines of the triangle
-            const lineAB = solveLinearEquation(points[0], points[1]);
-            const lineBC = solveLinearEquation(points[1], points[2]);
-            const lineAC = solveLinearEquation(points[0], points[2]);
-
-            // Calculate line AH, will get m and b
-            const lineAH = solveLinearEquation(points[0], {
-              x: pointH.x,
-              y: pointH.y,
-            });
-
-            // Calculate pointHa
-            const pointHa = calculateLineIntersectInLinearEquation(
-              lineAH.m,
-              lineAH.b,
-              lineBC.m,
-              lineBC.b
-            );
+            // Perpendicular line from A to BC
+            const pedalPointHa = getPedalPoint(points[0], points[1], points[2]);
             // set pointHa position
             HALabel.set({
-              left: pointHa.x - 5,
-              top: pointHa.y + 20,
+              left: pedalPointHa.x - 5,
+              top: pedalPointHa.y + 10,
             });
-
             // make line AHa using two points
             lineAHa.set({
               x1: points[0].x,
               y1: points[0].y,
-              x2: pointHa.x,
-              y2: pointHa.y,
+              x2: pedalPointHa.x,
+              y2: pedalPointHa.y,
               stroke: "blue",
             });
 
-
-
-            // BH
-            const lineBH = solveLinearEquation(points[1], {
-              x: pointH.x,
-              y: pointH.y,
-            });
-            // Calculate pointHa
-            const pointHb = calculateLineIntersectInLinearEquation(
-              lineBH.m,
-              lineBH.b,
-              lineAC.m,
-              lineAC.b
-            );
-
+            // Perpendicular line from B to AC
+            const pedalPointHb = getPedalPoint(points[1], points[0], points[2]);
             HBLabel.set({
-              left: pointHb.x + 10,
-              top: pointHb.y - 20,
+              left: pedalPointHb.x + 10,
+              top: pedalPointHb.y - 20,
             });
-
             lineBHb.set({
               x1: points[1].x,
               y1: points[1].y,
-              x2: pointHb.x,
-              y2: pointHb.y,
+              x2: pedalPointHb.x,
+              y2: pedalPointHb.y,
               stroke: "blue",
             });
 
-
-
-            // CH
-            const lineCH = solveLinearEquation(points[2], {
-              x: pointH.x,
-              y: pointH.y,
-            });
-            // Calculate pointHa
-            const pointHc = calculateLineIntersectInLinearEquation(
-              lineCH.m,
-              lineCH.b,
-              lineAB.m,
-              lineAB.b
-            );
-
+            // Perpendicular line from C to AB
+            const pedalPointHc = getPedalPoint(points[2], points[0], points[1]);
             HCLabel.set({
-              left: pointHc.x - 35,
-              top: pointHc.y - 20,
+              left: pedalPointHc.x - 35,
+              top: pedalPointHc.y - 20,
             });
-
             lineCHc.set({
               x1: points[2].x,
               y1: points[2].y,
-              x2: pointHc.x,
-              y2: pointHc.y,
+              x2: pedalPointHc.x,
+              y2: pedalPointHc.y,
               stroke: "blue",
+            });
+
+            // Perpendicular line from Hb to BC
+            const pedalPointQa = getPedalPoint(pedalPointHb, points[1], points[2]);
+            QALabel.set({
+              left: pedalPointQa.x - 5,
+              top: pedalPointQa.y + 10,
+            });
+            lineHbQa.set({
+              x1: pedalPointHb.x,
+              y1: pedalPointHb.y,
+              x2: pedalPointQa.x,
+              y2: pedalPointQa.y,
+              stroke: "red",
+            });
+
+            // Perpendicular line from Hc to BC
+            const pedalPointPa = getPedalPoint(pedalPointHc, points[1], points[2]);
+            PALabel.set({
+              left: pedalPointPa.x - 5,
+              top: pedalPointPa.y + 10,
+            });
+            lineHcPa.set({
+              x1: pedalPointHc.x,
+              y1: pedalPointHc.y,
+              x2: pedalPointPa.x,
+              y2: pedalPointPa.y,
+              stroke: "red",
+            });
+
+            // Perpendicular line from Ha to AC
+            const pedalPointPb = getPedalPoint(pedalPointHa, points[0], points[2]);
+            PBLabel.set({
+              left: pedalPointPb.x + 10,
+              top: pedalPointPb.y - 20,
+            });
+            lineHaPb.set({
+              x1: pedalPointHa.x,
+              y1: pedalPointHa.y,
+              x2: pedalPointPb.x,
+              y2: pedalPointPb.y,
+              stroke: "orange",
+            });
+
+            // Perpendicular line from Ha to AC
+            const pedalPointQb = getPedalPoint(pedalPointHc, points[0], points[2]);
+            QBLabel.set({
+              left: pedalPointQb.x + 10,
+              top: pedalPointQb.y - 20,
+            });
+            lineHcQb.set({
+              x1: pedalPointHc.x,
+              y1: pedalPointHc.y,
+              x2: pedalPointQb.x,
+              y2: pedalPointQb.y,
+              stroke: "orange",
+            });
+
+            // Perpendicular line from Ha to AB
+            const pedalPointQc = getPedalPoint(pedalPointHa, points[0], points[1]);
+            QCLabel.set({
+              left: pedalPointQc.x - 35,
+              top: pedalPointQc.y - 20,
+            });
+            lineHaQc.set({
+              x1: pedalPointHa.x,
+              y1: pedalPointHa.y,
+              x2: pedalPointQc.x,
+              y2: pedalPointQc.y,
+              stroke: "green",
+            });
+
+            // Perpendicular line from Hb to AB
+            const pedalPointPc = getPedalPoint(pedalPointHb, points[0], points[1]);
+            PCLabel.set({
+              left: pedalPointPc.x - 35,
+              top: pedalPointPc.y - 20,
+            });
+            lineHbPc.set({
+              x1: pedalPointHb.x,
+              y1: pedalPointHb.y,
+              x2: pedalPointPc.x,
+              y2: pedalPointPc.y,
+              stroke: "green",
             });
           }
           );
+
         canvas.add(triangle);
         canvas.add(aLabel);
         canvas.add(bLabel);
@@ -197,16 +240,25 @@ export default defineComponent(
         canvas.add(HALabel);
         canvas.add(HBLabel);
         canvas.add(HCLabel);
+        canvas.add(QALabel);
+        canvas.add(PALabel);
+        canvas.add(PBLabel);
+        canvas.add(QBLabel);
+        canvas.add(QCLabel)
+        canvas.add(PCLabel)
 
         canvas.add(lineAB);
         canvas.add(lineBC);
         canvas.add(lineAC);
-        canvas.add(lineAH);
         canvas.add(lineAHa);
-        canvas.add(lineBH);
         canvas.add(lineBHb);
-        canvas.add(lineCH);
         canvas.add(lineCHc);
+        canvas.add(lineHbQa);
+        canvas.add(lineHcPa);
+        canvas.add(lineHaPb);
+        canvas.add(lineHcQb);
+        canvas.add(lineHaQc);
+        canvas.add(lineHbPc);
       }
     },
 );
