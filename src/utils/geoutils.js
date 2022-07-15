@@ -173,6 +173,5 @@ export const pedalPoint = (a, b, c, p) => {
 };
 
 export const radiansToDegress = (r) => {
-  const pi = 3.14;
-  return r * (180 / pi);
+  return r * (180 / Math.PI);
 };
