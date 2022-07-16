@@ -14,8 +14,15 @@ import { defineComponent } from 'vue';
 import { indexTopicMap } from '@/data';
 import { Topic } from '@/types';
 import {fabric} from "fabric";
-import {makeLabel, makeLine, makeMovablePolygon} from "@/utils/canvas";
-import {calculateThreeAngles, getPedalPoint, trilinearToCartesian} from "@/utils/geometry";
+import {makeCircle, makeLabel, makeLine, makeMovablePolygon} from "@/utils/canvas";
+import {
+  calculateDistanceBetweenTwoPoints,
+  calculateThreeAngles,
+  getPedalPoint,
+  trilinearToCartesian
+} from "@/utils/geometry";
+import {findDistance} from "@/utils/geoutils";
+import {Point} from "fabric/fabric-impl";
 
 const topic = indexTopicMap.get(30) as Topic;
 
@@ -55,11 +62,13 @@ export default defineComponent(
         const QCLabel = makeLabel("Qc");
         const PCLabel = makeLabel("Pc")
 
+        const taylorCircle = makeCircle();
+
         const triangle = makeMovablePolygon(
           [
             {
-              x: 175,
-              y: 75,
+              x: 255,
+              y: 100,
             },
             {
               x: 100,
@@ -85,10 +94,10 @@ export default defineComponent(
               top: coords[2].y,
             });
 
-            // Calulate three angle of the triangle
+            // Calculate three angle of the triangle ABC
             const angles = calculateThreeAngles(coords[0], coords[1], coords[2]);
 
-            // Orthocenter          --     sec A: sec B: sec C
+            // OrthoCenter          --     sec A: sec B: sec C
             const pointH = trilinearToCartesian(
               coords[0],
               coords[1],
@@ -106,8 +115,8 @@ export default defineComponent(
             const pedalPointHa = getPedalPoint(points[0], points[1], points[2]);
             // set pointHa position
             HALabel.set({
-              left: pedalPointHa.x - 5,
-              top: pedalPointHa.y + 10,
+              left: pedalPointHa.x - 10,
+              top: pedalPointHa.y + 5,
             });
             // make line AHa using two points
             lineAHa.set({
@@ -115,7 +124,7 @@ export default defineComponent(
               y1: points[0].y,
               x2: pedalPointHa.x,
               y2: pedalPointHa.y,
-              stroke: "blue",
+              stroke: "black",
             });
 
             // Perpendicular line from B to AC
@@ -129,7 +138,7 @@ export default defineComponent(
               y1: points[1].y,
               x2: pedalPointHb.x,
               y2: pedalPointHb.y,
-              stroke: "blue",
+              stroke: "black",
             });
 
             // Perpendicular line from C to AB
@@ -143,14 +152,14 @@ export default defineComponent(
               y1: points[2].y,
               x2: pedalPointHc.x,
               y2: pedalPointHc.y,
-              stroke: "blue",
+              stroke: "black",
             });
 
             // Perpendicular line from Hb to BC
             const pedalPointQa = getPedalPoint(pedalPointHb, points[1], points[2]);
             QALabel.set({
               left: pedalPointQa.x - 5,
-              top: pedalPointQa.y + 10,
+              top: pedalPointQa.y + 5,
             });
             lineHbQa.set({
               x1: pedalPointHb.x,
@@ -163,8 +172,8 @@ export default defineComponent(
             // Perpendicular line from Hc to BC
             const pedalPointPa = getPedalPoint(pedalPointHc, points[1], points[2]);
             PALabel.set({
-              left: pedalPointPa.x - 5,
-              top: pedalPointPa.y + 10,
+              left: pedalPointPa.x - 20,
+              top: pedalPointPa.y + 5,
             });
             lineHcPa.set({
               x1: pedalPointHc.x,
@@ -185,7 +194,7 @@ export default defineComponent(
               y1: pedalPointHa.y,
               x2: pedalPointPb.x,
               y2: pedalPointPb.y,
-              stroke: "orange",
+              stroke: "red",
             });
 
             // Perpendicular line from Ha to AC
@@ -199,7 +208,7 @@ export default defineComponent(
               y1: pedalPointHc.y,
               x2: pedalPointQb.x,
               y2: pedalPointQb.y,
-              stroke: "orange",
+              stroke: "red",
             });
 
             // Perpendicular line from Ha to AB
@@ -213,7 +222,7 @@ export default defineComponent(
               y1: pedalPointHa.y,
               x2: pedalPointQc.x,
               y2: pedalPointQc.y,
-              stroke: "green",
+              stroke: "red",
             });
 
             // Perpendicular line from Hb to AB
@@ -227,8 +236,32 @@ export default defineComponent(
               y1: pedalPointHb.y,
               x2: pedalPointPc.x,
               y2: pedalPointPc.y,
-              stroke: "green",
+              stroke: "red",
             });
+
+            // Calculate three angles of triangle PaPbPc
+            const angles2 = calculateThreeAngles(pedalPointPa, pedalPointPb, pedalPointPc);
+            // Taylor Circle center .
+            const taylorCircleCenter = trilinearToCartesian(
+              pedalPointPa,
+              pedalPointPb,
+              pedalPointPc,
+              Math.cos(angles2.x),
+              Math.cos(angles2.y),
+              Math.cos(angles2.z));
+            // Taylor Circle radius
+            const taylorCircleRadius = calculateDistanceBetweenTwoPoints(taylorCircleCenter, pedalPointPa);
+
+            // Set Taylor Circle properties.
+            taylorCircle.set({
+              originX: "center",
+              originY: "center",
+              radius: taylorCircleRadius,
+              left: taylorCircleCenter.x,
+              top: taylorCircleCenter.y,
+              stroke: "blue",
+              strokeWidth: 1.5,
+           })
           }
           );
 
@@ -246,7 +279,6 @@ export default defineComponent(
         canvas.add(QBLabel);
         canvas.add(QCLabel)
         canvas.add(PCLabel)
-
         canvas.add(lineAB);
         canvas.add(lineBC);
         canvas.add(lineAC);
@@ -259,6 +291,7 @@ export default defineComponent(
         canvas.add(lineHcQb);
         canvas.add(lineHaQc);
         canvas.add(lineHbPc);
+        canvas.add(taylorCircle);
       }
     },
 );
