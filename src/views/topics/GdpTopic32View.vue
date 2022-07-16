@@ -49,6 +49,18 @@ export default defineComponent({
             });
         }
 
+        function createLine(points?: number[], color?: string, strokeWidth?: number) {
+            return new fabric.Line(points || [], {
+                originX: "center",
+                originY: "center",
+                hasControls: false,
+                hasBorders: false,
+                evented: false,
+                stroke: color || "black",
+                strokeWidth: strokeWidth || 1,
+            });
+        }
+
         function createLabel(text: string, fontSize?: number, color?: string) {
             return new fabric.Text(text, {
                 hasControls: false,
@@ -63,18 +75,39 @@ export default defineComponent({
         const circleB = createCircle(300, 220, 35);
         const circleC = createCircle(220, 300, 20);
 
-        const nodeAB = createCircle();
-        const nodeBC = createCircle();
-        const nodeAC = createCircle();
+        const tangentLineAB1 = createLine([], "green");
+        const tangentLineAB2 = createLine([], "green");
+        const tangentLineBC1 = createLine([], "blue");
+        const tangentLineBC2 = createLine([], "blue");
+        const tangentLineAC1 = createLine([], "red");
+        const tangentLineAC2 = createLine([], "red");
+
+        const nodeP = createCircle();
+        const nodeQ = createCircle();
+        const nodeR = createCircle();
+
+        const colinearLine = createLine();
 
         const labelA = createLabel("A");
         const labelB = createLabel("B");
         const labelC = createLabel("C");
 
-        function calculateTangentLineIntersection(p1: fabric.Point, r1: number, p2: fabric.Point, r2: number) {
-            const x = (r1 * p2.x - r2 * p1.x) / (r1 - r2);
-            const y = (r1 * p2.y - r2 * p1.y) / (r1 - r2);
+        function calculateTangentLineIntersection(pt1: fabric.Point, r1: number, pt2: fabric.Point, r2: number) {
+            const x = (r1 * pt2.x - r2 * pt1.x) / (r1 - r2);
+            const y = (r1 * pt2.y - r2 * pt1.y) / (r1 - r2);
             return new fabric.Point(x, y);
+        }
+
+        function calculateTangentPointsOnCircle(c: fabric.Point, pt: fabric.Point, r: number) {
+            const d = c.distanceFrom(pt);
+            const th = Math.acos(r / d);
+            const directionAngle = Math.atan2(pt.y - c.y, pt.x - c.x);
+            const directionAngleT1C = th + directionAngle;
+            const directionAngleT2C = th - directionAngle;
+            return [
+                new fabric.Point(c.x + r * Math.cos(directionAngleT1C), c.y + r * Math.sin(directionAngleT1C)),
+                new fabric.Point(c.x + r * Math.cos(directionAngleT2C), c.y - r * Math.sin(directionAngleT2C))
+            ];
         }
 
         function changeCircles() {
@@ -86,38 +119,6 @@ export default defineComponent({
             const radiusA = circleA.radius as number;
             const radiusB = circleB.radius as number;
             const radiusC = circleC.radius as number;
-
-            const intersectionAB = calculateTangentLineIntersection(centers[0], radiusA, centers[1], radiusB);
-            const intersectionBC = calculateTangentLineIntersection(centers[1], radiusB, centers[2], radiusC);
-            const intersectionAC = calculateTangentLineIntersection(centers[0], radiusA, centers[2], radiusC);
-            console.log(intersectionAB)
-            console.log(intersectionBC)
-            console.log(intersectionAC)
-
-            nodeAB.set({
-                left: intersectionAB.x,
-                top: intersectionAB.y,
-                hasControls: false,
-                evented: false,
-                radius: 2,
-                fill: "black",
-            });
-            nodeBC.set({
-                left: intersectionBC.x,
-                top: intersectionBC.y,
-                hasControls: false,
-                evented: false,
-                radius: 2,
-                fill: "black",
-            });
-            nodeAC.set({
-                left: intersectionAC.x,
-                top: intersectionAC.y,
-                hasControls: false,
-                evented: false,
-                radius: 2,
-                fill: "black",
-            });
 
             labelA.set({
                 left: circleA.left as number - radiusA - 25,
@@ -131,11 +132,90 @@ export default defineComponent({
                 left: circleC.left as number - radiusC - 25,
                 top: circleC.top as number - 25,
             });
+
+            const intersectionAB = calculateTangentLineIntersection(centers[0], radiusA, centers[1], radiusB);
+            const intersectionBC = calculateTangentLineIntersection(centers[1], radiusB, centers[2], radiusC);
+            const intersectionAC = calculateTangentLineIntersection(centers[0], radiusA, centers[2], radiusC);
+
+            nodeP.set({
+                left: intersectionAB.x,
+                top: intersectionAB.y,
+                hasControls: false,
+                evented: false,
+                radius: 2,
+                fill: "black",
+            });
+            nodeQ.set({
+                left: intersectionBC.x,
+                top: intersectionBC.y,
+                hasControls: false,
+                evented: false,
+                radius: 2,
+                fill: "black",
+            });
+            nodeR.set({
+                left: intersectionAC.x,
+                top: intersectionAC.y,
+                hasControls: false,
+                evented: false,
+                radius: 2,
+                fill: "black",
+            });
+
+            colinearLine.set({
+                x1: intersectionAB.lerp(intersectionBC, 1.1).x,
+                y1: intersectionAB.lerp(intersectionBC, 1.1).y,
+                x2: intersectionAB.lerp(intersectionBC, -0.1).x,
+                y2: intersectionAB.lerp(intersectionBC, -0.1).y,
+                strokeDashArray: [5, 5],
+            });
+
+            const tangentPointsAB = calculateTangentPointsOnCircle(centers[0], intersectionAB, radiusA);
+            const tangentPointsBC = calculateTangentPointsOnCircle(centers[1], intersectionBC, radiusB);
+            const tangentPointsAC = calculateTangentPointsOnCircle(centers[0], intersectionAC, radiusA);
+
+            tangentLineAB1.set({
+                x1: tangentPointsAB[0].lerp(intersectionAB, 1.1).x,
+                y1: tangentPointsAB[0].lerp(intersectionAB, 1.1).y,
+                x2: tangentPointsAB[0].lerp(intersectionAB, -0.1).x,
+                y2: tangentPointsAB[0].lerp(intersectionAB, -0.1).y,
+            });
+            tangentLineAB2.set({
+                x1: tangentPointsAB[1].lerp(intersectionAB, 1.1).x,
+                y1: tangentPointsAB[1].lerp(intersectionAB, 1.1).y,
+                x2: tangentPointsAB[1].lerp(intersectionAB, -0.1).x,
+                y2: tangentPointsAB[1].lerp(intersectionAB, -0.1).y,
+            });
+            tangentLineBC1.set({
+                x1: tangentPointsBC[0].lerp(intersectionBC, 1.1).x,
+                y1: tangentPointsBC[0].lerp(intersectionBC, 1.1).y,
+                x2: tangentPointsBC[0].lerp(intersectionBC, -0.1).x,
+                y2: tangentPointsBC[0].lerp(intersectionBC, -0.1).y,
+            });
+            tangentLineBC2.set({
+                x1: tangentPointsBC[1].lerp(intersectionBC, 1.1).x,
+                y1: tangentPointsBC[1].lerp(intersectionBC, 1.1).y,
+                x2: tangentPointsBC[1].lerp(intersectionBC, -0.1).x,
+                y2: tangentPointsBC[1].lerp(intersectionBC, -0.1).y,
+            });
+            tangentLineAC1.set({
+                x1: tangentPointsAC[0].lerp(intersectionAC, 1.1).x,
+                y1: tangentPointsAC[0].lerp(intersectionAC, 1.1).y,
+                x2: tangentPointsAC[0].lerp(intersectionAC, -0.1).x,
+                y2: tangentPointsAC[0].lerp(intersectionAC, -0.1).y,
+            });
+            tangentLineAC2.set({
+                x1: tangentPointsAC[1].lerp(intersectionAC, 1.1).x,
+                y1: tangentPointsAC[1].lerp(intersectionAC, 1.1).y,
+                x2: tangentPointsAC[1].lerp(intersectionAC, -0.1).x,
+                y2: tangentPointsAC[1].lerp(intersectionAC, -0.1).y,
+            });
         }
 
         changeCircles();
 
         canvas.on("object:moving", changeCircles);
+        canvas.on("object:scaling", changeCircles);
 
         canvas.add(circleA);
         canvas.add(circleB);
@@ -143,9 +223,16 @@ export default defineComponent({
         canvas.add(labelA);
         canvas.add(labelB);
         canvas.add(labelC);
-        canvas.add(nodeAB);
-        canvas.add(nodeBC);
-        canvas.add(nodeAC);
+        canvas.add(tangentLineAB1);
+        canvas.add(tangentLineAB2);
+        canvas.add(tangentLineBC1);
+        canvas.add(tangentLineBC2);
+        canvas.add(tangentLineAC1);
+        canvas.add(tangentLineAC2);
+        canvas.add(nodeP);
+        canvas.add(nodeQ);
+        canvas.add(nodeR);
+        canvas.add(colinearLine);
     }
 });
 </script>
