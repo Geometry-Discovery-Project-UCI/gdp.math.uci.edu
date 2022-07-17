@@ -10,16 +10,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { indexTopicMap } from '@/data';
-import { Topic } from '@/types';
-import { fabric } from 'fabric';
+import { defineComponent } from "vue";
+import { indexTopicMap } from "@/data";
+import { Topic } from "@/types";
+import { fabric } from "fabric";
 import {
   makeLine,
   makeLabel,
   makeCircle,
   makeMovablePolygon
-} from '@/utils/canvas';
+} from "@/utils/canvas";
 import {
   calculateThreeAngles,
   trilinearToCartesian,
@@ -27,7 +27,7 @@ import {
   solveLinearEquation,
   calculateIncenter,
   calculateLineIntersectInLinearEquation
-} from '@/utils/geometry';
+} from "@/utils/geometry";
 const topic = indexTopicMap.get(8) as Topic;
 export default defineComponent(
   {
@@ -73,8 +73,8 @@ export default defineComponent(
           new fabric.Point(100, 400),
           new fabric.Point(400, 400),
         ],
-        function (coords: Array<fabric.Point>) {
-          const points = triangle.points as Array<fabric.Point>;
+        function (coords: fabric.Point[]) {
+          const points = triangle.points as fabric.Point[];
           aLabel.set({
             left: coords[0].x,
             top: coords[0].y - 30,
@@ -95,7 +95,7 @@ export default defineComponent(
             Math.pow((1 / Math.cos(angles.x / 2)), 2),
             Math.pow((1 / Math.cos(angles.y / 2)), 2),
             Math.pow((1 / Math.cos(angles.z / 2)), 2)
-          )
+          );
           const pointN = trilinearToCartesian(
             coords[0],
             coords[1],
@@ -103,7 +103,7 @@ export default defineComponent(
             Math.pow((1 / Math.sin(angles.x / 2)), 2),
             Math.pow((1 / Math.sin(angles.y / 2)), 2),
             Math.pow((1 / Math.sin(angles.z / 2)), 2)
-          )
+          );
           const pointI = calculateIncenter(coords[0], coords[1], coords[2]);
 
           const lineAB = solveLinearEquation(points[0], points[1]);
@@ -285,7 +285,7 @@ export default defineComponent(
       canvas.add(lineCN);
       canvas.add(nNode);
       canvas.add(gNode);
-      canvas.add(iNode)
+      canvas.add(iNode);
       canvas.add(iLabel);
       canvas.add(inscribedCircle);
     }

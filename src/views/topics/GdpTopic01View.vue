@@ -11,12 +11,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { indexTopicMap } from '@/data';
-import { Topic } from '@/types';
-import { fabric } from 'fabric';
-import { makeLine, makeLabel, makeMovablePolygon } from '@/utils/canvas';
-import { calculateThreeAngles, trilinearToCartesian } from '@/utils/geometry';
+import { defineComponent } from "vue";
+import { indexTopicMap } from "@/data";
+import { Topic } from "@/types";
+import { fabric } from "fabric";
+import { makeLine, makeLabel, makeMovablePolygon } from "@/utils/canvas";
+import { calculateThreeAngles, trilinearToCartesian } from "@/utils/geometry";
 
 const topic = indexTopicMap.get(1) as Topic;
 
@@ -49,7 +49,7 @@ export default defineComponent(
       const cprimeLabel = makeLabel("C'", 18);
 
       const triangle = makeMovablePolygon([new fabric.Point(187, 75), new fabric.Point(75, 375), new fabric.Point(375, 375)],
-        function (coords: Array<fabric.Point>) {
+        function (coords: fabric.Point[]) {
           aLabel.set({
             left: coords[0].x,
             top: coords[0].y - 30,
@@ -104,7 +104,6 @@ export default defineComponent(
             left: cprime.x - 17,
             top: cprime.y - 17,
           });
-
 
           BAprime.set(
             {

@@ -1,4 +1,4 @@
-import { fabric } from 'fabric';
+import { fabric } from "fabric";
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
@@ -19,8 +19,7 @@ export function getPedalPoint(from: fabric.Point, toA: fabric.Point, toB: fabric
       x: result.x,
       y: result.y,
     };
-  }
-  else {
+  } else {
     return {
       x: 0,
       y: 0,
@@ -29,46 +28,44 @@ export function getPedalPoint(from: fabric.Point, toA: fabric.Point, toB: fabric
   }
 }
 
-export function calculateIncenter(A: fabric.Point, B: fabric.Point, C: fabric.Point) {
+export function calculateIncenter(pointA: fabric.Point, pointB: fabric.Point, pointC: fabric.Point) {
   // Centroid         --     1 : 1 : 1
-  const incenter = trilinearToCartesian(A, B, C, 1, 1, 1);
+  const incenter = trilinearToCartesian(pointA, pointB, pointC, 1, 1, 1);
 
   return new fabric.Point(incenter.x, incenter.y);
 }
 
-export function calculateCentroid(A: fabric.Point, B: fabric.Point, C: fabric.Point) {
-  const a = calculateDistanceBetweenTwoPoints(B, C);
-  const b = calculateDistanceBetweenTwoPoints(A, C);
-  const c = calculateDistanceBetweenTwoPoints(A, B);
+export function calculateCentroid(pointA: fabric.Point, pointB: fabric.Point, pointC: fabric.Point) {
+  const a = calculateDistanceBetweenTwoPoints(pointB, pointC);
+  const b = calculateDistanceBetweenTwoPoints(pointA, pointC);
+  const c = calculateDistanceBetweenTwoPoints(pointA, pointB);
 
   // Centroid         --     a^{-1}:b^{-1}:c^{-1}=csc A: csc B: csc C
-  const centroid = trilinearToCartesian(A, B, C, 1 / a, 1 / b, 1 / c);
+  const centroid = trilinearToCartesian(pointA, pointB, pointC, 1 / a, 1 / b, 1 / c);
   return {
     x: centroid.x,
     y: centroid.y
-  }
+  };
 }
 
-
-export function calculateCircumcenter(A: fabric.Point, B: fabric.Point, C: fabric.Point) {
-  const a = B.distanceFrom(C);
-  const b = calculateDistanceBetweenTwoPoints(A, C);
-  const c = calculateDistanceBetweenTwoPoints(A, B);
-
+export function calculateCircumcenter(pointA: fabric.Point, pointB: fabric.Point, pointC: fabric.Point) {
+  const a = pointB.distanceFrom(pointC);
+  const b = calculateDistanceBetweenTwoPoints(pointA, pointC);
+  const c = calculateDistanceBetweenTwoPoints(pointA, pointB);
 
   // Circumcenter         --     cos A: cos B: cos C
   const x = (b ** 2 + c ** 2 - a ** 2) / 2 / b / c;
   const y = (a ** 2 + c ** 2 - b ** 2) / 2 / a / c;
   const z = (b ** 2 + a ** 2 - c ** 2) / 2 / b / a;
 
-  const circumcenter = trilinearToCartesian(A, B, C, x, y, z);
-  return new fabric.Point(circumcenter.x, circumcenter.y)
+  const circumcenter = trilinearToCartesian(pointA, pointB, pointC, x, y, z);
+  return new fabric.Point(circumcenter.x, circumcenter.y);
 }
 
-export function calculateOrthocenter(A: fabric.Point, B: fabric.Point, C: fabric.Point) {
-  const c = calculateDistanceBetweenTwoPoints(A, B);
-  const b = calculateDistanceBetweenTwoPoints(A, C);
-  const a = calculateDistanceBetweenTwoPoints(B, C);
+export function calculateOrthocenter(pointA: fabric.Point, pointB: fabric.Point, pointC: fabric.Point) {
+  const c = calculateDistanceBetweenTwoPoints(pointA, pointB);
+  const b = calculateDistanceBetweenTwoPoints(pointA, pointC);
+  const a = calculateDistanceBetweenTwoPoints(pointB, pointC);
 
   // Orthocenter         --     sec A: sec B: sec C
   const x = (b ** 2 + c ** 2 - a ** 2) / 2 / b / c;
@@ -80,26 +77,26 @@ export function calculateOrthocenter(A: fabric.Point, B: fabric.Point, C: fabric
   if (Math.abs(x) < EPS) {
     x1 = 1;
     y1 = 0;
-    z1 = 0
+    z1 = 0;
   } else if (Math.abs(y) < EPS) {
     x1 = 0;
     y1 = 1;
-    z1 = 0
+    z1 = 0;
   } else if (Math.abs(z) < EPS) {
     x1 = 0;
     y1 = 0;
-    z1 = 1
+    z1 = 1;
   } else {
     x1 = 1 / x;
     y1 = 1 / y;
-    z1 = 1 / z
+    z1 = 1 / z;
   }
-  const orthocenter = trilinearToCartesian(A, B, C, x1, y1, z1);
-  return new fabric.Point(orthocenter.x, orthocenter.y)
+  const orthocenter = trilinearToCartesian(pointA, pointB, pointC, x1, y1, z1);
+  return new fabric.Point(orthocenter.x, orthocenter.y);
 }
 
 export function calculateMidpoint(p1: fabric.Point, p2: fabric.Point) {
-  return new fabric.Point((p1.x + p2.x) / 2, (p1.y + p2.y) / 2)
+  return new fabric.Point((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
 }
 
 export function calculateDistanceBetweenTwoPoints(pt1: fabric.Point, pt2: fabric.Point) {
@@ -123,10 +120,10 @@ export function calculateDistanceFromPointToLine(pt: fabric.Point, line: fabric.
 }
 
 // Angles of a triangle
-export function calculateThreeAngles(A: fabric.Point, B: fabric.Point, C: fabric.Point) {
-  const c = calculateDistanceBetweenTwoPoints(A, B);
-  const b = calculateDistanceBetweenTwoPoints(A, C);
-  const a = calculateDistanceBetweenTwoPoints(B, C);
+export function calculateThreeAngles(pointA: fabric.Point, pointB: fabric.Point, pointC: fabric.Point) {
+  const c = calculateDistanceBetweenTwoPoints(pointA, pointB);
+  const b = calculateDistanceBetweenTwoPoints(pointA, pointC);
+  const a = calculateDistanceBetweenTwoPoints(pointB, pointC);
 
   return {
     x: Math.acos((b ** 2 + c ** 2 - a ** 2) / 2 / b / c),
@@ -151,49 +148,50 @@ export function calculateThreeAngles(A: fabric.Point, B: fabric.Point, C: fabric
 // Gergonne point       --     (sec A/2)^2:(sec B/2)^2:(sec C/2)^2
 // Nagal point          --     (csc A/2)^2:(csc B/2)^2:(csc C/2)^2
 
-export function trilinearToCartesian(A: fabric.Point, B: fabric.Point, C: fabric.Point, a: number, b: number, c: number) {
-  const AB = calculateDistanceBetweenTwoPoints(A, B);
-  const CA = calculateDistanceBetweenTwoPoints(A, C);
-  const BC = calculateDistanceBetweenTwoPoints(B, C);
+export function trilinearToCartesian(pointA: fabric.Point, pointB: fabric.Point, pointC: fabric.Point, a: number, b: number, c: number) {
+  const AB = calculateDistanceBetweenTwoPoints(pointA, pointB);
+  const CA = calculateDistanceBetweenTwoPoints(pointA, pointC);
+  const BC = calculateDistanceBetweenTwoPoints(pointB, pointC);
 
   return {
-    x: (a * BC * A.x + b * CA * B.x + c * AB * C.x) / (c * AB + b * CA + a * BC),
-    y: (a * BC * A.y + b * CA * B.y + c * AB * C.y) / (c * AB + b * CA + a * BC),
+    x: (a * BC * pointA.x + b * CA * pointB.x + c * AB * pointC.x) / (c * AB + b * CA + a * BC),
+    y: (a * BC * pointA.y + b * CA * pointB.y + c * AB * pointC.y) / (c * AB + b * CA + a * BC),
   };
 }
 
 // Conversion of Cartesian coordinate system to Trilinear coordinate system
 // By the defintion of trilinear coordinates, they are signed distances to three sides, but need to be calibrated by the orientation.
 
-export function cartesianToTrilinear(A: Array<number>, B: Array<number>, C: Array<number>, P: Array<number>) {
+export function cartesianToTrilinear(pointA: number[], pointB: number[], pointC: number[], pointP: number[]) {
   return {
     x:
-      calculateSignedDistanceFromPointToLine(P, B, C) *
-      Math.sign(calculateSignedDistanceFromPointToLine(A, B, C)),
+      calculateSignedDistanceFromPointToLine(pointP, pointB, pointC) *
+      Math.sign(calculateSignedDistanceFromPointToLine(pointA, pointB, pointC)),
     y:
-      calculateSignedDistanceFromPointToLine(P, A, C) *
-      Math.sign(calculateSignedDistanceFromPointToLine(B, A, C)),
+      calculateSignedDistanceFromPointToLine(pointP, pointA, pointC) *
+      Math.sign(calculateSignedDistanceFromPointToLine(pointB, pointA, pointC)),
     z:
-      calculateSignedDistanceFromPointToLine(P, A, B) *
-      Math.sign(calculateSignedDistanceFromPointToLine(C, B, A)),
+      calculateSignedDistanceFromPointToLine(pointP, pointA, pointB) *
+      Math.sign(calculateSignedDistanceFromPointToLine(pointC, pointB, pointA)),
   };
 }
 
 // Singed distance, whose absolte value is the distance of a point to a line.
-export function calculateSignedDistanceFromPointToLine(pt: Array<number>, v: Array<number>, w: Array<number>) {
+export function calculateSignedDistanceFromPointToLine(pt: number[], v: number[], w: number[]) {
   const ab = Math.sqrt((w[2] - v[2]) ** 2 + (w[1] - v[1]) ** 2);
   return ((w[2] - v[2]) * (pt[1] - v[1]) - (w[1] - v[1]) * (pt[2] - v[2])) / ab;
 }
 
-export function polarToCartesian(radius: number, angle: number, center: fabric.Point | null = null, isDegree = true) {
+export function polarToCartesian(radius: number, angle: number, center?: fabric.Point, isDegree = true) {
   if (isDegree) {
     angle *= (Math.PI / 180);
   }
   const res = {
     x: radius * Math.cos(angle),
     y: radius * Math.sin(angle),
-  }
-  if (center !== null) {
+  };
+
+  if (center !== undefined) {
     res.x += center.x;
     res.y = center.y - res.y;
   }
@@ -209,11 +207,10 @@ export function calculateSlope(pt1: fabric.Point, pt2: fabric.Point) {
   }
 }
 
-
 export function calculateLineIntersectInLinearEquation(m1: number, b1: number, m2: number, b2: number) {
   const x = (b2 - b1) / (m1 - m2);
   const y = m1 * x + b1;
-  return new fabric.Point(x, y)
+  return new fabric.Point(x, y);
 }
 
 export function solveLinearEquation(pt1: fabric.Point, pt2: fabric.Point) {
@@ -271,17 +268,17 @@ export function calculateLineIntersectInPoints(line1: fabric.Line, line2: fabric
 export const CANVAS_WIDTH = 500;
 export const CANVAS_HEIGHT = 500;
 
-export const findMidpoint = (pt0: Array<number>, pt1: Array<number>) => {
+export const findMidpoint = (pt0: number[], pt1: number[]) => {
   return [(pt0[0] + pt1[0]) / 2, (pt0[1] + pt1[1]) / 2];
-}
+};
 
-export const findSlope = (pt0: Array<number>, pt1: Array<number>) => {
+export const findSlope = (pt0: number[], pt1: number[]) => {
   if (pt0[0] !== pt1[0]) {
     return (pt1[1] - pt0[1]) / (pt1[0] - pt0[0]);
   } else {
     return NaN;
   }
-}
+};
 
 export const isInside = (x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, x: number, y: number) => {
   const A = area(x1, y1, x2, y2, x3, y3);
@@ -290,9 +287,9 @@ export const isInside = (x1: number, y1: number, x2: number, y2: number, x3: num
   const A3 = area(x1, y1, x2, y2, x, y);
 
   return Math.abs(A - A1 - A2 - A3) <= 0.0000001;
-}
+};
 
-export const findDistance = (pt0: Array<number>, pt1: Array<number>,) => {
+export const findDistance = (pt0: number[], pt1: number[],) => {
   return Math.sqrt((pt0[0] - pt1[0]) ** 2 + (pt0[1] - pt1[1]) ** 2);
 };
 
@@ -300,7 +297,7 @@ export const area = (x1: number, y1: number, x2: number, y2: number, x3: number,
   return Math.abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0;
 };
 
-export const distToLine = (p: Array<number>, v: Array<number>, w: Array<number>) => {
+export const distToLine = (p: number[], v: number[], w: number[]) => {
   const l2 = findDistance(v, w);
   if (l2 === 0) return findDistance(p, v);
   const t =
@@ -311,21 +308,21 @@ export const distToLine = (p: Array<number>, v: Array<number>, w: Array<number>)
   );
 };
 
-export const pointAlongLine = (A: Array<number>, B: Array<number>, d: number) => {
-  const dAB = findDistance(A, B);
-  const Cx = ((B[0] - A[0]) * d) / dAB + A[0];
-  const Cy = ((B[1] - A[1]) * d) / dAB + A[1];
+export const pointAlongLine = (pointA: number[], pointB: number[], d: number) => {
+  const dAB = findDistance(pointA, pointB);
+  const Cx = ((pointB[0] - pointA[0]) * d) / dAB + pointA[0];
+  const Cy = ((pointB[1] - pointA[1]) * d) / dAB + pointA[1];
   return [Cx, Cy];
 };
 
-export const lineLineIntersection = (A: Array<number>, B: Array<number>, C: Array<number>, D: Array<number>) => {
-  const a1 = B[1] - A[1];
-  const b1 = A[0] - B[0];
-  const c1 = a1 * A[0] + b1 * A[1];
+export const lineLineIntersection = (pointA: number[], pointB: number[], pointC: number[], pointD: number[]) => {
+  const a1 = pointB[1] - pointA[1];
+  const b1 = pointA[0] - pointB[0];
+  const c1 = a1 * pointA[0] + b1 * pointA[1];
 
-  const a2 = D[1] - C[1];
-  const b2 = C[0] - D[0];
-  const c2 = a2 * C[0] + b2 * C[1];
+  const a2 = pointD[1] - pointC[1];
+  const b2 = pointC[0] - pointD[0];
+  const c2 = a2 * pointC[0] + b2 * pointC[1];
 
   const determinant = a1 * b2 - a2 * b1;
 
@@ -338,7 +335,7 @@ export const lineLineIntersection = (A: Array<number>, B: Array<number>, C: Arra
   }
 };
 
-export const projectPoint2Line = (p: Array<number>, a: Array<number>, b: Array<number>) => {
+export const projectPoint2Line = (p: number[], a: number[], b: number[]) => {
   const atob = [b[0] - a[0], b[1] - a[1]];
   const atop = [p[0] - a[0], p[1] - a[1]];
 
@@ -350,7 +347,7 @@ export const projectPoint2Line = (p: Array<number>, a: Array<number>, b: Array<n
   return [a[0] + atob[0] * t, a[1] + atob[1] * t];
 };
 
-export const drawFullLine = (pt: Array<number>, m: number, line: Element) => {
+export const drawFullLine = (pt: number[], m: number, line: Element) => {
   if (isNaN(m)) {
     m = 0;
   } else if (!isFinite(m)) {
@@ -370,28 +367,28 @@ export const ptoPointRad = (theta: number, rad: number) => {
   return [rad * Math.cos(theta), -rad * Math.sin(theta)];
 };
 
-export const drawLine = (a: Array<number>, b: Array<number>, l: Element) => {
+export const drawLine = (a: number[], b: number[], l: Element) => {
   l.setAttributeNS(null, "x1", String(a[0]));
   l.setAttributeNS(null, "y1", String(a[1]));
   l.setAttributeNS(null, "x2", String(b[0]));
   l.setAttributeNS(null, "y2", String(b[1]));
 };
 
-export const makeString = (arr: Array<Array<string | number>>) => {
+export const makeString = (arr: (string | number)[][]) => {
   return `${arr[0][0]},${arr[0][1]} ${arr[1][0]},${arr[1][1]} ${arr[2][0]},${arr[2][1]}`;
 };
 
-export const makeSvgTriangle = (pt0: Array<number>, pt1: Array<number>, pt2: Array<number>, ptoTri: Element) => {
+export const makeSvgTriangle = (pt0: number[], pt1: number[], pt2: number[], ptoTri: Element) => {
   ptoTri.setAttributeNS(null, "points", makeString([pt0, pt1, pt2]));
 };
 
-export const getEquationFromPoint = (a: Array<number>, b: Array<number>) => {
+export const getEquationFromPoint = (a: number[], b: number[]) => {
   const m = (a[1] - b[1]) / (a[0] - b[0]);
   const bb = a[1] - m * a[0];
   return [m, bb];
 };
 
-export const pedalPoint = (a: Array<number>, b: Array<number>, c: Array<number>, p: Array<number>) => {
+export const pedalPoint = (a: number[], b: number[], c: number[], p: number[]) => {
   const equAB = getEquationFromPoint(a, b);
   const equAC = getEquationFromPoint(a, c);
   const equBC = getEquationFromPoint(b, c);

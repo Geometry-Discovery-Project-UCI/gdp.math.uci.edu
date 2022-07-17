@@ -30,10 +30,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { indexTopicMap } from '@/data';
-import { Topic } from '@/types';
-import { drawFullLine, drawLine, findSlope, pedalPoint, projectPoint2Line, radiansToDegress } from '@/utils/geometry';
+import { defineComponent } from "vue";
+import { indexTopicMap } from "@/data";
+import { Topic } from "@/types";
+import { drawFullLine, drawLine, findSlope, pedalPoint, projectPoint2Line, radiansToDegress } from "@/utils/geometry";
 const topic = indexTopicMap.get(5) as Topic;
 export default defineComponent(
   {
@@ -104,7 +104,6 @@ export default defineComponent(
         raA?.setAttribute("width", "8");
         raA?.setAttribute("height", "8");
 
-
         if (p.y > p1[1]) {
           raA?.setAttribute("y", p1[1] + "");
         } else {
@@ -125,7 +124,7 @@ export default defineComponent(
         const tBC = Math.atan(mBC);
         const tAC = Math.atan(mAC);
 
-        if (section == 2) {
+        if (section === 2) {
           drawLine(pC, pBi, lineE);
           drawLine(pA, p1, lineE2);
           raB?.setAttribute("x", String(pBi[0]));
@@ -155,7 +154,7 @@ export default defineComponent(
           );
         }
 
-        if (section == 4) {
+        if (section === 4) {
           drawLine(pB, pBi, lineE);
           drawLine(pA, p1, lineE2);
           raC?.setAttribute("x", String(pAi[0]));
@@ -185,7 +184,7 @@ export default defineComponent(
           );
         }
 
-        if (section == 6) {
+        if (section === 6) {
           drawLine(pC, pAi, lineE);
           drawLine(pB, p1, lineE2);
           raC?.setAttribute("x", String(pAi[0]));
@@ -223,7 +222,7 @@ export default defineComponent(
 
       tri?.setAttributeNS(null, "points", makeString(points));
 
-      const svgEle = svg as SVGGraphicsElement
+      const svgEle = svg as SVGGraphicsElement;
       svgEle?.addEventListener("mousemove", (event) => {
         p = new DOMPoint(event.clientX, event.clientY);
         p = p.matrixTransform(svgEle.getScreenCTM()?.inverse());

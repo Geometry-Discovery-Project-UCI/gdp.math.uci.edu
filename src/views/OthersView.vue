@@ -40,10 +40,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { otherEssays, otherLinks, otherImages } from '@/data';
-import { LinkOutlined } from '@ant-design/icons-vue';
-import { defaultGridParams } from '@/consts';
+import { defineComponent } from "vue";
+import { otherEssays, otherLinks, otherImages } from "@/data";
+import { LinkOutlined } from "@ant-design/icons-vue";
+import { defaultGridParams } from "@/consts";
 
 export default defineComponent({
   components: {
@@ -57,10 +57,10 @@ export default defineComponent({
   data() {
     return {
       materials: [{
-        name: 'Essays',
+        name: "Essays",
         data: otherEssays,
       }, {
-        name: 'Links',
+        name: "Links",
         data: otherLinks,
       }],
       otherImages,

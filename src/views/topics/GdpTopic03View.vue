@@ -30,16 +30,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { indexTopicMap } from '@/data';
-import { Topic } from '@/types';
-import { fabric } from 'fabric';
+import { defineComponent } from "vue";
+import { indexTopicMap } from "@/data";
+import { Topic } from "@/types";
+import { fabric } from "fabric";
 import { makeCircle, makeLabel, makeLine, makeMovablePolygon } from "@/utils/canvas";
 import {
   calculateDistanceFromPointToLine, calculateIncenter,
   calculateLineIntersectInLinearEquation, calculateLineIntersectInPoints, calculateMidpoint,
   solveLinearEquation, solvePerpendicularLineEquation
-} from '@/utils/geometry';
+} from "@/utils/geometry";
 const topic = indexTopicMap.get(3) as Topic;
 export default defineComponent(
   {
@@ -72,7 +72,7 @@ export default defineComponent(
         const incircle = makeCircle();
 
         const triangle = makeMovablePolygon([new fabric.Point(125, 50), new fabric.Point(50, 450), new fabric.Point(450, 450)],
-          function (coords: Array<fabric.Point>) {
+          function (coords: fabric.Point[]) {
             aLabel.set({
               left: coords[0].x,
               top: coords[0].y - 30,
@@ -204,7 +204,7 @@ export default defineComponent(
 
         const triangle = makeMovablePolygon(
           [new fabric.Point(125, 50), new fabric.Point(50, 450), new fabric.Point(450, 450)],
-          function (coords: Array<fabric.Point>) {
+          function (coords: fabric.Point[]) {
             const mp1 = calculateMidpoint(coords[0], coords[1]);
             const mp2 = calculateMidpoint(coords[0], coords[2]);
             const mp3 = calculateMidpoint(coords[1], coords[2]);
@@ -295,7 +295,6 @@ export default defineComponent(
         const heightOnAC = makeLine();
         const heightOnAB = makeLine();
 
-
         function getPedalPoint(from: fabric.Point, toA: fabric.Point, toB: fabric.Point) {
           const targetLinEq = solveLinearEquation(toA, toB);
           const heightLinEq = solvePerpendicularLineEquation(targetLinEq.m, from);
@@ -308,7 +307,7 @@ export default defineComponent(
         }
 
         const triangle = makeMovablePolygon([new fabric.Point(125, 50), new fabric.Point(50, 450), new fabric.Point(450, 450)],
-          function (coords: Array<fabric.Point>) {
+          function (coords: fabric.Point[]) {
             aLabel.set({
               left: coords[0].x,
               top: coords[0].y - 30,
@@ -357,7 +356,7 @@ export default defineComponent(
         canvas.add(heightOnBC);
         canvas.add(heightOnAC);
         canvas.add(heightOnAB);
-      })()
+      })();
     },
   },
 );

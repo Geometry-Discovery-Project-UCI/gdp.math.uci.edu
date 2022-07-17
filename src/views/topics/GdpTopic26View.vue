@@ -10,21 +10,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { indexTopicMap } from '@/data';
-import { Topic } from '@/types';
-import { fabric } from 'fabric';
+import { defineComponent } from "vue";
+import { indexTopicMap } from "@/data";
+import { Topic } from "@/types";
+import { fabric } from "fabric";
 import {
     makeLine,
     makeLabel,
     makeCircle,
     makeMovablePolygon
-} from '@/utils/canvas';
+} from "@/utils/canvas";
 import {
     calculateLineIntersectInPoints,
     calculateMidpoint,
     calculateSlope
-} from '@/utils/geometry';
+} from "@/utils/geometry";
 
 const topic = indexTopicMap.get(26) as Topic;
 
@@ -75,7 +75,7 @@ export default defineComponent(
                     new fabric.Point(270, 420),
                     new fabric.Point(245, 340),
                 ],
-                function (coords: Array<fabric.Point>) {
+                function (coords: fabric.Point[]) {
                     // Change quadrilateral color
                     quadrilateral.set({
                         stroke: "green",

@@ -1,8 +1,8 @@
-import { fabric } from 'fabric';
+import { fabric } from "fabric";
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
-function _polygonPositionHandler(fn?: (points: Array<fabric.Point>) => void) {
+function _polygonPositionHandler(fn?: (points: fabric.Point[]) => void) {
   return function (this: { pointIndex: number }, _dim: any, _finalMatrix: any, fabricObject: fabric.Polygon) {
     const c = fabricObject.points!.map(function (pt: fabric.Point) {
       const transformPoint = new fabric.Point(pt.x - fabricObject.pathOffset.x, pt.y - fabricObject.pathOffset.y);
@@ -22,7 +22,7 @@ function _polygonPositionHandler(fn?: (points: Array<fabric.Point>) => void) {
 }
 
 function _actionHandler(_eventData: any, transform: fabric.Transform, x: number, y: number) {
-  type MyFabricObject = fabric.Polygon & { __corner: any }
+  type MyFabricObject = fabric.Polygon & { __corner: any };
   const polygon = transform.target as MyFabricObject;
   const currentControl: any = polygon.controls[polygon.__corner];
   const mouseLocalPosition = polygon.toLocalPoint(
@@ -65,7 +65,7 @@ function _anchorWrapper(anchorIndex: number, fn: (eventData: MouseEvent, transfo
   };
 }
 
-export function makeMovablePolygon(vertexes: Array<fabric.Point>, fn: (points: fabric.Point[]) => void) {
+export function makeMovablePolygon(vertexes: fabric.Point[], fn: (points: fabric.Point[]) => void) {
   const polygon = new fabric.Polygon(vertexes, {
     fill: "transparent",
     strokeWidth: 1.5,
@@ -82,7 +82,7 @@ export function makeMovablePolygon(vertexes: Array<fabric.Point>, fn: (points: f
   polygon.controls = polygon.points!.reduce(function (acc: any, _point, index) {
     type MyFabricControl = fabric.Control & {
       pointIndex: number
-    }
+    };
     const control = new fabric.Control({
       positionHandler: _polygonPositionHandler(fn),
       actionHandler: _anchorWrapper(
@@ -91,20 +91,20 @@ export function makeMovablePolygon(vertexes: Array<fabric.Point>, fn: (points: f
       ),
       actionName: "modifyPolygon",
     }) as MyFabricControl;
-    control.pointIndex = index
+    control.pointIndex = index;
     acc["p" + index] = control;
     return acc;
   }, {});
   return polygon;
 }
 
-export function makeLine(pt1: fabric.Point = new fabric.Point(0, 0), pt2: fabric.Point = new fabric.Point(0, 0), strokeWidth = 1, color = 'black') {
+export function makeLine(pt1: fabric.Point = new fabric.Point(0, 0), pt2: fabric.Point = new fabric.Point(0, 0), strokeWidth = 1, color = "black") {
   return new fabric.Line([pt1.x, pt1.y, pt2.x, pt2.y], {
     stroke: color,
     hasControls: false,
     hasBorders: false,
     evented: false,
-    strokeWidth: strokeWidth,
+    strokeWidth,
   });
 }
 
@@ -113,7 +113,7 @@ export function makeLabel(text: string, fontSize = 24) {
     hasControls: false,
     hasBorders: false,
     evented: false,
-    fontSize: fontSize,
+    fontSize,
   });
 }
 
@@ -125,8 +125,8 @@ export function makeCircle(radius = 5, center: fabric.Point = new fabric.Point(0
     hasBorders: false,
     evented: false,
     radius,
-    fill: fill,
-    strokeWidth: strokeWidth,
+    fill,
+    strokeWidth,
   });
 }
 

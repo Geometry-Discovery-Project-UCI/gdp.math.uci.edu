@@ -23,9 +23,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { topics } from '@/data';
-import { defaultGridParams } from '@/consts';
+import { defineComponent } from "vue";
+import { topics } from "@/data";
+import { defaultGridParams } from "@/consts";
 
 export default defineComponent({
   setup() {

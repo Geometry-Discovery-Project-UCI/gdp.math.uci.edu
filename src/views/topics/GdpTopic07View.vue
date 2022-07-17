@@ -46,9 +46,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { indexTopicMap } from '@/data';
-import { Topic } from '@/types';
+import { defineComponent } from "vue";
+import { indexTopicMap } from "@/data";
+import { Topic } from "@/types";
 import {
   drawLine,
   findDistance,
@@ -127,13 +127,13 @@ export default defineComponent(
           makeString([points[0], points[1], points[2]])
         );
 
-        const pCN = lineLineIntersection(pC, pP, pA, pB) as Array<number>;
+        const pCN = lineLineIntersection(pC, pP, pA, pB) as number[];
         drawLine(pC, pCN, line4);
 
-        const pAN = lineLineIntersection(pA, pP, pC, pB) as Array<number>;
+        const pAN = lineLineIntersection(pA, pP, pC, pB) as number[];
         drawLine(pA, pAN, line5);
 
-        const pBN = lineLineIntersection(pB, pP, pC, pA) as Array<number>;
+        const pBN = lineLineIntersection(pB, pP, pC, pA) as number[];
         drawLine(pB, pBN, line6);
 
         const dC = findDistance(pCN, pB);
@@ -187,7 +187,7 @@ export default defineComponent(
       // svg.("onclick", (event) => {
       //   constp;
       // });
-      const svgElement = svg as SVGGraphicsElement
+      const svgElement = svg as SVGGraphicsElement;
       svgElement.addEventListener("mousemove", (event) => {
         let p = new DOMPoint(event.clientX, event.clientY);
         p = p.matrixTransform(svgElement.getScreenCTM()?.inverse());

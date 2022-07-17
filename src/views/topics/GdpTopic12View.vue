@@ -41,7 +41,7 @@ export default defineComponent({
       });
     }
 
-    function createPolygon(vertices?: Array<fabric.Point>): fabric.Polygon {
+    function createPolygon(vertices?: fabric.Point[]): fabric.Polygon {
       return new fabric.Polygon(vertices || [], {
         fill: "transparent",
         stroke: "black",
@@ -130,7 +130,7 @@ export default defineComponent({
         new fabric.Point(vertexA.left as number, vertexA.top as number),
         new fabric.Point(vertexB.left as number, vertexB.top as number),
         new fabric.Point(vertexC.left as number, vertexC.top as number),
-      ]
+      ];
 
       triangle.set({
         points: vertices,
@@ -362,7 +362,7 @@ export default defineComponent({
     canvas.add(extendedLineAH);
     canvas.add(extendedLineBH);
     canvas.add(extendedLineCH);
-    canvas.add(circumCircle)
+    canvas.add(circumCircle);
     canvas.add(aLabel);
     canvas.add(bLabel);
     canvas.add(cLabel);
