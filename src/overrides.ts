@@ -7,8 +7,6 @@ declare module 'fabric' {
             dot: (that: Point) => number
         }
 
-        
-
         interface Intersection {
             status?: string,
             points?: Point[],
@@ -22,11 +20,9 @@ export function overrides() {
         return this.x * that.x + this.y * that.y;
     }
 
-    fabric.Point.prototype.lerp = function (that,t=0.5) {
-          return new fabric.Point(this.x + (that.x - this.x) * t, this.y + (that.y - this.y) * t);
-       
+    fabric.Point.prototype.lerp = function (that, t = 0.5) {
+        return new fabric.Point(this.x + (that.x - this.x) * t, this.y + (that.y - this.y) * t);
     }
-
 
     fabric.Intersection.prototype.intersectLineLine = function (a1, a2, b1, b2, isSegment = false): fabric.Intersection {
         let result: fabric.Intersection;
@@ -39,16 +35,13 @@ export function overrides() {
             if (!isSegment || 0 <= ua && ua <= 1 && 0 <= ub && ub <= 1) {
                 result = new fabric.Intersection('Intersection');
                 result.appendPoint(new fabric.Point(a1.x + ua * (a2.x - a1.x), a1.y + ua * (a2.y - a1.y)));
-            }
-            else {
+            } else {
                 result = new fabric.Intersection();
             }
-        }
-        else {
+        } else {
             if (uaT === 0 || ubT === 0) {
                 result = new fabric.Intersection('Coincident');
-            }
-            else {
+            } else {
                 result = new fabric.Intersection('Parallel');
             }
         }

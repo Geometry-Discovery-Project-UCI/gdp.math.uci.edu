@@ -69,18 +69,9 @@ export default defineComponent({
     // create triangle
     const triangle = makeMovablePolygon(
       [
-        {
-          x: 175,
-          y: 75,
-        },
-        {
-          x: 100,
-          y: 400,
-        },
-        {
-          x: 400,
-          y: 400,
-        },
+        new fabric.Point(175, 75),
+        new fabric.Point(100, 400),
+        new fabric.Point(400, 400),
       ],
       // set label for triangle's vertices
       function (coords: Array<fabric.Point>) {
@@ -101,7 +92,6 @@ export default defineComponent({
         const pedalPointOnAC = getPedalPoint(coords[1], coords[0], coords[2]);
         const pedalPointOnAB = getPedalPoint(coords[2], coords[0], coords[1]);
 
-   
 
         // set line coordinates for three altitudes
         if (pedalPointOnAB.y < coords[0].y) {

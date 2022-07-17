@@ -5,8 +5,7 @@
   </ATypographyParagraph>
   <div class="app">
     <ATypographyTitle :level="4">Animated Isogonal Conjugate</ATypographyTitle>
-    <svg id="tri-app_isotomic" width="500" height="500"
-         style="border: 2px solid black; background-color: floralwhite">
+    <svg id="tri-app_isotomic" width="500" height="500" style="border: 2px solid black; background-color: floralwhite">
       <polygon id="tri_isotomic" stroke="black" fill="transparent" />
       <line id="lineA_isotomic" stroke="purple" />
       <line id="lineB_isotomic" stroke="purple" />
@@ -51,14 +50,12 @@ import { defineComponent } from 'vue';
 import { indexTopicMap } from '@/data';
 import { Topic } from '@/types';
 import {
-  distToLine, drawLine,
+  drawLine,
   findDistance,
-  findMidpoint,
-  findSlope,
   isInside,
   lineLineIntersection,
   makeString, pointAlongLine
-} from "@/utils/geoutils";
+} from "@/utils/geometry";
 const topic = indexTopicMap.get(7) as Topic;
 export default defineComponent(
   {
@@ -79,31 +76,24 @@ export default defineComponent(
       const points = [pA, pB, pC];
       let pP = [349, 305];
 
-      const mAB = (pA[1] - pA[1]) / (pB[0] - pA[0]);
-      const mBC = (pB[1] - pC[1]) / (pB[0] - pC[0]);
-      const mAC = (pA[1] - pC[1]) / (pA[0] - pC[0]);
-
-      const tri = document.querySelector("#tri_isotomic");
-      const line4 = document.querySelector("#lineA_isotomic");
-      const line5 = document.querySelector("#lineB_isotomic");
-      const line6 = document.querySelector("#lineC_isotomic");
-      const line7 = document.querySelector("#lineAp_isotomic");
-      const line8 = document.querySelector("#lineBp_isotomic");
-      const line9 = document.querySelector("#lineCp_isotomic");
-      // dot = document.querySelector("#dot_isotomic");
-      const letterB = document.querySelector("#letterB_isotomic");
-      const letterA = document.querySelector("#letterA_isotomic");
-      const letterC = document.querySelector("#letterC_isotomic");
-      const letterD = document.querySelector("#letterD_isotomic");
-      const letterE = document.querySelector("#letterE_isotomic");
-      const letterF = document.querySelector("#letterF_isotomic");
-      const letterDp = document.querySelector("#letterDp_isotomic");
-      const letterEp = document.querySelector("#letterEp_isotomic");
-      const letterFp = document.querySelector("#letterFp_isotomic");
-      const letterP = document.querySelector("#letterP_isotomic");
-      const letterPp = document.querySelector("#letterPp_isotomic");
-
-      const ptoAngles = [1.4, 3.4, 5, 6];
+      const tri = document.querySelector("#tri_isotomic") as Element;
+      const line4 = document.querySelector("#lineA_isotomic") as Element;
+      const line5 = document.querySelector("#lineB_isotomic") as Element;
+      const line6 = document.querySelector("#lineC_isotomic") as Element;
+      const line7 = document.querySelector("#lineAp_isotomic") as Element;
+      const line8 = document.querySelector("#lineBp_isotomic") as Element;
+      const line9 = document.querySelector("#lineCp_isotomic") as Element;
+      const letterB = document.querySelector("#letterB_isotomic") as Element;
+      const letterA = document.querySelector("#letterA_isotomic") as Element;
+      const letterC = document.querySelector("#letterC_isotomic") as Element;
+      const letterD = document.querySelector("#letterD_isotomic") as Element;
+      const letterE = document.querySelector("#letterE_isotomic") as Element;
+      const letterF = document.querySelector("#letterF_isotomic") as Element;
+      const letterDp = document.querySelector("#letterDp_isotomic") as Element;
+      const letterEp = document.querySelector("#letterEp_isotomic") as Element;
+      const letterFp = document.querySelector("#letterFp_isotomic") as Element;
+      const letterP = document.querySelector("#letterP_isotomic") as Element;
+      const letterPp = document.querySelector("#letterPp_isotomic") as Element;
 
       letterA?.setAttribute("x", pA[0] + 5 + "");
       letterA?.setAttribute("y", pA[1] + "");
@@ -131,30 +121,19 @@ export default defineComponent(
         p.x = xx + radius * cosx;
         p.y = yy + radius * sinx;
 
-        const mid0 = findMidpoint(points[0], [p.x, p.y]);
-        const m0 = findSlope(points[0], [p.x, p.y]);
-        const mid1 = findMidpoint(points[1], [p.x, p.y]);
-        const m1 = findSlope(points[1], [p.x, p.y]);
-
         tri?.setAttributeNS(
           null,
           "points",
           makeString([points[0], points[1], points[2]])
         );
 
-        const p1 = [p.x, pA[1]];
-
-        const theta = Math.atan(-1 / mBC);
-        const dist = distToLine([p.x, p.y], pC, pA);
-        const p2 = [p.x - dist * Math.cos(theta), p.y - dist * Math.sin(theta)];
-
-        const pCN = lineLineIntersection(pC, pP, pA, pB);
+        const pCN = lineLineIntersection(pC, pP, pA, pB) as Array<number>;
         drawLine(pC, pCN, line4);
 
-        const pAN = lineLineIntersection(pA, pP, pC, pB);
+        const pAN = lineLineIntersection(pA, pP, pC, pB) as Array<number>;
         drawLine(pA, pAN, line5);
 
-        const pBN = lineLineIntersection(pB, pP, pC, pA);
+        const pBN = lineLineIntersection(pB, pP, pC, pA) as Array<number>;
         drawLine(pB, pBN, line6);
 
         const dC = findDistance(pCN, pB);
@@ -169,6 +148,8 @@ export default defineComponent(
         const pDB = pointAlongLine(pA, pC, dB);
         drawLine(pB, pDB, line9);
 
+        /* eslint-disable @typescript-eslint/no-non-null-assertion */
+
         const pPN = lineLineIntersection(pC, pDC, pB, pDB);
         letterPp?.setAttribute("x", pPN![0] + "");
         letterPp?.setAttribute("y", (pPN![1] - 10) + "");
@@ -181,6 +162,8 @@ export default defineComponent(
 
         letterE?.setAttribute("x", (pBN![0] + 20) + "");
         letterE?.setAttribute("y", pBN![1] + "");
+
+        /* eslint-enable @typescript-eslint/no-non-null-assertion */
 
         letterFp?.setAttribute("x", pDC[0] + "");
         letterFp?.setAttribute("y", (pDC[1] + 20) + "");

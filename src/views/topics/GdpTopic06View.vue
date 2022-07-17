@@ -22,6 +22,8 @@ type Intersection = fabric.Intersection & {
   points?: Array<fabric.Point>
 }
 
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
+
 type Circle = fabric.Circle & {
   [key: string]: any,
   intersects?: Array<Circle>,
@@ -56,7 +58,7 @@ type Label = fabric.Text & {
  */
 const log = console.log
 
-const makeLabel = (text: string, offSet={x: 0, y: 0}, fontSize=24): Label => {
+const makeLabel = (text: string, offSet = { x: 0, y: 0 }, fontSize = 24): Label => {
   let label = new fabric.Text(text, {
     hasControls: false,
     hasBorders: false,
@@ -67,13 +69,13 @@ const makeLabel = (text: string, offSet={x: 0, y: 0}, fontSize=24): Label => {
   return label
 }
 
-function isCircle(point: Circle | {top: number, left: number}): point is Circle {
+function isCircle(point: Circle | { top: number, left: number }): point is Circle {
   return point instanceof fabric.Circle
 }
 
-function setLabelToPoint(labels: Array<Label>, points: Array<{top: number, left: number}>): void
+function setLabelToPoint(labels: Array<Label>, points: Array<{ top: number, left: number }>): void
 function setLabelToPoint(labels: Array<Label>, points: Array<Circle>): void
-function setLabelToPoint(labels: Array<Label>, points: Array<Circle|{top: number, left: number}>): void {
+function setLabelToPoint(labels: Array<Label>, points: Array<Circle | { top: number, left: number }>): void {
   for (let index = 0; index < labels.length; index++) {
     let label = labels[index]
     let point = points[index]
@@ -106,9 +108,9 @@ function makeCircle(x: number | fabric.Point, y?: number, radius?: number, fill?
   return point
 }
 
-const makeLine = (pt1: Coord | fabric.Point, pt2: Coord | fabric.Point, 
-    strokeWidth?: number, stroke?: string): fabric.Line => {
-      return new fabric.Line([pt1.x, pt1.y, pt2.x, pt2.y], {
+const makeLine = (pt1: Coord | fabric.Point, pt2: Coord | fabric.Point,
+  strokeWidth?: number, stroke?: string): fabric.Line => {
+  return new fabric.Line([pt1.x, pt1.y, pt2.x, pt2.y], {
     stroke: stroke || "black",
     hasControls: false,
     hasBorders: false,
@@ -118,8 +120,8 @@ const makeLine = (pt1: Coord | fabric.Point, pt2: Coord | fabric.Point,
 }
 
 function getIntersectFromLines(line1: fabric.Line, line2: fabric.Line): Coord {
-  let l1 = solveLinearEquation({ x: line1.x1, y: line1.y1 }, { x: line1.x2, y: line1.y2 })
-  let l2 = solveLinearEquation({ x: line2.x1, y: line2.y1 }, { x: line2.x2, y: line2.y2 })
+  let l1 = solveLinearEquation(new fabric.Point(line1.x1!, line1.y1!), new fabric.Point(line1.x2!, line1.y2!))
+  let l2 = solveLinearEquation(new fabric.Point(line2.x1!, line2.y1!), new fabric.Point(line2.x2!, line2.y2!))
   return calculateLineIntersectInLinearEquation(l1.m, l1.b, l2.m, l2.b)
 }
 
@@ -146,7 +148,7 @@ export default defineComponent(
         }
       ) as Line;
       Object.assign(bottomLine, solveLinearEquation(
-        { x: bottomLine.x1, y: bottomLine.y1 }, { x: bottomLine.x2, y: bottomLine.y2 }
+        new fabric.Point(bottomLine.x1!, bottomLine.y1!), new fabric.Point(bottomLine.x2!, bottomLine.y2!)
       ))
       // y = -0.12x + 100
       let upperLine = new fabric.Line(
@@ -160,18 +162,18 @@ export default defineComponent(
         }
       ) as Line;
       Object.assign(upperLine, solveLinearEquation(
-        { x: upperLine.x1, y: upperLine.y1 }, { x: upperLine.x2, y: upperLine.y2 }
+        new fabric.Point(upperLine.x1!, upperLine.y1!), new fabric.Point(upperLine.x2!, upperLine.y2!)
       ))
 
-      const aLabel = makeLabel("A", {x: -20, y: 15});
-      const bLabel = makeLabel("B", {x: 0, y: 15});
-      const cLabel = makeLabel("C", {x: 5, y: 15});
-      const aprimeLabel = makeLabel("A'", {x: -20, y: -40});
-      const bprimeLabel = makeLabel("B'", {x: 0, y: -40});
-      const cprimeLabel = makeLabel("C'", {x: 0, y: -40});
-      const xLabel = makeLabel("X", {x: 20, y: 0})
-      const yLabel = makeLabel("Y", {x: -5, y: 20})
-      const zLabel = makeLabel("Z", {x: -30, y: 0})
+      const aLabel = makeLabel("A", { x: -20, y: 15 });
+      const bLabel = makeLabel("B", { x: 0, y: 15 });
+      const cLabel = makeLabel("C", { x: 5, y: 15 });
+      const aprimeLabel = makeLabel("A'", { x: -20, y: -40 });
+      const bprimeLabel = makeLabel("B'", { x: 0, y: -40 });
+      const cprimeLabel = makeLabel("C'", { x: 0, y: -40 });
+      const xLabel = makeLabel("X", { x: 20, y: 0 })
+      const yLabel = makeLabel("Y", { x: -5, y: 20 })
+      const zLabel = makeLabel("Z", { x: -30, y: 0 })
 
       const pointA = makeCircle(50, 400)
       const pointB = makeCircle(250, 400)
@@ -220,13 +222,13 @@ export default defineComponent(
       collinearLine.p1 = pointZ
       collinearLine.p2 = pointX
       Object.assign(collinearLine, solveLinearEquation(
-        {x: collinearLine.p1!.left, y: collinearLine.p1!.top}, {x: collinearLine.p2!.left, y: collinearLine.p2!.top}
+        new fabric.Point(collinearLine.p1!.left!, collinearLine.p1!.top!), new fabric.Point(collinearLine.p2!.left!, collinearLine.p2!.top!)
       ))
       collinearLine.set({
-          x1: collinearLine.p1!.left! - COLL_OFF_SET,
-          y1: collinearLine.m! * (collinearLine.p1!.left! - COLL_OFF_SET) + collinearLine.b!,
-          x2: collinearLine.p2!.left! + COLL_OFF_SET,
-          y2: collinearLine.m! * (collinearLine.p2!.left! + COLL_OFF_SET) + collinearLine.b!,
+        x1: collinearLine.p1!.left! - COLL_OFF_SET,
+        y1: collinearLine.m! * (collinearLine.p1!.left! - COLL_OFF_SET) + collinearLine.b!,
+        x2: collinearLine.p2!.left! + COLL_OFF_SET,
+        y2: collinearLine.m! * (collinearLine.p2!.left! + COLL_OFF_SET) + collinearLine.b!,
       })
       log("coll", collinearLine)
 
@@ -269,26 +271,26 @@ export default defineComponent(
         p.downLine && p.downLine.forEach(line => line.set({ x2: p.left, y2: p.top }))
 
         if (p.intersects) {
-            p.intersects.forEach(inter => {
-              let [l1, l2] = inter.crossLines!
-              let intersect = getIntersectFromLines(l1, l2)
-              let coord = { left: intersect.x, top: intersect.y }
-              inter.set(coord)
-              inter.label && setLabelToPoint([inter.label!], [coord])
-            })
-            Object.assign(collinearLine, solveLinearEquation(
-              {x: collinearLine.p1!.left, y: collinearLine.p1!.top}, {x: collinearLine.p2!.left, y: collinearLine.p2!.top}
-            ))
-            log(collinearLine)
-            collinearLine.set({
-              x1: collinearLine.p1!.left! - COLL_OFF_SET,
-              y1: collinearLine.m! * (collinearLine.p1!.left! - COLL_OFF_SET) + collinearLine.b!,
-              x2: collinearLine.p2!.left! + COLL_OFF_SET,
-              y2: collinearLine.m! * (collinearLine.p2!.left! + COLL_OFF_SET) + collinearLine.b!,
-            })
+          p.intersects.forEach(inter => {
+            let [l1, l2] = inter.crossLines!
+            let intersect = getIntersectFromLines(l1, l2)
+            let coord = { left: intersect.x, top: intersect.y }
+            inter.set(coord)
+            inter.label && setLabelToPoint([inter.label!], [coord])
+          })
+          Object.assign(collinearLine, solveLinearEquation(
+            new fabric.Point(collinearLine.p1!.left!, collinearLine.p1!.top!), new fabric.Point(collinearLine.p2!.left!, collinearLine.p2!.top!)
+          ))
+          log(collinearLine)
+          collinearLine.set({
+            x1: collinearLine.p1!.left! - COLL_OFF_SET,
+            y1: collinearLine.m! * (collinearLine.p1!.left! - COLL_OFF_SET) + collinearLine.b!,
+            x2: collinearLine.p2!.left! + COLL_OFF_SET,
+            y2: collinearLine.m! * (collinearLine.p2!.left! + COLL_OFF_SET) + collinearLine.b!,
+          })
         }
 
-        p.label && setLabelToPoint([p.label!], [{top: p.top!, left: p.left!}])
+        p.label && setLabelToPoint([p.label!], [{ top: p.top!, left: p.left! }])
       }
 
       canvas.on("object:moving", onPointMove)
@@ -307,4 +309,6 @@ export default defineComponent(
     },
   },
 );
+
+/* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 </script>

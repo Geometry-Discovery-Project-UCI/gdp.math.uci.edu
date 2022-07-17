@@ -13,9 +13,9 @@
 import { defineComponent } from 'vue';
 import { indexTopicMap } from '@/data';
 import { Topic } from '@/types';
-import {fabric} from 'fabric';
-import {makeCircle, makeLabel, makeLine, makeMovablePoint } from '@/utils/canvas';
-import {calculateDistanceBetweenTwoPoints, calculateLineIntersectInLinearEquation, solveLinearEquation } from '@/utils/geometry';
+import { fabric } from 'fabric';
+import { makeCircle, makeLabel, makeLine, makeMovablePoint } from '@/utils/canvas';
+import { calculateDistanceBetweenTwoPoints, calculateLineIntersectInLinearEquation, solveLinearEquation } from '@/utils/geometry';
 const topic = indexTopicMap.get(2) as Topic;
 export default defineComponent(
   {
@@ -52,7 +52,7 @@ export default defineComponent(
       const valueFB = makeLabel("0");
       const resultText = makeLabel("1");
 
-    // create triangle
+      // create triangle
       const triangle = new fabric.Polygon(
         [
           { x: 150, y: 100 },
@@ -74,11 +74,8 @@ export default defineComponent(
       );
 
 
-    // set coordinates and options for point P inside the triangle
-      const pointP = makeMovablePoint({
-        x: 180,
-        y: 310,
-      });
+      // set coordinates and options for point P inside the triangle
+      const pointP = makeMovablePoint(new fabric.Point(180, 310));
 
       pointP.set({
         originX: "center",
@@ -87,22 +84,13 @@ export default defineComponent(
         fill: "black",
       });
 
-    // function to find points D,E,F and draw lines that depends on coordinates of point P
+      // function to find points D,E,F and draw lines that depends on coordinates of point P
       function movePointP() {
         // find slope and intercept of the line segments from vertices to point P
         const points = triangle.points as Array<fabric.Point>;
-        const lineAP = solveLinearEquation(points[0], {
-          x: pointP.left,
-          y: pointP.top,
-        });
-        const lineBP = solveLinearEquation(points[1], {
-          x: pointP.left,
-          y: pointP.top,
-        });
-        const lineCP = solveLinearEquation(points[2], {
-          x: pointP.left,
-          y: pointP.top,
-        });
+        const lineAP = solveLinearEquation(points[0], new fabric.Point(pointP.left!, pointP.top!));
+        const lineBP = solveLinearEquation(points[1], new fabric.Point(pointP.left!, pointP.top!));
+        const lineCP = solveLinearEquation(points[2], new fabric.Point(pointP.left!, pointP.top!));
 
         // find slope and intercept of the line segments between the vertices
         const lineAB = solveLinearEquation(points[0], points[1]);
@@ -222,8 +210,7 @@ export default defineComponent(
         });
 
         // calculate values for text
-        const distBD =
-          calculateDistanceBetweenTwoPoints(points[1], pointD) / 100;
+        const distBD = calculateDistanceBetweenTwoPoints(points[1], pointD) / 100;
         const distDC =
           calculateDistanceBetweenTwoPoints(points[2], pointD) / 100;
         const distCE =

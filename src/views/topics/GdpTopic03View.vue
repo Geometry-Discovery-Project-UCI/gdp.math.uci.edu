@@ -3,41 +3,43 @@
   <ATypographyParagraph>
 
   </ATypographyParagraph>
-<!--  <li>-->
-    <div id="incenter-wrapper">
-      <ATypographyTitle :level="4">Incenter Animated Illustration</ATypographyTitle>
-      <canvas id="incenter-canvas" width="500" height="500"></canvas>
-    </div>
-<!--  </li>-->
-<!--  <li>-->
+  <!--  <li>-->
+  <div id="incenter-wrapper">
+    <ATypographyTitle :level="4">Incenter Animated Illustration</ATypographyTitle>
+    <canvas id="incenter-canvas" width="500" height="500"></canvas>
+  </div>
+  <!--  </li>-->
+  <!--  <li>-->
   <ATypographyParagraph>
 
   </ATypographyParagraph>
-    <div id="centroid-wrapper">
-      <ATypographyTitle :level="4">Centroid Animated Illustration</ATypographyTitle>
-      <canvas id="centroid-canvas" width="500" height="500"></canvas>
-    </div>
-<!--  </li>-->
-<!--  <li>-->
+  <div id="centroid-wrapper">
+    <ATypographyTitle :level="4">Centroid Animated Illustration</ATypographyTitle>
+    <canvas id="centroid-canvas" width="500" height="500"></canvas>
+  </div>
+  <!--  </li>-->
+  <!--  <li>-->
   <ATypographyParagraph>
 
   </ATypographyParagraph>
-    <div id="orthocenter-wrapper">
-      <ATypographyTitle :level="4">Orthocenter Animated Illustration (Need fixes)</ATypographyTitle>
-      <canvas id="orthocenter-canvas" width="500" height="500"></canvas>
-    </div>
-<!--  </li>-->
+  <div id="orthocenter-wrapper">
+    <ATypographyTitle :level="4">Orthocenter Animated Illustration (Need fixes)</ATypographyTitle>
+    <canvas id="orthocenter-canvas" width="500" height="500"></canvas>
+  </div>
+  <!--  </li>-->
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { indexTopicMap } from '@/data';
 import { Topic } from '@/types';
-import {fabric} from 'fabric';
-import {makeCircle, makeLabel, makeLine, makeMovablePolygon} from "@/utils/canvas";
-import {calculateDistanceFromPointToLine, calculateIncenter,
+import { fabric } from 'fabric';
+import { makeCircle, makeLabel, makeLine, makeMovablePolygon } from "@/utils/canvas";
+import {
+  calculateDistanceFromPointToLine, calculateIncenter,
   calculateLineIntersectInLinearEquation, calculateLineIntersectInPoints, calculateMidpoint,
-  solveLinearEquation, solvePerpendicularLineEquation } from '@/utils/geometry';
+  solveLinearEquation, solvePerpendicularLineEquation
+} from '@/utils/geometry';
 const topic = indexTopicMap.get(3) as Topic;
 export default defineComponent(
   {
@@ -46,7 +48,7 @@ export default defineComponent(
     },
     mounted() {
       // Incenter animation function
-      (()=>{
+      (() => {
         const canvas = new fabric.Canvas("incenter-canvas", {
           selection: false,
           backgroundColor: "floralwhite",
@@ -69,21 +71,7 @@ export default defineComponent(
 
         const incircle = makeCircle();
 
-        const triangle = makeMovablePolygon(
-          [
-            {
-              x: 125,
-              y: 50,
-            },
-            {
-              x: 50,
-              y: 450,
-            },
-            {
-              x: 450,
-              y: 450,
-            },
-          ],
+        const triangle = makeMovablePolygon([new fabric.Point(125, 50), new fabric.Point(50, 450), new fabric.Point(450, 450)],
           function (coords: Array<fabric.Point>) {
             aLabel.set({
               left: coords[0].x,
@@ -107,25 +95,25 @@ export default defineComponent(
               makeLine(coords[0], incenter),
               makeLine(coords[1], coords[2]),
               true
-            );
+            ) as fabric.Point;
             const onAC = calculateLineIntersectInPoints(
               makeLine(coords[1], incenter),
               makeLine(coords[0], coords[2]),
               true
-            );
+            ) as fabric.Point;
             const onAB = calculateLineIntersectInPoints(
               makeLine(coords[2], incenter),
               makeLine(coords[0], coords[1]),
               true
-            );
+            ) as fabric.Point;
 
             dLabel.set({
-              left: onAB?.x - 25,
-              top: onAB?.y - 25,
+              left: onAB.x - 25,
+              top: onAB.y - 25,
             });
             eLabel.set({
-              left: onAC?.x + 10,
-              top: onAC?.y - 25,
+              left: onAC.x + 10,
+              top: onAC.y - 25,
             });
             fLabel.set({
               left: onBC?.x,
@@ -191,7 +179,7 @@ export default defineComponent(
       })();
 
       // Centroid animation function
-      (()=>{
+      (() => {
         const canvas = new fabric.Canvas("centroid-canvas", {
           selection: false,
           backgroundColor: "floralwhite",
@@ -215,20 +203,7 @@ export default defineComponent(
         const gLabel = makeLabel("G");
 
         const triangle = makeMovablePolygon(
-          [
-            {
-              x: 125,
-              y: 50,
-            },
-            {
-              x: 50,
-              y: 450,
-            },
-            {
-              x: 450,
-              y: 450,
-            },
-          ],
+          [new fabric.Point(125, 50), new fabric.Point(50, 450), new fabric.Point(450, 450)],
           function (coords: Array<fabric.Point>) {
             const mp1 = calculateMidpoint(coords[0], coords[1]);
             const mp2 = calculateMidpoint(coords[0], coords[2]);
@@ -279,11 +254,11 @@ export default defineComponent(
               top: mp3.y,
             });
 
-            const intersect = calculateLineIntersectInPoints(median1, median2);
+            const intersect = calculateLineIntersectInPoints(median1, median2) as fabric.Point;
 
             gLabel.set({
-              left: intersect?.x + 5,
-              top: intersect?.y + 10,
+              left: intersect.x + 5,
+              top: intersect.y + 10,
             });
           }
         );
@@ -305,7 +280,7 @@ export default defineComponent(
       })();
 
       // Orthocenter animation
-      (()=>{
+      (() => {
         const canvas = new fabric.Canvas("orthocenter-canvas", {
           selection: false,
           backgroundColor: "floralwhite",
@@ -332,22 +307,8 @@ export default defineComponent(
           );
         }
 
-        const triangle = makeMovablePolygon(
-          [
-            {
-              x: 125,
-              y: 50,
-            },
-            {
-              x: 50,
-              y: 450,
-            },
-            {
-              x: 450,
-              y: 450,
-            },
-          ],
-          function (coords : Array<fabric.Point>) {
+        const triangle = makeMovablePolygon([new fabric.Point(125, 50), new fabric.Point(50, 450), new fabric.Point(450, 450)],
+          function (coords: Array<fabric.Point>) {
             aLabel.set({
               left: coords[0].x,
               top: coords[0].y - 30,

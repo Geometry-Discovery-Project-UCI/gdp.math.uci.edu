@@ -69,18 +69,9 @@ export default defineComponent(
 
       const triangle = makeMovablePolygon(
         [
-          {
-            x: 175,
-            y: 75,
-          },
-          {
-            x: 100,
-            y: 400,
-          },
-          {
-            x: 400,
-            y: 400,
-          },
+          new fabric.Point(175, 75),
+          new fabric.Point(100, 400),
+          new fabric.Point(400, 400),
         ],
         function (coords: Array<fabric.Point>) {
           const points = triangle.points as Array<fabric.Point>;
@@ -118,30 +109,12 @@ export default defineComponent(
           const lineAB = solveLinearEquation(points[0], points[1]);
           const lineBC = solveLinearEquation(points[1], points[2]);
           const lineAC = solveLinearEquation(points[0], points[2]);
-          const lineAG = solveLinearEquation(points[0], {
-            x: pointG.x,
-            y: pointG.y,
-          });
-          const lineBG = solveLinearEquation(points[1], {
-            x: pointG.x,
-            y: pointG.y,
-          });
-          const lineCG = solveLinearEquation(points[2], {
-            x: pointG.x,
-            y: pointG.y,
-          });
-          const lineAN = solveLinearEquation(points[0], {
-            x: pointN.x,
-            y: pointN.y,
-          });
-          const lineBN = solveLinearEquation(points[1], {
-            x: pointN.x,
-            y: pointN.y,
-          });
-          const lineCN = solveLinearEquation(points[2], {
-            x: pointN.x,
-            y: pointN.y,
-          });
+          const lineAG = solveLinearEquation(points[0], new fabric.Point(pointG.x, pointG.y));
+          const lineBG = solveLinearEquation(points[1], new fabric.Point(pointG.x, pointG.y));
+          const lineCG = solveLinearEquation(points[2], new fabric.Point(pointG.x, pointG.y));
+          const lineAN = solveLinearEquation(points[0], new fabric.Point(pointN.x, pointN.y));
+          const lineBN = solveLinearEquation(points[1], new fabric.Point(pointN.x, pointN.y));
+          const lineCN = solveLinearEquation(points[2], new fabric.Point(pointN.x, pointN.y));
           const pointD = calculateLineIntersectInLinearEquation(
             lineAG.m,
             lineAG.b,
@@ -275,19 +248,8 @@ export default defineComponent(
             fill: "Red",
           });
           const inCenter = calculateIncenter(coords[0], coords[1], coords[2]);
-          const radius = calculateDistanceFromPointToLine(
-            inCenter,
-            makeLine(coords[1], coords[2])
-          );
-          const centerOfCircle = inscribedCircle.translateToCenterPoint(
-            // {
-            //   x: incenter.x,
-            //   y: incenter.y,
-            // },
-            inCenter as fabric.Point,
-            "right",
-            "bottom"
-          );
+          const radius = calculateDistanceFromPointToLine(inCenter, makeLine(coords[1], coords[2]));
+          const centerOfCircle = inscribedCircle.translateToCenterPoint(inCenter, "right", "bottom");
           inscribedCircle.set({
             radius,
             left: centerOfCircle.x,
