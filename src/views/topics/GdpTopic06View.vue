@@ -201,10 +201,15 @@ export default defineComponent(
       const pY = (fabric.Intersection.intersectLineLine(
         pA, ppC, ppA, pC) as Intersection).points![0];
       const pX = (fabric.Intersection.intersectLineLine(
-        pB, ppC, pC, ppB) as Intersection).points![0];
-      const [pointX, pointY, pointZ] = [pX, pY, pZ].map(p => makeCircle(p, undefined, 3));
-      log("pointX", pointX);
-      setLabelToPoint([zLabel, yLabel, xLabel], [pointZ, pointY, pointX]);
+        pB, ppC, pC, ppB) as Intersection).points![0]
+      const [pointX, pointY, pointZ] = [pX, pY, pZ].map(p => makeCircle(p, undefined, 3))
+      log("pointX", pointX)
+      // Disable user dragging on intersections
+      pointX.set({lockMovementX: true, lockMovementY: true})
+      pointY.set({lockMovementX: true, lockMovementY: true})
+      pointZ.set({lockMovementX: true, lockMovementY: true})
+
+      setLabelToPoint([zLabel, yLabel, xLabel], [pointZ, pointY, pointX])
 
       pointA.rightBound = pointB;
       pointB.leftBound = pointA;
@@ -252,16 +257,16 @@ export default defineComponent(
       const onPointMove = (e: IEvent): void => {
         const p = e.target! as Circle;
         // Setting the boundaris of the point's position
-        if (p.leftBound && p.left! < p.leftBound.left!) {
-          p.left = p.leftBound.left;
+        if (p.leftBound !== undefined && p.left! < p.leftBound.left!) {
+          p.left = p.leftBound.left
         }
-        if (p.rightBound && p.left! > p.rightBound.left!) {
-          p.left = p.rightBound.left;
+        if (p.rightBound !== undefined && p.left! > p.rightBound.left!) {
+          p.left = p.rightBound.left
         }
-        if (p.upLine) {
-          p.top = 400; // Hard-coded for now
-        } else {
-          p.top = upperLine.m! * p.left! + upperLine.b!;
+        if (p.upLine !== undefined) {
+          p.top = 400 // Hard-coded for now
+        } else if (p.downLine !== undefined) {
+          p.top = upperLine.m! * p.left! + upperLine.b!
         }
 
         if (p.upLine !== undefined) {
@@ -271,26 +276,25 @@ export default defineComponent(
           p.downLine.forEach(line => line.set({ x2: p.left, y2: p.top }));
         }
 
-        if (p.intersects) {
-          p.intersects.forEach(inter => {
-            const [l1, l2] = inter.crossLines!;
-            const intersect = getIntersectFromLines(l1, l2);
-            const coord = { left: intersect.x, top: intersect.y };
-            inter.set(coord);
+        if (p.intersects !== undefined) {
+            p.intersects.forEach(inter => {
+              const [l1, l2] = inter.crossLines!
+              const intersect = getIntersectFromLines(l1, l2)
+              const coord = { left: intersect.x, top: intersect.y }
+              inter.set(coord)
             if (inter.label !== undefined) {
               setLabelToPoint([inter.label!], [coord]);
             }
-          });
-          Object.assign(collinearLine, solveLinearEquation(
-            new fabric.Point(collinearLine.p1!.left!, collinearLine.p1!.top!), new fabric.Point(collinearLine.p2!.left!, collinearLine.p2!.top!)
-          ));
-          log(collinearLine);
-          collinearLine.set({
-            x1: collinearLine.p1!.left! - COLL_OFF_SET,
-            y1: collinearLine.m! * (collinearLine.p1!.left! - COLL_OFF_SET) + collinearLine.b!,
-            x2: collinearLine.p2!.left! + COLL_OFF_SET,
-            y2: collinearLine.m! * (collinearLine.p2!.left! + COLL_OFF_SET) + collinearLine.b!,
-          });
+            })
+            Object.assign(collinearLine, solveLinearEquation(
+              {x: collinearLine.p1!.left, y: collinearLine.p1!.top}, {x: collinearLine.p2!.left, y: collinearLine.p2!.top}
+            ))
+            collinearLine.set({
+              x1: collinearLine.p1!.left! - COLL_OFF_SET,
+              y1: collinearLine.m! * (collinearLine.p1!.left! - COLL_OFF_SET) + collinearLine.b!,
+              x2: collinearLine.p2!.left! + COLL_OFF_SET,
+              y2: collinearLine.m! * (collinearLine.p2!.left! + COLL_OFF_SET) + collinearLine.b!,
+            })
         }
 
         if (p.label !== undefined) {
