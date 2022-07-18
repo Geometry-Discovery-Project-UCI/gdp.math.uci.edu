@@ -97,7 +97,7 @@ export default defineComponent({
     }
 
     const vertexA = createCircle(175, 75, 10).set({ evented: true });
-    const vertexB = createCircle(75, 350, 10).set({ evented: true });
+    const vertexB = createCircle(75, 400, 10).set({ evented: true });
     const vertexC = createCircle(400, 400, 10).set({ evented: true });
 
     const triangle = createPolygon();
@@ -117,9 +117,9 @@ export default defineComponent({
     const parallelToCA = createLine([]);
     const parallelToAB = createLine([]);
 
-    const lineP2Q3 = createLine([], "black", 1.5);
-    const lineP3Q1 = createLine([], "black", 1.5);
-    const lineP1Q2 = createLine([], "black", 1.5);
+    const lineP2Q3 = createLine([], "red", 1);
+    const lineP3Q1 = createLine([], "red", 1);
+    const lineP1Q2 = createLine([], "red", 1);
 
     const lineAB = createLine([], "black");
     const lineBC = createLine([], "black");
@@ -228,23 +228,23 @@ export default defineComponent({
         });
         dLabel.set({
           left: p1.x - 10,
-          top: p1.y - 35,
+          top: p1.y,
         });
         fNode.set({
           left: p2.x,
           top: p2.y,
         });
         fLabel.set({
-          left: p2.x - 10,
-          top: p2.y - 35,
+          left: p2.x + 5,
+          top: p2.y - 20,
         });
         hNode.set({
           left: p3.x,
           top: p3.y,
         });
         hLabel.set({
-          left: p3.x - 10,
-          top: p3.y - 35,
+          left: p3.x - 20,
+          top: p3.y - 30,
         });
       }
 
@@ -258,24 +258,24 @@ export default defineComponent({
           top: q1.y,
         });
         eLabel.set({
-          left: q1.x - 10,
-          top: q1.y - 35,
+          left: q1.x - 5,
+          top: q1.y,
         });
         gNode.set({
           left: q2.x,
           top: q2.y,
         });
         gLabel.set({
-          left: q2.x - 10,
-          top: q2.y - 35,
+          left: q2.x - 5,
+          top: q2.y - 30,
         });
         iNode.set({
           left: q3.x,
           top: q3.y,
         });
         iLabel.set({
-          left: q3.x - 10,
-          top: q3.y - 35,
+          left: q3.x - 15,
+          top: q3.y - 20,
         });
 
         const verticesP = [
