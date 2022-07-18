@@ -1,11 +1,11 @@
 <template>
     <TopicMeta :topic="topic" />
   <ATypographyParagraph>
-
+<!--    TODO: Topic description here-->
   </ATypographyParagraph>
-  <div id="Gergonne-and-Nagel-Points-wapper">
+  <div id="Taylor-Circle-wapper">
     <ATypographyTitle :level="4">Animated Taylor Circles</ATypographyTitle>
-    <canvas id="Gergonne-and-Nagel-Points-canvas" width="500" height="500" />
+    <canvas id="Taylor-Circle-canvas" width="500" height="500" />
   </div>
 </template>
 
@@ -21,8 +21,6 @@ import {
   getPedalPoint,
   trilinearToCartesian
 } from "@/utils/geometry";
-import {findDistance} from "@/utils/geoutils";
-import {Point} from "fabric/fabric-impl";
 
 const topic = indexTopicMap.get(30) as Topic;
 
@@ -32,7 +30,7 @@ export default defineComponent(
             return { topic };
         },
       mounted() {
-        const canvas = new fabric.Canvas("Gergonne-and-Nagel-Points-canvas", {
+        const canvas = new fabric.Canvas("Taylor-Circle-canvas", {
           selection: false,
         });
         const lineAB = makeLine();
@@ -47,6 +45,16 @@ export default defineComponent(
         const lineHcQb = makeLine();
         const lineHbPc = makeLine();
         const lineHaQc = makeLine();
+        const lineBAHc = makeLine();
+        const lineCAHb = makeLine();
+        const lineABHc = makeLine();
+        const lineCBHa = makeLine();
+        const lineBCHa = makeLine();
+        const lineACHb = makeLine();
+
+        const lineAHAh = makeLine();
+        const lineCHcH = makeLine();
+        const lineHbBH = makeLine();
 
         const aLabel = makeLabel("A");
         const bLabel = makeLabel("B");
@@ -63,7 +71,6 @@ export default defineComponent(
         const PCLabel = makeLabel("Pc")
 
         const taylorCircle = makeCircle();
-
         const triangle = makeMovablePolygon(
           [
             {
@@ -96,6 +103,8 @@ export default defineComponent(
 
             // Calculate three angle of the triangle ABC
             const angles = calculateThreeAngles(coords[0], coords[1], coords[2]);
+            console.log("angles: " + angles.x + ", " + angles.y + ", " + angles.z);
+
 
             // OrthoCenter          --     sec A: sec B: sec C
             const pointH = trilinearToCartesian(
@@ -261,7 +270,88 @@ export default defineComponent(
               top: taylorCircleCenter.y,
               stroke: "blue",
               strokeWidth: 1.5,
-           })
+           });
+
+            // Make extension line.
+            const rightAngle = Math.PI / 2;
+            if (angles.x > rightAngle) {  // when A is obtuse angle
+              lineBAHc.set({
+                x1: points[0].x,
+                y1: points[0].y,
+                x2: pedalPointHc.x,
+                y2: pedalPointHc.y,
+                stroke: "green",
+                strokeDashArray: [5, 5],
+              });
+              lineCAHb.set({
+                x1: points[0].x,
+                y1: points[0].y,
+                x2: pedalPointHb.x,
+                y2: pedalPointHb.y,
+                stroke: "green",
+                strokeDashArray: [5, 5],
+              });
+            }
+            if (angles.y > rightAngle) { // when B is obtuse angle
+              lineABHc.set({
+                x1: points[1].x,
+                y1: points[1].y,
+                x2: pedalPointHc.x,
+                y2: pedalPointHc.y,
+                stroke: "green",
+                strokeDashArray: [5, 5],
+              });
+              lineCBHa.set({
+                x1: points[1].x,
+                y1: points[1].y,
+                x2: pedalPointHa.x,
+                y2: pedalPointHa.y,
+                stroke: "green",
+                strokeDashArray: [5, 5],
+              });
+              lineAHAh.set({
+                x1: pointH.x,
+                y1: pointH.y,
+                x2: pedalPointHa.x,
+                y2: pedalPointHa.y,
+                stroke: "green",
+                strokeDashArray: [5, 5],
+              });
+              lineCHcH.set({
+                x1: pointH.x,
+                y1: pointH.y,
+                x2: pedalPointHc.x,
+                y2: pedalPointHc.y,
+                stroke: "green",
+                strokeDashArray: [5, 5],
+              });
+              lineHbBH.set({
+                x1: pointH.x,
+                y1: pointH.y,
+                x2: points[1].x,
+                y2: points[1].y,
+                stroke: "green",
+                strokeDashArray: [5, 5],
+              });
+            }
+            if (angles.z > rightAngle){ // when C is obtuse angle
+              lineACHb.set({
+                x1: points[2].x,
+                y1: points[2].y,
+                x2: pedalPointHb.x,
+                y2: pedalPointHb.y,
+                stroke: "green",
+                strokeDashArray: [5, 5],
+              });
+              lineBCHa.set({
+                x1: points[2].x,
+                y1: points[2].y,
+                x2: pedalPointHa.x,
+                y2: pedalPointHa.y,
+                stroke: "green",
+                strokeDashArray: [5, 5],
+              });
+            }
           }
           );
 
@@ -291,6 +381,17 @@ export default defineComponent(
         canvas.add(lineHcQb);
         canvas.add(lineHaQc);
         canvas.add(lineHbPc);
+        canvas.add(lineABHc);
+        canvas.add(lineCBHa);
+        canvas.add(lineBAHc);
+        canvas.add(lineCAHb);
+        canvas.add(lineBCHa);
+        canvas.add(lineACHb);
+
+        canvas.add(lineAHAh);
+        canvas.add(lineCHcH);
+        canvas.add(lineHbBH);
+
         canvas.add(taylorCircle);
       }
     },
