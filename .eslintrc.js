@@ -77,7 +77,7 @@ module.exports = {
     "curly": ["error", "multi-line"],
     "dot-notation": "error",
     "eqeqeq": "error",
-    "linebreak-style": ["error", "windows"],
+    "linebreak-style": ["error", "unix"],
     "new-parens": "error",
     "no-caller": "error",
     "no-duplicate-case": "error",

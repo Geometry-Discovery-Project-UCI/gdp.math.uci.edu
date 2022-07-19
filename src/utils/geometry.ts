@@ -1,11 +1,12 @@
 import { fabric } from "fabric";
+import { Coord } from "@/types";
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
 export const EPS = .000001;
 
 // function to find feet of triangle's altitudes
-export function getPedalPoint(from: fabric.Point, toA: fabric.Point, toB: fabric.Point) {
+export function getPedalPoint(from: Coord, toA: Coord, toB: Coord): Coord {
   const toAPoint = new fabric.Point(toA.x, toA.y);
   const toBPoint = new fabric.Point(toB.x, toB.y);
   const fromPoint = new fabric.Point(from.x, from.y);
@@ -28,14 +29,14 @@ export function getPedalPoint(from: fabric.Point, toA: fabric.Point, toB: fabric
   }
 }
 
-export function calculateIncenter(pointA: fabric.Point, pointB: fabric.Point, pointC: fabric.Point) {
+export function calculateIncenter(pointA: Coord, pointB: Coord, pointC: Coord) {
   // Centroid         --     1 : 1 : 1
   const incenter = trilinearToCartesian(pointA, pointB, pointC, 1, 1, 1);
 
   return new fabric.Point(incenter.x, incenter.y);
 }
 
-export function calculateCentroid(pointA: fabric.Point, pointB: fabric.Point, pointC: fabric.Point) {
+export function calculateCentroid(pointA: Coord, pointB: Coord, pointC: Coord): Coord {
   const a = calculateDistanceBetweenTwoPoints(pointB, pointC);
   const b = calculateDistanceBetweenTwoPoints(pointA, pointC);
   const c = calculateDistanceBetweenTwoPoints(pointA, pointB);
@@ -62,7 +63,7 @@ export function calculateCircumcenter(pointA: fabric.Point, pointB: fabric.Point
   return new fabric.Point(circumcenter.x, circumcenter.y);
 }
 
-export function calculateOrthocenter(pointA: fabric.Point, pointB: fabric.Point, pointC: fabric.Point) {
+export function calculateOrthocenter(pointA: Coord, pointB: Coord, pointC: Coord) {
   const c = calculateDistanceBetweenTwoPoints(pointA, pointB);
   const b = calculateDistanceBetweenTwoPoints(pointA, pointC);
   const a = calculateDistanceBetweenTwoPoints(pointB, pointC);
@@ -95,32 +96,32 @@ export function calculateOrthocenter(pointA: fabric.Point, pointB: fabric.Point,
   return new fabric.Point(orthocenter.x, orthocenter.y);
 }
 
-export function calculateMidpoint(p1: fabric.Point, p2: fabric.Point) {
+export function calculateMidpoint(p1: Coord, p2: Coord) {
   return new fabric.Point((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
 }
 
-export function calculateDistanceBetweenTwoPoints(pt1: fabric.Point, pt2: fabric.Point) {
+export function calculateDistanceBetweenTwoPoints(pt1: Coord, pt2: Coord) {
   return Math.sqrt(Math.pow(pt1.x - pt2.x, 2) + Math.pow(pt1.y - pt2.y, 2));
 }
 
-export function calculateDistanceFromPointToLine(pt: fabric.Point, line: fabric.Line) {
+export function calculateDistanceFromPointToLine(pt: Coord, line: fabric.Line) {
   const { m: k, b: b } = solveLinearEquation(
-    new fabric.Point(
-      line.x1!,
-      line.y1!,
-    ),
-    new fabric.Point(
-      line.x2!,
-      line.y2!,
-    )
+    {
+      x: line.x1!,
+      y: line.y1!,
+    },
+    {
+      x: line.x2!,
+      y: line.y2!,
+    },
   );
   const { m: m, b: c } = solvePerpendicularLineEquation(k, pt);
-  const { x, y } = calculateLineIntersectInLinearEquation(k, b, m, c);
-  return calculateDistanceBetweenTwoPoints(pt, new fabric.Point(x, y));
+  const intersect = calculateLineIntersectInLinearEquation(k, b, m, c);
+  return calculateDistanceBetweenTwoPoints(pt, intersect);
 }
 
 // Angles of a triangle
-export function calculateThreeAngles(pointA: fabric.Point, pointB: fabric.Point, pointC: fabric.Point) {
+export function calculateThreeAngles(pointA: Coord, pointB: Coord, pointC: Coord) {
   const c = calculateDistanceBetweenTwoPoints(pointA, pointB);
   const b = calculateDistanceBetweenTwoPoints(pointA, pointC);
   const a = calculateDistanceBetweenTwoPoints(pointB, pointC);
@@ -148,7 +149,7 @@ export function calculateThreeAngles(pointA: fabric.Point, pointB: fabric.Point,
 // Gergonne point       --     (sec A/2)^2:(sec B/2)^2:(sec C/2)^2
 // Nagal point          --     (csc A/2)^2:(csc B/2)^2:(csc C/2)^2
 
-export function trilinearToCartesian(pointA: fabric.Point, pointB: fabric.Point, pointC: fabric.Point, a: number, b: number, c: number) {
+export function trilinearToCartesian(pointA: Coord, pointB: Coord, pointC: Coord, a: number, b: number, c: number): Coord {
   const AB = calculateDistanceBetweenTwoPoints(pointA, pointB);
   const CA = calculateDistanceBetweenTwoPoints(pointA, pointC);
   const BC = calculateDistanceBetweenTwoPoints(pointB, pointC);
@@ -182,7 +183,7 @@ export function calculateSignedDistanceFromPointToLine(pt: number[], v: number[]
   return ((w[2] - v[2]) * (pt[1] - v[1]) - (w[1] - v[1]) * (pt[2] - v[2])) / ab;
 }
 
-export function polarToCartesian(radius: number, angle: number, center?: fabric.Point, isDegree = true) {
+export function polarToCartesian(radius: number, angle: number, center?: Coord, isDegree = true) {
   if (isDegree) {
     angle *= (Math.PI / 180);
   }
@@ -199,7 +200,7 @@ export function polarToCartesian(radius: number, angle: number, center?: fabric.
 }
 
 // The following functions will be obsolete
-export function calculateSlope(pt1: fabric.Point, pt2: fabric.Point) {
+export function calculateSlope(pt1: Coord, pt2: Coord) {
   if (pt1.x !== pt2.x) {
     return (pt2.y - pt1.y) / (pt2.x - pt1.x);
   } else {
@@ -213,7 +214,7 @@ export function calculateLineIntersectInLinearEquation(m1: number, b1: number, m
   return new fabric.Point(x, y);
 }
 
-export function solveLinearEquation(pt1: fabric.Point, pt2: fabric.Point) {
+export function solveLinearEquation(pt1: Coord, pt2: Coord) {
   const m = ((pt2.y - pt1.y)) / (pt2.x - pt1.x);
   const b = pt1.y - m * pt1.x;
   return {
@@ -222,7 +223,7 @@ export function solveLinearEquation(pt1: fabric.Point, pt2: fabric.Point) {
   };
 }
 
-export function solvePerpendicularLineEquation(originalM: number, pt: fabric.Point) {
+export function solvePerpendicularLineEquation(originalM: number, pt: Coord) {
   const m = originalM === 0 ? 10000 : -1 / originalM;
   const b = pt.y - m * pt.x;
   return { m, b };

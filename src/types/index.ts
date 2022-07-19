@@ -29,3 +29,8 @@ export interface TopicRouteProps {
   index: number
   component: Component
 }
+
+export interface Coord {
+  x: number;
+  y: number;
+}
