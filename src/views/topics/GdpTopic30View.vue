@@ -50,10 +50,12 @@ export default defineComponent(
         const lineCBHa = makeLine();
         const lineBCHa = makeLine();
         const lineACHb = makeLine();
-
-        const lineAHAh = makeLine();
+        const lineBHbH = makeLine();
+        const lineHaAH = makeLine();
+        const lineAHaH = makeLine();
         const lineCHcH = makeLine();
         const lineHbBH = makeLine();
+        const lineHcCH = makeLine();
 
         const aLabel = makeLabel("A");
         const bLabel = makeLabel("B");
@@ -68,13 +70,12 @@ export default defineComponent(
         const PBLabel = makeLabel("Pb");
         const QCLabel = makeLabel("Qc");
         const PCLabel = makeLabel("Pc");
-
         const taylorCircle = makeCircle();
         const triangle = makeMovablePolygon(
           [
-            new fabric.Point(255, 100),
+            new fabric.Point(200, 100),
             new fabric.Point(100, 400),
-            new fabric.Point(100, 400),
+            new fabric.Point(375, 400),
           ],
           function (coords: fabric.Point[]) {
             const points = triangle.points as fabric.Point[];
@@ -113,6 +114,7 @@ export default defineComponent(
             HALabel.set({
               left: pedalPointHa.x - 10,
               top: pedalPointHa.y + 5,
+              fontSize:15,
             });
             // make line AHa using two points
             lineAHa.set({
@@ -126,8 +128,9 @@ export default defineComponent(
             // Perpendicular line from B to AC
             const pedalPointHb = getPedalPoint(points[1], points[0], points[2]);
             HBLabel.set({
-              left: pedalPointHb.x + 10,
-              top: pedalPointHb.y - 20,
+              left: pedalPointHb.x + 5,
+              top: pedalPointHb.y - 15,
+              fontSize:15,
             });
             lineBHb.set({
               x1: points[1].x,
@@ -140,8 +143,9 @@ export default defineComponent(
             // Perpendicular line from C to AB
             const pedalPointHc = getPedalPoint(points[2], points[0], points[1]);
             HCLabel.set({
-              left: pedalPointHc.x - 35,
-              top: pedalPointHc.y - 20,
+              left: pedalPointHc.x - 25,
+              top: pedalPointHc.y - 10,
+              fontSize:15,
             });
             lineCHc.set({
               x1: points[2].x,
@@ -150,114 +154,6 @@ export default defineComponent(
               y2: pedalPointHc.y,
               stroke: "black",
             });
-
-            // Perpendicular line from Hb to BC
-            const pedalPointQa = getPedalPoint(pedalPointHb, points[1], points[2]);
-            QALabel.set({
-              left: pedalPointQa.x - 5,
-              top: pedalPointQa.y + 5,
-            });
-            lineHbQa.set({
-              x1: pedalPointHb.x,
-              y1: pedalPointHb.y,
-              x2: pedalPointQa.x,
-              y2: pedalPointQa.y,
-              stroke: "red",
-            });
-
-            // Perpendicular line from Hc to BC
-            const pedalPointPa = getPedalPoint(pedalPointHc, points[1], points[2]);
-            PALabel.set({
-              left: pedalPointPa.x - 20,
-              top: pedalPointPa.y + 5,
-            });
-            lineHcPa.set({
-              x1: pedalPointHc.x,
-              y1: pedalPointHc.y,
-              x2: pedalPointPa.x,
-              y2: pedalPointPa.y,
-              stroke: "red",
-            });
-
-            // Perpendicular line from Ha to AC
-            const pedalPointPb = getPedalPoint(pedalPointHa, points[0], points[2]);
-            PBLabel.set({
-              left: pedalPointPb.x + 10,
-              top: pedalPointPb.y - 20,
-            });
-            lineHaPb.set({
-              x1: pedalPointHa.x,
-              y1: pedalPointHa.y,
-              x2: pedalPointPb.x,
-              y2: pedalPointPb.y,
-              stroke: "red",
-            });
-
-            // Perpendicular line from Ha to AC
-            const pedalPointQb = getPedalPoint(pedalPointHc, points[0], points[2]);
-            QBLabel.set({
-              left: pedalPointQb.x + 10,
-              top: pedalPointQb.y - 20,
-            });
-            lineHcQb.set({
-              x1: pedalPointHc.x,
-              y1: pedalPointHc.y,
-              x2: pedalPointQb.x,
-              y2: pedalPointQb.y,
-              stroke: "red",
-            });
-
-            // Perpendicular line from Ha to AB
-            const pedalPointQc = getPedalPoint(pedalPointHa, points[0], points[1]);
-            QCLabel.set({
-              left: pedalPointQc.x - 35,
-              top: pedalPointQc.y - 20,
-            });
-            lineHaQc.set({
-              x1: pedalPointHa.x,
-              y1: pedalPointHa.y,
-              x2: pedalPointQc.x,
-              y2: pedalPointQc.y,
-              stroke: "red",
-            });
-
-            // Perpendicular line from Hb to AB
-            const pedalPointPc = getPedalPoint(pedalPointHb, points[0], points[1]);
-            PCLabel.set({
-              left: pedalPointPc.x - 35,
-              top: pedalPointPc.y - 20,
-            });
-            lineHbPc.set({
-              x1: pedalPointHb.x,
-              y1: pedalPointHb.y,
-              x2: pedalPointPc.x,
-              y2: pedalPointPc.y,
-              stroke: "red",
-            });
-
-            // Calculate three angles of triangle PaPbPc
-            const angles2 = calculateThreeAngles(pedalPointPa, pedalPointPb, pedalPointPc);
-            // Taylor Circle center .
-            const taylorCircleCenter = trilinearToCartesian(
-              pedalPointPa,
-              pedalPointPb,
-              pedalPointPc,
-              Math.cos(angles2.x),
-              Math.cos(angles2.y),
-              Math.cos(angles2.z));
-            // Taylor Circle radius
-            const taylorCircleRadius = calculateDistanceBetweenTwoPoints(taylorCircleCenter, pedalPointPa);
-
-            // Set Taylor Circle properties.
-            taylorCircle.set({
-              originX: "center",
-              originY: "center",
-              radius: taylorCircleRadius,
-              left: taylorCircleCenter.x,
-              top: taylorCircleCenter.y,
-              stroke: "blue",
-              strokeWidth: 1.5,
-           });
 
             // Make extension line.
             const rightAngle = Math.PI / 2;
@@ -275,6 +171,30 @@ export default defineComponent(
                 y1: points[0].y,
                 x2: pedalPointHb.x,
                 y2: pedalPointHb.y,
+                stroke: "green",
+                strokeDashArray: [5, 5],
+              });
+              lineBHbH.set({
+                x1: pointH.x,
+                y1: pointH.y,
+                x2: pedalPointHb.x,
+                y2: pedalPointHb.y,
+                stroke: "green",
+                strokeDashArray: [5, 5],
+              });
+              lineCHcH.set({
+                x1: pointH.x,
+                y1: pointH.y,
+                x2: pedalPointHc.x,
+                y2: pedalPointHc.y,
+                stroke: "green",
+                strokeDashArray: [5, 5],
+              });
+              lineHaAH.set({
+                x1: pointH.x,
+                y1: pointH.y,
+                x2: points[0].x,
+                y2: points[0].y,
                 stroke: "green",
                 strokeDashArray: [5, 5],
               });
@@ -296,7 +216,7 @@ export default defineComponent(
                 stroke: "green",
                 strokeDashArray: [5, 5],
               });
-              lineAHAh.set({
+              lineAHaH.set({
                 x1: pointH.x,
                 y1: pointH.y,
                 x2: pedalPointHa.x,
@@ -338,10 +258,147 @@ export default defineComponent(
                 stroke: "green",
                 strokeDashArray: [5, 5],
               });
+              lineAHaH.set({
+                x1: pointH.x,
+                y1: pointH.y,
+                x2: pedalPointHa.x,
+                y2: pedalPointHa.y,
+                stroke: "green",
+                strokeDashArray: [5, 5],
+              });
+              lineBHbH.set({
+                x1: pointH.x,
+                y1: pointH.y,
+                x2: pedalPointHb.x,
+                y2: pedalPointHb.y,
+                stroke: "green",
+                strokeDashArray: [5, 5],
+              });
+              lineHcCH.set({
+                x1: pointH.x,
+                y1: pointH.y,
+                x2: points[2].x,
+                y2: points[2].y,
+                stroke: "green",
+                strokeDashArray: [5, 5],
+              });
             }
+
+            // Perpendicular line from Hb to BC
+            const pedalPointQa = getPedalPoint(pedalPointHb, points[1], points[2]);
+            QALabel.set({
+              left: pedalPointQa.x - 5,
+              top: pedalPointQa.y + 5,
+              fontSize:15,
+            });
+            lineHbQa.set({
+              x1: pedalPointHb.x,
+              y1: pedalPointHb.y,
+              x2: pedalPointQa.x,
+              y2: pedalPointQa.y,
+              stroke: "red",
+            });
+
+            // Perpendicular line from Hc to BC
+            const pedalPointPa = getPedalPoint(pedalPointHc, points[1], points[2]);
+            PALabel.set({
+              left: pedalPointPa.x - 10,
+              top: pedalPointPa.y + 5,
+              fontSize:15,
+            });
+            lineHcPa.set({
+              x1: pedalPointHc.x,
+              y1: pedalPointHc.y,
+              x2: pedalPointPa.x,
+              y2: pedalPointPa.y,
+              stroke: "red",
+            });
+
+            // Perpendicular line from Ha to AC
+            const pedalPointPb = getPedalPoint(pedalPointHa, points[0], points[2]);
+            PBLabel.set({
+              left: pedalPointPb.x + 5,
+              top: pedalPointPb.y - 10,
+              fontSize:15,
+            });
+            lineHaPb.set({
+              x1: pedalPointHa.x,
+              y1: pedalPointHa.y,
+              x2: pedalPointPb.x,
+              y2: pedalPointPb.y,
+              stroke: "red",
+            });
+
+            // Perpendicular line from Ha to AC
+            const pedalPointQb = getPedalPoint(pedalPointHc, points[0], points[2]);
+            QBLabel.set({
+              left: pedalPointQb.x + 5,
+              top: pedalPointQb.y - 15,
+              fontSize:15,
+            });
+            lineHcQb.set({
+              x1: pedalPointHc.x,
+              y1: pedalPointHc.y,
+              x2: pedalPointQb.x,
+              y2: pedalPointQb.y,
+              stroke: "red",
+            });
+
+            // Perpendicular line from Ha to AB
+            const pedalPointQc = getPedalPoint(pedalPointHa, points[0], points[1]);
+            QCLabel.set({
+              left: pedalPointQc.x - 25,
+              top: pedalPointQc.y - 10,
+              fontSize:15,
+            });
+            lineHaQc.set({
+              x1: pedalPointHa.x,
+              y1: pedalPointHa.y,
+              x2: pedalPointQc.x,
+              y2: pedalPointQc.y,
+              stroke: "red",
+            });
+
+            // Perpendicular line from Hb to AB
+            const pedalPointPc = getPedalPoint(pedalPointHb, points[0], points[1]);
+            PCLabel.set({
+              left: pedalPointPc.x - 20,
+              top: pedalPointPc.y - 15,
+              fontSize:15,
+            });
+            lineHbPc.set({
+              x1: pedalPointHb.x,
+              y1: pedalPointHb.y,
+              x2: pedalPointPc.x,
+              y2: pedalPointPc.y,
+              stroke: "red",
+            });
+
+            // Calculate three angles of triangle PaPbPc
+            const angles2 = calculateThreeAngles(pedalPointPa, pedalPointPb, pedalPointPc);
+            // Taylor Circle center .
+            const taylorCircleCenter = trilinearToCartesian(
+              pedalPointPa,
+              pedalPointPb,
+              pedalPointPc,
+              Math.cos(angles2.x),
+              Math.cos(angles2.y),
+              Math.cos(angles2.z));
+            // Taylor Circle radius
+            const taylorCircleRadius = calculateDistanceBetweenTwoPoints(taylorCircleCenter, pedalPointPa);
+
+            // Set Taylor Circle properties.
+            taylorCircle.set({
+              originX: "center",
+              originY: "center",
+              radius: taylorCircleRadius,
+              left: taylorCircleCenter.x,
+              top: taylorCircleCenter.y,
+              stroke: "blue",
+              strokeWidth: 1.5,
+           });
           }
           );
-
         canvas.add(triangle);
         canvas.add(aLabel);
         canvas.add(bLabel);
@@ -374,11 +431,12 @@ export default defineComponent(
         canvas.add(lineCAHb);
         canvas.add(lineBCHa);
         canvas.add(lineACHb);
-
-        canvas.add(lineAHAh);
+        canvas.add(lineBHbH);
+        canvas.add(lineHaAH);
+        canvas.add(lineAHaH);
         canvas.add(lineCHcH);
         canvas.add(lineHbBH);
-
+        canvas.add(lineHcCH);
         canvas.add(taylorCircle);
       }
     },
