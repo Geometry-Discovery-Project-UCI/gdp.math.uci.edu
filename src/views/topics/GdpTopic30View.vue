@@ -10,9 +10,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { indexTopicMap } from '@/data';
-import { Topic } from '@/types';
+import { defineComponent } from "vue";
+import { indexTopicMap } from "@/data";
+import { Topic } from "@/types";
 import {fabric} from "fabric";
 import {makeCircle, makeLabel, makeLine, makeMovablePolygon} from "@/utils/canvas";
 import {
@@ -21,7 +21,6 @@ import {
   getPedalPoint,
   trilinearToCartesian
 } from "@/utils/geometry";
-
 const topic = indexTopicMap.get(30) as Topic;
 
 export default defineComponent(
@@ -64,30 +63,21 @@ export default defineComponent(
         const HBLabel = makeLabel("Hb");
         const HCLabel = makeLabel("Hc");
         const QALabel = makeLabel("Qa");
-        const PALabel = makeLabel("Pa")
+        const PALabel = makeLabel("Pa");
         const QBLabel = makeLabel("Qb");
-        const PBLabel = makeLabel("Pb")
+        const PBLabel = makeLabel("Pb");
         const QCLabel = makeLabel("Qc");
-        const PCLabel = makeLabel("Pc")
+        const PCLabel = makeLabel("Pc");
 
         const taylorCircle = makeCircle();
         const triangle = makeMovablePolygon(
           [
-            {
-              x: 255,
-              y: 100,
-            },
-            {
-              x: 100,
-              y: 400,
-            },
-            {
-              x: 400,
-              y: 400,
-            },
+            new fabric.Point(255, 100),
+            new fabric.Point(100, 400),
+            new fabric.Point(100, 400),
           ],
-          function (coords: Array<fabric.Point>) {
-            const points = triangle.points as Array<fabric.Point>;
+          function (coords: fabric.Point[]) {
+            const points = triangle.points as fabric.Point[];
             aLabel.set({
               left: coords[0].x,
               top: coords[0].y - 30,
@@ -103,9 +93,6 @@ export default defineComponent(
 
             // Calculate three angle of the triangle ABC
             const angles = calculateThreeAngles(coords[0], coords[1], coords[2]);
-            console.log("angles: " + angles.x + ", " + angles.y + ", " + angles.z);
-
-
             // OrthoCenter          --     sec A: sec B: sec C
             const pointH = trilinearToCartesian(
               coords[0],
@@ -114,11 +101,11 @@ export default defineComponent(
               1 / Math.cos(angles.x),
               1 / Math.cos(angles.y),
               1 / Math.cos(angles.z)
-            )
+            );
             HLabel.set({
               left: pointH.x,
               top: pointH.y
-            })
+            });
 
             // Perpendicular line from A to BC
             const pedalPointHa = getPedalPoint(points[0], points[1], points[2]);
@@ -367,8 +354,8 @@ export default defineComponent(
         canvas.add(PALabel);
         canvas.add(PBLabel);
         canvas.add(QBLabel);
-        canvas.add(QCLabel)
-        canvas.add(PCLabel)
+        canvas.add(QCLabel);
+        canvas.add(PCLabel);
         canvas.add(lineAB);
         canvas.add(lineBC);
         canvas.add(lineAC);

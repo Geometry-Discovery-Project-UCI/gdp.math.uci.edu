@@ -20,10 +20,10 @@ import { defineComponent } from "vue";
 export default defineComponent({
   computed: {
     layout() {
-      return (this.$route.meta.layout || Layout.Sider)
+      return (this.$route.meta.layout || Layout.Sider);
     }
   },
-})
+});
 </script>
 
 <style>
