@@ -38,12 +38,10 @@ import { makeCircle, makeLabel, makeLine, makeMovablePolygon } from "@/utils/can
 import {
   calculateDistanceFromPointToLine,
   calculateIncenter,
-  calculateLineIntersectInLinearEquation,
   calculateLineIntersectInPoints,
   calculateMidpoint,
   calculateThreeAngles,
-  solveLinearEquation,
-  solvePerpendicularLineEquation,
+  getPedalPoint,
   trilinearToCartesian
 } from "@/utils/geometry";
 const topic = indexTopicMap.get(3) as Topic;
@@ -304,17 +302,6 @@ export default defineComponent(
         const heightOnAC = makeLine();
         const heightOnAB = makeLine();
 
-        function getPedalPoint(from: fabric.Point, toA: fabric.Point, toB: fabric.Point) {
-          const targetLinEq = solveLinearEquation(toA, toB);
-          const heightLinEq = solvePerpendicularLineEquation(targetLinEq.m, from);
-          return calculateLineIntersectInLinearEquation(
-            targetLinEq.m,
-            targetLinEq.b,
-            heightLinEq.m,
-            heightLinEq.b
-          );
-        }
-
         const triangle = makeMovablePolygon([new fabric.Point(125, 50), new fabric.Point(50, 450), new fabric.Point(450, 450)],
           function (coords: fabric.Point[]) {
             aLabel.set({
@@ -366,6 +353,7 @@ export default defineComponent(
               top: pedalPointOnAB.y -15,
             });
 
+            // Orthocenter point H
             const angles = calculateThreeAngles(coords[0], coords[1], coords[2]);
             const pointH = trilinearToCartesian(
               coords[0], coords[1], coords[2],
