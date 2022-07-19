@@ -23,7 +23,7 @@
 
   </ATypographyParagraph>
   <div id="orthocenter-wrapper">
-    <ATypographyTitle :level="4">Orthocenter Animated Illustration (Need fixes)</ATypographyTitle>
+    <ATypographyTitle :level="4">Orthocenter Animated Illustration (fixing in progress)</ATypographyTitle>
     <canvas id="orthocenter-canvas" width="500" height="500"></canvas>
   </div>
   <!--  </li>-->
@@ -36,9 +36,15 @@ import { Topic } from "@/types";
 import { fabric } from "fabric";
 import { makeCircle, makeLabel, makeLine, makeMovablePolygon } from "@/utils/canvas";
 import {
-  calculateDistanceFromPointToLine, calculateIncenter,
-  calculateLineIntersectInLinearEquation, calculateLineIntersectInPoints, calculateMidpoint,
-  solveLinearEquation, solvePerpendicularLineEquation
+  calculateDistanceFromPointToLine,
+  calculateIncenter,
+  calculateLineIntersectInLinearEquation,
+  calculateLineIntersectInPoints,
+  calculateMidpoint,
+  calculateThreeAngles,
+  solveLinearEquation,
+  solvePerpendicularLineEquation,
+  trilinearToCartesian
 } from "@/utils/geometry";
 const topic = indexTopicMap.get(3) as Topic;
 export default defineComponent(
@@ -290,7 +296,10 @@ export default defineComponent(
         const aLabel = makeLabel("A");
         const bLabel = makeLabel("B");
         const cLabel = makeLabel("C");
-
+        const haLabel = makeLabel("Ha");
+        const hbLabel = makeLabel("Hb");
+        const hcLabel = makeLabel("Hc");
+        const hLabel = makeLabel("H");
         const heightOnBC = makeLine();
         const heightOnAC = makeLine();
         const heightOnAB = makeLine();
@@ -328,6 +337,10 @@ export default defineComponent(
               x2: pedalPointOnBC.x,
               y2: pedalPointOnBC.y,
             });
+            haLabel.set({
+              left: pedalPointOnBC.x - 10,
+              top: pedalPointOnBC.y,
+            });
 
             const pedalPointOnAC = getPedalPoint(coords[1], coords[0], coords[2]);
             heightOnAC.set({
@@ -335,6 +348,10 @@ export default defineComponent(
               y1: coords[1].y,
               x2: pedalPointOnAC.x,
               y2: pedalPointOnAC.y,
+            });
+            hbLabel.set({
+              left: pedalPointOnAC.x + 5,
+              top: pedalPointOnAC.y -20,
             });
 
             const pedalPointOnAB = getPedalPoint(coords[2], coords[0], coords[1]);
@@ -344,15 +361,33 @@ export default defineComponent(
               x2: pedalPointOnAB.x,
               y2: pedalPointOnAB.y,
             });
+            hcLabel.set({
+              left: pedalPointOnAB.x - 35,
+              top: pedalPointOnAB.y -15,
+            });
+
+            const angles = calculateThreeAngles(coords[0], coords[1], coords[2]);
+            const pointH = trilinearToCartesian(
+              coords[0], coords[1], coords[2],
+              1 / Math.cos(angles.x),
+              1 / Math.cos(angles.y),
+              1 / Math.cos(angles.z)
+            );
+            hLabel.set({
+              left: pointH.x,
+              top: pointH.y
+            });
           }
         );
 
         canvas.add(triangle);
-
         canvas.add(aLabel);
         canvas.add(bLabel);
         canvas.add(cLabel);
-
+        canvas.add(haLabel);
+        canvas.add(hbLabel);
+        canvas.add(hcLabel);
+        canvas.add(hLabel);
         canvas.add(heightOnBC);
         canvas.add(heightOnAC);
         canvas.add(heightOnAB);
