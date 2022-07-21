@@ -613,6 +613,13 @@ export default defineComponent({
           y2: q1.y,
         });
 
+        lineCQ1.set({ stroke: "transparent" });
+        lineAP2.set({ stroke: "transparent" });
+        lineBP1.set({ stroke: "transparent" });
+        lineAQ3.set({ stroke: "transparent" });
+        lineAQ2.set({ stroke: "transparent" });
+        lineBP3.set({ stroke: "transparent" });
+        // draw the extenstion line
         const rightAngle = Math.PI / 2;
         if (angles.z > rightAngle) {
           lineCQ1.set({
@@ -632,7 +639,6 @@ export default defineComponent({
             strokeDashArray: [5, 5],
           });
         }
-
         if (angles.y > rightAngle) {
           lineBP1.set({
             x1: vertices[1].x,
@@ -651,7 +657,6 @@ export default defineComponent({
             strokeDashArray: [5, 5],
           });
         }
-
         if (angles.x > rightAngle) {
           lineAQ2.set({
             x1: vertices[0].x,
