@@ -44,6 +44,7 @@ export default defineComponent(
         const lineHcQb = makeLine();
         const lineHbPc = makeLine();
         const lineHaQc = makeLine();
+        // Extension lines
         const lineBAHc = makeLine();
         const lineCAHb = makeLine();
         const lineABHc = makeLine();
@@ -56,6 +57,7 @@ export default defineComponent(
         const lineCHcH = makeLine();
         const lineHbBH = makeLine();
         const lineHcCH = makeLine();
+
         const squarHaline1 = makeLine();
         const squarHaline2 = makeLine();
         // const squarHbline1 = makeLine();
@@ -176,6 +178,20 @@ export default defineComponent(
               y2: pedalPointHc.y,
               stroke: "green",
             });
+
+            lineBAHc.set({stroke: "transparent",});
+            lineCAHb.set({stroke: "transparent",});
+            lineABHc.set({stroke: "transparent",});
+            lineCBHa.set({stroke: "transparent",});
+            lineBCHa.set({stroke: "transparent",});
+            lineACHb.set({stroke: "transparent",});
+            lineBHbH.set({stroke: "transparent",});
+            lineHaAH.set({stroke: "transparent",});
+            lineAHaH.set({stroke: "transparent",});
+            lineCHcH.set({stroke: "transparent",});
+            lineHbBH.set({stroke: "transparent",});
+            lineHcCH.set({stroke: "transparent",});
+
             // const squarHcline1 = makeLine();
             // const squarHcline2 = makeLine();
 
