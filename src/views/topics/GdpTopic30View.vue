@@ -56,6 +56,12 @@ export default defineComponent(
         const lineCHcH = makeLine();
         const lineHbBH = makeLine();
         const lineHcCH = makeLine();
+        const squarHaline1 = makeLine();
+        const squarHaline2 = makeLine();
+        // const squarHbline1 = makeLine();
+        // const squarHbline2 = makeLine();
+        // const squarHcline1 = makeLine();
+        // const squarHcline2 = makeLine();
 
         const aLabel = makeLabel("A");
         const bLabel = makeLabel("B");
@@ -124,6 +130,20 @@ export default defineComponent(
               y2: pedalPointHa.y,
               stroke: "green",
             });
+            squarHaline1.set({
+              x1: pedalPointHa.x,
+              y1: pedalPointHa.y - 10,
+              x2: pedalPointHa.x + 10,
+              y2: pedalPointHa.y - 10,
+              stroke: "green",
+            });
+            squarHaline2.set({
+              x1: pedalPointHa.x + 10,
+              y1: pedalPointHa.y - 10,
+              x2: pedalPointHa.x + 10,
+              y2: pedalPointHa.y,
+              stroke: "green",
+            });
 
             // Perpendicular line from B to AC
             const pedalPointHb = getPedalPoint(points[1], points[0], points[2]);
@@ -139,6 +159,8 @@ export default defineComponent(
               y2: pedalPointHb.y,
               stroke: "green",
             });
+            // const squarHbline1 = makeLine();
+            // const squarHbline2 = makeLine();
 
             // Perpendicular line from C to AB
             const pedalPointHc = getPedalPoint(points[2], points[0], points[1]);
@@ -154,6 +176,8 @@ export default defineComponent(
               y2: pedalPointHc.y,
               stroke: "green",
             });
+            // const squarHcline1 = makeLine();
+            // const squarHcline2 = makeLine();
 
             // Make extension line.
             const rightAngle = Math.PI / 2;
@@ -437,6 +461,8 @@ export default defineComponent(
         canvas.add(lineCHcH);
         canvas.add(lineHbBH);
         canvas.add(lineHcCH);
+        canvas.add(squarHaline1);
+        canvas.add(squarHaline2);
         canvas.add(taylorCircle);
       }
     },
