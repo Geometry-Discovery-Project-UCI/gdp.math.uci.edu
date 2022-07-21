@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, h } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
@@ -29,6 +29,7 @@ import {
   calculateLineIntersectInPoints,
   calculateDistanceBetweenTwoPoints,
 } from "@/utils/geometry";
+import { makeLine } from "@/utils/canvas";
 
 const topic = indexTopicMap.get(17) as Topic;
 
@@ -82,7 +83,7 @@ function createLabel(text: string, fontSize?: number, color?: string) {
     hasControls: false,
     hasBorders: false,
     evented: false,
-    fontSize: fontSize || 24,
+    fontSize: fontSize || 22,
     fill: color || "black",
   });
 }
@@ -402,9 +403,16 @@ export default defineComponent({
       // Symmdian point
       const kNode = createCircle(0, 0, 2, "red");
 
-      const lineP1Q2 = createLine();
-      const lineP2Q3 = createLine();
-      const lineP3Q1 = createLine();
+      const lineP1Q2 = createLine([], "red", 1);
+      const lineP2Q3 = createLine([], "red", 1);
+      const lineP3Q1 = createLine([], "red", 1);
+
+      const lineCQ1 = makeLine();
+      const lineAP2 = makeLine();
+      const lineBP1 = makeLine();
+      const lineAQ3 = makeLine();
+      const lineAQ2 = makeLine();
+      const lineBP3 = makeLine();
 
       const aLabel = createLabel("A");
       const bLabel = createLabel("B");
@@ -486,35 +494,94 @@ export default defineComponent({
         const sideAQ3 = ((2 * r) / sideBC) * sideCA;
         const lambda1 = sideAQ3 / sideAB;
         const q3 = new fabric.Point(
-          lambda1 * vertices[0].x + (1 - lambda1) * vertices[1].x,
-          lambda1 * vertices[0].y + (1 - lambda1) * vertices[1].y
+          lambda1 * vertices[1].x + (1 - lambda1) * vertices[0].x,
+          lambda1 * vertices[1].y + (1 - lambda1) * vertices[0].y
         );
         iNode.set({
           left: q3.x,
           top: q3.y,
         });
         iLabel.set({
-          left: q3.x - 15,
+          left: q3.x - 20,
           top: q3.y - 20,
         });
-        // triangle BQ1P3 ~ BAC
+
+        const sideAP2 = ((2 * r) / sideBC) * sideAB;
+        const lambda2 = sideAP2 / sideCA;
+        const p2 = new fabric.Point(
+          lambda2 * vertices[2].x + (1 - lambda2) * vertices[0].x,
+          lambda2 * vertices[2].y + (1 - lambda2) * vertices[0].y
+        );
+        fNode.set({
+          left: p2.x,
+          top: p2.y,
+        });
+        fLabel.set({
+          left: p2.x + 5,
+          top: p2.y - 20,
+        });
+
+        // triangle BP3Q1 ~ BAC
         const sideBQ1 = ((2 * r) / sideCA) * sideAB;
-        const lambda2 = sideBQ1 / sideAB;
+        const lambda3 = sideBQ1 / sideBC;
         const q1 = new fabric.Point(
-          lambda2 * vertices[1].x + (1 - lambda2) * vertices[0].x,
-          lambda2 * vertices[1].y + (1 - lambda2) * vertices[0].y
+          lambda3 * vertices[2].x + (1 - lambda3) * vertices[1].x,
+          lambda3 * vertices[2].y + (1 - lambda3) * vertices[1].y
         );
         eNode.set({
           left: q1.x,
           top: q1.y,
         });
         eLabel.set({
-          left: q1.x - 15,
-          top: q1.y - 20,
+          left: q1.x - 5,
+          top: q1.y + 5,
         });
-        // triangle CQ2P1 ~ CBA
 
-        // AP2  / AB = P2Q3 / BC
+        const sideBP3 = ((2 * r) / sideCA) * sideBC;
+        const lambda4 = sideBP3 / sideAB;
+        const p3 = new fabric.Point(
+          lambda4 * vertices[0].x + (1 - lambda4) * vertices[1].x,
+          lambda4 * vertices[0].y + (1 - lambda4) * vertices[1].y
+        );
+        hNode.set({
+          left: p3.x,
+          top: p3.y,
+        });
+        hLabel.set({
+          left: p3.x - 25,
+          top: p3.y - 20,
+        });
+
+        // triangle CQ2P1 ~ CBA
+        const sideCQ2 = ((2 * r) / sideAB) * sideBC;
+        const lambda5 = sideCQ2 / sideCA;
+        const q2 = new fabric.Point(
+          lambda5 * vertices[0].x + (1 - lambda5) * vertices[2].x,
+          lambda5 * vertices[0].y + (1 - lambda5) * vertices[2].y
+        );
+        gNode.set({
+          left: q2.x,
+          top: q2.y,
+        });
+        gLabel.set({
+          left: q2.x + 5,
+          top: q2.y - 20,
+        });
+
+        const sideCP1 = ((2 * r) / sideAB) * sideCA;
+        const lambda6 = sideCP1 / sideBC;
+        const p1 = new fabric.Point(
+          lambda6 * vertices[1].x + (1 - lambda6) * vertices[2].x,
+          lambda6 * vertices[1].y + (1 - lambda6) * vertices[2].y
+        );
+        dNode.set({
+          left: p1.x,
+          top: p1.y,
+        });
+        dLabel.set({
+          left: p1.x - 5,
+          top: p1.y + 5,
+        });
 
         kNode.set({
           left: symmedianPoint.x,
@@ -524,6 +591,85 @@ export default defineComponent({
           left: symmedianPoint.x - 10,
           top: symmedianPoint.y - 35,
         });
+
+        lineP1Q2.set({
+          x1: p1.x,
+          y1: p1.y,
+          x2: q2.x,
+          y2: q2.y,
+        });
+
+        lineP2Q3.set({
+          x1: p2.x,
+          y1: p2.y,
+          x2: q3.x,
+          y2: q3.y,
+        });
+
+        lineP3Q1.set({
+          x1: p3.x,
+          y1: p3.y,
+          x2: q1.x,
+          y2: q1.y,
+        });
+
+        const rightAngle = Math.PI / 2;
+        if (angles.z > rightAngle) {
+          lineCQ1.set({
+            x1: vertices[2].x,
+            y1: vertices[2].y,
+            x2: q1.x,
+            y2: q1.y,
+            stroke: "green",
+            strokeDashArray: [5, 5],
+          });
+          lineAP2.set({
+            x1: vertices[0].x,
+            y1: vertices[0].y,
+            x2: p2.x,
+            y2: p2.y,
+            stroke: "green",
+            strokeDashArray: [5, 5],
+          });
+        }
+
+        if (angles.y > rightAngle) {
+          lineBP1.set({
+            x1: vertices[1].x,
+            y1: vertices[1].y,
+            x2: p1.x,
+            y2: p1.y,
+            stroke: "green",
+            strokeDashArray: [5, 5],
+          });
+          lineAQ3.set({
+            x1: vertices[0].x,
+            y1: vertices[0].y,
+            x2: q3.x,
+            y2: q3.y,
+            stroke: "green",
+            strokeDashArray: [5, 5],
+          });
+        }
+
+        if (angles.x > rightAngle) {
+          lineAQ2.set({
+            x1: vertices[0].x,
+            y1: vertices[0].y,
+            x2: q2.x,
+            y2: q2.y,
+            stroke: "green",
+            strokeDashArray: [5, 5],
+          });
+          lineBP3.set({
+            x1: vertices[1].x,
+            y1: vertices[1].y,
+            x2: p3.x,
+            y2: p3.y,
+            stroke: "green",
+            strokeDashArray: [5, 5],
+          });
+        }
       }
 
       moveVertices();
@@ -536,12 +682,29 @@ export default defineComponent({
       canvas.add(aLabel);
       canvas.add(bLabel);
       canvas.add(cLabel);
+      canvas.add(dNode);
       canvas.add(eNode);
+      canvas.add(fNode);
+      canvas.add(gNode);
+      canvas.add(hNode);
       canvas.add(iNode);
       canvas.add(kNode);
+      canvas.add(dLabel);
       canvas.add(eLabel);
+      canvas.add(fLabel);
+      canvas.add(gLabel);
+      canvas.add(hLabel);
       canvas.add(iLabel);
       canvas.add(kLable);
+      canvas.add(lineP1Q2);
+      canvas.add(lineP2Q3);
+      canvas.add(lineP3Q1);
+      canvas.add(lineCQ1);
+      canvas.add(lineAP2);
+      canvas.add(lineBP1);
+      canvas.add(lineAQ3);
+      canvas.add(lineAQ2);
+      canvas.add(lineBP3);
     })();
   },
 });
