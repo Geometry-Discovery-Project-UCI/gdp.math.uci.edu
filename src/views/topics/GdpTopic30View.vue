@@ -122,7 +122,7 @@ export default defineComponent(
               y1: points[0].y,
               x2: pedalPointHa.x,
               y2: pedalPointHa.y,
-              stroke: "black",
+              stroke: "green",
             });
 
             // Perpendicular line from B to AC
@@ -137,7 +137,7 @@ export default defineComponent(
               y1: points[1].y,
               x2: pedalPointHb.x,
               y2: pedalPointHb.y,
-              stroke: "black",
+              stroke: "green",
             });
 
             // Perpendicular line from C to AB
@@ -152,7 +152,7 @@ export default defineComponent(
               y1: points[2].y,
               x2: pedalPointHc.x,
               y2: pedalPointHc.y,
-              stroke: "black",
+              stroke: "green",
             });
 
             // Make extension line.
