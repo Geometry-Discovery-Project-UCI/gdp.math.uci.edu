@@ -1,10 +1,10 @@
 <template>
     <TopicMeta :topic="topic" />
     <ATypographyParagraph>
-        The description of Newton Line
+        The description of Quadrilateral Area Formulas
     </ATypographyParagraph>
     <div id="Quadrilateral-Area-Formulas-wapper">
-        <ATypographyTitle :level="4">Newton Line</ATypographyTitle>
+        <ATypographyTitle :level="4">Quadrilateral Area Formulas</ATypographyTitle>
         <canvas id="Quadrilateral-Area-Formulas-canvas" width="500" height="500" />
 
     </div>
