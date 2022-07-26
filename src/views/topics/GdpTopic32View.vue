@@ -33,13 +33,17 @@ export default defineComponent({
                 left: x || 0,
                 top: y || 0,
                 hasControls: true,
+                cornerSize: 10,
                 hasBorders: false,
                 evented: true,
                 radius: radius || 1,
                 fill: fill || "transparent",
                 strokeWidth: 1.5,
                 stroke: "black",
+                strokeUniform: true,
                 lockScalingFlip: true,
+                lockUniScaling: true,
+                borderOpacityWhenMoving: 0,
             }).setControlsVisibility({
                 mt: false,
                 mb: false,
@@ -67,9 +71,13 @@ export default defineComponent({
                 hasBorders: false,
                 evented: false,
                 fontSize: fontSize || 24,
-                fill: color || "black"
+                fill: color || "black",
             });
         }
+
+        const centerA = createCircle();
+        const centerB = createCircle();
+        const centerC = createCircle();
 
         const circleA = createCircle(150, 170, 70);
         const circleB = createCircle(300, 220, 35);
@@ -115,10 +123,48 @@ export default defineComponent({
                 new fabric.Point(circleA.left as number, circleA.top as number),
                 new fabric.Point(circleB.left as number, circleB.top as number),
                 new fabric.Point(circleC.left as number, circleC.top as number),
-            ]
-            const radiusA = circleA.radius as number;
-            const radiusB = circleB.radius as number;
-            const radiusC = circleC.radius as number;
+            ];
+
+            centerA.set({
+                left: centers[0].x,
+                top: centers[0].y,
+                hasControls: false,
+                evented: false,
+            });
+            centerB.set({
+                left: centers[1].x,
+                top: centers[1].y,
+                hasControls: false,
+                evented: false,
+            });
+            centerC.set({
+                left: centers[2].x,
+                top: centers[2].y,
+                hasControls: false,
+                evented: false,
+            });
+
+            const radiusA = circleA.getRadiusX() as number;
+            const radiusB = circleB.getRadiusX() as number;
+            const radiusC = circleC.getRadiusX() as number;
+
+            console.log(canvas.getActiveObject());
+            if (canvas.getActiveObject() === circleA) {
+                circleA.minScaleLimit = radiusB * 1.5 / radiusA;
+            }
+            if (canvas.getActiveObject() === circleB) {
+                if (radiusB > radiusA / 1.5) {
+                    // TODO: fix maxScaleLimit
+                    circleB.scale(radiusA / radiusB);
+                }
+                circleB.minScaleLimit = radiusC * 1.5 / radiusB;
+            }
+            if (canvas.getActiveObject() === circleC) {
+                if (radiusC > radiusB / 1.5) {
+                    // TODO: fix maxScaleLimit
+                    circleC.scale(radiusB / radiusC);
+                }
+            }
 
             labelA.set({
                 left: circleA.left as number - radiusA - 25,
@@ -220,6 +266,9 @@ export default defineComponent({
         canvas.add(circleA);
         canvas.add(circleB);
         canvas.add(circleC);
+        canvas.add(centerA);
+        canvas.add(centerB);
+        canvas.add(centerC);
         canvas.add(labelA);
         canvas.add(labelB);
         canvas.add(labelC);
