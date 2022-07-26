@@ -44,6 +44,7 @@ export default defineComponent({
                 lockScalingFlip: true,
                 lockUniScaling: true,
                 borderOpacityWhenMoving: 0,
+                centeredScaling: true,
             }).setControlsVisibility({
                 mt: false,
                 mb: false,
@@ -118,6 +119,31 @@ export default defineComponent({
             ];
         }
 
+        function scaleCircle() {
+            const radiusA = circleA.getRadiusX() as number;
+            const radiusB = circleB.getRadiusX() as number;
+            const radiusC = circleC.getRadiusX() as number;
+
+            if (canvas.getActiveObject() === circleA) {
+                circleA.minScaleLimit = radiusB * 1.5 / radiusA;
+            }
+            if (canvas.getActiveObject() === circleB) {
+                if (radiusB > radiusA / 1.5) {
+                    // TODO: fix maxScaleLimit
+                    circleB.scale(radiusA / radiusB);
+                    console.log(circleB.getObjectScaling());
+                }
+                circleB.minScaleLimit = radiusC * 1.5 / radiusB;
+            }
+            if (canvas.getActiveObject() === circleC) {
+                if (radiusC > radiusB / 1.5) {
+                    // TODO: fix maxScaleLimit
+                    circleC.scale(radiusB / radiusC);
+                }
+            }
+            changeCircles();
+        }
+
         function changeCircles() {
             const centers = [
                 new fabric.Point(circleA.left as number, circleA.top as number),
@@ -147,24 +173,6 @@ export default defineComponent({
             const radiusA = circleA.getRadiusX() as number;
             const radiusB = circleB.getRadiusX() as number;
             const radiusC = circleC.getRadiusX() as number;
-
-            console.log(canvas.getActiveObject());
-            if (canvas.getActiveObject() === circleA) {
-                circleA.minScaleLimit = radiusB * 1.5 / radiusA;
-            }
-            if (canvas.getActiveObject() === circleB) {
-                if (radiusB > radiusA / 1.5) {
-                    // TODO: fix maxScaleLimit
-                    circleB.scale(radiusA / radiusB);
-                }
-                circleB.minScaleLimit = radiusC * 1.5 / radiusB;
-            }
-            if (canvas.getActiveObject() === circleC) {
-                if (radiusC > radiusB / 1.5) {
-                    // TODO: fix maxScaleLimit
-                    circleC.scale(radiusB / radiusC);
-                }
-            }
 
             labelA.set({
                 left: circleA.left as number - radiusA - 25,
@@ -261,7 +269,7 @@ export default defineComponent({
         changeCircles();
 
         canvas.on("object:moving", changeCircles);
-        canvas.on("object:scaling", changeCircles);
+        canvas.on("object:scaling", scaleCircle);
 
         canvas.add(circleA);
         canvas.add(circleB);
