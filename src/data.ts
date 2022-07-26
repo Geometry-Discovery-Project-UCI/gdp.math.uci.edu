@@ -58,7 +58,7 @@ export const VINNIE_HSIA: Contributor = {
 
 export const JIANLIN_LI: Contributor = {
   name: "Jianlin Li",
-  email: "yixual44@uci.edu",
+  email: "jianlil2@uci.edu",
   institute: Institute.UCIrvine,
 };
 
@@ -302,7 +302,7 @@ export const topics: Topic[] = [
     index: 6,
     snapshot: "images/snapshots/topic06.png",
     essay: "pdfs/topic06.pdf",
-    animationContributors: [],
+    animationContributors: [ZEJIN_XU],
     essayContributors: [
       ZHIQIN_LU,
       XIANFU_LIU,
@@ -326,7 +326,9 @@ export const topics: Topic[] = [
     index: 8,
     snapshot: "images/snapshots/topic08.png",
     essay: "pdfs/topic08.pdf",
-    animationContributors: [],
+    animationContributors: [
+      YIXUAN_LI,
+    ],
     essayContributors: [],
   },
   {
@@ -366,7 +368,7 @@ export const topics: Topic[] = [
     index: 12,
     snapshot: "images/snapshots/topic12.png",
     essay: "pdfs/topic12.pdf",
-    animationContributors: [],
+    animationContributors: [VINNIE_HSIA],
     essayContributors: [
       CHUXIANGBO_WANG,
     ],
@@ -376,7 +378,9 @@ export const topics: Topic[] = [
     index: 13,
     snapshot: "images/snapshots/topic13.png",
     essay: "pdfs/topic13.pdf",
-    animationContributors: [],
+    animationContributors: [
+      MAI_NGUYEN,
+    ],
     essayContributors: [
       RUSSELL_MARASIGAN,
       MAI_NGUYEN,
