@@ -129,16 +129,13 @@ export default defineComponent({
             }
             if (canvas.getActiveObject() === circleB) {
                 if (radiusB > radiusA / 1.5) {
-                    // TODO: fix maxScaleLimit
-                    circleB.scale(radiusA / radiusB);
-                    console.log(circleB.getObjectScaling());
+                    circleB.scale(1.5);
                 }
                 circleB.minScaleLimit = radiusC * 1.5 / radiusB;
             }
             if (canvas.getActiveObject() === circleC) {
                 if (radiusC > radiusB / 1.5) {
-                    // TODO: fix maxScaleLimit
-                    circleC.scale(radiusB / radiusC);
+                    circleC.scale(1.5);
                 }
             }
             changeCircles();
