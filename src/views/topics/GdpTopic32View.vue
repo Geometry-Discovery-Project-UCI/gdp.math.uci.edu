@@ -71,7 +71,7 @@ export default defineComponent({
                 hasControls: false,
                 hasBorders: false,
                 evented: false,
-                fontSize: fontSize || 24,
+                fontSize: fontSize || 18,
                 fill: color || "black",
             });
         }
@@ -100,6 +100,9 @@ export default defineComponent({
         const labelA = createLabel("A");
         const labelB = createLabel("B");
         const labelC = createLabel("C");
+        const labelP = createLabel("P");
+        const labelQ = createLabel("Q");
+        const labelR = createLabel("R");
 
         function calculateTangentLineIntersection(pt1: fabric.Point, r1: number, pt2: fabric.Point, r2: number) {
             const x = (r1 * pt2.x - r2 * pt1.x) / (r1 - r2);
@@ -129,13 +132,13 @@ export default defineComponent({
             }
             if (canvas.getActiveObject() === circleB) {
                 if (radiusB > radiusA / 1.5) {
-                    circleB.scale(1.5);
+                    circleB.scale(radiusA / 1.5 / (circleB.radius as number));
                 }
                 circleB.minScaleLimit = radiusC * 1.5 / radiusB;
             }
             if (canvas.getActiveObject() === circleC) {
                 if (radiusC > radiusB / 1.5) {
-                    circleC.scale(1.5);
+                    circleC.scale(radiusB / 1.5 / (circleC.radius as number));
                 }
             }
             changeCircles();
@@ -172,16 +175,16 @@ export default defineComponent({
             const radiusC = circleC.getRadiusX() as number;
 
             labelA.set({
-                left: circleA.left as number - radiusA - 25,
-                top: circleA.top as number - 25,
+                left: circleA.left as number - 18,
+                top: circleA.top as number - 10,
             });
             labelB.set({
-                left: circleB.left as number - radiusB - 25,
-                top: circleB.top as number - 25,
+                left: circleB.left as number - 18,
+                top: circleB.top as number - 10,
             });
             labelC.set({
-                left: circleC.left as number - radiusC - 25,
-                top: circleC.top as number - 25,
+                left: circleC.left as number - 18,
+                top: circleC.top as number - 10,
             });
 
             const intersectionAB = calculateTangentLineIntersection(centers[0], radiusA, centers[1], radiusB);
@@ -211,6 +214,18 @@ export default defineComponent({
                 evented: false,
                 radius: 2,
                 fill: "black",
+            });
+            labelP.set({
+                left: (nodeP.left as number),
+                top: (nodeP.top as number) + 10,
+            });
+            labelQ.set({
+                left: (nodeQ.left as number),
+                top: (nodeQ.top as number) + 10,
+            });
+            labelR.set({
+                left: (nodeR.left as number),
+                top: (nodeR.top as number) + 10,
             });
 
             colinearLine.set({
@@ -286,6 +301,9 @@ export default defineComponent({
         canvas.add(nodeP);
         canvas.add(nodeQ);
         canvas.add(nodeR);
+        canvas.add(labelP);
+        canvas.add(labelQ);
+        canvas.add(labelR);
         canvas.add(colinearLine);
     }
 });
