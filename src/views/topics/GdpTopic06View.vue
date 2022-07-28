@@ -178,8 +178,8 @@ function partTwo() {
   const bLabel = makeLabel("B", { x: -20, y: 0 });
   const cLabel = makeLabel("C", { x: -10, y: 10 });
   const dLabel = makeLabel("D", { x: -35, y: -20 });
-  const eLabel = makeLabel("E");
-  const fLabel = makeLabel("F");
+  const eLabel = makeLabel("E", { x: -10, y: 5 });
+  const fLabel = makeLabel("F", { x: 5, y: 10 });
   setLabelToPoint([aLabel, bLabel, cLabel, dLabel, eLabel, fLabel],
     [pointA, pointB, pointC, pointD, pointE, pointF]);
   cvsPascal.add(aLabel, bLabel, cLabel, dLabel, eLabel, fLabel);
@@ -196,9 +196,9 @@ function partTwo() {
   });
   cvsPascal.add(circle);
 
-  const xLable = makeLabel("X");
+  const xLable = makeLabel("X", { x: 15, y: -5 });
   const yLable = makeLabel("Y");
-  const zLable = makeLabel("Z");
+  const zLable = makeLabel("Z", { x: 15, y: -10 });
   const pointX = new fabric.Point(0, 0);
   const pointY = new fabric.Point(0, 0);
   const pointZ = new fabric.Point(0, 0);
@@ -259,7 +259,9 @@ function partTwo() {
       setLineFromPoints(az, pointA, pointZ);
       setLineFromPoints(by, pointB, pointY);
       setLineFromPoints(fy, pointF, pointY);
-      setLineFromPoints(xy, pointX, pointY);
+      const { m, b } = solveLinearEquation(pointX, pointY);
+      const y1 = m*500 + b;
+      setLineFromPoints(xy, { x: 500, y: y1 }, { x: 0, y: b});
     },
     circleRestrict
   );
