@@ -27,8 +27,9 @@ import {
     calculateDistanceBetweenTwoPoints,
     calculateSlope,
     calculateLineIntersectInPoints,
-    CANVAS_HEIGHT, CANVAS_WIDTH
+    CANVAS_HEIGHT, CANVAS_WIDTH, calculateThreeAngles
 } from "@/utils/geometry";
+import { LineHeightOutlined } from "@ant-design/icons-vue";
 const topic = indexTopicMap.get(31) as Topic;
 export default defineComponent(
     {
@@ -47,6 +48,7 @@ export default defineComponent(
             const fLabel = makeLabel("F");
             const mLabel = makeLabel("M");
             const pLabel = makeLabel("P");
+            const nLabel = makeLabel("N");
             const lineAC = makeLine();
             const lineBD = makeLine();
             const lineAE = makeLine();
@@ -66,6 +68,9 @@ export default defineComponent(
             const valueSquareBCD = makeLabel("0");
             const valueSquareABD = makeLabel("0");
             const valueSquareABCD = makeLabel("0");
+            const angleE = new fabric.Rect();
+            const angleF = new fabric.Rect();
+            const angleP = new fabric.Rect();
             const quadrilateral = makeMovablePolygon([new fabric.Point(140, 90), new fabric.Point(70, 300), new fabric.Point(340, 420), new fabric.Point(400, 300)],
                 function (coords: fabric.Point[]) {
                     // Change quadrilateral color
@@ -264,6 +269,96 @@ export default defineComponent(
                         radius: 2,
                         fill: "blue",
                     });
+                    const pointN = new fabric.Point(500, coords[1].y);
+                    nLabel.set({
+                        left: pointN.x + 5,
+                        top: pointN.y + 5,
+                        fill: "red",
+                    });
+                    const disBD = calculateDistanceBetweenTwoPoints(coords[1], coords[3]);
+                    const disBN = calculateDistanceBetweenTwoPoints(coords[1], pointN);
+                    const disDN = calculateDistanceBetweenTwoPoints(pointN, coords[3]);
+                    if (coords[1].y >= coords[3].y && pointP.x < coords[2].x) {
+                        angleE.set({
+                            left: pedalPointAOnBD.x as number,
+                            top: pedalPointAOnBD.y as number,
+                            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+                            angle: 0 - (Math.acos((disBD * disBD + disBN * disBN - disDN * disDN) / (2 * disBD * disBN)) * 180 / Math.PI) - 90
+                        });
+                        angleF.set({
+                            left: pedalPointCOnBD.x as number,
+                            top: pedalPointCOnBD.y as number,
+                            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+                            angle: 0 - (Math.acos((disBD * disBD + disBN * disBN - disDN * disDN) / (2 * disBD * disBN)) * 180 / Math.PI) + 90
+                        });
+                        angleP.set({
+                            left: pointP.x as number,
+                            top: pointP.y as number,
+                            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+                            angle: 0 - (Math.acos((disBD * disBD + disBN * disBN - disDN * disDN) / (2 * disBD * disBN)) * 180 / Math.PI) - 90
+                        });
+
+                    }
+                    if (coords[1].y < coords[3].y && pointP.x > coords[2].x) {
+                        angleE.set({
+                            left: pedalPointAOnBD.x as number,
+                            top: pedalPointAOnBD.y as number,
+                            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+                            angle: Math.acos((disBD * disBD + disBN * disBN - disDN * disDN) / (2 * disBD * disBN)) * 180 / Math.PI - 90
+                        });
+                        angleF.set({
+                            left: pedalPointCOnBD.x as number,
+                            top: pedalPointCOnBD.y as number,
+                            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+                            angle: Math.acos((disBD * disBD + disBN * disBN - disDN * disDN) / (2 * disBD * disBN)) * 180 / Math.PI + 90
+                        });
+                        angleP.set({
+                            left: pointP.x as number,
+                            top: pointP.y as number,
+                            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+                            angle: Math.acos((disBD * disBD + disBN * disBN - disDN * disDN) / (2 * disBD * disBN)) * 180 / Math.PI - 90
+                        });
+                    }
+                    if (coords[1].y < coords[3].y && coords[2].x > pointP.x) {
+                        angleE.set({
+                            left: pedalPointAOnBD.x as number,
+                            top: pedalPointAOnBD.y as number,
+                            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+                            angle: Math.acos((disBD * disBD + disBN * disBN - disDN * disDN) / (2 * disBD * disBN)) * 180 / Math.PI - 90
+                        });
+                        angleF.set({
+                            left: pedalPointCOnBD.x as number,
+                            top: pedalPointCOnBD.y as number,
+                            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+                            angle: Math.acos((disBD * disBD + disBN * disBN - disDN * disDN) / (2 * disBD * disBN)) * 180 / Math.PI + 90
+                        });
+                        angleP.set({
+                            left: pointP.x as number,
+                            top: pointP.y as number,
+                            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+                            angle: Math.acos((disBD * disBD + disBN * disBN - disDN * disDN) / (2 * disBD * disBN)) * 180 / Math.PI - 90
+                        });
+                    }
+                    if (coords[1].y >= coords[3].y && pointP.x > coords[2].x) {
+                        angleE.set({
+                            left: pedalPointAOnBD.x as number,
+                            top: pedalPointAOnBD.y as number,
+                            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+                            angle: 0 - (Math.acos((disBD * disBD + disBN * disBN - disDN * disDN) / (2 * disBD * disBN)) * 180 / Math.PI) - 90
+                        });
+                        angleF.set({
+                            left: pedalPointCOnBD.x as number,
+                            top: pedalPointCOnBD.y as number,
+                            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+                            angle: 0 - (Math.acos((disBD * disBD + disBN * disBN - disDN * disDN) / (2 * disBD * disBN)) * 180 / Math.PI) + 90
+                        });
+                        angleP.set({
+                            left: pointP.x as number,
+                            top: pointP.y as number,
+                            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+                            angle: 0 - (Math.acos((disBD * disBD + disBN * disBN - disDN * disDN) / (2 * disBD * disBN)) * 180 / Math.PI) + 180
+                        });
+                    }
                 }
             );
             canvas.add(aLabel);
@@ -273,6 +368,7 @@ export default defineComponent(
             canvas.add(eLabel);
             canvas.add(fLabel);
             canvas.add(mLabel);
+            canvas.add(nLabel);
             canvas.add(pLabel);
             canvas.add(lineAC);
             canvas.add(lineBD);
@@ -288,6 +384,9 @@ export default defineComponent(
             canvas.add(fNode);
             canvas.add(eNode);
             canvas.add(pNode);
+            canvas.add(angleE);
+            canvas.add(angleF);
+            canvas.add(angleP);
             canvas.add(parallelCP);
             canvas.add(quadrilateral);
             canvas.add(valueSquareBCD);
