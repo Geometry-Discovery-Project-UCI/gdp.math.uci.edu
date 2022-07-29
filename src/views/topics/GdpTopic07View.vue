@@ -76,12 +76,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { indexTopicMap } from "@/data";
-import { Topic } from "@/types";
+import { defineComponent } from 'vue';
+import { indexTopicMap } from '@/data';
+import { Topic } from '@/types';
 import {
-  drawLine,
+  distToLine, drawLine,
   findDistance,
+  findMidpoint,
+  findSlope,
   isInside,
   lineLineIntersection,
   makeString, pointAlongLine,
@@ -177,19 +179,30 @@ export default defineComponent(
         p.x = xx + radius * cosx;
         p.y = yy + radius * sinx;
 
+        const mid0 = findMidpoint(points[0], [p.x, p.y]);
+        const m0 = findSlope(points[0], [p.x, p.y]);
+        const mid1 = findMidpoint(points[1], [p.x, p.y]);
+        const m1 = findSlope(points[1], [p.x, p.y]);
+
         tri?.setAttributeNS(
           null,
           "points",
           makeString([points[0], points[1], points[2]])
         );
 
-        const pCN = lineLineIntersection(pC, pP, pA, pB) as number[];
+        const p1 = [p.x, pA[1]];
+
+        const theta = Math.atan(-1 / mBC);
+        const dist = distToLine([p.x, p.y], pC, pA);
+        const p2 = [p.x - dist * Math.cos(theta), p.y - dist * Math.sin(theta)];
+
+        const pCN = lineLineIntersection(pC, pP, pA, pB);
         drawLine(pC, pCN, line4);
 
-        const pAN = lineLineIntersection(pA, pP, pC, pB) as number[];
+        const pAN = lineLineIntersection(pA, pP, pC, pB);
         drawLine(pA, pAN, line5);
 
-        const pBN = lineLineIntersection(pB, pP, pC, pA) as number[];
+        const pBN = lineLineIntersection(pB, pP, pC, pA);
         drawLine(pB, pBN, line6);
 
         const dC = findDistance(pCN, pB);
@@ -204,8 +217,6 @@ export default defineComponent(
         const pDB = pointAlongLine(pA, pC, dB);
         drawLine(pB, pDB, line9);
 
-        /* eslint-disable @typescript-eslint/no-non-null-assertion */
-
         const pPN = lineLineIntersection(pC, pDC, pB, pDB);
         letterPp?.setAttribute("x", pPN![0] + "");
         letterPp?.setAttribute("y", (pPN![1] - 10) + "");
@@ -218,8 +229,6 @@ export default defineComponent(
 
         letterE?.setAttribute("x", (pBN![0] + 20) + "");
         letterE?.setAttribute("y", pBN![1] + "");
-
-        /* eslint-enable @typescript-eslint/no-non-null-assertion */
 
         letterFp?.setAttribute("x", pDC[0] + "");
         letterFp?.setAttribute("y", (pDC[1] + 20) + "");
