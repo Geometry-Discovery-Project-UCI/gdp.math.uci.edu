@@ -7,18 +7,22 @@
     <ATypographyTitle :level="4">Centroid Animated Illustration</ATypographyTitle>
     <canvas id="centroid-canvas" width="500" height="500"></canvas>
   </div>
-  <!--  </li>-->
-  <!--  <li>-->
+
   <ATypographyParagraph>
 
   </ATypographyParagraph>
-  <!--  <li>-->
   <div id="incenter-wrapper">
     <ATypographyTitle :level="4">Incenter Animated Illustration</ATypographyTitle>
     <canvas id="incenter-canvas" width="500" height="500"></canvas>
   </div>
-  <!--  </li>-->
-  <!--  <li>-->
+
+  <ATypographyParagraph>
+
+  </ATypographyParagraph>
+  <div id="circumcenter-wrapper">
+    <ATypographyTitle :level="4">Circumcenter Animated Illustration</ATypographyTitle>
+    <canvas id="circumcenter-canvas" width="500" height="500"></canvas>
+  </div>
 
   <ATypographyParagraph>
 
@@ -27,7 +31,6 @@
     <ATypographyTitle :level="4">Orthocenter Animated Illustration (fixing in progress)</ATypographyTitle>
     <canvas id="orthocenter-canvas" width="500" height="500"></canvas>
   </div>
-  <!--  </li>-->
 </template>
 
 <script lang="ts">
@@ -37,6 +40,7 @@ import { Topic } from "@/types";
 import { fabric } from "fabric";
 import { makeCircle, makeLabel, makeLine, makeMovablePolygon } from "@/utils/canvas";
 import {
+  calculateCircumcenter, calculateDistanceBetweenTwoPoints,
   calculateDistanceFromPointToLine,
   calculateIncenter,
   calculateLineIntersectInPoints,
@@ -279,6 +283,104 @@ export default defineComponent(
 
         canvas.add(incircle);
       })();
+
+      (() => {
+        const canvas = new fabric.Canvas("circumcenter-canvas", {
+          selection: false,
+          backgroundColor: "floralwhite",
+        });
+        // vertexes
+        const aLabel = makeLabel("A");
+        const bLabel = makeLabel("B");
+        const cLabel = makeLabel("C");
+        const oLabel = makeLabel("O");
+        const dLabel = makeLabel("D");
+        const eLabel = makeLabel("E");
+        const fLabel = makeLabel("F");
+        const lineOD = makeLine();
+        const lineOE = makeLine();
+        const lineOF = makeLine();
+        const lineAO = makeLine();
+        const lineBO = makeLine();
+        const lineCO = makeLine();
+        const circumCircle = makeCircle();
+
+        const triangle = makeMovablePolygon(
+          [
+            new fabric.Point(300, 50),
+            new fabric.Point(70, 370),
+            new fabric.Point(400, 370)
+          ],
+          function (coords: fabric.Point[]) {
+            aLabel.set({left: coords[0].x, top: coords[0].y - 30, });
+            bLabel.set({left: coords[1].x - 15, top: coords[1].y,});
+            cLabel.set({left: coords[2].x + 5, top: coords[2].y,});
+
+            const pointO = calculateCircumcenter(coords[0], coords[1], coords[2]);
+            oLabel.set({left: pointO.x + 5, top: pointO.y});
+            const radius = calculateDistanceBetweenTwoPoints(coords[0], pointO);
+            circumCircle.set({
+              originX: "center",
+              originY: "center",
+              radius,
+              left: pointO.x,
+              top:pointO.y,
+              stroke: "blue"
+            });
+            const pedalPointD = getPedalPoint(pointO, coords[1], coords[2]);
+            const pedalPointE = getPedalPoint(pointO, coords[0], coords[2]);
+            const pedalPointF = getPedalPoint(pointO, coords[0], coords[1]);
+            dLabel.set({left: pedalPointD.x - 5, top: pedalPointD.y});
+            eLabel.set({left: pedalPointE.x + 5, top: pedalPointE.y - 10});
+            fLabel.set({left: pedalPointF.x - 20, top: pedalPointF.y - 15});
+            lineOD.set({
+              x1:pointO.x, y1: pointO.y,
+              x2:pedalPointD.x, y2: pedalPointD.y
+            });
+            lineOE.set({
+              x1:pointO.x, y1: pointO.y,
+              x2:pedalPointE.x, y2: pedalPointE.y
+            });
+            lineOF.set({
+              x1:pointO.x, y1: pointO.y,
+              x2:pedalPointF.x, y2: pedalPointF.y
+            });
+            lineAO.set({
+              x1: coords[0].x, y1: coords[0].y,
+              x2: pointO.x, y2: pointO.y,
+              stroke:"red",
+              strokeDashArray: [5,5]
+            });
+            lineBO.set({
+              x1: coords[1].x, y1: coords[1].y,
+              x2: pointO.x, y2: pointO.y,
+              stroke:"red",
+              strokeDashArray: [5,5]
+            });
+            lineCO.set({
+              x1: coords[2].x, y1: coords[2].y,
+              x2: pointO.x, y2: pointO.y,
+              stroke:"red",
+              strokeDashArray: [5,5]
+            });
+          });
+        canvas.add(triangle);
+        canvas.add(aLabel);
+        canvas.add(bLabel);
+        canvas.add(cLabel);
+        canvas.add(oLabel);
+        canvas.add(dLabel);
+        canvas.add(eLabel);
+        canvas.add(fLabel);
+        canvas.add(lineOD);
+        canvas.add(lineOE);
+        canvas.add(lineOF);
+        canvas.add(lineAO);
+        canvas.add(lineBO);
+        canvas.add(lineCO);
+        canvas.add(circumCircle);
+      })();
+
       // Orthocenter animation
       (() => {
         const canvas = new fabric.Canvas("orthocenter-canvas", {
