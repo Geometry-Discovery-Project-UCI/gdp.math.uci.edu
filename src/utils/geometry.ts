@@ -427,4 +427,9 @@ export const radiansToDegress = (r: number) => {
   return r * (180 / Math.PI);
 };
 
+export const degreesToRadians = (theta: number) => {
+  console.log(theta);
+  return theta / 180 * Math.PI;
+};
+
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
