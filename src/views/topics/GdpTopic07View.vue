@@ -82,10 +82,9 @@ import { Topic } from "@/types";
 import {
   drawLine,
   findDistance,
-  degreesToRadians,
   isInside,
   lineLineIntersection,
-  makeString, pointAlongLine, radiansToDegress,
+  makeString, pointAlongLine,
 } from "@/utils/geometry";
 import { Vector } from "../../utils/vector";
 const topic = indexTopicMap.get(7) as Topic;
@@ -279,7 +278,7 @@ export default defineComponent(
         const medC = Vector.rotate(v1, thetaBP);
         console.log(thetaBP + thetaAP - thetaAB);
         const medCl = lineLineIntersection([pC[0] + medC.x, pC[1] + medC.y], pC, pA, pB);
-        if (medCl == null) return;
+        if (medCl === null) return;
         drawLine(medCl, pC, line4a);
 
         const vab = new Vector(pA[0] - pB[0], pA[1] - pB[1]);
@@ -288,7 +287,7 @@ export default defineComponent(
         const tAPB = Vector.angleBetween(vab, vpb);
         const medB = Vector.rotate(vcb, tAPB);
         const medBl = lineLineIntersection([pB[0] + medB.x, pB[1] + medB.y], pB, pA, pC);
-        if (medBl == null) return;
+        if (medBl === null) return;
         drawLine(medBl, pB, line5a);
         //
         const vba = new Vector(pB[0] - pA[0], pB[1] - pA[1]);
@@ -297,10 +296,10 @@ export default defineComponent(
         const tCP = Vector.angleBetween(vca, vpa);
         const medA = Vector.rotate(vba, tCP);
         const medAl = lineLineIntersection([pA[0] + medA.x, pA[1] + medA.y], pA, pB, pC);
-        if (medAl == null) return;
+        if (medAl === null) return;
         drawLine(medAl, pA, line6a);
         const pPrime = lineLineIntersection(medCl, pC, medBl, pB);
-        if (pPrime == null) return;
+        if (pPrime === null) return;
         letterPp2.setAttribute("x", pPrime[0] + "");
         letterPp2.setAttribute("y", pPrime[1] - 20 + "");
         letterD2.setAttribute("x", medCl[0] + "");
