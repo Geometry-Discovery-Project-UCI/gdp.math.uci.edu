@@ -263,12 +263,12 @@ export default defineComponent(
 
         const pPBC = lineLineIntersection(pB, pA, pC, pP) as number[];
         drawLine(pC, pPBC, line3a);
-        letterEp2.setAttribute("x", pPAC[0]);
-        letterEp2.setAttribute("y", pPAC[1]);
-        letterFp2.setAttribute("x", pPAB[0] - 20);
-        letterFp2.setAttribute("y", pPAB[1]);
-        letterDp2.setAttribute("x", pPBC[0]);
-        letterDp2.setAttribute("y", pPBC[1] + 20);
+        letterEp2.setAttribute("x", pPAC[0] + "");
+        letterEp2.setAttribute("y", pPAC[1] + "");
+        letterFp2.setAttribute("x", pPAB[0] - 20 + "");
+        letterFp2.setAttribute("y", pPAB[1] + "");
+        letterDp2.setAttribute("x", pPBC[0] + "");
+        letterDp2.setAttribute("y", pPBC[1] + 20 + "");
 
         const v1 = new Vector(pA[0] - pC[0], pA[1] - pC[1]);
         const v2 = new Vector(pP[0] - pC[0], pP[1] - pC[1]);
@@ -279,6 +279,7 @@ export default defineComponent(
         const medC = Vector.rotate(v1, thetaBP);
         console.log(thetaBP + thetaAP - thetaAB);
         const medCl = lineLineIntersection([pC[0] + medC.x, pC[1] + medC.y], pC, pA, pB);
+        if (medCl == null) return;
         drawLine(medCl, pC, line4a);
 
         const vab = new Vector(pA[0] - pB[0], pA[1] - pB[1]);
@@ -287,6 +288,7 @@ export default defineComponent(
         const tAPB = Vector.angleBetween(vab, vpb);
         const medB = Vector.rotate(vcb, tAPB);
         const medBl = lineLineIntersection([pB[0] + medB.x, pB[1] + medB.y], pB, pA, pC);
+        if (medBl == null) return;
         drawLine(medBl, pB, line5a);
         //
         const vba = new Vector(pB[0] - pA[0], pB[1] - pA[1]);
@@ -295,16 +297,18 @@ export default defineComponent(
         const tCP = Vector.angleBetween(vca, vpa);
         const medA = Vector.rotate(vba, tCP);
         const medAl = lineLineIntersection([pA[0] + medA.x, pA[1] + medA.y], pA, pB, pC);
+        if (medAl == null) return;
         drawLine(medAl, pA, line6a);
         const pPrime = lineLineIntersection(medCl, pC, medBl, pB);
-        letterPp2.setAttribute("x", pPrime[0]);
-        letterPp2.setAttribute("y", pPrime[1] - 20);
-        letterD2.setAttribute("x", medCl[0]);
-        letterD2.setAttribute("y", medCl[1] + 20);
-        letterE2.setAttribute("x", medBl[0] + 5);
-        letterE2.setAttribute("y", medBl[1]);
-        letterF2.setAttribute("x", medAl[0] - 20);
-        letterF2.setAttribute("y", medAl[1]);
+        if (pPrime == null) return;
+        letterPp2.setAttribute("x", pPrime[0] + "");
+        letterPp2.setAttribute("y", pPrime[1] - 20 + "");
+        letterD2.setAttribute("x", medCl[0] + "");
+        letterD2.setAttribute("y", medCl[1] + 20 + "");
+        letterE2.setAttribute("x", medBl[0] + 5 + "");
+        letterE2.setAttribute("y", medBl[1] + "");
+        letterF2.setAttribute("x", medAl[0] - 20 + "");
+        letterF2.setAttribute("y", medAl[1] + "");
       };
         const pPoint = DOMPoint.fromPoint({
             x: 160,
