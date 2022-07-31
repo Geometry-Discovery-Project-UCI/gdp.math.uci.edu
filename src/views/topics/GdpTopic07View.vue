@@ -331,10 +331,10 @@ export default defineComponent(
       // });
       let mouseDown = 0;
       document.body.onmousedown = function () {
-        ++mouseDown;
+        mouseDown++;
       };
       document.body.onmouseup = function () {
-        --mouseDown;
+        mouseDown--;
       };
       const svgElement = svg as SVGGraphicsElement;
       svgElement.addEventListener("mousemove", (event) => {

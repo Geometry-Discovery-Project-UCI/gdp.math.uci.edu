@@ -168,10 +168,10 @@ export default defineComponent(
         mouseOnA = false;
         mouseOnB = false;
         mouseOnC = false;
-        ++mouseDown;
+        mouseDown--;
       };
       document.body.onmouseup = function () {
-        --mouseDown;
+        mouseDown++;
       };
       const svgElement = svg as SVGGraphicsElement;
       svgElement.addEventListener("mousemove", (event) => {
