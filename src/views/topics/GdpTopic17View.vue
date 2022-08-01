@@ -464,8 +464,9 @@ export default defineComponent({
           Math.sin(angles.z)
         );
 
-        // caculate the radius of the lemonie circle
-
+        /*
+         * caculate the radius of the lemonie circle
+         */
         // set the sides of the triangle a, b, c
         const sideAB = vertices[0].distanceFrom(vertices[1]);
         const sideBC = vertices[1].distanceFrom(vertices[2]);
@@ -490,7 +491,7 @@ export default defineComponent({
           strokeWidth: 2,
         });
 
-        // triganler AQ3P2 ~ ABC
+        // triangle AQ3P2 ~ ABC
         const sideAQ3 = ((2 * r) / sideBC) * sideCA;
         const lambda1 = sideAQ3 / sideAB;
         const q3 = new fabric.Point(
