@@ -329,20 +329,30 @@ export default defineComponent(
       // svg.("onclick", (event) => {
       //   constp;
       // });
-
+      let mouseDown = 0;
+      document.body.onmousedown = function () {
+        mouseDown++;
+      };
+      document.body.onmouseup = function () {
+        mouseDown--;
+      };
       const svgElement = svg as SVGGraphicsElement;
       svgElement.addEventListener("mousemove", (event) => {
         let p = new DOMPoint(event.clientX, event.clientY);
         p = p.matrixTransform(svgElement.getScreenCTM()?.inverse());
         console.log("B:::", p);
-        isotomicMouse(p);
+        if (mouseDown) {
+          isotomicMouse(p);
+        }
       });
       const svgElement2 = svg2 as SVGGraphicsElement;
       svgElement2.addEventListener("mousemove", (event) => {
         let p = new DOMPoint(event.clientX, event.clientY);
         console.log("A:  ", p);
         p = p.matrixTransform(svgElement2.getScreenCTM()?.inverse());
-        isogonalConjugate(p);
+        if (mouseDown) {
+          isogonalConjugate(p);
+        }
         // if ()
       });
     }

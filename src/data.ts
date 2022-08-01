@@ -279,7 +279,9 @@ export const topics: Topic[] = [
     index: 4,
     snapshot: "images/snapshots/topic04.png",
     essay: "pdfs/topic04.pdf",
-    animationContributors: [],
+    animationContributors: [
+      MELISSA_YU
+    ],
     essayContributors: [
       ZHIQIN_LU,
     ],
