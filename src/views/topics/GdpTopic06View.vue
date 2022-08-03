@@ -1,11 +1,15 @@
 <template>
   <TopicMeta :topic="topic" />
+  <div id="Desargues-wrapper" style="padding-top: 40px;">
+    <h2>Pascal's Theorem</h2>
+    <canvas id="Desargues-canvas" width="800" height="500" />
+  </div>
   <div id="Pascal-Brainchon-wrapper" style="padding-top: 40px;">
     <h2>Pappus' Theorem</h2>
     <canvas id="Pascal-Brainchon-canvas" width="500" height="500" />
   </div>
 
-    <div id="Pascal-wrapper" style="padding-top: 40px;">
+  <div id="Pascal-wrapper" style="padding-top: 40px;">
     <h2>Pascal's Theorem</h2>
     <canvas id="Pascal-canvas" width="500" height="500" />
   </div>
@@ -35,10 +39,11 @@ type Circle = fabric.Circle & {
   intersects?: Circle[],
   upLine?: fabric.Line[],
   downLine?: fabric.Line[],
-  crossLines?: fabric.Line[],
+  crossLines?: Line[],
   label?: Label,
   leftBound?: Circle,
   rightBound?: Circle,
+  moveLine?: Line,  // The line on which the point moves.
 };
 
 type Line = fabric.Line & {
@@ -46,6 +51,8 @@ type Line = fabric.Line & {
   p2?: Circle,
   m?: number,
   b?: number,
+  inter?: Circle,  // The intersection with another Line. So far only for part III
+  thatLine?: Line,  // The other line to intersect with. So far only for part III
 };
 
 interface Coord {
@@ -79,6 +86,7 @@ function isCircle(point: Circle | { top: number, left: number } | Coord): point 
   return point instanceof fabric.Circle;
 }
 
+// TODO use rest parameter
 function setLabelToPoint(labels: Label[], points: Circle[] | { top: number, left: number }[] | Coord[]): void {
   for (let index = 0; index < labels.length; index++) {
     const label = labels[index];
@@ -124,7 +132,7 @@ function coordToPoint(cd: Coord): fabric.Point {
 }
 
 const makeLine = (pt1: Coord | fabric.Point | fabric.Circle, pt2: Coord | fabric.Point | fabric.Circle,
-  strokeWidth?: number, stroke?: string): fabric.Line => {
+  strokeWidth?: number, stroke?: string): Line => {
   if (pt1 instanceof fabric.Circle) {
     pt1 = { x: pt1.left!, y: pt1.top! };
   }
@@ -153,6 +161,217 @@ function setLineFromPoints(line: fabric.Line, a: Coord, b: Coord): void {
     x2: b.x,
     y2: b.y,
   });
+}
+
+/**
+ * Update the position of `inter` and `inter`'s `crossLines`
+ * @param line1 The first line that intersects with line2
+ * @param line2 The second line that intersects with line1
+ * @param inter The intersection point
+ */
+function updateInterAndLine(line1: Line, line2: Line, inter: Circle): void {
+  const newInter = calculateLineIntersectInPoints(line1, line2, true);
+  if (newInter === null || newInter === undefined) return;
+  inter.set({left: newInter.x, top: newInter.y});
+  if (inter.crossLines !== undefined) {
+    inter.crossLines.forEach(line => {
+      line.set({
+        x1: line.p1!.left,
+        y1: line.p1!.top,
+        x2: line.p2!.left,
+        y2: line.p2!.top,
+      });
+    });
+  }
+}
+
+/**
+ * Part III
+ */
+function partThree() {
+  const cvsDes = new fabric.Canvas("Desargues-canvas", {
+    selection: false,
+    backgroundColor: "floralwhite",
+  });
+  /**
+   * Position initialization.
+   */
+  // (2,5.5)--(0,6)--(1.5,4)
+  const mul = 50;
+  const height = 470;
+  const xOffset = 20;
+  const pointC = makeCircle(xOffset + 2*mul, height - 5.5*mul);
+  const pointB = makeCircle(xOffset + 0*mul, height - 6*mul);
+  const pointA = makeCircle(xOffset + 1.5*mul, height - 4*mul);
+  // (5.5,1.125)--(0,0)--(2.25,2)
+  const pointPrimeC = makeCircle(xOffset + mul*5.5, height - mul*1.125);
+  const pointPrimeB = makeCircle(xOffset + mul*0, height - mul*0);
+  const pointPrimeA = makeCircle(xOffset + mul*2.25, height - mul*2);
+  cvsDes.add(pointA, pointB, pointC, pointPrimeA, pointPrimeB, pointPrimeC);
+  const aLabel = makeLabel("A");
+  const bLabel = makeLabel("B");
+  const cLabel = makeLabel("C");
+  const aprimeLabel = makeLabel("A'");
+  const bprimeLabel = makeLabel("B'");
+  const cprimeLabel = makeLabel("C'");
+  const movablePoints = [pointA, pointB, pointC, pointPrimeA, pointPrimeB, pointPrimeC];
+  setLabelToPoint(
+    [aLabel, bLabel, cLabel, aprimeLabel, bprimeLabel, cprimeLabel],
+    movablePoints
+  );
+  // const pointsFromMovables = movablePoints.map(ele => new fabric.Point(ele.left!, ele.top!));
+  // const [pa, pb, pc, ppa, ppb, ppc] = pointsFromMovables;
+  cvsDes.add(aLabel, bLabel, cLabel, aprimeLabel, bprimeLabel, cprimeLabel);
+
+  const aAprime = makeLine(pointA, pointPrimeA);
+  const bBprime = makeLine(pointB, pointPrimeB);
+  // const cCprime = makeLine(pointC, pointPrimeC);
+  // cvsDes.add(aAprime, bBprime, cCprime);
+  const pO = calculateLineIntersectInPoints(aAprime, bBprime, true);
+  const pointO = makeCircle(pO!);
+  const oBp = makeLine(pointO, pointPrimeB);
+  const oCp = makeLine(pointO, pointPrimeC);
+  const oAp = makeLine(pointO, pointPrimeA);
+  pointB.moveLine = oBp;
+  pointA.moveLine = oAp;
+  pointC.moveLine = oCp;
+  Object.assign(oAp, solveLinearEquation(
+    {x: pointO.left!, y: pointO.top!}, {x: pointPrimeA.left!, y: pointPrimeA.top!}));
+  Object.assign(oBp, solveLinearEquation(
+    {x: pointO.left!, y: pointO.top!}, {x: pointPrimeB.left!, y: pointPrimeB.top!}));
+  Object.assign(oCp, solveLinearEquation(
+    {x: pointO.left!, y: pointO.top!}, {x: pointPrimeC.left!, y: pointPrimeC.top!}));
+  cvsDes.add(pointO, oBp, oCp, oAp);
+  log("obp", oBp);
+  // Triangle part
+  const ab = makeLine(pointA, pointB);
+  const ac = makeLine(pointA, pointC);
+  const bc = makeLine(pointB, pointC);
+  const apBp = makeLine(pointPrimeA, pointPrimeB);
+  const apCp = makeLine(pointPrimeA, pointPrimeC);
+  const bpCp = makeLine(pointPrimeB, pointPrimeC);
+  cvsDes.add(ab, ac, bc, apBp, apCp, bpCp);
+  // Assign respective lines and points
+  Object.assign(ab, {
+    p1: pointA,
+    p2: pointB,
+    thatLine: apBp,
+  });
+  Object.assign(ac, {
+    p1: pointA,
+    p2: pointC,
+    thatLine: apCp,
+  });
+  Object.assign(bc, {
+    p1: pointC,
+    p2: pointB,
+    thatLine: bpCp,
+  });
+  Object.assign(apBp, {
+    p1: pointPrimeA,
+    p2: pointPrimeB,
+    thatLine: ab,
+  });
+  Object.assign(apCp, {
+    p1: pointPrimeA,
+    p2: pointPrimeC,
+    thatLine: ac,
+  });
+  Object.assign(bpCp, {
+    p1: pointPrimeC,
+    p2: pointPrimeB,
+    thatLine: bc,
+  });
+  pointA.crossLines = [ab, ac];
+  pointB.crossLines = [ab, bc];
+  pointC.crossLines = [ac, bc];
+
+  // Collinear & cocurrent
+  const pointP = makeCircle(calculateLineIntersectInPoints(bc, bpCp, true)!, 3, "red");
+  const cp = makeLine(pointC, pointP);
+  const cpP = makeLine(pointPrimeC, pointP);
+
+  const pointQ = makeCircle(calculateLineIntersectInPoints(ac, apCp, true)!, 3, "red");
+  const pointR = makeCircle(calculateLineIntersectInPoints(ab, apBp, true)!, 3, "red");
+  const aq = makeLine(pointA, pointQ);
+  const apQ = makeLine(pointPrimeA, pointQ);
+  const ar = makeLine(pointA, pointR);
+  const apR = makeLine(pointPrimeA, pointR);
+  const pq = makeLine(pointP, pointQ);
+  pq.p1 = pointP;
+  pq.p2 = pointQ;
+  cvsDes.add(pointP, pointQ, pointR);
+  cvsDes.add(cp, cpP, aq, apQ, ar, apR, pq);
+  // Assigning intersections
+  ab.inter = pointR;
+  apBp.inter = pointR;
+  ac.inter = pointQ;
+  apCp.inter = pointQ;
+  bc.inter = pointP;
+  bpCp.inter = pointP;
+  // Intersection lines
+  pointR.crossLines = [ar, apR];
+  ar.p1 = pointA;
+  ar.p2 = pointR;
+  apR.p1 = pointPrimeA;
+  apR.p2 = pointR;
+  pointQ.crossLines = [aq, apQ];
+  aq.p1 = pointQ;
+  aq.p2 = pointA;
+  apQ.p1 = pointPrimeA;
+  apQ.p2 = pointQ;
+  pointP.crossLines = [cp, cpP];
+  cp.p1 = pointC;
+  cp.p2 = pointP;
+  cpP.p1 = pointPrimeC;
+  cpP.p2 = pointP;
+  const oLabel = makeLabel("O");
+  const pLabel = makeLabel("P");
+  const qLabel = makeLabel("Q");
+  const rLabel = makeLabel("R");
+  setLabelToPoint([oLabel, pLabel, qLabel, rLabel], [pointO, pointP, pointQ, pointR]);
+  cvsDes.add(oLabel, pLabel, qLabel, rLabel);
+
+  // Interaction
+  const onPointMove = (e: IEvent): void => {
+    const p = e.target! as Circle;
+    // Restrict movement
+    if (p.moveLine !== undefined) {
+      let x = (p.top! - p.moveLine.b!) / p.moveLine.m!;
+      if (p.moveLine.m === Infinity) x = p.moveLine.x1!;
+      p.set("left", x);
+    }
+    // TODO set up & down boundaries
+
+    if (p.crossLines !== undefined) {
+      p.crossLines.forEach(line => {
+        // Adjust line position
+        line.set({
+          x1: line.p1!.left,
+          y1: line.p1!.top,
+          x2: line.p2!.left,
+          y2: line.p2!.top,
+        });
+        // Adjust intersections accordingly
+        if (line.inter !== undefined && line.inter.crossLines !== undefined) {
+          updateInterAndLine(line, line.thatLine!, line.inter);
+          setLabelToPoint([line.inter.label!], [line.inter]);
+        }
+      });
+    }
+    // Update the collinear PQ line
+    pq.set({
+      x1: pq.p1!.left,
+      y1: pq.p1!.top,
+      x2: pq.p2!.left,
+      y2: pq.p2!.top,
+    });
+    // Update according to position change
+    if (p.label !== undefined) {
+      setLabelToPoint([p.label], [p]);
+    }
+  };
+  cvsDes.on("object:moving", onPointMove);
 }
 
 /**
@@ -500,7 +719,7 @@ export default defineComponent(
 
       const onPointMove = (e: IEvent): void => {
         const p = e.target! as Circle;
-        // Setting the boundaris of the point's position
+        // Setting the boundaries of the point's position
         if (p.leftBound !== undefined && p.left! < p.leftBound.left!) {
           p.left = p.leftBound.left;
         }
@@ -508,7 +727,7 @@ export default defineComponent(
           p.left = p.rightBound.left;
         }
         if (p.upLine !== undefined) {
-          p.top = 400; // Hard-coded for now
+          p.top = 400;  // Hard-coded for now
         } else if (p.downLine !== undefined) {
           p.top = upperLine.m! * p.left! + upperLine.b!;
         }
@@ -559,6 +778,11 @@ export default defineComponent(
        * Part two of animation Pascal Theorem
        */
       partTwo();
+
+      /**
+       * Part three of animation: Desargues' Theorem
+       */
+      partThree();
     },
   },
 );
