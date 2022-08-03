@@ -266,6 +266,20 @@ export function calculateLineIntersectInPoints(line1: fabric.Line, line2: fabric
   return new fabric.Point(x, y);
 }
 
+// Draw Right Angle Sign for angle AOB.
+
+export function drawRightAngleSign(pointA: fabric.Point, pointO: fabric.Point, pointB: fabric.Point, asize: number) {
+  const a = pointA.distanceFrom(pointO);
+   const b = pointB.distanceFrom(pointO);
+   const  t1 = asize / a;
+   const t2 = asize / b;
+   const anglecoord0 = pointO.lerp(pointA, t1);
+   const anglecoord1 = pointO.lerp(pointB, t2);
+   const temp = anglecoord0.add(anglecoord1);
+   const anglecoord2 = temp.subtract(pointO);
+   return { anglecoord0, anglecoord1, anglecoord2 };
+ }
+
 export const CANVAS_WIDTH = 500;
 export const CANVAS_HEIGHT = 500;
 
@@ -287,7 +301,7 @@ export const isInside = (x1: number, y1: number, x2: number, y2: number, x3: num
   const A2 = area(x1, y1, x, y, x3, y3);
   const A3 = area(x1, y1, x2, y2, x, y);
 
-  return Math.abs(A - A1 - A2 - A3) <= 0.0000001;
+  return Math.abs(A - A1 - A2 - A3) < EPS;
 };
 
 export const findDistance = (pt0: number[], pt1: number[],) => {
