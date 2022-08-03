@@ -1,9 +1,5 @@
 <template>
   <TopicMeta :topic="topic" />
-  <div id="Desargues-wrapper" style="padding-top: 40px;">
-    <h2>Desargues's Theorem</h2>
-    <canvas id="Desargues-canvas" width="800" height="500" />
-  </div>
   <div id="Pascal-Brainchon-wrapper" style="padding-top: 40px;">
     <h2>Pappus' Theorem</h2>
     <canvas id="Pascal-Brainchon-canvas" width="500" height="500" />
@@ -12,6 +8,11 @@
   <div id="Pascal-wrapper" style="padding-top: 40px;">
     <h2>Pascal's Theorem</h2>
     <canvas id="Pascal-canvas" width="500" height="500" />
+  </div>
+
+  <div id="Desargues-wrapper" style="padding-top: 40px;">
+    <h2>Desargues's Theorem</h2>
+    <canvas id="Desargues-canvas" width="800" height="500" />
   </div>
 </template>
 
@@ -133,6 +134,10 @@ function coordToPoint(cd: Coord): fabric.Point {
   return new fabric.Point(cd.x, cd.y);
 }
 
+function circleToCoord(...circle: Circle[]): fabric.Point[] {
+  return circle.map(c => new fabric.Point(c.left!, c.top!));
+}
+
 const makeLine = (pt1: Coord | fabric.Point | fabric.Circle, pt2: Coord | fabric.Point | fabric.Circle,
   strokeWidth?: number, stroke?: string): Line => {
   if (pt1 instanceof fabric.Circle) {
@@ -210,7 +215,15 @@ function partThree() {
   const pointPrimeC = makeCircle(xOffset + mul*5.5, yOffset - mul*1.125);
   const pointPrimeB = makeCircle(xOffset + mul*0, yOffset - mul*0);
   const pointPrimeA = makeCircle(xOffset + mul*2.25, yOffset - mul*2);
+  const abc = new fabric.Polygon(circleToCoord(pointA, pointB, pointC), {fill: "yellow"});
+  const primeTriangle = new fabric.Polygon(circleToCoord(pointPrimeA, pointPrimeB, pointPrimeC), {fill: "#5efc03"});
+  abc.selectable = false;
+  abc.evented = false;
+  primeTriangle.selectable = false;
+  primeTriangle.evented = false;
+  cvsDes.add(abc, primeTriangle);
   cvsDes.add(pointA, pointB, pointC, pointPrimeA, pointPrimeB, pointPrimeC);
+
   const aLabel = makeLabel("A", {x: 15, y: -10});
   const bLabel = makeLabel("B");
   const cLabel = makeLabel("C", {x: 15, y: -20});
@@ -251,7 +264,6 @@ function partThree() {
   Object.assign(oCp, solveLinearEquation(
     {x: pointO.left!, y: pointO.top!}, {x: pointPrimeC.left!, y: pointPrimeC.top!}));
   cvsDes.add(pointO, oBp, oCp, oAp);
-  log("obp", oBp);
   // Triangle part
   const ab = makeLine(pointA, pointB);
   const ac = makeLine(pointA, pointC);
@@ -341,7 +353,7 @@ function partThree() {
   setLabelToPoint([oLabel, pLabel, qLabel, rLabel], [pointO, pointP, pointQ, pointR]);
   cvsDes.add(oLabel, pLabel, qLabel, rLabel);
   [pointPrimeA, pointPrimeB, pointPrimeC, pointO, pointP, pointQ, pointR].forEach(p => {
-    p.set({lockMovementX: true, lockMovementY: true});
+    p.set({lockMovementX: true, lockMovementY: true, evented: false});
   });
 
   // Interaction
@@ -356,7 +368,7 @@ function partThree() {
       if (p.moveLine.m === Infinity) x = p.moveLine.x1!;
       p.set("left", x);
     }
-    // TODO set up & down boundaries
+    abc.set("points", circleToCoord(pointA, pointB, pointC));
 
     if (p.crossLines !== undefined) {
       p.crossLines.forEach(line => {
@@ -402,7 +414,6 @@ function partTwo() {
   });
   const RADIUS = 80;
   const center = { x: 150, y: 350 } as Coord;
-  const centerPoint = makeCircle(center, 5, "red");
   let pointA = coordToPoint(polarToCartesian(RADIUS, 10, center));
   let pointB = coordToPoint(polarToCartesian(RADIUS, 45, center));
   let pointC = coordToPoint(polarToCartesian(RADIUS, 80, center));
