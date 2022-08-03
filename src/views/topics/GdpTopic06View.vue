@@ -1,7 +1,7 @@
 <template>
   <TopicMeta :topic="topic" />
   <div id="Desargues-wrapper" style="padding-top: 40px;">
-    <h2>Pascal's Theorem</h2>
+    <h2>Desargues's Theorem</h2>
     <canvas id="Desargues-canvas" width="800" height="500" />
   </div>
   <div id="Pascal-Brainchon-wrapper" style="padding-top: 40px;">
@@ -44,6 +44,8 @@ type Circle = fabric.Circle & {
   leftBound?: Circle,
   rightBound?: Circle,
   moveLine?: Line,  // The line on which the point moves.
+  upBound?: Circle,
+  downBound?: Circle,
 };
 
 type Line = fabric.Line & {
@@ -196,21 +198,22 @@ function partThree() {
   /**
    * Position initialization.
    */
+  const cvsWidth = 800;
   // (2,5.5)--(0,6)--(1.5,4)
   const mul = 50;
-  const height = 470;
+  const yOffset = 470;
   const xOffset = 20;
-  const pointC = makeCircle(xOffset + 2*mul, height - 5.5*mul);
-  const pointB = makeCircle(xOffset + 0*mul, height - 6*mul);
-  const pointA = makeCircle(xOffset + 1.5*mul, height - 4*mul);
+  const pointC = makeCircle(xOffset + 2*mul, yOffset - 5.5*mul);
+  const pointB = makeCircle(xOffset + 0*mul, yOffset - 6*mul);
+  const pointA = makeCircle(xOffset + 1.5*mul, yOffset - 4*mul);
   // (5.5,1.125)--(0,0)--(2.25,2)
-  const pointPrimeC = makeCircle(xOffset + mul*5.5, height - mul*1.125);
-  const pointPrimeB = makeCircle(xOffset + mul*0, height - mul*0);
-  const pointPrimeA = makeCircle(xOffset + mul*2.25, height - mul*2);
+  const pointPrimeC = makeCircle(xOffset + mul*5.5, yOffset - mul*1.125);
+  const pointPrimeB = makeCircle(xOffset + mul*0, yOffset - mul*0);
+  const pointPrimeA = makeCircle(xOffset + mul*2.25, yOffset - mul*2);
   cvsDes.add(pointA, pointB, pointC, pointPrimeA, pointPrimeB, pointPrimeC);
-  const aLabel = makeLabel("A");
+  const aLabel = makeLabel("A", {x: 15, y: -10});
   const bLabel = makeLabel("B");
-  const cLabel = makeLabel("C");
+  const cLabel = makeLabel("C", {x: 15, y: -20});
   const aprimeLabel = makeLabel("A'");
   const bprimeLabel = makeLabel("B'");
   const cprimeLabel = makeLabel("C'");
@@ -235,6 +238,12 @@ function partThree() {
   pointB.moveLine = oBp;
   pointA.moveLine = oAp;
   pointC.moveLine = oCp;
+  pointA.upBound = pointPrimeA;
+  pointA.downBound = pointO;
+  pointB.upBound = pointPrimeB;
+  pointB.downBound = pointO;
+  pointC.upBound = pointPrimeC;
+  pointC.downBound = pointO;
   Object.assign(oAp, solveLinearEquation(
     {x: pointO.left!, y: pointO.top!}, {x: pointPrimeA.left!, y: pointPrimeA.top!}));
   Object.assign(oBp, solveLinearEquation(
@@ -325,18 +334,24 @@ function partThree() {
   cp.p2 = pointP;
   cpP.p1 = pointPrimeC;
   cpP.p2 = pointP;
-  const oLabel = makeLabel("O");
+  const oLabel = makeLabel("O", {x: -5, y: -30});
   const pLabel = makeLabel("P");
-  const qLabel = makeLabel("Q");
-  const rLabel = makeLabel("R");
+  const qLabel = makeLabel("Q", {x: -25, y: 0});
+  const rLabel = makeLabel("R", {x: 10, y: 0});
   setLabelToPoint([oLabel, pLabel, qLabel, rLabel], [pointO, pointP, pointQ, pointR]);
   cvsDes.add(oLabel, pLabel, qLabel, rLabel);
+  [pointPrimeA, pointPrimeB, pointPrimeC, pointO, pointP, pointQ, pointR].forEach(p => {
+    p.set({lockMovementX: true, lockMovementY: true});
+  });
 
   // Interaction
   const onPointMove = (e: IEvent): void => {
     const p = e.target! as Circle;
-    // Restrict movement
+    // Restrict movement to line
     if (p.moveLine !== undefined) {
+      // Restric boundries
+      if (p.upBound !== undefined && p.top! > p.upBound.top!) p.top = p.upBound.top;
+      if (p.downBound !== undefined && p.top! < p.downBound.top!) p.top = p.downBound.top;
       let x = (p.top! - p.moveLine.b!) / p.moveLine.m!;
       if (p.moveLine.m === Infinity) x = p.moveLine.x1!;
       p.set("left", x);
@@ -360,11 +375,13 @@ function partThree() {
       });
     }
     // Update the collinear PQ line
+    // Extend to canvas width
+    Object.assign(pq, solveLinearEquation({x: pq.p1!.left!, y: pq.p1!.top!}, {x:pq.p2!.left!, y:pq.p2!.top!}));
     pq.set({
-      x1: pq.p1!.left,
-      y1: pq.p1!.top,
-      x2: pq.p2!.left,
-      y2: pq.p2!.top,
+      x1: 0,
+      y1: pq.b,
+      x2: cvsWidth,
+      y2: cvsWidth*pq.m! + pq.b!,
     });
     // Update according to position change
     if (p.label !== undefined) {
