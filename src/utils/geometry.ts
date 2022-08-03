@@ -1,5 +1,6 @@
 import { fabric } from "fabric";
 import { Coord } from "@/types";
+import { ssrContextKey } from "vue";
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
@@ -428,8 +429,21 @@ export const radiansToDegress = (r: number) => {
 };
 
 export const degreesToRadians = (theta: number) => {
-  console.log(theta);
   return theta / 180 * Math.PI;
+};
+
+export const fillDigits = (s: string, digits: number) => {
+  let sSize = s.length;
+  if (s.indexOf(".") === -1) {
+    s += ".";
+  } else{
+    sSize--;
+  }
+  while (sSize < digits) {
+    s += "0";
+    sSize++;
+  }
+  return s;
 };
 
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
