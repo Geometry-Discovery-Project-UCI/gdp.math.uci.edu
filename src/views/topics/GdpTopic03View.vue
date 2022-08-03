@@ -45,8 +45,8 @@ import {
   calculateIncenter,
   calculateLineIntersectInPoints,
   calculateMidpoint, calculateOrthocenter,
-  calculateThreeAngles,
-  getPedalPoint,
+  calculateThreeAngles, drawRightAngleSignCoords,
+  getPedalPoint
 } from "@/utils/geometry";
 const topic = indexTopicMap.get(3) as Topic;
 export default defineComponent(
@@ -284,6 +284,7 @@ export default defineComponent(
         canvas.add(incircle);
       })();
 
+      // Circumcenter animation.
       (() => {
         const canvas = new fabric.Canvas("circumcenter-canvas", {
           selection: false,
@@ -415,6 +416,14 @@ export default defineComponent(
         const lineHbBH = makeLine();
         const lineHcCH = makeLine();
 
+        // Right angle sign lines
+        const line1 = new fabric.Line([0,0,0,0]);
+        const line2 = new fabric.Line([0,0,0,0]);
+        const line3 = new fabric.Line([0,0,0,0]);
+        const line4 = new fabric.Line([0,0,0,0]);
+        const line5 = new fabric.Line([0,0,0,0]);
+        const line6 = new fabric.Line([0,0,0,0]);
+
         const triangle = makeMovablePolygon([new fabric.Point(125, 50), new fabric.Point(50, 450), new fabric.Point(450, 450)],
           function (coords: fabric.Point[]) {
             aLabel.set({
@@ -478,6 +487,12 @@ export default defineComponent(
               stroke: "green",
               fill: "green"
             });
+
+            // Draw right angle sings
+            drawRightAngleSignCoords(coords[0], pedalPointOnBC, coords[2], line1, line2, 8, "red");
+            drawRightAngleSignCoords(coords[1], pedalPointOnAC, coords[0], line3, line4,8, "red");
+            drawRightAngleSignCoords(coords[2], pedalPointOnAB, coords[1], line5, line6,8, "red");
+
             hLabel.set({left: pointH.x, top: pointH.y,});
             lineBAHc.set({stroke: "transparent",});
             lineCAHb.set({stroke: "transparent",});
@@ -646,6 +661,12 @@ export default defineComponent(
         canvas.add(lineHbBH);
         canvas.add(lineHcCH);
         canvas.add(hCenter);
+        canvas.add(line1);
+        canvas.add(line2);
+        canvas.add(line3);
+        canvas.add(line4);
+        canvas.add(line5);
+        canvas.add(line6);
       })();
     },
   },
