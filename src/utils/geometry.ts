@@ -446,4 +446,22 @@ export function drawRightAngleSign(point1: Coord, pointO: Coord, point2: Coord,
   line2.set({x1: anglecoord2.x, y1: anglecoord2.y, x2: anglecoord3.x, y2: anglecoord3.y, stroke});
 }
 
+export const degreesToRadians = (theta: number) => {
+  return theta / 180 * Math.PI;
+};
+
+export const fillDigits = (s: string, digits: number) => {
+  let sSize = s.length;
+  if (s.indexOf(".") === -1) {
+    s += ".";
+  } else{
+    sSize--;
+  }
+  while (sSize < digits) {
+    s += "0";
+    sSize++;
+  }
+  return s;
+};
+
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */

@@ -44,6 +44,7 @@ export default defineComponent(
         const lineHcQb = makeLine();
         const lineHbPc = makeLine();
         const lineHaQc = makeLine();
+        // Extension lines
         const lineBAHc = makeLine();
         const lineCAHb = makeLine();
         const lineABHc = makeLine();
@@ -56,6 +57,13 @@ export default defineComponent(
         const lineCHcH = makeLine();
         const lineHbBH = makeLine();
         const lineHcCH = makeLine();
+
+        const squarHaline1 = makeLine();
+        const squarHaline2 = makeLine();
+        // const squarHbline1 = makeLine();
+        // const squarHbline2 = makeLine();
+        // const squarHcline1 = makeLine();
+        // const squarHcline2 = makeLine();
 
         const aLabel = makeLabel("A");
         const bLabel = makeLabel("B");
@@ -122,7 +130,21 @@ export default defineComponent(
               y1: points[0].y,
               x2: pedalPointHa.x,
               y2: pedalPointHa.y,
-              stroke: "black",
+              stroke: "green",
+            });
+            squarHaline1.set({
+              x1: pedalPointHa.x,
+              y1: pedalPointHa.y - 10,
+              x2: pedalPointHa.x + 10,
+              y2: pedalPointHa.y - 10,
+              stroke: "green",
+            });
+            squarHaline2.set({
+              x1: pedalPointHa.x + 10,
+              y1: pedalPointHa.y - 10,
+              x2: pedalPointHa.x + 10,
+              y2: pedalPointHa.y,
+              stroke: "green",
             });
 
             // Perpendicular line from B to AC
@@ -137,8 +159,10 @@ export default defineComponent(
               y1: points[1].y,
               x2: pedalPointHb.x,
               y2: pedalPointHb.y,
-              stroke: "black",
+              stroke: "green",
             });
+            // const squarHbline1 = makeLine();
+            // const squarHbline2 = makeLine();
 
             // Perpendicular line from C to AB
             const pedalPointHc = getPedalPoint(points[2], points[0], points[1]);
@@ -152,8 +176,24 @@ export default defineComponent(
               y1: points[2].y,
               x2: pedalPointHc.x,
               y2: pedalPointHc.y,
-              stroke: "black",
+              stroke: "green",
             });
+
+            lineBAHc.set({stroke: "transparent",});
+            lineCAHb.set({stroke: "transparent",});
+            lineABHc.set({stroke: "transparent",});
+            lineCBHa.set({stroke: "transparent",});
+            lineBCHa.set({stroke: "transparent",});
+            lineACHb.set({stroke: "transparent",});
+            lineBHbH.set({stroke: "transparent",});
+            lineHaAH.set({stroke: "transparent",});
+            lineAHaH.set({stroke: "transparent",});
+            lineCHcH.set({stroke: "transparent",});
+            lineHbBH.set({stroke: "transparent",});
+            lineHcCH.set({stroke: "transparent",});
+
+            // const squarHcline1 = makeLine();
+            // const squarHcline2 = makeLine();
 
             // Make extension line.
             const rightAngle = Math.PI / 2;
@@ -437,6 +477,8 @@ export default defineComponent(
         canvas.add(lineCHcH);
         canvas.add(lineHbBH);
         canvas.add(lineHcCH);
+        canvas.add(squarHaline1);
+        canvas.add(squarHaline2);
         canvas.add(taylorCircle);
       }
     },
