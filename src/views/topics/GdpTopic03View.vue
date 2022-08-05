@@ -28,7 +28,7 @@
 
   </ATypographyParagraph>
   <div id="orthocenter-wrapper">
-    <ATypographyTitle :level="4">Orthocenter Animated Illustration (fixing in progress)</ATypographyTitle>
+    <ATypographyTitle :level="4">Orthocenter Animated Illustration</ATypographyTitle>
     <canvas id="orthocenter-canvas" width="500" height="500"></canvas>
   </div>
 </template>
@@ -38,9 +38,15 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
-import { makeCircle, makeLabel, makeLine, makeMovablePolygon } from "@/utils/canvas";
 import {
-  calculateCircumcenter, calculateDistanceBetweenTwoPoints,
+  makeCircle,
+  makeLabel,
+  makeLine,
+  makeMovablePoint,
+  makeMovablePolygon
+} from "@/utils/canvas";
+import {
+  calculateCircumcenter,
   calculateDistanceFromPointToLine,
   calculateIncenter,
   calculateLineIntersectInPoints,
@@ -48,6 +54,7 @@ import {
   calculateThreeAngles, drawRightAngleSignCoords,
   getPedalPoint
 } from "@/utils/geometry";
+import {Circle, IEvent} from "fabric/fabric-impl";
 const topic = indexTopicMap.get(3) as Topic;
 export default defineComponent(
   {
@@ -304,68 +311,142 @@ export default defineComponent(
         const lineAO = makeLine();
         const lineBO = makeLine();
         const lineCO = makeLine();
-        const circumCircle = makeCircle();
 
-        const triangle = makeMovablePolygon(
-          [
-            new fabric.Point(300, 50),
-            new fabric.Point(70, 370),
-            new fabric.Point(400, 370)
-          ],
-          function (coords: fabric.Point[]) {
-            aLabel.set({left: coords[0].x, top: coords[0].y - 30, });
-            bLabel.set({left: coords[1].x - 15, top: coords[1].y,});
-            cLabel.set({left: coords[2].x + 5, top: coords[2].y,});
+        const radius = 200, centerX = 250, centerY = 250, pi = Math.PI;
+        const circumCircle = makeCircle(radius, new fabric.Point(centerX, centerY), "transparent", 1);
+        const center = makeCircle(2, new fabric.Point(centerX, centerY),"black", 1);
+        const moveableA = makeMovablePoint(new fabric.Point(250, 50));
+        moveableA.set({  originX:"center", originY: "center", radius: 3});
+        const A = [moveableA.left as number, moveableA.top as number];
+        const B = [centerX - radius * Math.cos(pi / 6), centerY + Math.sin(pi / 6) * radius];
+        const C = [centerX + radius * Math.cos(pi / 6), centerY + Math.sin(pi / 6) * radius];
+        // const pointA = new fabric.Point(A[0], A[1]);
+        const pointA = new fabric.Point(A[0], A[1]);
+        const pointB = new fabric.Point(B[0], B[1]);
+        const pointC = new fabric.Point(C[0], C[1]);
+        const lineAB = makeLine(pointA, pointB);
+        const lineBC = makeLine(pointB, pointC);
+        const lineAC = makeLine(pointA, pointC);
+        circumCircle.set({originX: "center", originY: "center", stroke: "blue"});
+        center.set({originX: "center", originY: "center", stroke: "black"});
+        aLabel.set({left: moveableA.left as number - 10, top: moveableA.top as number - 30});
+        bLabel.set({left: pointB.x - 15, top: pointB.y});
+        cLabel.set({left: pointC.x, top: pointC.y});
+        oLabel.set({left: center.left, top: center.top});
 
-            const pointO = calculateCircumcenter(coords[0], coords[1], coords[2]);
-            oLabel.set({left: pointO.x + 5, top: pointO.y});
-            const radius = calculateDistanceBetweenTwoPoints(coords[0], pointO);
-            circumCircle.set({
-              originX: "center",
-              originY: "center",
-              radius,
-              left: pointO.x,
-              top:pointO.y,
-              stroke: "blue"
+        const pointO = calculateCircumcenter(pointA, pointB, pointC);
+        const pedalPointD = getPedalPoint(pointO, pointB, pointC);
+        const pedalPointE = getPedalPoint(pointO, pointA, pointC);
+        const pedalPointF = getPedalPoint(pointO,pointA, pointB);
+        dLabel.set({left: pedalPointD.x - 5, top: pedalPointD.y});
+        eLabel.set({left: pedalPointE.x + 5, top: pedalPointE.y - 10});
+        fLabel.set({left: pedalPointF.x - 20, top: pedalPointF.y - 15});
+        lineOD.set({
+          x1:pointO.x, y1: pointO.y,
+          x2:pedalPointD.x, y2: pedalPointD.y
+        });
+        lineOE.set({
+          x1:pointO.x, y1: pointO.y,
+          x2:pedalPointE.x, y2: pedalPointE.y
+        });
+        lineOF.set({
+          x1:pointO.x, y1: pointO.y,
+          x2:pedalPointF.x, y2: pedalPointF.y
+        });
+        lineAO.set({
+          x1: pointA.x, y1: pointA.y,
+          x2: pointO.x, y2: pointO.y,
+          stroke:"red",
+          strokeDashArray: [5,5]
+        });
+        lineBO.set({
+          x1: pointB.x, y1: pointB.y,
+          x2: pointO.x, y2: pointO.y,
+          stroke:"red",
+          strokeDashArray: [5,5]
+        });
+        lineCO.set({
+          x1: pointC.x, y1: pointC.y,
+          x2: pointO.x, y2: pointO.y,
+          stroke:"red",
+          strokeDashArray: [5,5]
+        });
+
+        const onMovePointA = (e: IEvent): void => {
+          const a = e.target! as Circle;
+          // const aLeft = a.left as number;
+          // const aTop = a.top as number;
+          // const cox = (a.left as number - centerX) / Math.sqrt((a.left as number - centerX) * (a.left as number - centerX) + (a[1] - yy) * (a[1] - yy));
+         const cosx = (a.left as number - centerX) / Math.sqrt((a.left as number - centerX) * (a.left as number - centerX) + (a.top as number - centerY) * (a.top as number - centerY));
+         const sinx = (a.top as number - centerY) / Math.sqrt((a.left as number - centerX) * (a.left as number - centerX) + (a.top as number - centerY) * (a.top as number - centerY));
+          if (a.left as number >= 250) {
+            a.set({
+              left: centerX + radius * cosx,
+              top: centerY + radius * sinx,
             });
-            const pedalPointD = getPedalPoint(pointO, coords[1], coords[2]);
-            const pedalPointE = getPedalPoint(pointO, coords[0], coords[2]);
-            const pedalPointF = getPedalPoint(pointO, coords[0], coords[1]);
-            dLabel.set({left: pedalPointD.x - 5, top: pedalPointD.y});
-            eLabel.set({left: pedalPointE.x + 5, top: pedalPointE.y - 10});
-            fLabel.set({left: pedalPointF.x - 20, top: pedalPointF.y - 15});
-            lineOD.set({
-              x1:pointO.x, y1: pointO.y,
-              x2:pedalPointD.x, y2: pedalPointD.y
+          } else {
+            a.set({
+              left: centerX + radius * cosx,
+              top: centerY + radius * sinx,
             });
-            lineOE.set({
-              x1:pointO.x, y1: pointO.y,
-              x2:pedalPointE.x, y2: pedalPointE.y
-            });
-            lineOF.set({
-              x1:pointO.x, y1: pointO.y,
-              x2:pedalPointF.x, y2: pedalPointF.y
-            });
-            lineAO.set({
-              x1: coords[0].x, y1: coords[0].y,
-              x2: pointO.x, y2: pointO.y,
-              stroke:"red",
-              strokeDashArray: [5,5]
-            });
-            lineBO.set({
-              x1: coords[1].x, y1: coords[1].y,
-              x2: pointO.x, y2: pointO.y,
-              stroke:"red",
-              strokeDashArray: [5,5]
-            });
-            lineCO.set({
-              x1: coords[2].x, y1: coords[2].y,
-              x2: pointO.x, y2: pointO.y,
-              stroke:"red",
-              strokeDashArray: [5,5]
-            });
+          }
+         aLabel.set({left: a.left as number , top: a.top as number + 10});
+         lineAB.set({
+            x1: moveableA.left, y1: moveableA.top,
+            x2: pointB.x, y2: pointB.y,
+            stroke: "black"
           });
-        canvas.add(triangle);
+          lineBC.set({
+            x1: pointB.x, y1: pointB.y,
+            x2: pointC.x, y2: pointC.y,
+            stroke: "black"
+          });
+          lineAC.set({
+            x1: moveableA.left, y1: moveableA.top,
+            x2: pointC.x, y2: pointC.y,
+            stroke: "black"
+          });
+          const movingA = new fabric.Point(a.left as number, a.top as number);
+          const pointO = calculateCircumcenter(movingA, pointB, pointC);
+          const pedalPointE = getPedalPoint(pointO, movingA, pointC);
+          const pedalPointF = getPedalPoint(pointO,movingA, pointB);
+          dLabel.set({left: pedalPointD.x - 5, top: pedalPointD.y});
+          eLabel.set({left: pedalPointE.x + 5, top: pedalPointE.y - 10});
+          fLabel.set({left: pedalPointF.x - 20, top: pedalPointF.y - 15});
+          lineOD.set({
+            x1:pointO.x, y1: pointO.y,
+            x2:pedalPointD.x, y2: pedalPointD.y
+          });
+          lineOE.set({
+            x1:pointO.x, y1: pointO.y,
+            x2:pedalPointE.x, y2: pedalPointE.y
+          });
+          lineOF.set({
+            x1:pointO.x, y1: pointO.y,
+            x2:pedalPointF.x, y2: pedalPointF.y
+          });
+          lineAO.set({
+            x1: movingA.x, y1: movingA.y,
+            x2: pointO.x, y2: pointO.y,
+            stroke:"red",
+            strokeDashArray: [5,5]
+          });
+          // lineBO.set({
+          //   x1: pointB.x, y1: pointB.y,
+          //   x2: pointO.x, y2: pointO.y,
+          //   stroke:"red",
+          //   strokeDashArray: [5,5]
+          // });
+          // lineCO.set({
+          //   x1: pointC.x, y1: pointC.y,
+          //   x2: pointO.x, y2: pointO.y,
+          //   stroke:"red",
+          //   strokeDashArray: [5,5]
+          // });
+        };
+
+        canvas.on("object:moving", onMovePointA);
+        canvas.add(moveableA);
         canvas.add(aLabel);
         canvas.add(bLabel);
         canvas.add(cLabel);
@@ -379,7 +460,11 @@ export default defineComponent(
         canvas.add(lineAO);
         canvas.add(lineBO);
         canvas.add(lineCO);
+        canvas.add(lineAB);
+        canvas.add(lineBC);
+        canvas.add(lineAC);
         canvas.add(circumCircle);
+        canvas.add(center);
       })();
 
       // Orthocenter animation
