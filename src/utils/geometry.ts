@@ -427,7 +427,7 @@ export const radiansToDegress = (r: number) => {
   return r * (180 / Math.PI);
 };
 
-export function drawRightAngleSignCoords(point1: Coord, pointO: Coord, point2: Coord,
+export function drawRightAngleSign(point1: Coord, pointO: Coord, point2: Coord,
                                          line1: fabric.Line, line2: fabric.Line,
                                          signSize = 8, stroke: "red") {
   const fpoint1 = new fabric.Point(point1.x, point1.y);
