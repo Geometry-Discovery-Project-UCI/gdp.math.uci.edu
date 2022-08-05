@@ -51,7 +51,7 @@ import {
   calculateIncenter,
   calculateLineIntersectInPoints,
   calculateMidpoint, calculateOrthocenter,
-  calculateThreeAngles, drawRightAngleSignCoords,
+  calculateThreeAngles, drawRightAngleSign,
   getPedalPoint
 } from "@/utils/geometry";
 import {Circle, IEvent} from "fabric/fabric-impl";
@@ -275,7 +275,6 @@ export default defineComponent(
         );
 
         canvas.add(triangle);
-
         canvas.add(aLabel);
         canvas.add(bLabel);
         canvas.add(cLabel);
@@ -283,7 +282,6 @@ export default defineComponent(
         canvas.add(eLabel);
         canvas.add(fLabel);
         canvas.add(iLabel);
-
         canvas.add(bisectionOnAB);
         canvas.add(bisectionOnAC);
         canvas.add(bisectionOnBC);
@@ -311,6 +309,12 @@ export default defineComponent(
         const lineAO = makeLine();
         const lineBO = makeLine();
         const lineCO = makeLine();
+        const rightAngleDl1 = makeLine();
+        const rightAngleDl2 = makeLine();
+        const rightAngleEl1 = makeLine();
+        const rightAngleEl2 = makeLine();
+        const rightAngleFl1 = makeLine();
+        const rightAngleFl2 = makeLine();
 
         const radius = 200, centerX = 250, centerY = 250, pi = Math.PI;
         const circumCircle = makeCircle(radius, new fabric.Point(centerX, centerY), "transparent", 1);
@@ -320,13 +324,13 @@ export default defineComponent(
         const A = [moveableA.left as number, moveableA.top as number];
         const B = [centerX - radius * Math.cos(pi / 6), centerY + Math.sin(pi / 6) * radius];
         const C = [centerX + radius * Math.cos(pi / 6), centerY + Math.sin(pi / 6) * radius];
-        // const pointA = new fabric.Point(A[0], A[1]);
         const pointA = new fabric.Point(A[0], A[1]);
         const pointB = new fabric.Point(B[0], B[1]);
         const pointC = new fabric.Point(C[0], C[1]);
         const lineAB = makeLine(pointA, pointB);
         const lineBC = makeLine(pointB, pointC);
         const lineAC = makeLine(pointA, pointC);
+
         circumCircle.set({originX: "center", originY: "center", stroke: "blue"});
         center.set({originX: "center", originY: "center", stroke: "black"});
         aLabel.set({left: moveableA.left as number - 10, top: moveableA.top as number - 30});
@@ -341,6 +345,9 @@ export default defineComponent(
         dLabel.set({left: pedalPointD.x - 5, top: pedalPointD.y});
         eLabel.set({left: pedalPointE.x + 5, top: pedalPointE.y - 10});
         fLabel.set({left: pedalPointF.x - 20, top: pedalPointF.y - 15});
+        drawRightAngleSign(pointO, pedalPointD, pointC, rightAngleDl1, rightAngleDl2,8,"red");
+        drawRightAngleSign(pointO, pedalPointE, pointC, rightAngleEl1, rightAngleEl2,8,"red");
+        drawRightAngleSign(pointO, pedalPointF, pointB, rightAngleFl1, rightAngleFl2,8,"red");
         lineOD.set({
           x1:pointO.x, y1: pointO.y,
           x2:pedalPointD.x, y2: pedalPointD.y
@@ -374,9 +381,6 @@ export default defineComponent(
 
         const onMovePointA = (e: IEvent): void => {
           const a = e.target! as Circle;
-          // const aLeft = a.left as number;
-          // const aTop = a.top as number;
-          // const cox = (a.left as number - centerX) / Math.sqrt((a.left as number - centerX) * (a.left as number - centerX) + (a[1] - yy) * (a[1] - yy));
          const cosx = (a.left as number - centerX) / Math.sqrt((a.left as number - centerX) * (a.left as number - centerX) + (a.top as number - centerY) * (a.top as number - centerY));
          const sinx = (a.top as number - centerY) / Math.sqrt((a.left as number - centerX) * (a.left as number - centerX) + (a.top as number - centerY) * (a.top as number - centerY));
           if (a.left as number >= 250) {
@@ -410,6 +414,8 @@ export default defineComponent(
           const pointO = calculateCircumcenter(movingA, pointB, pointC);
           const pedalPointE = getPedalPoint(pointO, movingA, pointC);
           const pedalPointF = getPedalPoint(pointO,movingA, pointB);
+          drawRightAngleSign(pointO, pedalPointE, pointC, rightAngleEl1, rightAngleEl2,8,"red");
+          drawRightAngleSign(pointO, pedalPointF, pointB, rightAngleFl1, rightAngleFl2,8,"red");
           dLabel.set({left: pedalPointD.x - 5, top: pedalPointD.y});
           eLabel.set({left: pedalPointE.x + 5, top: pedalPointE.y - 10});
           fLabel.set({left: pedalPointF.x - 20, top: pedalPointF.y - 15});
@@ -431,18 +437,6 @@ export default defineComponent(
             stroke:"red",
             strokeDashArray: [5,5]
           });
-          // lineBO.set({
-          //   x1: pointB.x, y1: pointB.y,
-          //   x2: pointO.x, y2: pointO.y,
-          //   stroke:"red",
-          //   strokeDashArray: [5,5]
-          // });
-          // lineCO.set({
-          //   x1: pointC.x, y1: pointC.y,
-          //   x2: pointO.x, y2: pointO.y,
-          //   stroke:"red",
-          //   strokeDashArray: [5,5]
-          // });
         };
 
         canvas.on("object:moving", onMovePointA);
@@ -465,6 +459,7 @@ export default defineComponent(
         canvas.add(lineAC);
         canvas.add(circumCircle);
         canvas.add(center);
+        canvas.add(rightAngleDl1, rightAngleDl2, rightAngleEl1, rightAngleEl2, rightAngleFl1, rightAngleFl2);
       })();
 
       // Orthocenter animation
@@ -574,9 +569,9 @@ export default defineComponent(
             });
 
             // Draw right angle sings
-            drawRightAngleSignCoords(coords[0], pedalPointOnBC, coords[2], line1, line2, 8, "red");
-            drawRightAngleSignCoords(coords[1], pedalPointOnAC, coords[0], line3, line4,8, "red");
-            drawRightAngleSignCoords(coords[2], pedalPointOnAB, coords[1], line5, line6,8, "red");
+            drawRightAngleSign(coords[0], pedalPointOnBC, coords[2], line1, line2, 8, "red");
+            drawRightAngleSign(coords[1], pedalPointOnAC, coords[0], line3, line4,8, "red");
+            drawRightAngleSign(coords[2], pedalPointOnAB, coords[1], line5, line6,8, "red");
 
             hLabel.set({left: pointH.x, top: pointH.y,});
             lineBAHc.set({stroke: "transparent",});
