@@ -1,6 +1,5 @@
 import { fabric } from "fabric";
 import { Coord } from "@/types";
-import { ssrContextKey } from "vue";
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
@@ -427,6 +426,25 @@ export const pedalPoint = (a: number[], b: number[], c: number[], p: number[]) =
 export const radiansToDegress = (r: number) => {
   return r * (180 / Math.PI);
 };
+
+export function drawRightAngleSign(point1: Coord, pointO: Coord, point2: Coord,
+                                         line1: fabric.Line, line2: fabric.Line,
+                                         signSize = 8, stroke: "red") {
+  const fpoint1 = new fabric.Point(point1.x, point1.y);
+  const fpointO = new fabric.Point(pointO.x, pointO.y);
+  const fpoint2 = new fabric.Point(point2.x, point2.y);
+  const a = fpoint1.distanceFrom(fpointO);
+  const b = fpoint2.distanceFrom(fpointO);
+  const t1 = signSize / a;
+  const t2 = signSize / b;
+
+  const anglecoord1 = fpointO.lerp(fpoint1, t1);
+  const anglecoord2 = fpointO.lerp(fpoint2, t2);
+  const temp = anglecoord1.add(anglecoord2);
+  const anglecoord3 = temp.subtract(fpointO);
+  line1.set({x1: anglecoord1.x, y1: anglecoord1.y, x2: anglecoord3.x, y2: anglecoord3.y, stroke});
+  line2.set({x1: anglecoord2.x, y1: anglecoord2.y, x2: anglecoord3.x, y2: anglecoord3.y, stroke});
+}
 
 export const degreesToRadians = (theta: number) => {
   return theta / 180 * Math.PI;
