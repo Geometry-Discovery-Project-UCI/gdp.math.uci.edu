@@ -178,6 +178,7 @@ export const contributors: Contributor[] = [
   ZHIQIN_LU,
   CHRISTOPHER_DAVIS,
   XIANFU_LIU,
+  YI_CHEN,
   YUE_CHU,
   RUOYING_DENG,
   JIAMING_FENG,
@@ -268,6 +269,7 @@ export const topics: Topic[] = [
     essay: "pdfs/topic03.pdf",
     animationContributors: [
       XINXI_GUO,
+      YI_CHEN,
     ],
     essayContributors: [
       ZHIQIN_LU,
@@ -538,7 +540,9 @@ export const topics: Topic[] = [
     index: 30,
     snapshot: "images/snapshots/topic30.png",
     essay: "pdfs/topic30.pdf",
-    animationContributors: [],
+    animationContributors: [
+      YI_CHEN,
+    ],
     essayContributors: [
       JIMENA_ISABEL_RAZO,
     ],
