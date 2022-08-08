@@ -22,12 +22,18 @@ import { makeCircle, makeLabel, makeLine, makeMovablePoint } from "@/utils/canva
 import {
   calculateDistanceBetweenTwoPoints,
   calculateLineIntersectInLinearEquation,
-  calculateSlope,
+  isInside,
   solveLinearEquation,
 } from "@/utils/geometry";
-import { Intersection } from "fabric/fabric-impl";
+import { IEvent, Intersection } from "fabric/fabric-impl";
 
 const topic = indexTopicMap.get(2) as Topic;
+
+type Circle = fabric.Circle & {
+  [key: string]: any;
+  topBound?: Circle;
+  bottomBound?: Circle;
+};
 export default defineComponent({
   setup() {
     return { topic };
@@ -84,6 +90,12 @@ export default defineComponent({
           evented: false,
         }
       );
+
+      const vertices = [
+        new fabric.Point(150, 100),
+        new fabric.Point(50, 400),
+        new fabric.Point(350, 400),
+      ];
 
       // set coordinates and options for point P inside the triangle
       const pointP = makeMovablePoint(new fabric.Point(180, 310));
@@ -266,7 +278,7 @@ export default defineComponent({
         // calculate and update result
         const resultValue = Math.round(((((distBD / distDC) * distCE) / distEA) * distAF) / distFB);
         resultText.set({
-          text: "     = " + String(resultValue.toFixed(2)),
+          text: "=  " + String(resultValue.toFixed(2)),
           left: 306,
           top: 155,
           fontSize: 20,
@@ -274,9 +286,32 @@ export default defineComponent({
         });
       }
 
-      movePointP();
+      const movePoint = (e: IEvent): void => {
+        const p = e.target! as Circle;
+        if (
+          isInside(
+            vertices[0].x,
+            vertices[0].y,
+            vertices[1].x,
+            vertices[1].y,
+            vertices[2].x,
+            vertices[2].y,
+            p.left as number,
+            p.top as number
+          )
+        ) {
+          p.set({
+            left: p.left as number,
+            top: p.top as number,
+          });
+        } else {
+          return;
+        }
+        movePointP();
+      };
 
-      canvas.on("object:moving", movePointP);
+      movePointP();
+      canvas.on("object:moving", movePoint);
 
       const equationText = [
         ["BD", "DC"],
@@ -324,7 +359,7 @@ export default defineComponent({
         );
 
         canvas.add(
-          new fabric.Text("           .         .", {
+          new fabric.Text("             .         .", {
             left: 306,
             top: signCoord + 5,
             strokeWidth: 1,
