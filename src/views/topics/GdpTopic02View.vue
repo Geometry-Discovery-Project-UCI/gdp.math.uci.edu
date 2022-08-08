@@ -1,11 +1,15 @@
 <template>
   <TopicMeta :topic="topic" />
-  <ATypographyParagraph>
-
-  </ATypographyParagraph>
+  <ATypographyParagraph> </ATypographyParagraph>
   <div id="ceva-theorem-wrapper">
     <ATypographyTitle :level="4">Animated Ceva Theorem</ATypographyTitle>
     <canvas id="ceva-theorem-canvas" width="500" height="500" />
+  </div>
+
+  <ATypographyParagraph> </ATypographyParagraph>
+  <div id="menelaus-theorem-wrapper">
+    <ATypographyTitle :level="4">Animated Menelaus Theorems</ATypographyTitle>
+    <canvas id="menelaus-theorem-canvas" width="500" height="500" />
   </div>
 </template>
 
@@ -15,14 +19,21 @@ import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
 import { makeCircle, makeLabel, makeLine, makeMovablePoint } from "@/utils/canvas";
-import { calculateDistanceBetweenTwoPoints, calculateLineIntersectInLinearEquation, solveLinearEquation } from "@/utils/geometry";
+import {
+  calculateDistanceBetweenTwoPoints,
+  calculateLineIntersectInLinearEquation,
+  calculateSlope,
+  solveLinearEquation,
+} from "@/utils/geometry";
+import { Intersection } from "fabric/fabric-impl";
 const topic = indexTopicMap.get(2) as Topic;
-export default defineComponent(
-  {
-    setup() {
-      return { topic };
-    },
-    mounted() {
+export default defineComponent({
+  setup() {
+    return { topic };
+  },
+  mounted() {
+    // Ceva Theorem
+    (() => {
       const canvas = new fabric.Canvas("ceva-theorem-canvas", {
         selection: false,
         backgroundColor: "floralwhite",
@@ -79,8 +90,8 @@ export default defineComponent(
       pointP.set({
         originX: "center",
         originY: "center",
-        radius: 5,
-        fill: "black",
+        radius: 2,
+        fill: "red",
       });
 
       // function to find points D,E,F and draw lines that depends on coordinates of point P
@@ -124,7 +135,7 @@ export default defineComponent(
           y1: points[0].y,
           x2: pointD.x,
           y2: pointD.y,
-          stroke: "black",
+          stroke: "green",
         });
 
         lineBE.set({
@@ -132,7 +143,7 @@ export default defineComponent(
           y1: points[1].y,
           x2: pointE.x,
           y2: pointE.y,
-          stroke: "black",
+          stroke: "green",
         });
 
         lineCF.set({
@@ -140,7 +151,7 @@ export default defineComponent(
           y1: points[2].y,
           x2: pointF.x,
           y2: pointF.y,
-          stroke: "black",
+          stroke: "green",
         });
 
         // set coordinates for the labels
@@ -181,8 +192,8 @@ export default defineComponent(
         });
 
         pLabel.set({
-          left: pointP.left as number - 25,
-          top: pointP.top as number - 10,
+          left: (pointP.left as number) - 25,
+          top: (pointP.top as number) - 10,
           fontSize: 18,
         });
 
@@ -210,16 +221,11 @@ export default defineComponent(
 
         // calculate values for text
         const distBD = calculateDistanceBetweenTwoPoints(points[1], pointD) / 100;
-        const distDC =
-          calculateDistanceBetweenTwoPoints(points[2], pointD) / 100;
-        const distCE =
-          calculateDistanceBetweenTwoPoints(points[2], pointE) / 100;
-        const distEA =
-          calculateDistanceBetweenTwoPoints(points[0], pointE) / 100;
-        const distAF =
-          calculateDistanceBetweenTwoPoints(points[0], pointF) / 100;
-        const distFB =
-          calculateDistanceBetweenTwoPoints(points[1], pointF) / 100;
+        const distDC = calculateDistanceBetweenTwoPoints(points[2], pointD) / 100;
+        const distCE = calculateDistanceBetweenTwoPoints(points[2], pointE) / 100;
+        const distEA = calculateDistanceBetweenTwoPoints(points[0], pointE) / 100;
+        const distAF = calculateDistanceBetweenTwoPoints(points[0], pointF) / 100;
+        const distFB = calculateDistanceBetweenTwoPoints(points[1], pointF) / 100;
 
         // update values for text
         const valueList = [
@@ -257,11 +263,9 @@ export default defineComponent(
         });
 
         // calculate and update result
-        const resultValue = Math.round(
-          ((((distBD / distDC) * distCE) / distEA) * distAF) / distFB
-        );
+        const resultValue = Math.round(((((distBD / distDC) * distCE) / distEA) * distAF) / distFB);
         resultText.set({
-          text: "=  " + String(resultValue.toFixed(2)),
+          text: "     = " + String(resultValue.toFixed(2)),
           left: 306,
           top: 155,
           fontSize: 20,
@@ -319,7 +323,7 @@ export default defineComponent(
         );
 
         canvas.add(
-          new fabric.Text("=           .         .", {
+          new fabric.Text("           .         .", {
             left: 306,
             top: signCoord + 5,
             strokeWidth: 1,
@@ -356,7 +360,189 @@ export default defineComponent(
       canvas.add(valueAF);
       canvas.add(valueFB);
       canvas.add(resultText);
-    }
+    })();
+
+    // Menelaus Theorems
+    (() => {
+      const canvas = new fabric.Canvas("menelaus-theorem-canvas", {
+        selection: false,
+        backgroundColor: "floralwhite",
+      });
+
+      function createCircle(x?: number, y?: number, radius?: number, fill?: string): fabric.Circle {
+        return new fabric.Circle({
+          originX: "center",
+          originY: "center",
+          left: x || 0,
+          top: y || 0,
+          hasControls: false,
+          hasBorders: false,
+          evented: false,
+          radius: radius || 1,
+          fill: fill || "transparent",
+        });
+      }
+
+      function createPolygon(vertices?: fabric.Point[]): fabric.Polygon {
+        return new fabric.Polygon(vertices || [], {
+          fill: "transparent",
+          stroke: "black",
+          strokeWidth: 1.5,
+          objectCaching: false,
+          transparentCorners: false,
+          cornerColor: "transparent",
+          hasBorders: false,
+          hasControls: false,
+          hoverCursor: "normal",
+          lockMovementX: true,
+          lockMovementY: true,
+        });
+      }
+
+      function createLabel(text: string, fontSize?: number, color?: string) {
+        return new fabric.Text(text, {
+          hasControls: false,
+          hasBorders: false,
+          evented: false,
+          fontSize: fontSize || 24,
+          fill: color || "black",
+        });
+      }
+
+      function createLine(points?: number[], color?: string, strokeWidth?: number) {
+        return new fabric.Line(points || [], {
+          hasControls: false,
+          hasBorders: false,
+          evented: false,
+          stroke: color || "black",
+          strokeWidth: strokeWidth || 1.5,
+        });
+      }
+
+      const movablePointQ = createCircle(450, 200, 2, "black").set({ evented: true });
+
+      const triangle = createPolygon();
+
+      const pNode = createCircle(40, 440, 2, "purple");
+      const dNode = createCircle();
+
+      const linePQ = createLine();
+      const lineBD = createLine();
+
+      const aLabel = createLabel("A");
+      const bLabel = createLabel("B");
+      const cLabel = createLabel("C");
+      const dLabel = createLabel("D");
+      const pLabel = createLabel("P");
+      const qLabel = createLabel("Q");
+      const eLabel = createLabel("E");
+      const fLabel = createLabel("F");
+
+      function movablePoint() {
+        const vertices = [
+          new fabric.Point(190, 100),
+          new fabric.Point(110, 400),
+          new fabric.Point(440, 400),
+        ];
+        triangle.set({
+          points: vertices,
+        });
+        aLabel.set({
+          left: vertices[0].x - 10,
+          top: vertices[0].y - 35,
+        });
+        bLabel.set({
+          left: vertices[1].x - 20,
+          top: vertices[1].y,
+        });
+        cLabel.set({
+          left: vertices[2].x + 5,
+          top: vertices[2].y,
+        });
+
+        const pointP = new fabric.Point(pNode.left as number, pNode.top as number);
+        const pointQ = new fabric.Point(movablePointQ.left as number, movablePointQ.top as number);
+
+        const pointE = (
+          fabric.Intersection.intersectLineLine(
+            pointP,
+            pointQ,
+            vertices[0],
+            vertices[1]
+          ) as Intersection
+        ).points![0];
+
+        const pointF = (
+          fabric.Intersection.intersectLineLine(
+            pointP,
+            pointQ,
+            vertices[0],
+            vertices[2]
+          ) as Intersection
+        ).points![0];
+
+        const sloppBC = calculateSlope(vertices[1], vertices[2]);
+
+        const line = solveLinearEquation(vertices[1], vertices[2]);
+
+        const a1 = new fabric.Point(20, 400);
+
+        const pointD = (
+          fabric.Intersection.intersectLineLine(pointP, pointQ, vertices[1], a1) as Intersection
+        ).points![0];
+
+        lineBD.set({
+          x1: vertices[1].x,
+          y1: vertices[1].y,
+          x2: pointD.x,
+          y2: pointD.y,
+        });
+
+        linePQ.set({
+          x1: movablePointQ.left,
+          y1: movablePointQ.top,
+          x2: pNode.left,
+          y2: pNode.top,
+        });
+
+        pLabel.set({
+          left: pointP.x - 15,
+          top: pointP.y,
+        });
+        qLabel.set({
+          left: movablePointQ.left,
+          top: movablePointQ.top,
+        });
+
+        dLabel.set({
+          left: pointD.x - 25,
+          top: pointD.y - 15,
+        });
+        eLabel.set({
+          left: pointE.x - 20,
+          top: pointE.y - 25,
+        });
+        fLabel.set({
+          left: pointF.x - 3,
+          top: pointF.y - 30,
+        });
+      }
+
+      movablePoint();
+      canvas.on("object:moving", movablePoint);
+      canvas.add(triangle);
+      canvas.add(movablePointQ);
+      canvas.add(linePQ);
+      canvas.add(lineBD);
+      canvas.add(aLabel);
+      canvas.add(bLabel);
+      canvas.add(cLabel);
+      canvas.add(dLabel);
+      canvas.add(eLabel);
+      canvas.add(fLabel);
+      canvas.add(pLabel);
+      canvas.add(qLabel);
+    })();
   },
-);
+});
 </script>
