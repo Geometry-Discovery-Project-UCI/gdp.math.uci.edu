@@ -26,6 +26,7 @@ import {
   solveLinearEquation,
 } from "@/utils/geometry";
 import { Intersection } from "fabric/fabric-impl";
+
 const topic = indexTopicMap.get(2) as Topic;
 export default defineComponent({
   setup() {
@@ -157,19 +158,19 @@ export default defineComponent({
         // set coordinates for the labels
         aLabel.set({
           left: points[0].x - 5,
-          top: points[0].y - 30,
+          top: points[0].y - 25,
           fontSize: 20,
         });
 
         bLabel.set({
           left: points[1].x - 10,
-          top: points[1].y + 10,
+          top: points[1].y + 3,
           fontSize: 20,
         });
 
         cLabel.set({
-          left: points[2].x + 10,
-          top: points[2].y + 10,
+          left: points[2].x,
+          top: points[2].y,
           fontSize: 20,
         });
 
@@ -415,7 +416,7 @@ export default defineComponent({
           hasBorders: false,
           evented: false,
           stroke: color || "black",
-          strokeWidth: strokeWidth || 1.5,
+          strokeWidth: strokeWidth || 1,
         });
       }
 
@@ -423,11 +424,13 @@ export default defineComponent({
 
       const triangle = createPolygon();
 
-      const pNode = createCircle(40, 440, 2, "purple");
-      const dNode = createCircle();
+      const pNode = createCircle(40, 440, 2, "black");
+      const dNode = createCircle(0, 0, 2, "red");
+      const eNode = createCircle(0, 0, 2, "red");
+      const fNode = createCircle(0, 0, 2, "red");
 
-      const linePQ = createLine();
-      const lineBD = createLine();
+      const linePQ = createLine([], "orange");
+      const lineBC = createLine();
 
       const aLabel = createLabel("A");
       const bLabel = createLabel("B");
@@ -440,9 +443,9 @@ export default defineComponent({
 
       function movablePoint() {
         const vertices = [
-          new fabric.Point(190, 100),
-          new fabric.Point(110, 400),
-          new fabric.Point(440, 400),
+          new fabric.Point(270, 150),
+          new fabric.Point(170, 400),
+          new fabric.Point(420, 400),
         ];
         triangle.set({
           points: vertices,
@@ -456,8 +459,8 @@ export default defineComponent({
           top: vertices[1].y,
         });
         cLabel.set({
-          left: vertices[2].x + 5,
-          top: vertices[2].y,
+          left: vertices[2].x,
+          top: vertices[2].y - 2,
         });
 
         const pointP = new fabric.Point(pNode.left as number, pNode.top as number);
@@ -481,22 +484,41 @@ export default defineComponent({
           ) as Intersection
         ).points![0];
 
-        const sloppBC = calculateSlope(vertices[1], vertices[2]);
-
-        const line = solveLinearEquation(vertices[1], vertices[2]);
-
-        const a1 = new fabric.Point(20, 400);
+        const a = new fabric.Point(
+          vertices[1].lerp(vertices[2], -0.5).x,
+          vertices[1].lerp(vertices[2], -0.5).y
+        );
 
         const pointD = (
-          fabric.Intersection.intersectLineLine(pointP, pointQ, vertices[1], a1) as Intersection
+          fabric.Intersection.intersectLineLine(pointP, pointQ, vertices[1], a) as Intersection
         ).points![0];
 
-        lineBD.set({
-          x1: vertices[1].x,
-          y1: vertices[1].y,
-          x2: pointD.x,
-          y2: pointD.y,
+        lineBC.set({
+          x1: vertices[2].x,
+          y1: vertices[2].y,
+          x2: a.x,
+          y2: a.y,
         });
+
+        dNode.set({
+          left: pointD.x,
+          top: pointD.y,
+        });
+        eNode.set({
+          left: pointE.x,
+          top: pointE.y,
+        });
+        fNode.set({
+          left: pointF.x,
+          top: pointF.y,
+        });
+
+        // lineBD.set({
+        //   x1: vertices[2].x,
+        //   y1: vertices[2].y,
+        //   x2: pointD.x,
+        //   y2: pointD.y,
+        // });
 
         linePQ.set({
           x1: movablePointQ.left,
@@ -515,8 +537,8 @@ export default defineComponent({
         });
 
         dLabel.set({
-          left: pointD.x - 25,
-          top: pointD.y - 15,
+          left: pointD.x - 20,
+          top: pointD.y - 25,
         });
         eLabel.set({
           left: pointE.x - 20,
@@ -531,9 +553,13 @@ export default defineComponent({
       movablePoint();
       canvas.on("object:moving", movablePoint);
       canvas.add(triangle);
+      canvas.add(pNode);
       canvas.add(movablePointQ);
+      canvas.add(dNode);
+      canvas.add(eNode);
+      canvas.add(fNode);
       canvas.add(linePQ);
-      canvas.add(lineBD);
+      canvas.add(lineBC);
       canvas.add(aLabel);
       canvas.add(bLabel);
       canvas.add(cLabel);
