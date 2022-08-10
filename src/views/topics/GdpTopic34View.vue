@@ -157,44 +157,187 @@ export default defineComponent(
             const peDist = calculateDistanceBetweenTwoPoints({x:pointP.left, y:pointP.top}, {x:pointE.x, y:pointE.y});
             const pfDist = calculateDistanceBetweenTwoPoints({x:pointP.left, y:pointP.top}, {x:pointF.x, y:pointF.y});
 
+            // Draw side lines based off length of PE/PD/PF and position of P
+
+            var pdSign = "";
+            var peSign = "+";
+            var pfSign = "+";
+
+            if (pointP.top as number > 450) {
+                pdSign = "-";
+            }
+            if (pointP.left as number > pointE.x) {
+                peSign = "-";
+            }
+            if (pointP.left as number < pointF.x) {
+                pfSign = " - ";
+            }
+            if (pointP.top as number > 450 && pointP.left as number > pointE.x) {
+                sumPD.set({
+                    x1: 450,
+                    y1: 150 + pfDist - peDist,
+                    x2: 450,
+                    y2: 150 + pfDist - peDist - pdDist,
+                    stroke: "red",
+                    strokeWidth: 2,
+                });
+
+                sumPE.set({
+                    x1: 450,
+                    y1: 150 + pfDist,
+                    x2: 450,
+                    y2: 150 + pfDist - peDist,
+                    stroke: "green",
+                    strokeWidth: 2,
+                });            
+
+                sumPF.set({
+                    x1: 425,
+                    y1: 150,
+                    x2: 425,
+                    y2: 150 + pfDist,
+                    stroke: "blue",
+                    strokeWidth: 2,
+                });  
+            }
+
+            else if (pointP.top as number > 450 && pointP.left as number < pointF.x) {
+               sumPD.set({
+                    x1: 450,
+                    y1: 150 + peDist - pfDist,
+                    x2: 450,
+                    y2: 150 + peDist - pfDist - pdDist,
+                    stroke: "red",
+                    strokeWidth: 2,
+                });  
+
+                sumPE.set({
+                    x1: 425,
+                    y1: 150,
+                    x2: 425,
+                    y2: 150 + peDist,
+                    stroke: "green",
+                    strokeWidth: 2,
+                });            
+
+                sumPF.set({
+                    x1: 450,
+                    y1: 150 + peDist,
+                    x2: 450,
+                    y2: 150 + peDist - pfDist,
+                    stroke: "blue",
+                    strokeWidth: 2,
+                });  
+            }
+            else if (pointP.left as number > pointE.x && pointP.left as number < pointF.x) {
+               sumPD.set({
+                    x1: 425, y1: 150, x2: 425, y2: 150 + pdDist,
+                    stroke: "red",
+                    strokeWidth: 2,
+                });  
+
+                sumPE.set({
+                    x1: 450, y1: 150 + pdDist, x2: 450, y2: 150 + pdDist - peDist,
+                    stroke: "green",
+                    strokeWidth: 2,
+                });            
+
+                sumPF.set({
+                    x1: 450, y1: 150 + pdDist - peDist, x2: 450, y2: 150 + pdDist - pfDist - peDist,
+                    stroke: "blue",
+                    strokeWidth: 2,
+                });  
+            }
+            else if (pointP.top as number > 450) {
+                sumPD.set({
+                    x1: 450, y1: 150 + peDist + pfDist, x2: 450, y2: 150 + peDist + pfDist - pdDist,
+                    stroke: "red",
+                    strokeWidth: 2,
+                });
+
+                sumPE.set({
+                    x1: 425, y1: 150, x2: 425, y2: 150 + peDist,
+                    stroke: "green",
+                    strokeWidth: 2,
+                });            
+
+                sumPF.set({
+                    x1: 425, y1: 150 + peDist, x2: 425, y2: 150 + peDist + pfDist,
+                    stroke: "blue",
+                    strokeWidth: 2,
+                });  
+            }
+            else if (pointP.left as number > pointE.x) {
+                sumPD.set({x1: 425, y1: 150, x2: 425, y2: 150 + pdDist,
+                    stroke: "red",
+                    strokeWidth: 2,
+                });
+
+                sumPE.set({
+                    x1: 450, y1: 150 + pdDist + pfDist - peDist, x2: 450, y2: 150 + pdDist + pfDist,
+                    stroke: "green",
+                    strokeWidth: 2,
+                });            
+
+                sumPF.set({
+                    x1: 425, y1: 150 + pdDist, x2: 425, y2: 150 + pdDist + pfDist,
+                    stroke: "blue",
+                    strokeWidth: 2,
+                });  
+            }
+            else if (pointP.left as number < pointF.x) {
+                sumPD.set({
+                    x1: 425, y1: 150, x2: 425, y2: 150 + pdDist,
+                    stroke: "red",
+                    strokeWidth: 2,
+                });
+
+                sumPE.set({
+                    x1: 425, y1: 150 + pdDist, x2: 425, y2: 150 + pdDist + peDist,
+                    stroke: "green",
+                    strokeWidth: 2,
+                });            
+
+                sumPF.set({
+                    x1: 450, y1: 150 + pdDist + peDist - pfDist, x2: 450, y2: 150 + pdDist + peDist,
+                    stroke: "blue",
+                    strokeWidth: 2,
+                });  
+            }
+            else {
+                sumPD.set({
+                    x1: 425, y1: 150, x2: 425, y2: 150 + pdDist,
+                    stroke: "red",
+                    strokeWidth: 2,
+                });
+
+                sumPE.set({
+                    x1: 425, y1: 150 + pdDist, x2: 425, y2: 150 + pdDist + peDist,
+                    stroke: "green",
+                    strokeWidth: 2,
+                });            
+
+                sumPF.set({
+                    x1: 425, y1: 150 + pdDist + peDist, x2: 425, y2: 150 + pdDist + peDist + pfDist,
+                    stroke: "blue",
+                    strokeWidth: 2,
+                });  
+            }
+
+
             // draw values of individual side lengths
-            const sumDist = pdDist + peDist + pfDist;
-            valuePD.set({text: (pdDist/sumDist).toFixed(3).toString() + " +", left:110, top:90});
-            valuePE.set({text: (peDist/sumDist).toFixed(3).toString() + " +", left:190, top:90});
-            valuePF.set({text: (pfDist/sumDist).toFixed(3).toString() + " = 1", left:270, top:90});
 
-            // Draw side lines based off length of PE/PD/PF
-            sumPD.set({
-                x1: points[0].x,
-                y1: 150,
-                x2: points[0].x,
-                y2: 150 + pdDist,
-                stroke: "red",
-                strokeWidth: 2,
-            });
-
-            sumPE.set({
-                x1: points[0].x,
-                y1: 150 + pdDist,
-                x2: points[0].x,
-                y2: 150 + pdDist + peDist,
-                stroke: "green",
-                strokeWidth: 2,
-            });            
-
-            sumPF.set({
-                x1: points[0].x,
-                y1: 150 + pdDist + peDist,
-                x2: points[0].x,
-                y2: 150 + pdDist + peDist + pfDist,
-                stroke: "blue",
-                strokeWidth: 2,
-            });  
+            const normalizeFactor = 301.5;
+//(eval(stringDist)/normalizeFactor).toFixed(2)
+            var stringDist = (pdSign + pdDist.toString() + peSign + peDist.toString() + pfSign + pfDist.toString())
+            valuePD.set({text: pdSign + (pdDist/normalizeFactor).toFixed(3).toString() + " " + peSign + "  ", left:110, top:90});
+            valuePE.set({text: (peDist/normalizeFactor).toFixed(3).toString() + " " + pfSign, left:190, top:90});
+            valuePF.set({text: (pfDist/normalizeFactor).toFixed(3).toString() + "  =  1.00 ", left:270, top:90});
 
             lineHeight.set({
-                x1: 425,
+                x1: 475,
                 y1: 150,
-                x2: 425,
+                x2: 475,
                 y2: 450,
                 stroke: "black",
                 strokeWidth: 2,
@@ -209,12 +352,12 @@ export default defineComponent(
             eLabel.set({left: pointE.x - 20, top: pointE.y - 15, fontSize: 18});
             fLabel.set({left: pointF.x - 20,top: pointF.y - 15,fontSize: 18});
 
-            hLabel.set({left: 430,top: 300,fontSize: 18});
+            hLabel.set({left: 455,top: 300,fontSize: 18});
             pLabel.set({left: pointP.left as number - 25,top: pointP.top as number - 10,fontSize: 18});
             
             // Align squares to their respective points
             angleD.set({left: pointP.left as number - 10,top: 440});
-            angleF.set({left: pointF.x, top: pointF.y});
+            angleF.set({left: pointF.x as number - 6, top: pointF.y as number + 10});
             angleE.set({left: pointE.x, top: pointE.y});
         }
 
