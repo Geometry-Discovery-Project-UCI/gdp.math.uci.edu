@@ -464,4 +464,16 @@ export const fillDigits = (s: string, digits: number) => {
   return s;
 };
 
+export const aboveBelow = (p1: number[], m: number, b: number) => {
+  return p1[1] > (m * p1[0] + b);
+};
+
+export const lerpp = (p1: number[], p2: number[], t: number) => {
+  return [p1[0] + (p2[0] - p1[0]) * t, p1[1] + (p2[1] - p1[1]) * t];
+};
+
+export const setp = (e: Element, p: number[]) => {
+  e.setAttribute("x", p[0] + "");
+  e.setAttribute("y", p[1] - 10 + "");
+};
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
