@@ -35,7 +35,7 @@ export default defineComponent(
         const labelD = makeLabel("D");
         const labelP = makeLabel("P");
         const labelL1 = makeLabel("L1");
-        const equation = makeLabel("EH x FG/EG/FH = 1");
+        const equation = makeLabel("EH * FG / EG * FH = 1");
         const PA = makeLine();
         const PB = makeLine();
         const PC = makeLine();
