@@ -1,5 +1,10 @@
 <template>
   <TopicMeta :topic="topic" />
+  <div id="Brainchon-wrapper" style="padding-top: 40px;">
+    <h2>Brainchon's Theorem</h2>
+    <canvas id="Brainchon-canvas" width="500" height="500" />
+  </div>
+
   <div id="Pascal-Brainchon-wrapper" style="padding-top: 40px;">
     <h2>Pappus' Theorem</h2>
     <canvas id="Pascal-Brainchon-canvas" width="500" height="500" />
@@ -11,7 +16,7 @@
   </div>
 
   <div id="Desargues-wrapper" style="padding-top: 40px;">
-    <h2>Desargues's Theorem</h2>
+    <h2>Desargues' Theorem</h2>
     <canvas id="Desargues-canvas" width="800" height="500" />
   </div>
 </template>
@@ -22,7 +27,7 @@ import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
 import { IEvent } from "fabric/fabric-impl";
-import { calculateLineIntersectInLinearEquation, calculateLineIntersectInPoints, findSlope, polarToCartesian, solveLinearEquation } from "@/utils/geometry";
+import { calculateDistanceBetweenTwoPoints, calculateLineIntersectInLinearEquation, calculateLineIntersectInPoints, findSlope, polarToCartesian, solveLinearEquation, solvePerpendicularLineEquation } from "@/utils/geometry";
 
 const topic = indexTopicMap.get(6) as Topic;
 
@@ -47,6 +52,10 @@ type Circle = fabric.Circle & {
   moveLine?: Line,  // The line on which the point moves.
   upBound?: Circle,
   downBound?: Circle,
+  clockPoint?: Circle,
+  cntClockPoint?: Circle,
+  clockLine?: Line,
+  cntClockLine?: Line,
 };
 
 type Line = fabric.Line & {
@@ -68,6 +77,11 @@ type Label = fabric.Text & {
   // they won't mix in a mess.
   offSet: Coord,
 };
+
+interface LinearEq {
+  m: number,
+  b: number,
+}
 
 /**
  * Utility functions
@@ -126,6 +140,7 @@ function makeCircle(x: number | fabric.Point | Coord, y?: number, radius?: any, 
     fill: fill || "black",
     originX: "center",
     originY: "center",
+    padding: 20,
   });
   return point;
 }
@@ -190,6 +205,196 @@ function updateInterAndLine(line1: Line, line2: Line, inter: Circle): void {
       });
     });
   }
+}
+
+function getTangentLine(inter: Coord, radius: number, center: Coord): LinearEq {
+  const {m, b} = solveLinearEquation(inter, center);
+  return solvePerpendicularLineEquation(m, inter);
+}
+
+function getInterByLinearEq(l1: LinearEq, l2: LinearEq): Coord {
+  const coord = calculateLineIntersectInLinearEquation(l1.m, l1.b, l2.m, l2.b);
+  return coord;
+}
+
+/**
+ * Part IV
+ */
+function partFour() {
+  const cvsBra = new fabric.Canvas("Brainchon-canvas", {
+    selection: false,
+    backgroundColor: "floralwhite",
+  });
+  const RADIUS = 120;
+  const center = { x: 250, y: 250 } as Coord;
+  const centerPoint = makeCircle(center);
+  centerPoint.evented = false;
+
+  const circle = new fabric.Circle({
+    radius: RADIUS,
+    fill: "",
+    strokeWidth: 1,
+    stroke: "black",
+    left: center.x - RADIUS,
+    top: center.y - RADIUS,
+    hasControls: false,
+    selectable: false,
+    evented: false,
+  });
+  cvsBra.add(circle);
+
+  const taf = coordToPoint(polarToCartesian(RADIUS, 30, center));
+  const tab = coordToPoint(polarToCartesian(RADIUS, 80, center));
+  const tbc = coordToPoint(polarToCartesian(RADIUS, 120, center));
+  const tcd = coordToPoint(polarToCartesian(RADIUS, 2000, center));
+  const tde = coordToPoint(polarToCartesian(RADIUS, 280, center));
+  const tef = coordToPoint(polarToCartesian(RADIUS, -20, center));
+
+  const abLinear = getTangentLine(tab, RADIUS, center);
+  const bcLinear = getTangentLine(tbc, RADIUS, center);
+  const cdLinear = getTangentLine(tcd, RADIUS, center);
+  const deLinear = getTangentLine(tde, RADIUS, center);
+  const efLinear = getTangentLine(tef, RADIUS, center);
+  const faLinear = getTangentLine(taf, RADIUS, center);
+
+  const pa = makeCircle(getInterByLinearEq(abLinear, faLinear));
+  const pb = makeCircle(getInterByLinearEq(abLinear, bcLinear));
+  const pc = makeCircle(getInterByLinearEq(bcLinear, cdLinear));
+  const pd = makeCircle(getInterByLinearEq(cdLinear, deLinear));
+  const pe = makeCircle(getInterByLinearEq(deLinear, efLinear));
+  const pf = makeCircle(getInterByLinearEq(efLinear, faLinear));
+
+  const ab = makeLine(pa, pb);
+  const bc = makeLine(pb, pc);
+  const cd = makeLine(pd, pc);
+  const de = makeLine(pd, pe);
+  const ef = makeLine(pf, pe);
+  const fa = makeLine(pf, pa);
+
+  const ad = makeLine(pa, pd, undefined, "green");
+  const be = makeLine(pb, pe, undefined, "green");
+  const cf = makeLine(pc, pf, undefined, "green");
+
+  pa.clockLine = fa;
+  pa.cntClockLine = ab;
+  pb.clockLine = ab;
+  pb.cntClockLine = bc;
+  pc.clockLine = bc;
+  pc.cntClockLine = cd;
+  pd.clockLine = cd;
+  pd.cntClockLine = de;
+  pe.clockLine = de;
+  pe.cntClockLine = ef;
+  pf.clockLine = ef;
+  pf.cntClockLine = fa;
+
+  pa.clockPoint = pf;
+  pa.cntClockPoint = pb;
+  pb.clockPoint = pa;
+  pb.cntClockPoint = pc;
+  pc.clockPoint = pb;
+  pc.cntClockPoint = pd;
+  pd.clockPoint = pc;
+  pd.cntClockPoint = pe;
+  pe.clockPoint = pd;
+  pe.cntClockPoint = pf;
+  pf.clockPoint = pe;
+  pf.cntClockPoint = pa;
+
+  ab.p1 = pa;
+  ab.p2 = pb;
+  bc.p1 = pb;
+  bc.p2 = pc;
+  cd.p1 = pc;
+  cd.p2 = pd;
+  de.p1 = pd;
+  de.p2 = pe;
+  ef.p1 = pe;
+  ef.p2 = pf;
+  fa.p1 = pa;
+  fa.p2 = pf;
+  ad.p1 = pa;
+  ad.p2 = pd;
+  be.p1 = pb;
+  be.p2 = pe;
+  cf.p1 = pc;
+  cf.p2 = pf;
+
+  const aLabel = makeLabel("A", {x: 10, y: -20});
+  const bLabel = makeLabel("B", {x: 0, y: -30});
+  const cLabel = makeLabel("C", {x: -25, y: -5});
+  const dLabel = makeLabel("D", {x: -5, y: 10});
+  const eLabel = makeLabel("E");
+  const fLabel = makeLabel("F");
+  const oLabel = makeLabel("O");
+  setLabelToPoint([aLabel, bLabel, cLabel, dLabel, eLabel, fLabel, oLabel],
+    [pa, pb, pc, pd, pe, pf, centerPoint]);
+  cvsBra.add(aLabel, bLabel, cLabel, dLabel, eLabel, fLabel, oLabel);
+  cvsBra.add(pa, pb, pc, pd, pe, pf, centerPoint);
+  cvsBra.add(ab, bc, cd, de, ef, fa, ad, be, cf);
+
+  const onPointMove = (e: IEvent): void => {
+    const p = e.target! as Circle;
+    setLabelToPoint([p.label!], [p]);
+    const dist = calculateDistanceBetweenTwoPoints(circleToCoord(p)[0], center);
+    const alpha = Math.acos(RADIUS/dist);
+    let rad = Math.atan(-findSlope([center.x, center.y], [p.left!, p.top!]));
+    // log("slope:", -findSlope([center.x, center.y], [p.left!, p.top!]));
+    // log("b4:", rad, p);
+    if (p.left! < center.x) {
+      rad -= Math.PI;
+    }
+    // Restrict movement outside of circle.
+    if (dist <= RADIUS) {
+      const onCircle = polarToCartesian(RADIUS, rad, center, false);
+      p.set({left: onCircle.x, top: onCircle.y});
+    }
+    // log("rad:", rad);
+    // log("coord", polarToCartesian(dist, rad-Math.PI, center, false), polarToCartesian(dist, rad, center, false));
+    const clkRad = rad - alpha;
+    const cntClkRad = alpha + rad;
+    // New tangent point and lines
+    const clkT = polarToCartesian(RADIUS, clkRad, center, false);
+    const cntClkT = polarToCartesian(RADIUS, cntClkRad, center, false);
+    // log("tang p", clkT, cntClkT);
+    const clkLinearEq = solveLinearEquation(circleToCoord(p)[0], clkT);
+    const cntClkLinearEq = solveLinearEquation(circleToCoord(p)[0], cntClkT);
+
+    // New intersections
+    let clkLine = p.clockPoint!.clockLine!;
+    let cntClkLine = p.cntClockPoint!.cntClockLine!;
+    const clkP = getInterByLinearEq(clkLinearEq, solveLinearEquation(
+      {x: clkLine.x1!, y: clkLine.y1!},
+      {x: clkLine.x2!, y: clkLine.y2!}
+    ));
+    p.clockPoint!.set({left: clkP.x, top: clkP.y});
+    const cntClkP = getInterByLinearEq(cntClkLinearEq, solveLinearEquation(
+      {x: cntClkLine.x1!, y: cntClkLine.y1!},
+      {x: cntClkLine.x2!, y: cntClkLine.y2!}
+    ));
+    p.cntClockPoint!.set({left: cntClkP.x, top: cntClkP.y});
+    // log("Points:", clkP, cntClkP);
+
+    // Update lines accordingly
+    setLineFromPoints(clkLine,
+      {x: clkLine.p1!.left!, y: clkLine.p1!.top!}, {x: clkLine.p2!.left!, y: clkLine.p2!.top!});
+    setLineFromPoints(cntClkLine,
+      {x: cntClkLine.p1!.left!, y: cntClkLine.p1!.top!}, {x: cntClkLine.p2!.left!, y: cntClkLine.p2!.top!});
+
+    clkLine = p.clockLine!;
+    setLineFromPoints(clkLine,
+      {x: clkLine.p1!.left!, y: clkLine.p1!.top!}, {x: clkLine.p2!.left!, y: clkLine.p2!.top!});
+    cntClkLine = p.cntClockLine!;
+    setLineFromPoints(cntClkLine,
+      {x: cntClkLine.p1!.left!, y: cntClkLine.p1!.top!}, {x: cntClkLine.p2!.left!, y: cntClkLine.p2!.top!});
+    [ad, be, cf].forEach(line => {
+      setLineFromPoints(line, {x: line.p1!.left!, y: line.p1!.top!}, {x: line.p2!.left!, y: line.p2!.top!});
+    });
+
+    setLabelToPoint([p.clockPoint!.label!, p.cntClockPoint!.label!], [p.clockPoint!, p.cntClockPoint!]);
+  };
+
+  cvsBra.on("object:moving", onPointMove);
 }
 
 /**
@@ -464,11 +669,11 @@ function partTwo() {
       rad -= Math.PI;
     }
     const coord = polarToCartesian(
-          RADIUS,
-          rad,
-          center,
-          false
-      );
+      RADIUS,
+      rad,
+      center,
+      false
+    );
     p.setFromPoint(coord);
     return p;
   }
@@ -811,6 +1016,11 @@ export default defineComponent(
        * Part three of animation: Desargues' Theorem
        */
       partThree();
+
+      /**
+       * Part IV
+       */
+      partFour();
     },
   },
 );
