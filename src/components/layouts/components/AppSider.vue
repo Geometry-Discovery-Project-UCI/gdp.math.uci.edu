@@ -13,14 +13,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { routesProps } from '@/router';
-import MenuItem from '@/components/MenuItem.vue';
-import { useRouter } from 'vue-router';
+import { ref } from "vue";
+import { routesProps } from "@/router";
+import MenuItem from "@/components/MenuItem.vue";
+import { useRouter } from "vue-router";
 
-const router = useRouter()
-await router.isReady()
-const selectedKey = ref<Array<string>>([router.currentRoute.value.name as string]);
+const router = useRouter();
+await router.isReady();
+const selectedKey = ref<string[]>([router.currentRoute.value.name as string]);
 router.afterEach((to) => {
   selectedKey.value = [to.name as string];
 });

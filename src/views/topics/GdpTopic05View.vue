@@ -1,263 +1,553 @@
 <template>
   <TopicMeta :topic="topic" />
   <ATypographyParagraph>
-
+    The description of Simson Line
   </ATypographyParagraph>
-  <div id="ceva-theorem-wrapper">
-    <ATypographyTitle :level="4">Animated Simson Line</ATypographyTitle>
-<!--    <canvas id="ceva-theorem-canvas" width="500" height="500" />-->
-    <svg id="tri-app" width="500" height="500" style="border: 2px solid black; background-color: floralwhite;">
-      <circle id="ptoCircle_simsonline" r="200" cx="250" cy="250" fill="transparent" stroke="black" />
-      <polygon id="tri_simsonline" fill="transparent" stroke="black" />
+  <div id="Simson-Line-wapper">
+    <ATypographyTitle :level="4">Simson Line</ATypographyTitle>
+    <canvas id="Simson-Line-canvas" width="500" height="500" />
 
-      <rect id="rightAngleA_simsonline" stroke="purple" fill="transparent"></rect>
-      <rect id="rightAngleB_simsonline" stroke="purple" fill="transparent" width="8" height="8"></rect>
-      <rect id="rightAngleC_simsonline" stroke="purple" fill="transparent" width="8" height="8"></rect>
-
-      <line id="line0_simsonline" stroke="purple" />
-      <line id="line1_simsonline" stroke="blue" />
-      <line id="line2_simsonline" stroke="#6495ED" />
-      <line id="line3_simsonline" stroke="lime" />
-      <line id="line4_simsonline" stroke="lime" />
-      <line id="line5_simsonline" stroke="#6495ED" />
-      <line id="lineExtend_simsonline" stroke="black" />
-      <line id="lineExtend2_simsonline" stroke="black" />
-      <text id="letterA_simsonline">A</text>
-      <text id="letterB_simsonline">B</text>
-      <text id="letterC_simsonline">C</text>
-      <text id="letterP_simsonline">P</text>
-    </svg>
   </div>
 </template>
-
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { indexTopicMap } from '@/data';
-import { Topic } from '@/types';
-import {distToLine, drawFullLine, drawLine, findMidpoint, findSlope, pedalPoint, projectPoint2Line, radiansToDegress} from '@/utils/geoutils';
+import { defineComponent } from "vue";
+import { indexTopicMap, otherImages } from "@/data";
+import { Topic } from "@/types";
+import { IEvent, Point } from "fabric/fabric-impl";
+import { fabric } from "fabric";
+import {
+  makeLine,
+  makeLabel,
+  makeCircle,
+  makeMovablePolygon,
+  makeMovablePoint
+} from "@/utils/canvas";
+import {
+  calculateMidpoint,
+  getPedalPoint,
+  calculateDistanceBetweenTwoPoints,
+  calculateSlope,
+  calculateLineIntersectInPoints,
+  CANVAS_HEIGHT, CANVAS_WIDTH, calculateThreeAngles, pedalPoint, projectPoint2Line, drawLine
+} from "@/utils/geometry";
+import { LineHeightOutlined, RightCircleFilled } from "@ant-design/icons-vue";
 const topic = indexTopicMap.get(5) as Topic;
+type Circle = fabric.Circle & {
+  [key: string]: any,
+  intersects?: Circle[],
+  upLine?: fabric.Line[],
+  downLine?: fabric.Line[],
+  crossLines?: fabric.Line[],
+  leftBound?: Circle,
+  rightBound?: Circle,
+};
+function makecircle(point: fabric.Point, radius?: number, fill?: any): Circle;
+function makecircle(x: number, y: number, radius?: number, fill?: string): Circle;
+function makecircle(x: number | fabric.Point, y?: number, radius?: number, fill?: string): Circle {
+  if (x instanceof fabric.Point) {
+    y = x.y;
+    x = x.x;
+  }
+  const point = new fabric.Circle({
+    left: x,
+    top: y,
+    hasControls: false,
+    hasBorders: false,
+    evented: true,
+    radius: radius || 3,
+    fill: fill || "black",
+    originX: "center",
+    originY: "center",
+  });
+  return point;
+}
 export default defineComponent(
   {
     setup() {
       return { topic };
     },
     mounted() {
-      const svg = document.querySelector("#tri-app");
+      const canvas = new fabric.Canvas("Simson-Line-canvas", {
+        selection: false,
+      });
       const pi = 3.14;
-
-      const radius = 200;
+      const aLabel = makeLabel("A");
+      const bLabel = makeLabel("B");
+      const cLabel = makeLabel("C");
+      const pLabel = makeLabel("P");
+      const xLabel = makeLabel("X");
+      const yLabel = makeLabel("Y");
+      const zLabel = makeLabel("Z");
+      const lineAB = makeLine();
+      const lineAC = makeLine();
+      const lineBC = makeLine();
+      const linePX = makeLine();
+      const linePY = makeLine();
+      const linePZ = makeLine();
+      const lineAZ = makeLine();
+      const lineBZ = makeLine();
+      const lineBX = makeLine();
+      const lineCX = makeLine();
+      const lineAY = makeLine();
+      const lineCY = makeLine();
+      const lineSimson = makeLine();
+      const angleX = new fabric.Rect();
+      const angleY = new fabric.Rect();
+      const angleZ = new fabric.Rect();
+      const radiusCircle = 200;
       const xx = 250;
       const yy = 250;
-      const makeString = (arr: number[][]) => {
-        return `${arr[0][0]},${arr[0][1]} ${arr[1][0]},${arr[1][1]} ${arr[2][0]},${arr[2][1]}`;
-      };
-      const pA = [xx + Math.cos(pi / 6) * radius, yy + Math.sin(pi / 6) * radius];
-      const pB = [xx - Math.cos(pi / 6) * radius, yy + Math.sin(pi / 6) * radius];
-      const pC = [xx - Math.cos(pi / 3) * radius, yy - Math.sin(pi / 3) * radius];
-      const points = [pA, pB, pC];
-
-      const mAB = (pA[1] - pA[1]) / (pB[0] - pA[0]);
-      const mBC = (pB[1] - pC[1]) / (pB[0] - pC[0]);
-      const mAC = (pA[1] - pC[1]) / (pA[0] - pC[0]);
-
-      const tri = document.querySelector("#tri_simsonline");
-      const line0 = document.querySelector("#line0_simsonline");
-      const line1 = document.querySelector("#line1_simsonline");
-      const line2 = document.querySelector("#line2_simsonline");
-      const line3 = document.querySelector("#line3_simsonline");
-      const lineE = document.querySelector("#lineExtend_simsonline");
-      const lineE2 = document.querySelector("#lineExtend2_simsonline");
-      const raA = document.querySelector("#rightAngleA_simsonline");
-      const raB = document.querySelector("#rightAngleB_simsonline");
-      const raC = document.getElementById("rightAngleC_simsonline");
-
-      const letterA = document.querySelector("#letterA_simsonline");
-      const letterB = document.querySelector("#letterB_simsonline");
-      const letterC = document.querySelector("#letterC_simsonline");
-      const letterP = document.querySelector("#letterP_simsonline");
-
-      const moveMouse = (p: { x: number; y: number; }) => {
-        const cosx =
-          (p.x - xx) / Math.sqrt((p.x - xx) * (p.x - xx) + (p.y - yy) * (p.y - yy));
-        const sinx =
-          (p.y - yy) / Math.sqrt((p.x - xx) * (p.x - xx) + (p.y - yy) * (p.y - yy));
-
-        p.x = xx + radius * cosx;
-        p.y = yy + radius * sinx;
-
-//  pay attention to these functions
-        const mid0 = findMidpoint(points[0], [p.x, p.y]);
-        const m0 = findSlope(points[0], [p.x, p.y]);
-        const mid1 = findMidpoint(points[1], [p.x, p.y]);
-        const m1 = findSlope(points[1], [p.x, p.y]);
-
-        tri?.setAttributeNS(
-          null,
-          "points",
-          makeString([points[0], points[1], points[2]])
-        );
-        const p1 = [p.x, pA[1]];
-        // .log([p.x, p.y], pA, pB);
-        const pAi = projectPoint2Line([p.x, p.y], pA, pC);
-
-        const mAi = (pAi[1] - p1[1]) / (pAi[0] - p1[0]);
-
-        drawLine(pAi, [p.x, p.y], line2);
-        drawLine(p1, [p.x, p.y], line0);
-        const pBi = projectPoint2Line([p.x, p.y], pB, pC);
-        // drawLine(p1, pBi, line3);
-        // drawLine(p1, pAi, line4);
-        drawFullLine(p1, findSlope(p1, pAi), line3);
-
-        drawLine(pBi, [p.x, p.y], line1);
-
-        const theta = Math.atan(-1 / mBC);
-        const dist = distToLine([p.x, p.y], pC, pA);
-        const p2 = [p.x - dist * Math.cos(theta), p.y - dist * Math.sin(theta)];
-
-        // drawFullLine(p2, findSlope(p1, p2), line3);
-        raA?.setAttribute("width", "8");
-        raA?.setAttribute("height", "8");
-
-
-        if (p.y > p1[1]) {
-          raA?.setAttribute("y", p1[1] + "");
-        } else {
-          raA?.setAttribute("y", p1[1] - 8 + "");
-        }
-
-        if (p.x > p1[0]) {
-          raA?.setAttribute("x", p1[0] + "");
-        } else {
-          raA?.setAttribute("x", (p1[0] - 8) + "");
-        }
-
-        letterP?.setAttribute("x", p.x + "");
-        letterP?.setAttribute("y", (p.y - 10) + "");
-        letterP?.setAttribute("font-size", "1.5rem");
-
-        const section = pedalPoint(pC, pB, pA, [p.x, p.y]);
-        const tBC = Math.atan(mBC);
-        const tAC = Math.atan(mAC);
-
-        if (section == 2) {
-          drawLine(pC, pBi, lineE);
-          drawLine(pA, p1, lineE2);
-          raB?.setAttribute("x", pBi[0]);
-          raB?.setAttribute("y", pBi[1]);
-          raB?.setAttribute(
-            "transform",
-            "rotate(" +
-            String(radiansToDegress(tBC)) +
-            " " +
-            String(pBi[0]) +
-            " " +
-            String(pBi[1]) +
-            ")"
-          );
-          // For Yi to check the setAttribute
-          raC?.setAttribute("x", pAi[0]);
-          raC?.setAttribute("y", (pAi[1] - 8) + "");
-          raC?.setAttribute(
-            "transform",
-            "rotate(" +
-            String(radiansToDegress(tAC)) +
-            " " +
-            String(pAi[0]) +
-            " " +
-            String(pAi[1]) +
-            ")"
-          );
-        }
-
-        if (section == 4) {
-          drawLine(pB, pBi, lineE);
-          drawLine(pA, p1, lineE2);
-          raC?.setAttribute("x", pAi[0]);
-          raC?.setAttribute("y", pAi[1]);
-          raC?.setAttribute(
-            "transform",
-            "rotate(" +
-            String(radiansToDegress(tAC)) +
-            " " +
-            String(pAi[0]) +
-            " " +
-            String(pAi[1]) +
-            ")"
-          );
-
-          raB?.setAttribute("x", pBi[0]);
-          raB?.setAttribute("y", pBi[1]);
-          raB?.setAttribute(
-            "transform",
-            "rotate(" +
-            String(radiansToDegress(tBC)) +
-            " " +
-            String(pBi[0]) +
-            " " +
-            String(pBi[1]) +
-            ")"
-          );
-        }
-
-        if (section == 6) {
-          drawLine(pC, pAi, lineE);
-          drawLine(pB, p1, lineE2);
-          raC?.setAttribute("x", pAi[0]);
-          raC?.setAttribute("y", pAi[1]);
-          raC?.setAttribute(
-            "transform",
-            "rotate(" +
-            String(radiansToDegress(tAC)) +
-            " " +
-            String(pAi[0]) +
-            " " +
-            String(pAi[1]) +
-            ")"
-          );
-
-          raB?.setAttribute("x", (pBi[0] - 8) + "");
-          raB?.setAttribute("y", (pBi[1] - 8) + "");
-          raB?.setAttribute(
-            "transform",
-            "rotate(" +
-            String(radiansToDegress(tBC)) +
-            " " +
-            String(pBi[0]) +
-            " " +
-            String(pBi[1]) +
-            ")"
-          );
-        }
-      };
-      let p = new DOMPoint(
-        xx - Math.cos((pi * 5) / 9) * radius,
-        yy - Math.sin(pi / 9) * radius
-      );
-      moveMouse(p);
-      const ptoAngles = [1.4, 3.4, 5, 6];
-
-      tri?.setAttributeNS(null, "points", makeString(points));
-
-      const svgEle = svg as SVGGraphicsElement
-      svgEle?.addEventListener("mousemove", (event) => {
-        p = new DOMPoint(event.clientX, event.clientY);
-        p = p.matrixTransform(svgEle.getScreenCTM()?.inverse());
-        moveMouse(p);
+      const circumCircle = makeCircle();
+      const pointP = makeMovablePoint(new fabric.Point(250, 50));
+      circumCircle.set({
+        left: 50,
+        top: 50,
+        radius: radiusCircle,
+        stroke: "black"
       });
+      const pC = [xx + Math.cos(pi / 6) * radiusCircle, yy + Math.sin(pi / 6) * radiusCircle];
+      const pB = [xx - Math.cos(pi / 6) * radiusCircle, yy + Math.sin(pi / 6) * radiusCircle];
+      const pA = [xx - Math.cos(pi / 3) * radiusCircle, yy - Math.sin(pi / 3) * radiusCircle];
+      const pointA = new fabric.Point(pA[0], pA[1]);
+      const pointB = new fabric.Point(pB[0], pB[1]);
+      const pointC = new fabric.Point(pC[0], pC[1]);
+      aLabel.set({
+        left: pA[0] - 25,
+        top: pA[1] - 20,
+        fill: "green",
+      });
+      bLabel.set({
+        left: pB[0] - 20,
+        top: pB[1] - 5,
+        fill: "green",
+      });
+      cLabel.set({
+        left: pC[0],
+        top: pC[1],
+        fill: "green",
+      });
+      lineAB.set({
+        x1: pA[0],
+        y1: pA[1],
+        x2: pB[0],
+        y2: pB[1],
+        stroke: "black",
+      });
+      lineAC.set({
+        x1: pA[0],
+        y1: pA[1],
+        x2: pC[0],
+        y2: pC[1],
+        stroke: "black",
+      });
+      lineBC.set({
+        x1: pC[0],
+        y1: pC[1],
+        x2: pB[0],
+        y2: pB[1],
+        stroke: "black",
+      });
+      const disAB = calculateDistanceBetweenTwoPoints(pointA, pointB);
+      const disBC = calculateDistanceBetweenTwoPoints(pointB, pointC);
+      const disAC = calculateDistanceBetweenTwoPoints(pointA, pointC);
 
-      letterA?.setAttribute("x", (pA[0] + 4) + "");
-      letterA?.setAttribute("y", (pA[1] + 9) + "");
-      letterA?.setAttribute("font-size", "1.5rem");
+      const onPointMove = (e: IEvent): void => {
+        const p = e.target! as Circle;
+        const cosx =
+          (p.left as number - xx) / Math.sqrt((p.left as number - xx) * (p.left as number - xx) + (p.top as number - yy) * (p.top as number - yy));
+        const sinx =
+          (p.top as number - yy) / Math.sqrt((p.left as number - xx) * (p.left as number - xx) + (p.top as number - yy) * (p.top as number - yy));
+        if (p.left as number >= 250) {
+          p.set({
+            left: xx + radiusCircle * cosx,
+            top: yy + radiusCircle * sinx,
+          });
+        }
+        if (p.left as number < 250) {
+          p.set({
+            left: xx + radiusCircle * cosx,
+            top: yy + radiusCircle * sinx,
+          });
+        }
+        const pointp = new fabric.Point(p.left as number, p.top as number);
+        const pointY = getPedalPoint(pointp, pointA, pointC);
+        const pointX = getPedalPoint(pointp, pointC, pointB);
+        const pointZ = getPedalPoint(pointp, pointA, pointB);
+        linePY.set({
+          x1: pointp.x,
+          y1: pointp.y,
+          x2: pointY.x,
+          y2: pointY.y,
+          strokeWidth: 2.5,
+          stroke: "blue",
+        });
+        linePX.set({
+          x1: pointp.x,
+          y1: pointp.y,
+          x2: pointX.x,
+          y2: pointX.y,
+          strokeWidth: 2.5,
+          stroke: "purple",
+        });
+        linePZ.set({
+          x1: pointp.x,
+          y1: pointp.y,
+          x2: pointZ.x,
+          y2: pointZ.y,
+          strokeWidth: 2.5,
+          stroke: "green",
+        });
+        lineAZ.set({
+          x1: pointA.x,
+          y1: pointA.y,
+          x2: pointZ.x,
+          y2: pointZ.y,
+          strokeDashArray: [5, 5],
+          stroke: "gray",
+        });
+        lineBZ.set({
+          x1: pointB.x,
+          y1: pointB.y,
+          x2: pointZ.x,
+          y2: pointZ.y,
+          strokeDashArray: [5, 5],
+          stroke: "gray",
+        });
+        lineBX.set({
+          x1: pointB.x,
+          y1: pointB.y,
+          x2: pointX.x,
+          y2: pointX.y,
+          strokeDashArray: [5, 5],
+          stroke: "gray",
+        });
+        lineCX.set({
+          x1: pointC.x,
+          y1: pointC.y,
+          x2: pointX.x,
+          y2: pointX.y,
+          strokeDashArray: [5, 5],
+          stroke: "gray",
+        });
+        lineAY.set({
+          x1: pointA.x,
+          y1: pointA.y,
+          x2: pointY.x,
+          y2: pointY.y,
+          strokeDashArray: [5, 5],
+          stroke: "gray",
+        });
+        lineCY.set({
+          x1: pointC.x,
+          y1: pointC.y,
+          x2: pointY.x,
+          y2: pointY.y,
+          strokeDashArray: [5, 5],
+          stroke: "gray",
+        });
+        pLabel.set({
+          left: pointp.x + 10,
+          top: pointp.y + 5,
+          fill: "green",
+        });
+        xLabel.set({
+          left: pointX.x - 25,
+          top: pointX.y,
+          fill: "green",
+        });
+        yLabel.set({
+          left: pointY.x - 25,
+          top: pointY.y - 10,
+          fill: "green",
+        });
+        zLabel.set({
+          left: pointZ.x - 25,
+          top: pointZ.y - 10,
+          fill: "green",
+        });
 
-      letterB?.setAttribute("x", (pB[0] - 20) + "");
-      letterB?.setAttribute("y", (pB[1] + 10) + "");
-      letterB?.setAttribute("font-size", "1.5rem");
+        if (pointp.y <= pointB.y && pointp.x < pointC.x) {
+          angleX.set({
+            left: pointX.x as number,
+            top: pointX.y as number,
+            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+            angle: -90
+          });
+        }
+        if (pointp.y > pointB.y) {
+          angleX.set({
+            left: pointX.x as number,
+            top: pointX.y as number,
+            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+            angle: 90
+          });
+        }
+        if (pointp.x > pointC.x) {
+          angleX.set({
+            left: pointX.x as number,
+            top: pointX.y as number,
+            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+            angle: 180
+          });
+        }
+        if (pointY.x < pointA.x) {
+          angleY.set({
+            left: pointY.x as number,
+            top: pointY.y as number,
+            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+            angle: (Math.acos((disBC * disBC + disAC * disAC - disAB * disAB) / (2 * disAC * disBC)) * 180 / Math.PI)
+          });
+        }
+        if (pointY.x > pointC.x) {
+          angleY.set({
+            left: pointY.x as number,
+            top: pointY.y as number,
+            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+            angle: (Math.acos((disBC * disBC + disAC * disAC - disAB * disAB) / (2 * disAC * disBC)) * 180 / Math.PI) + 90
+          });
+        }
+        if (pointp.y < pointC.y && pointp.x > pointA.x) {
+          angleY.set({
+            left: pointY.x as number,
+            top: pointY.y as number,
+            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+            angle: (Math.acos((disBC * disBC + disAC * disAC - disAB * disAB) / (2 * disAC * disBC)) * 180 / Math.PI) + 270
+          });
+        }
+        if (pointp.y > pointA.y && pointp.x < pointC.x && pointZ.x < pointA.x) {
+          angleY.set({
+            left: pointY.x as number,
+            top: pointY.y as number,
+            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+            angle: (Math.acos((disBC * disBC + disAC * disAC - disAB * disAB) / (2 * disAC * disBC)) * 180 / Math.PI) + 90
+          });
+        }
+        if (pointZ.y < pointA.y) {
+          angleZ.set({
+            left: pointZ.x as number,
+            top: pointZ.y as number,
+            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+            angle: (Math.acos((disBC * disBC + disAB * disAB - disAC * disAC) / (2 * disAB * disBC)) * 180 / Math.PI) + 300
+          });
+        }
+        if (pointZ.y >= pointB.y) {
+          angleZ.set({
+            left: pointZ.x as number,
+            top: pointZ.y as number,
+            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+            angle: (Math.acos((disBC * disBC + disAB * disAB - disAC * disAC) / (2 * disAB * disBC)) * 180 / Math.PI) + 210
+          });
+        }
+        if (pointZ.y >= pointA.y && pointZ.y < pointB.y && pointp.x > pointA.x) {
+          angleZ.set({
+            left: pointZ.x as number,
+            top: pointZ.y as number,
+            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+            angle: (Math.acos((disBC * disBC + disAB * disAB - disAC * disAC) / (2 * disAB * disBC)) * 180 / Math.PI) + 210
+          });
+        }
+        if (pointZ.y >= pointA.y && pointZ.y < pointB.y && pointp.x <= pointA.x) {
+          angleZ.set({
+            left: pointZ.x as number,
+            top: pointZ.y as number,
+            width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+            angle: -(Math.acos((disBC * disBC + disAB * disAB - disAC * disAC) / (2 * disAB * disBC)) * 180 / Math.PI) - 180
+          });
+        }
+        const slope = calculateSlope(pointX, pointZ);
+        if (!isFinite(slope)) {
+          lineSimson.set({
+            x1: pointZ.x,
+            y1: 0,
+            x2: pointZ.x,
+            y2: CANVAS_HEIGHT,
+            strokeWidth: 2.5,
+            stroke: "red",
+          });
+          // (2) When length between 2 points = 0, set slope = 0
+        } else if (isNaN(slope)) {
+          lineSimson.set({
+            x1: 0,
+            y1: pointZ.y,
+            x2: CANVAS_WIDTH,
+            y2: pointZ.y,
+            strokeWidth: 2.5,
+            stroke: "red",
+          });
+          // (3) Else, draw the line using linear equations with slope and midpoint1
+        } else {
+          lineSimson.set({
+            x1: 0,
+            y1: -slope * pointZ.x + pointZ.y - 0.75,
+            x2: CANVAS_WIDTH,
+            y2: slope * (CANVAS_WIDTH - pointZ.x) + pointZ.y - 0.75,
+            strokeWidth: 2.5,
+            stroke: "red",
+          });
+        }
+      };
 
-      letterC?.setAttribute("x", (pC[0] - 12) + "");
-      letterC?.setAttribute("y", (pC[1] - 6) + "");
-      letterC?.setAttribute("font-size", "1.5rem");
-    }
+      canvas.on("object:moving", onPointMove);
+
+      const pointM = pointP.left as number;
+      const pointN = pointP.top as number;
+      pointP.set({
+        originX: "center",
+        originY: "center",
+        radius: 5,
+        fill: "black",
+      });
+      const pointp = new fabric.Point(pointM, pointN);
+      const pointY = getPedalPoint(pointp, pointA, pointC);
+      const pointX = getPedalPoint(pointp, pointC, pointB);
+      const pointZ = getPedalPoint(pointp, pointA, pointB);
+      pLabel.set({
+        left: pointP.left as number + 10,
+        top: pointP.top as number + 5,
+        fill: "green",
+      });
+      xLabel.set({
+        left: pointX.x - 25,
+        top: pointX.y,
+        fill: "green",
+      });
+      yLabel.set({
+        left: pointY.x - 25,
+        top: pointY.y - 10,
+        fill: "green",
+      });
+      zLabel.set({
+        left: pointZ.x - 25,
+        top: pointZ.y - 10,
+        fill: "green",
+      });
+      linePY.set({
+        x1: pointp.x,
+        y1: pointp.y,
+        x2: pointY.x,
+        y2: pointY.y,
+        strokeWidth: 2.5,
+        stroke: "blue",
+      });
+      linePX.set({
+        x1: pointp.x,
+        y1: pointp.y,
+        x2: pointX.x,
+        y2: pointX.y,
+        strokeWidth: 2.5,
+        stroke: "purple",
+      });
+      linePZ.set({
+        x1: pointp.x,
+        y1: pointp.y,
+        x2: pointZ.x,
+        y2: pointZ.y,
+        strokeWidth: 2.5,
+        stroke: "green",
+      });
+      lineAZ.set({
+        x1: pointA.x,
+        y1: pointA.y,
+        x2: pointZ.x,
+        y2: pointZ.y,
+        strokeDashArray: [5, 5],
+        stroke: "gray",
+      });
+      lineBZ.set({
+        x1: pointB.x,
+        y1: pointB.y,
+        x2: pointZ.x,
+        y2: pointZ.y,
+        strokeDashArray: [5, 5],
+        stroke: "gray",
+      });
+      lineBX.set({
+        x1: pointB.x,
+        y1: pointB.y,
+        x2: pointX.x,
+        y2: pointX.y,
+        strokeDashArray: [5, 5],
+        stroke: "gray",
+      });
+      lineCX.set({
+        x1: pointC.x,
+        y1: pointC.y,
+        x2: pointX.x,
+        y2: pointX.y,
+        strokeDashArray: [5, 5],
+        stroke: "gray",
+      });
+      lineAY.set({
+        x1: pointA.x,
+        y1: pointA.y,
+        x2: pointY.x,
+        y2: pointY.y,
+        strokeDashArray: [5, 5],
+        stroke: "gray",
+      });
+      lineCY.set({
+        x1: pointC.x,
+        y1: pointC.y,
+        x2: pointY.x,
+        y2: pointY.y,
+        strokeDashArray: [5, 5],
+        stroke: "gray",
+      });
+      const slope = calculateSlope(pointX, pointZ);
+      if (!isFinite(slope)) {
+        lineSimson.set({
+          x1: pointZ.x,
+          y1: 0,
+          x2: pointZ.x,
+          y2: CANVAS_HEIGHT,
+          strokeWidth: 2.5,
+          stroke: "red",
+        });
+        // (2) When length between 2 points = 0, set slope = 0
+      } else if (isNaN(slope)) {
+        lineSimson.set({
+          x1: 0,
+          y1: pointZ.y,
+          x2: CANVAS_WIDTH,
+          y2: pointZ.y,
+          strokeWidth: 2.5,
+          stroke: "red",
+        });
+        // (3) Else, draw the line using linear equations with slope and midpoint1
+      } else {
+        lineSimson.set({
+          x1: 0,
+          y1: -slope * pointZ.x + pointZ.y - 0.75,
+          x2: CANVAS_WIDTH,
+          y2: slope * (CANVAS_WIDTH - pointZ.x) + pointZ.y - 0.75,
+          strokeWidth: 2.5,
+          stroke: "red",
+        });
+      }
+      angleX.set({
+        left: pointX.x as number,
+        top: pointX.y as number,
+        width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+        angle: -90
+      });
+      angleY.set({
+        left: pointY.x as number,
+        top: pointY.y as number,
+        width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+        angle: (Math.acos((disBC * disBC + disAC * disAC - disAB * disAB) / (2 * disAC * disBC)) * 180 / Math.PI) + 270
+      });
+      angleZ.set({
+        left: pointZ.x as number,
+        top: pointZ.y as number,
+        width: 10, height: 10, fill: "", stroke: "gray", strokeDashArray: [2.5, 2.5],
+        angle: (Math.acos((disBC * disBC + disAB * disAB - disAC * disAC) / (2 * disAB * disBC)) * 180 / Math.PI) + 300
+      });
+      canvas.add(aLabel, bLabel, cLabel, pLabel, xLabel, yLabel, zLabel);
+      canvas.add(pointP);
+      canvas.add(lineAB, lineAC, lineBC, linePX, linePY, linePZ, lineAZ, lineBZ, lineAY, lineCY, lineBX, lineCX, lineSimson);
+      canvas.add(circumCircle);
+      canvas.add(angleX, angleY, angleZ);
+    },
   },
 );
 </script>

@@ -10,21 +10,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { indexTopicMap } from '@/data';
-import { Topic } from '@/types';
-import { fabric } from 'fabric';
+import { defineComponent } from "vue";
+import { indexTopicMap } from "@/data";
+import { Topic } from "@/types";
+import { fabric } from "fabric";
 import {
     makeLine,
     makeLabel,
     makeCircle,
     makeMovablePolygon
-} from '@/utils/canvas';
+} from "@/utils/canvas";
 import {
     calculateLineIntersectInPoints,
     calculateMidpoint,
     calculateSlope
-} from '@/utils/geometry';
+} from "@/utils/geometry";
 
 const topic = indexTopicMap.get(26) as Topic;
 
@@ -70,24 +70,12 @@ export default defineComponent(
             // Creates movable quadrilateral
             const quadrilateral = makeMovablePolygon(
                 [
-                    {
-                        x: 110,
-                        y: 265,
-                    },
-                    {
-                        x: 70,
-                        y: 420,
-                    },
-                    {
-                        x: 270,
-                        y: 420,
-                    },
-                    {
-                        x: 245,
-                        y: 340,
-                    },
+                    new fabric.Point(110, 265),
+                    new fabric.Point(70, 420),
+                    new fabric.Point(270, 420),
+                    new fabric.Point(245, 340),
                 ],
-                function (coords: Array<fabric.Point>) {
+                function (coords: fabric.Point[]) {
                     // Change quadrilateral color
                     quadrilateral.set({
                         stroke: "green",
@@ -196,8 +184,8 @@ export default defineComponent(
                         stroke: "black",
                     });
 
-                    const pointE = calculateLineIntersectInPoints(lineBA, lineCD, true);
-                    const pointF = calculateLineIntersectInPoints(lineAD, lineBC, true);
+                    const pointE = calculateLineIntersectInPoints(lineBA, lineCD, true) as fabric.Point;
+                    const pointF = calculateLineIntersectInPoints(lineAD, lineBC, true) as fabric.Point;
 
                     // Update the label coordinates
                     // for the intersection point E
@@ -264,7 +252,7 @@ export default defineComponent(
                         makeLine(coords[1], coords[3]),
                         newtonLine,
                         true
-                    );
+                    ) as fabric.Point;
 
                     mLabel.set({
                         left: pointM?.x,
@@ -276,7 +264,7 @@ export default defineComponent(
                         makeLine(coords[0], coords[2]),
                         newtonLine,
                         true
-                    );
+                    ) as fabric.Point;
 
                     nLabel.set({
                         left: pointN?.x - 23,
@@ -288,7 +276,7 @@ export default defineComponent(
                         makeLine(pointE, pointF),
                         newtonLine,
                         true
-                    );
+                    ) as fabric.Point;
 
                     lLabel.set({
                         left: pointL?.x + 15,

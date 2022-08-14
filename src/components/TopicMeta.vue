@@ -16,8 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, PropType } from 'vue';
-import { Topic } from '@/types';
+import { defineProps, PropType } from "vue";
+import { Topic } from "@/types";
 
 defineProps({
   topic: {

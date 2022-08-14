@@ -3,8 +3,8 @@
 </template>
 
 <script setup lang="ts">
-import logo from '@/assets/logo.png';
-import logoLight from '@/assets/logo-light.png';
+import logo from "@/assets/logo.png";
+import logoLight from "@/assets/logo-light.png";
 
 const props = defineProps<{
   isLight: boolean
