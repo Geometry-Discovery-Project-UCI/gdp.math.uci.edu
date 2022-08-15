@@ -174,6 +174,11 @@ export const MELISSA_YU: Contributor = {
   email: "melissajiayu@gmail.com",
 };
 
+export const ISHAN_DARJI: Contributor = {
+  name: "Ishan Darji",
+  email: "ishan.darji0@gmail.com"
+};
+
 export const contributors: Contributor[] = [
   ZHIQIN_LU,
   CHRISTOPHER_DAVIS,
@@ -202,6 +207,7 @@ export const contributors: Contributor[] = [
   ZEJIN_XU,
   FELIX_YU,
   MELISSA_YU,
+  ISHAN_DARJI,
 ];
 
 export const otherEssays: { name: string, uri: string }[] = [
@@ -580,7 +586,9 @@ export const topics: Topic[] = [
     index: 34,
     snapshot: "images/snapshots/topic34.png",
     essay: "pdfs/topic34.pdf",
-    animationContributors: [],
+    animationContributors: [
+      ISHAN_DARJI,
+    ],
     essayContributors: [
       YUFEI_REN,
     ],
