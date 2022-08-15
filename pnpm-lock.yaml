@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@ant-design/icons-vue': ^6.1.0
   '@types/fabric': ^4.5.10
+  '@types/katex': ^0.14.0
   '@typescript-eslint/eslint-plugin': ^5.30.6
   '@typescript-eslint/parser': ^5.30.6
   '@vue/cli-plugin-eslint': ~5.0.8
@@ -17,6 +18,7 @@ specifiers:
   eslint-plugin-vue: ^8.7.1
   eslint-plugin-vuejs-accessibility: ^1.2.0
   fabric: ^5.2.1
+  katex: ^0.16.0
   lint-staged: ^11.2.6
   typescript: ~4.5.5
   vue: ^3.2.37
@@ -26,11 +28,13 @@ dependencies:
   '@ant-design/icons-vue': 6.1.0_vue@3.2.37
   ant-design-vue: 3.2.10_vue@3.2.37
   fabric: 5.2.1
+  katex: 0.16.0
   vue: 3.2.37
   vue-router: 4.1.2_vue@3.2.37
 
 devDependencies:
   '@types/fabric': 4.5.10
+  '@types/katex': 0.14.0
   '@typescript-eslint/eslint-plugin': 5.30.6_vyqjobnklww3xdlzqlhkvlorlu
   '@typescript-eslint/parser': 5.30.6_sgaiclxgc5mltnpgmg7py4v6ca
   '@vue/cli-plugin-eslint': 5.0.8_yvnkslq6l73c7sesu7e5hzum2a
@@ -563,6 +567,10 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+    dev: true
+
+  /@types/katex/0.14.0:
+    resolution: {integrity: sha512-+2FW2CcT0K3P+JMR8YG846bmDwplKUTsWgT2ENwdQ1UdVfRk3GQrh6Mi4sTopy30gI8Uau5CEqHTDZ6YvWIUPA==}
     dev: true
 
   /@types/mime/1.3.2:
@@ -2029,7 +2037,6 @@ packages:
   /commander/8.3.0:
     resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
     engines: {node: '>= 12'}
-    dev: true
 
   /commondir/1.0.1:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
@@ -4406,6 +4413,13 @@ packages:
     optionalDependencies:
       graceful-fs: 4.2.10
     dev: true
+
+  /katex/0.16.0:
+    resolution: {integrity: sha512-wPRB4iUPysfH97wTgG5/tRLYxmKVq6Q4jRAWRVOUxXB1dsiv4cvcNjqabHkrOvJHM1Bpk3WrgmllSO1vIvP24w==}
+    hasBin: true
+    dependencies:
+      commander: 8.3.0
+    dev: false
 
   /kind-of/6.0.3:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
