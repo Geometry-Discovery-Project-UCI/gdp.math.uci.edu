@@ -24,4 +24,13 @@ createApp(App)
     const isDisplay = binding.arg === "display";
     katex.render(el.innerHTML, el, { displayMode: isDisplay });
   })
+  .directive("tikz", (el) => {
+    const scripts = el.innerHTML;
+    el.classList.add("tikz-diagram");
+    el.innerHTML = null;
+    const scriptTag = document.createElement("script");
+    scriptTag.type = "text/tikz";
+    scriptTag.innerHTML = scripts;
+    el.appendChild(scriptTag);
+  })
   .mount("#app");
