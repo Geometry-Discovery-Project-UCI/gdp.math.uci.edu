@@ -14,7 +14,12 @@ import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import {fabric} from "fabric";
 import {makeCircle, makeLabel, makeLine, makeMovablePoint} from "@/utils/canvas";
-import {calculateLineIntersectInPoints} from "@/utils/geometry";
+import {
+  calculateLineIntersectInPoints,
+  findDistance,
+  findMidpoint,
+  getPedalPoint, pedalPoint
+} from "@/utils/geometry";
 import {IEvent, Circle} from "fabric/fabric-impl";
 
 const topic = indexTopicMap.get(36) as Topic;
@@ -98,7 +103,7 @@ export default defineComponent(
         let pointH = calculateLineIntersectInPoints(l2, PD, false);
         circleE.set({
           originX: "center", originY: "center",
-          radius: 3,
+          radius: 4,
           left:pointE!.x,
           top: pointE!.y,
           fill: "blue",
@@ -106,7 +111,7 @@ export default defineComponent(
         });
         circleF.set({
           originX: "center", originY: "center",
-          radius: 3,
+          radius: 4,
           left:pointF!.x,
           top: pointF!.y,
           fill: "blue",
@@ -114,7 +119,7 @@ export default defineComponent(
         });
         circleG.set({
           originX: "center", originY: "center",
-          radius: 3,
+          radius: 4,
           left:pointG!.x,
           top: pointG!.y,
           fill: "blue",
@@ -122,7 +127,7 @@ export default defineComponent(
         });
         circleH.set({
           originX: "center", originY: "center",
-          radius: 3,
+          radius: 4,
           left:pointH!.x,
           top: pointH!.y,
           fill: "blue",
@@ -137,14 +142,32 @@ export default defineComponent(
         const onMovePoint = (e: IEvent): void => {
           const p = e.target as Circle;
           const point = new fabric.Point(p.left as number, p.top as number);
-          if (point.x > pointP.x) {
+          let pedalPoint;
+          if (point.x > pointP.x) { // moving right point
             l2.set({
               x1: movingLeftPoint.left as number, y1: movingLeftPoint.top as number,
               x2: point.x, y2: point.y});
-          } else {
+            labelL2.set({left: point.x, top: point.y});
+            const leftPoint = new fabric.Point(movingLeftPoint.left!, movingLeftPoint.top!);
+            pedalPoint = getPedalPoint(pointP,leftPoint,point);
+          } else {  // moving left point
             l2.set({
               x1:point.x , y1: point.y,
               x2: movingRightPoint.left, y2: movingRightPoint.top,
+            });
+            const rightPoint = new fabric.Point(movingRightPoint.left!, movingRightPoint.top!);
+            pedalPoint = getPedalPoint(pointP,rightPoint,point);
+          }
+          const distance = findDistance([pointP.x,pointP.y],[pedalPoint.x,pedalPoint.y]);
+          let boundaryX = 0, boundaryY = 0;
+          if (distance === 0) {
+            boundaryX = p.left!;
+            boundaryY = p.top!;
+          }
+          if (distance < 0) {
+            p.set({
+              left: boundaryX,
+              top: boundaryY
             });
           }
 
@@ -162,6 +185,7 @@ export default defineComponent(
           labelG.set({left: pointG!.x - 10, top: pointG!.y + 10});
           labelH.set({left: pointH!.x - 10, top: pointH!.y + 10});
         };
+
         equation.set({left:150, top: 420});
 
         canvas.on("object:moving", onMovePoint);
