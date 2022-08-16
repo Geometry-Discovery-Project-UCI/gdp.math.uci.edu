@@ -21,7 +21,9 @@
   </ATypographyParagraph>
   <div id="circumcenter-wrapper">
     <ATypographyTitle :level="4">Circumcenter Animated Illustration</ATypographyTitle>
-    <canvas id="circumcenter-canvas" width="500" height="500"></canvas>
+    <canvas id="circumcenter-canvas1" width="500" height="500"></canvas>
+    <ATypographyTitle :level="4">Circumcenter Animated Illustration2</ATypographyTitle>
+    <canvas id="circumcenter-canvas2" width="500" height="500"></canvas>
   </div>
 
   <ATypographyParagraph>
@@ -51,7 +53,8 @@ import {
   calculateIncenter,
   calculateLineIntersectInPoints,
   calculateMidpoint, calculateOrthocenter,
-  calculateThreeAngles, drawRightAngleSign,
+  calculateThreeAngles, drawFullLine, drawRightAngleSign,
+  findMidpoint,
   getPedalPoint
 } from "@/utils/geometry";
 import {Circle, IEvent} from "fabric/fabric-impl";
@@ -289,9 +292,9 @@ export default defineComponent(
         canvas.add(incircle);
       })();
 
-      // Circumcenter animation.
+      // Circumcenter animation1.
       (() => {
-        const canvas = new fabric.Canvas("circumcenter-canvas", {
+        const canvas = new fabric.Canvas("circumcenter-canvas1", {
           selection: false,
           backgroundColor: "floralwhite",
         });
@@ -462,6 +465,127 @@ export default defineComponent(
         canvas.add(rightAngleDl1, rightAngleDl2, rightAngleEl1, rightAngleEl2, rightAngleFl1, rightAngleFl2);
       })();
 
+      //Circumcenter animation2.
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      (() => {
+        const canvas2 = new fabric.Canvas("circumcenter-canvas2", {
+          selection: false,
+          backgroundColor: "floralwhite",
+        });
+
+        const aLabel = makeLabel("A");
+        const bLabel = makeLabel("B");
+        const cLabel = makeLabel("C");
+        const dLabel = makeLabel("D");
+        const eLabel = makeLabel("E");
+        const fLabel = makeLabel("F");
+        const lineAB = makeLine();
+        const lineAC = makeLine();
+        const lineBC = makeLine();
+        const lineAD = makeLine();
+        const lineBE = makeLine();
+        const lineCF = makeLine();
+        const bisecPerpenLineOnAC = makeLine();
+        const bisecPerpenLineOnAB = makeLine();
+        const moveableA = makeMovablePoint(new fabric.Point(250, 100));
+        const pointA = new fabric.Point(moveableA.left as number, moveableA.top as number);
+        const pointB = new fabric.Point(100, 350);
+        const pointC = new fabric.Point(400, 350);
+
+        moveableA.set({
+          originX: "center",
+          originY: "center",
+          fill: "transparent"
+        });
+        aLabel.set({left: moveableA.left as number - 10, top: moveableA.top as number - 30});
+        bLabel.set({left: pointB.x - 20, top: pointB.y + 5});
+        cLabel.set({left: pointC.x, top: pointC.y + 5});
+        lineAB.set({x1: pointA.x, y1: pointA.y, x2: pointB.x, y2: pointB.y});
+        lineAC.set({x1: pointA.x, y1: pointA.y, x2: pointC.x, y2: pointC.y});
+        lineBC.set({x1: pointB.x, y1: pointB.y, x2: pointC.x, y2: pointC.y});
+
+        // midPointOnBC
+        const pointD = findMidpoint([pointB.x, pointB.y], [pointC.x, pointC.y]);
+        // midPointOnAC
+        const pointE = findMidpoint([pointA.x, pointA.y], [pointC.x, pointC.y]);
+        // midPointOnAB
+        const pointF = findMidpoint([pointA.x, pointA.y], [pointB.x, pointB.y]);
+        // Perpendicular bisector
+        lineAD.set({
+          x1: pointA.x, y1: 0,
+          x2: pointD[0], y2: 500,
+          strokeDashArray:[5,5],
+          stroke:"lightBlue"
+        });
+        bisecPerpenLineOnAC.set({
+          x1: pointB.x, y1:pointB.y,
+          x2: pointE[0], y2: pointE[1],
+          strokeDashArray:[5,5],
+          stroke:"lightBlue"
+        });
+        bisecPerpenLineOnAB.set({
+          x1: pointC.x, y1:pointC.y,
+          x2: pointF[0], y2: pointF[1],
+          strokeDashArray:[5,5],
+          stroke:"lightBlue"
+        });
+        dLabel.set({left: pointD[0] - 5, top: pointD[1]});
+        eLabel.set({left: pointE[0] + 5, top: pointE[1] - 10});
+        fLabel.set({left: pointF[0] - 20, top: pointF[1] - 15});
+
+        // drawFullLine(midPointOnBC,4,lineAD);
+        const onMovePoint = (e: IEvent): void => {
+          const p = e.target! as Circle;
+          // p.set({
+          //   left: pointD[0],
+          // });
+          // const point = new fabric.Point(pointD[0], p.top!);
+          const point = new fabric.Point(p.left!, p.top!);
+          aLabel.set({left: p.left! -10, top: p.top! - 30});
+          lineAB.set({
+            x1: point.x, y1: point.y,
+            x2: pointB.x, y2: pointB.y,
+            stroke: "black",
+            strokeWidth: 1
+           });
+          lineAC.set({
+            x1: point.x, y1: point.y,
+            x2: pointC.x, y2: pointC.y,
+            stroke: "black",
+            strokeWidth: 1
+          });
+          // mid points
+          const midPointOnAC = findMidpoint([point.x, point.y], [pointC.x, pointC.y]);
+          const midPointOnAB = findMidpoint([point.x, point.y], [pointB.x, pointB.y]);
+          const pointE = new fabric.Point(midPointOnAC[0], midPointOnAC[1]);
+          const pointF = new fabric.Point(midPointOnAB[0], midPointOnAB[1]);
+
+          // circumcenter
+          const center = calculateCircumcenter(point, pointB, pointC);
+          bisecPerpenLineOnAC.set({
+            x1: pointE.lerp(center, 5).x,
+            y1: pointE.lerp(center, 5).y,
+            x2: center.x, y2: center.y,
+            stroke:"lightBlue"
+          });
+          bisecPerpenLineOnAB.set({
+            x1: pointF.lerp(center, 5).x,
+            y1: pointF.lerp(center, 5).y,
+            x2: center.x, y2: center.y,
+            stroke:"lightBlue"
+          });
+          dLabel.set({left: pointD[0] - 5, top: pointD[1]});
+          eLabel.set({left: pointE.x + 5, top:pointE.y - 10});
+          fLabel.set({left: pointF.x - 20, top: pointF.y - 15});
+        };
+
+        // drawFullLine()
+        canvas2.on("object:moving", onMovePoint);
+        canvas2.add(aLabel, bLabel, cLabel, dLabel, eLabel, fLabel);
+        canvas2.add(moveableA);
+        canvas2.add(lineAB, lineAC, lineBC,bisecPerpenLineOnAB,bisecPerpenLineOnAC, lineAD,lineBE,lineCF);
+      })();
+
       // Orthocenter animation
       (() => {
         const canvas = new fabric.Canvas("orthocenter-canvas", {
@@ -504,7 +628,7 @@ export default defineComponent(
         const line5 = new fabric.Line([0,0,0,0]);
         const line6 = new fabric.Line([0,0,0,0]);
 
-        const triangle = makeMovablePolygon([new fabric.Point(125, 50), new fabric.Point(50, 450), new fabric.Point(450, 450)],
+        const triangle = makeMovablePolygon([new fabric.Point(225, 100), new fabric.Point(100, 400), new fabric.Point(400, 400)],
           function (coords: fabric.Point[]) {
             aLabel.set({
               left: coords[0].x,
