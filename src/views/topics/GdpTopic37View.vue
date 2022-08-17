@@ -297,7 +297,7 @@ export default defineComponent(
                         left: pointE.x as number,
                         top: pointE.y as number,
                         width: 10, height: 10, fill: "", stroke: "gray",
-                        angle: -(Math.acos((disBC * disBC + disAC * disAC - disAB * disAB) / (2 * disBC * disAC)) * 180 / Math.PI) - 120
+                        angle: -(Math.acos((disBC * disBC + disAC * disAC - disAB * disAB) / (2 * disBC * disAC)) * 180 / Math.PI) - 122
                     });
                 }
                 if (pointE.x <= points[0].x && pointP.top as number > pointE.y) {
