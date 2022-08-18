@@ -11,28 +11,25 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { indexTopicMap, otherImages } from "@/data";
+import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
-import { IEvent, Point } from "fabric/fabric-impl";
+import { IEvent } from "fabric/fabric-impl";
 import { fabric } from "fabric";
 import {
   makeLine,
   makeLabel,
   makeCircle,
-  makeMovablePolygon,
   makeMovablePoint
 } from "@/utils/canvas";
 import {
-  calculateMidpoint,
   getPedalPoint,
   calculateDistanceBetweenTwoPoints,
   calculateSlope,
-  calculateLineIntersectInPoints,
-  CANVAS_HEIGHT, CANVAS_WIDTH, calculateThreeAngles, pedalPoint, projectPoint2Line, drawLine
+  CANVAS_HEIGHT, CANVAS_WIDTH
 } from "@/utils/geometry";
-import { LineHeightOutlined, RightCircleFilled } from "@ant-design/icons-vue";
 const topic = indexTopicMap.get(5) as Topic;
 type Circle = fabric.Circle & {
+  // eslint-disable-next-line
   [key: string]: any,
   intersects?: Circle[],
   upLine?: fabric.Line[],
@@ -41,26 +38,6 @@ type Circle = fabric.Circle & {
   leftBound?: Circle,
   rightBound?: Circle,
 };
-function makecircle(point: fabric.Point, radius?: number, fill?: any): Circle;
-function makecircle(x: number, y: number, radius?: number, fill?: string): Circle;
-function makecircle(x: number | fabric.Point, y?: number, radius?: number, fill?: string): Circle {
-  if (x instanceof fabric.Point) {
-    y = x.y;
-    x = x.x;
-  }
-  const point = new fabric.Circle({
-    left: x,
-    top: y,
-    hasControls: false,
-    hasBorders: false,
-    evented: true,
-    radius: radius || 3,
-    fill: fill || "black",
-    originX: "center",
-    originY: "center",
-  });
-  return point;
-}
 export default defineComponent(
   {
     setup() {

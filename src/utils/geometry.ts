@@ -376,7 +376,8 @@ export const drawLine = (a: number[], b: number[], l: Element) => {
 };
 
 export const makeString = (arr: (string | number)[][]) => {
-  return `${arr[0][0]},${arr[0][1]} ${arr[1][0]},${arr[1][1]} ${arr[2][0]},${arr[2][1]}`;
+  if (arr.length === 3) return `${arr[0][0]},${arr[0][1]} ${arr[1][0]},${arr[1][1]} ${arr[2][0]},${arr[2][1]}`;
+  return `${arr[0][0]},${arr[0][1]} ${arr[1][0]},${arr[1][1]} ${arr[2][0]},${arr[2][1]},${arr[3][0]} ${arr[3][1]}`;
 };
 
 export const makeSvgTriangle = (pt0: number[], pt1: number[], pt2: number[], ptoTri: Element) => {
@@ -462,6 +463,36 @@ export const fillDigits = (s: string, digits: number) => {
     sSize++;
   }
   return s;
+};
+
+export const aboveBelow = (p1: number[], m: number, b: number) => {
+  return p1[1] > (m * p1[0] + b);
+};
+
+export const lerpp = (p1: number[], p2: number[], t: number) => {
+  return [p1[0] + (p2[0] - p1[0]) * t, p1[1] + (p2[1] - p1[1]) * t];
+};
+
+export const setp = (e: Element, p: number[]) => {
+  e.setAttribute("x", p[0] + "");
+  e.setAttribute("y", p[1] - 10 + "");
+};
+
+export const setc = (e: Element, p: number[]) => {
+  e.setAttribute("cx", p[0] + "");
+  e.setAttribute("cy", p[1] + "");
+};
+
+export const areaa = (polygon: number[]) => {
+  const length = polygon.length;
+
+  let sum = 0;
+
+  for (let i = 0; i < length; i += 2) {
+    sum += polygon[i] * polygon[(i + 3) % length] - polygon[i + 1] * polygon[(i + 2) % length];
+  }
+
+  return Math.abs(sum) * 0.5;
 };
 
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */

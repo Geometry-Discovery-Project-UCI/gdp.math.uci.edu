@@ -2,7 +2,8 @@
   <TopicMeta :topic="topic" />
   <ATypographyParagraph>
   </ATypographyParagraph>
-  <svg id="tri-app_erdos-mordell" width="500" height="500" style="border: 2px solid black; background-color: floralwhite">
+  <svg id="tri-app_erdos-mordell" width="500" height="500"
+    style="border: 2px solid black; background-color: floralwhite">
     <polygon id="tri_erdos-mordell" stroke="black" stroke-width="2.5px" fill="transparent"></polygon>
     <text id="letterA_erdos-mordell" font-size="25px">A</text>
     <text id="letterB_erdos-mordell" font-size="25px">B</text>
@@ -36,14 +37,11 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import {
-distToLine,
   drawLine,
   findDistance,
   isInside,
-  lineLineIntersection,
-  makeString, pointAlongLine, projectPoint2Line, fillDigits, radiansToDegress
+  makeString, projectPoint2Line, fillDigits, radiansToDegress
 } from "@/utils/geometry";
-import { Vector } from "../../utils/vector";
 const topic = indexTopicMap.get(4) as Topic;
 export default defineComponent(
   {

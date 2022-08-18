@@ -11,11 +11,13 @@
     "@ant-design/icons-vue": "^6.1.0",
     "ant-design-vue": "^3.2.10",
     "fabric": "^5.2.1",
+    "katex": "^0.16.0",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2"
   },
   "devDependencies": {
     "@types/fabric": "^4.5.10",
+    "@types/katex": "^0.14.0",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
     "@vue/cli-plugin-eslint": "~5.0.8",
