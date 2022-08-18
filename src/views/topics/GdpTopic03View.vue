@@ -54,10 +54,10 @@ import {
   calculateLineIntersectInPoints,
   calculateMidpoint, calculateOrthocenter,
   calculateThreeAngles, drawFullLine, drawRightAngleSign,
-  findMidpoint,
+  findMidpoint, findSlope,
   getPedalPoint
 } from "@/utils/geometry";
-import {Circle, IEvent} from "fabric/fabric-impl";
+import {Circle, IEvent, Intersection} from "fabric/fabric-impl";
 const topic = indexTopicMap.get(3) as Topic;
 export default defineComponent(
   {
@@ -487,6 +487,12 @@ export default defineComponent(
         const lineCF = makeLine();
         const bisecPerpenLineOnAC = makeLine();
         const bisecPerpenLineOnAB = makeLine();
+        const angleDsignl1 = makeLine();
+        const angleDsiggnl2 = makeLine();
+        const angleEsignl1 = makeLine();
+        const angleEsiggnl2 = makeLine();
+        const angleFsignl1 = makeLine();
+        const angleFsiggnl2 = makeLine();
         const moveableA = makeMovablePoint(new fabric.Point(250, 100));
         const pointA = new fabric.Point(moveableA.left as number, moveableA.top as number);
         const pointB = new fabric.Point(100, 350);
@@ -507,39 +513,105 @@ export default defineComponent(
         // midPointOnBC
         const pointD = findMidpoint([pointB.x, pointB.y], [pointC.x, pointC.y]);
         // midPointOnAC
-        const pointE = findMidpoint([pointA.x, pointA.y], [pointC.x, pointC.y]);
+        const midPointOnAC = findMidpoint([pointA.x, pointA.y], [pointC.x, pointC.y]);
+        const pointE = new fabric.Point(midPointOnAC[0], midPointOnAC[1]);
         // midPointOnAB
-        const pointF = findMidpoint([pointA.x, pointA.y], [pointB.x, pointB.y]);
+        const midPointOnAB = findMidpoint([pointA.x, pointA.y], [pointB.x, pointB.y]);
+        const pointF = new fabric.Point(midPointOnAB[0], midPointOnAB[1]);
+
+        // Another point on bisector perpendicular line
+        const pointM = new fabric.Point(
+          (pointA.x + pointC.x - pointA.y + pointC.y) / 2,
+          (pointA.y + pointC.y - pointC.x + pointA.x) / 2);
+        const pointN = new fabric.Point(
+          (pointA.x + pointB.x - pointA.y + pointB.y) / 2,
+          (pointA.y + pointB.y - pointB.x + pointA.x) / 2);
         // Perpendicular bisector
         lineAD.set({
           x1: pointA.x, y1: 0,
           x2: pointD[0], y2: 500,
-          strokeDashArray:[5,5],
-          stroke:"lightBlue"
-        });
-        bisecPerpenLineOnAC.set({
-          x1: pointB.x, y1:pointB.y,
-          x2: pointE[0], y2: pointE[1],
-          strokeDashArray:[5,5],
-          stroke:"lightBlue"
-        });
-        bisecPerpenLineOnAB.set({
-          x1: pointC.x, y1:pointC.y,
-          x2: pointF[0], y2: pointF[1],
-          strokeDashArray:[5,5],
-          stroke:"lightBlue"
+          stroke:"green"
         });
         dLabel.set({left: pointD[0] - 5, top: pointD[1]});
-        eLabel.set({left: pointE[0] + 5, top: pointE[1] - 10});
-        fLabel.set({left: pointF[0] - 20, top: pointF[1] - 15});
+        eLabel.set({left: pointE.x + 5, top: pointE.y - 10});
+        fLabel.set({left: pointF.x - 20, top: pointF.y - 15});
+
+        // Inner canvas
+        const leftTop = new fabric.Point(50, 50), rightTop = new fabric.Point(450, 50),
+          leftBottom = new fabric.Point(50, 450), rightBottom = new fabric.Point(450, 450);
+        const topLine = makeLine(leftTop, rightTop, 1, "lightBlue");
+        const bottomLine = makeLine(leftBottom, rightBottom,1, "lightBlue");
+        const leftLine = makeLine(leftTop, leftBottom,1, "lightBlue");
+        const rightLine = makeLine(rightTop, rightBottom,1, "lightBlue");
+
+        // Two full perpendicular bisector lines
+        const fullLine1 = makeLine(); //bisecPerpenLineOnAB
+        const fullLine2 = makeLine(); // bisecPerpenLineOnAC
+        let interX1 = 0, interY1 = 0, interX2 = 0, interY2 = 0;
+        let interX11 = 0, interY11 = 0, interX22 = 0, interY22 = 0;
+        const topInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
+          pointF, pointN, leftTop, rightTop) as Intersection).points![0];
+        const leftInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
+           pointF, pointN, leftTop, leftBottom) as Intersection).points![0];
+        const bottomInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
+          pointF, pointN, rightBottom, rightTop) as Intersection).points![0];
+        const rightInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
+          pointF, pointN, rightTop, rightBottom) as Intersection).points![0];
+
+        if (topInterPoint1.x < 50) {
+           interX1 = leftInterPoint1.x;
+           interY1 = leftInterPoint1.y;
+        } else {
+          interX1 = topInterPoint1.x;
+          interY1 = topInterPoint1.y;
+        }
+        if (bottomInterPoint1.x > 450) {
+          interX2 = rightInterPoint1.x;
+          interY2 = rightInterPoint1.y;
+        } else {
+          interX2 = bottomInterPoint1.x;
+          interY2 = bottomInterPoint1.y;
+        }
+        fullLine1.set({
+          x1: interX1, y1: interY1,
+          x2: interX2, y2: interY2,
+          stroke:"green"
+        });
+
+        const topInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
+          pointE, pointM, leftTop, rightTop) as Intersection).points![0];
+        const leftInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
+          pointE, pointM, leftTop, leftBottom) as Intersection).points![0];
+        const bottomInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
+          pointE, pointM, rightBottom, leftBottom) as Intersection).points![0];
+        const rightInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
+          pointE, pointM, rightTop, rightBottom) as Intersection).points![0];
+        if (topInterPoint2.x > 450) {
+          interX11 = rightInterPoint2.x;
+          interY11 = rightInterPoint2.y;
+        } else {
+          interX11 = topInterPoint2.x;
+          interY11 = topInterPoint2.y;
+        }
+        if (bottomInterPoint2.x < 50) {
+          interX22 = leftInterPoint2.x;
+          interY22 = leftInterPoint2.y;
+        } else {
+          interX22 = bottomInterPoint2.x;
+          interY22 = bottomInterPoint2.y;
+        }
+        fullLine2.set({
+          x1: interX11, y1: interY11,
+          x2: interX22, y2: interY22,
+          stroke:"green"
+        });
+        drawRightAngleSign(new fabric.Point(250, 250), new fabric.Point(250, 350), pointC,angleDsignl1, angleDsiggnl2, 8,"red");
+        drawRightAngleSign(pointN, pointF, pointB,angleFsignl1, angleFsiggnl2, 8,"red");
+        drawRightAngleSign(new fabric.Point(interX22, interY22), pointE, pointC,angleEsignl1, angleEsiggnl2, 8,"red");
 
         // drawFullLine(midPointOnBC,4,lineAD);
         const onMovePoint = (e: IEvent): void => {
           const p = e.target! as Circle;
-          // p.set({
-          //   left: pointD[0],
-          // });
-          // const point = new fabric.Point(pointD[0], p.top!);
           const point = new fabric.Point(p.left!, p.top!);
           aLabel.set({left: p.left! -10, top: p.top! - 30});
           lineAB.set({
@@ -554,36 +626,129 @@ export default defineComponent(
             stroke: "black",
             strokeWidth: 1
           });
+
           // mid points
           const midPointOnAC = findMidpoint([point.x, point.y], [pointC.x, pointC.y]);
           const midPointOnAB = findMidpoint([point.x, point.y], [pointB.x, pointB.y]);
           const pointE = new fabric.Point(midPointOnAC[0], midPointOnAC[1]);
           const pointF = new fabric.Point(midPointOnAB[0], midPointOnAB[1]);
 
-          // circumcenter
-          const center = calculateCircumcenter(point, pointB, pointC);
-          bisecPerpenLineOnAC.set({
-            x1: pointE.lerp(center, 5).x,
-            y1: pointE.lerp(center, 5).y,
-            x2: center.x, y2: center.y,
-            stroke:"lightBlue"
-          });
-          bisecPerpenLineOnAB.set({
-            x1: pointF.lerp(center, 5).x,
-            y1: pointF.lerp(center, 5).y,
-            x2: center.x, y2: center.y,
-            stroke:"lightBlue"
-          });
+          // Another points on bisector perpendicular line
+          const pointM = new fabric.Point(
+            (point.x + pointC.x - point.y + pointC.y) / 2,
+            (point.y + pointC.y - pointC.x + point.x) / 2);
+          const pointN = new fabric.Point(
+            (point.x + pointB.x - point.y + pointB.y) / 2,
+            (point.y + pointB.y - pointB.x + point.x) / 2);
+
           dLabel.set({left: pointD[0] - 5, top: pointD[1]});
           eLabel.set({left: pointE.x + 5, top:pointE.y - 10});
           fLabel.set({left: pointF.x - 20, top: pointF.y - 15});
+
+          // When fullLine1 ,fullLine2 intersect with four boundaries.
+          const topInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
+            pointF, pointN, leftTop, rightTop) as Intersection);
+          const leftInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
+            pointF, pointN, leftTop, leftBottom) as Intersection);
+          const bottomInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
+            pointF, pointN, rightBottom, leftBottom) as Intersection);
+          const rightInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
+            pointF, pointN, rightTop, rightBottom) as Intersection);
+          // Horizontal line -- Parallel to top and bottom
+          if (topInterPoint1.status === "Parallel" || bottomInterPoint1.status === "Parallel") {
+            interX1 = leftInterPoint1.points![0].x;
+            interY1 = leftInterPoint1.points![0].y;
+            interX2 = rightInterPoint1.points![0].x;
+            interY2 = rightInterPoint1.points![0].y;
+            // Perpendicular line
+          } else if (leftInterPoint1.status === "Parallel" || rightInterPoint1.status === "Parallel"){
+            interX1 = topInterPoint1.points![0].x;
+            interY1 = topInterPoint1.points![0].y;
+            interX2 = bottomInterPoint1.points![0].x;
+            interY2 = bottomInterPoint1.points![0].y;
+          } else {
+            if (topInterPoint1.points![0].x < 50) {
+              interX1 = leftInterPoint1.points![0].x;
+              interY1 = leftInterPoint1.points![0].y;
+            } else if (topInterPoint1.points![0].x > 450) {
+              interX1 = rightInterPoint1.points![0].x;
+              interY1 = rightInterPoint1.points![0].y;
+            } else {
+              interX1 = topInterPoint1.points![0].x;
+              interY1 = topInterPoint1.points![0].y;
+            }
+            if (bottomInterPoint1.points![0].x > 450) {
+              interX2 = rightInterPoint1.points![0].x;
+              interY2 = rightInterPoint1.points![0].y;
+            } else if (bottomInterPoint1.points![0].x < 50) {
+              interX2 = leftInterPoint1.points![0].x;
+              interY2 = leftInterPoint1.points![0].y;
+            } else {
+              interX2 = bottomInterPoint1.points![0].x;
+              interY2 = bottomInterPoint1.points![0].y;
+            }
+            fullLine1.set({
+              x1: interX1, y1: interY1,
+              x2: interX2, y2: interY2,
+            });
+          }
+
+          const topInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
+            pointE, pointM, leftTop, rightTop) as Intersection);
+          const leftInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
+            pointE, pointM, leftTop, leftBottom) as Intersection);
+          const bottomInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
+            pointE, pointM, rightBottom, leftBottom) as Intersection);
+          const rightInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
+            pointE, pointM, rightTop, rightBottom) as Intersection);
+          if (topInterPoint2.status === "Parallel" || bottomInterPoint2.status === "Parallel") {
+            fullLine2.set({
+              x1: leftInterPoint2.points![0].x, y1: leftInterPoint2.points![0].y,
+              x2: rightInterPoint2.points![0].x, y2: rightInterPoint2.points![0].y,
+            });
+            // Perpendicular line
+          } else if (leftInterPoint2.status === "Parallel" || rightInterPoint2.status === "Parallel"){
+            fullLine1.set({
+              x1: topInterPoint2.points![0].x, y1: topInterPoint2.points![0].y,
+              x2: bottomInterPoint2.points![0].x, y2: bottomInterPoint2.points![0].y,
+            });
+          } else {
+            if (topInterPoint2.points![0].x < 50) {
+              interX11 = leftInterPoint2.points![0].x;
+              interY11 = leftInterPoint2.points![0].y;
+            }else if (topInterPoint2.points![0].x > 450) {
+              interX11 = rightInterPoint2.points![0].x;
+              interY11 = rightInterPoint2.points![0].y;
+            } else {
+              interX11 = topInterPoint2.points![0].x;
+              interY11 = topInterPoint2.points![0].y;
+            }
+            if (bottomInterPoint2.points![0].x < 50) {
+              interX22 = leftInterPoint2.points![0].x;
+              interY22 = leftInterPoint2.points![0].y;
+            } else if (bottomInterPoint2.points![0].x > 450) {
+              interX22 = rightInterPoint2.points![0].x;
+              interY22 = rightInterPoint2.points![0].y;
+            } else {
+              interX22 = bottomInterPoint2.points![0].x;
+              interY22 = bottomInterPoint2.points![0].y;
+            }
+            fullLine2.set({
+              x1: interX11, y1: interY11,
+              x2: interX22, y2: interY22,
+            });
+          }
+          drawRightAngleSign(pointN, pointF, pointB,angleFsignl1, angleFsiggnl2, 8,"red");
+          drawRightAngleSign(new fabric.Point(interX22, interY22), pointE, pointC,angleEsignl1, angleEsiggnl2, 8,"red");
         };
 
-        // drawFullLine()
         canvas2.on("object:moving", onMovePoint);
         canvas2.add(aLabel, bLabel, cLabel, dLabel, eLabel, fLabel);
         canvas2.add(moveableA);
         canvas2.add(lineAB, lineAC, lineBC,bisecPerpenLineOnAB,bisecPerpenLineOnAC, lineAD,lineBE,lineCF);
+        canvas2.add(leftLine, rightLine, topLine, bottomLine, fullLine1, fullLine2);
+        canvas2.add(angleDsignl1, angleDsiggnl2, angleEsignl1, angleEsiggnl2, angleFsignl1, angleFsiggnl2);
+        // canvas2.add(fullLine1, fullLine2);
       })();
 
       // Orthocenter animation
