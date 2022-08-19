@@ -155,7 +155,7 @@ export default defineComponent(
                     left: pointF.x - 30,
                     top: pointF.y - 10,
 
-                    fill: "green",
+                    fill: "purple",
                 });
                 pLabel.set({
                     left: pointP.left as number - 25,
