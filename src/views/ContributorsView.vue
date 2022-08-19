@@ -24,10 +24,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { contributors } from '@/data';
-import { MailOutlined } from '@ant-design/icons-vue';
-import { defaultGridParams, avatarGenerator } from '@/consts';
+import { defineComponent } from "vue";
+import { contributors } from "@/data";
+import { MailOutlined } from "@ant-design/icons-vue";
+import { defaultGridParams, avatarGenerator } from "@/consts";
 
 export default defineComponent({
   components: {

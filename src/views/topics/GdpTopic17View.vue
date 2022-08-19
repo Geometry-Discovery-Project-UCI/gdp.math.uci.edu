@@ -62,7 +62,7 @@ function createCircle(x?: number, y?: number, radius?: number, fill?: string): f
   });
 }
 
-function createPolygon(vertices?: Array<fabric.Point>): fabric.Polygon {
+function createPolygon(vertices?: fabric.Point[]): fabric.Polygon {
   return new fabric.Polygon(vertices || [], {
     fill: "transparent",
     stroke: "black",

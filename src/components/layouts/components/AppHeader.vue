@@ -13,5 +13,5 @@
 </template>
 
 <script setup lang="ts">
-import GdpLogo from '@/components/GdpLogo.vue';
+import GdpLogo from "@/components/GdpLogo.vue";
 </script>

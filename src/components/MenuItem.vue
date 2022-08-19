@@ -8,8 +8,8 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, PropType } from 'vue';
-import { RouteProps } from '@/types';
+import { defineProps, PropType } from "vue";
+import { RouteProps } from "@/types";
 
 defineProps({
   routeProps: {

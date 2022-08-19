@@ -4,7 +4,7 @@
 
 If you are using macOS, feel free to use [Homebrew](https://brew.sh/) for installation.
 
-Also, [nvm](https://github.com/nvm-sh/nvm)([nvm-windows](https://github.com/coreybutler/nvm-windows)) is also recommended for those who wanting to manage multiple versions of Node.js.
+[nvm](https://github.com/nvm-sh/nvm)([nvm-windows](https://github.com/coreybutler/nvm-windows)) is also recommended for those who wanting to manage multiple versions of Node.js.
 
 To setup development environment:
 

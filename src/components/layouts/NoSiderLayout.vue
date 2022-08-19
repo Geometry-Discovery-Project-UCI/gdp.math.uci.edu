@@ -8,6 +8,6 @@
 </template>
 
 <script setup lang='ts'>
-import AppHeader from '@/components/layouts/components/AppHeader.vue';
-import AppContent from '@/components/layouts/components/AppContent.vue';
+import AppHeader from "@/components/layouts/components/AppHeader.vue";
+import AppContent from "@/components/layouts/components/AppContent.vue";
 </script>
