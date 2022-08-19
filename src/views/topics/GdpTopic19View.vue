@@ -183,13 +183,13 @@ export default defineComponent(
 
                     const pointP1 = new fabric.Point(pointer?.x as number, vertices[1].y);
                     p1Node.set({
-                        left: pointP1?.x,
-                        top: pointP1?.y,
+                        left: pointP1.x,
+                        top: pointP1.y,
                     });
                     canvas.add(p1Node);
                     p1Label.set({
-                        left: (pointP1?.x as number) - 10,
-                        top: (pointP1?.y as number) + 10,
+                        left: (pointP1.x as number) - 10,
+                        top: (pointP1.y as number) + 10,
                     });
                     canvas.add(p1Label);
 
@@ -203,8 +203,8 @@ export default defineComponent(
                     await delay(1000);
                     canvas.add(p2Node);
                     p2Label.set({
-                        left: pointP2?.x - 30,
-                        top: pointP2?.y - 15,
+                        left: pointP2.x - 30,
+                        top: pointP2.y - 15,
                     });
                     canvas.add(p2Label);
 
@@ -218,8 +218,8 @@ export default defineComponent(
                     await delay(1000);
                     canvas.add(p3Node);
                     p3Label.set({
-                        left: pointP3?.x + 10,
-                        top: pointP3?.y - 15,
+                        left: pointP3.x + 10,
+                        top: pointP3.y - 15,
                     });
                     canvas.add(p3Label);
 
@@ -233,8 +233,8 @@ export default defineComponent(
                     await delay(1000);
                     canvas.add(p4Node);
                     p4Label.set({
-                        left: pointP4?.x - 10,
-                        top: pointP4?.y + 10,
+                        left: pointP4.x - 10,
+                        top: pointP4.y + 10,
                     });
                     canvas.add(p4Label);
 
@@ -248,8 +248,8 @@ export default defineComponent(
                     await delay(1000);
                     canvas.add(p5Node);
                     p5Label.set({
-                        left: pointP5?.x - 30,
-                        top: pointP5?.y - 15,
+                        left: pointP5.x - 30,
+                        top: pointP5.y - 15,
                     });
                     canvas.add(p5Label);
 
@@ -263,8 +263,8 @@ export default defineComponent(
                     await delay(1000);
                     canvas.add(p6Node);
                     p6Label.set({
-                        left: pointP6?.x + 10,
-                        top: pointP6?.y - 15,
+                        left: pointP6.x + 10,
+                        top: pointP6.y - 15,
                     });
                     canvas.add(p6Label);
 
