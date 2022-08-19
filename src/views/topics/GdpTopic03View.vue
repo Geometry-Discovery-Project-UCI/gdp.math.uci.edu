@@ -473,14 +473,30 @@ export default defineComponent(
           backgroundColor: "floralwhite",
         });
 
+        function subNums(str: string) {
+          let newStr = "";
+          for (let i=0; i<str.length; i++) {
+            //  Get the code of the current character
+            const code = str.charCodeAt(i);
+            if (code >= 48 && code <= 57) {
+              //  If it's between "0" and "9", offset the code ...
+              newStr += String.fromCharCode(code + 8272);
+            } else {
+              //   ... otherwise keep the character
+              newStr += str[i];
+            }
+          }
+          return newStr;
+        }
+
         const aLabel = makeLabel("A");
         const bLabel = makeLabel("B");
         const cLabel = makeLabel("C");
         const dLabel = makeLabel("D");
         const eLabel = makeLabel("E");
         const fLabel = makeLabel("F");
-        const l1Label = makeLabel("l1");
-        const l2Label = makeLabel("l2");
+        const l1Label = makeLabel(subNums("L1"));
+        const l2Label = makeLabel(subNums("L2"));
         const lineAB = makeLine();
         const lineAC = makeLine();
         const lineBC = makeLine();
@@ -604,8 +620,8 @@ export default defineComponent(
           x2: interX22, y2: interY22,
           stroke:"green"
         });
-        l1Label.set({left: interX1, top: interY1 - 30});
-        l2Label.set({left: interX11, top: interY11 - 30});
+        l1Label.set({left: interX1, top: interY1 - 30, fill:"red", fontSize: 18});
+        l2Label.set({left: interX11, top: interY11 - 30,fill:"red", fontSize: 18});
         const interP = calculateLineIntersectInPoints(fullLine1, fullLine2);
         interPoint.set({
           originX: "center",
@@ -700,7 +716,7 @@ export default defineComponent(
               x2: interX2, y2: interY2,
             });
           }
-          l1Label.set({left: interX1, top: interY1 - 30});
+          l1Label.set({left: interX1, top: interY1 - 30, fill:"red", fontSize: 18});
 
           const topInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
             pointE, pointM, leftTop, rightTop) as Intersection);
@@ -754,7 +770,7 @@ export default defineComponent(
               top: interP?.y
             });
           }
-          l2Label.set({left: interX11, top: interY11 - 30});
+          l2Label.set({left: interX11, top: interY11 - 30,fill:"red", fontSize: 18});
           drawRightAngleSign(pointN, pointF, pointB,angleFsignl1, angleFsiggnl2, 8,"red");
           drawRightAngleSign(new fabric.Point(interX22, interY22), pointE, pointC,angleEsignl1, angleEsiggnl2, 8,"red");
         };
