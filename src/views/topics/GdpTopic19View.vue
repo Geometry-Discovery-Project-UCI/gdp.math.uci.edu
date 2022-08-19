@@ -103,7 +103,7 @@ export default defineComponent(
             const linearDF = solveLinearEquation(pedalPointOnBC, pedalPointOnAB);
             const linearEF = solveLinearEquation(pedalPointOnAB, pedalPointOnAC);
             const linearDE = solveLinearEquation(pedalPointOnBC, pedalPointOnAC);
-
+            
             const p1Node = createCircle(0, 0, 2, "red");
             const p2Node = createCircle(0, 0, 2, "red");
             const p3Node = createCircle(0, 0, 2, "red");
@@ -192,7 +192,7 @@ export default defineComponent(
                         top: (pointP1?.y as number) + 10,
                     });
                     canvas.add(p1Label);
-
+                    
                     const linearP1P2 = findParallelLine(pointP1 as Coord, linearDF.m);
                     const pointP2 = calculateLineIntersectInLinearEquation(linearAB.m, linearAB.b, linearP1P2.m, linearP1P2.b);
                     animate(lineP1P2, pointP1, pointP2);
