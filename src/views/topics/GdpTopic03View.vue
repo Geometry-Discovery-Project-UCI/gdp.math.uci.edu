@@ -323,7 +323,7 @@ export default defineComponent(
         const circumCircle = makeCircle(radius, new fabric.Point(centerX, centerY), "transparent", 1);
         const center = makeCircle(2, new fabric.Point(centerX, centerY),"black", 1);
         const moveableA = makeMovablePoint(new fabric.Point(250, 50));
-        moveableA.set({  originX:"center", originY: "center", radius: 3});
+        moveableA.set({  originX:"center", originY: "center", radius: 3, padding: 10});
         const A = [moveableA.left as number, moveableA.top as number];
         const B = [centerX - radius * Math.cos(pi / 6), centerY + Math.sin(pi / 6) * radius];
         const C = [centerX + radius * Math.cos(pi / 6), centerY + Math.sin(pi / 6) * radius];
@@ -479,6 +479,8 @@ export default defineComponent(
         const dLabel = makeLabel("D");
         const eLabel = makeLabel("E");
         const fLabel = makeLabel("F");
+        const l1Label = makeLabel("l1");
+        const l2Label = makeLabel("l2");
         const lineAB = makeLine();
         const lineAC = makeLine();
         const lineBC = makeLine();
@@ -493,7 +495,8 @@ export default defineComponent(
         const angleEsiggnl2 = makeLine();
         const angleFsignl1 = makeLine();
         const angleFsiggnl2 = makeLine();
-        const moveableA = makeMovablePoint(new fabric.Point(250, 100));
+        const interPoint = makeCircle(3, new fabric.Point(0,0),"green", 2);
+        const moveableA = makeMovablePoint(new fabric.Point(300, 100));
         const pointA = new fabric.Point(moveableA.left as number, moveableA.top as number);
         const pointB = new fabric.Point(100, 350);
         const pointC = new fabric.Point(400, 350);
@@ -501,7 +504,9 @@ export default defineComponent(
         moveableA.set({
           originX: "center",
           originY: "center",
-          fill: "transparent"
+          fill: "black",
+          radius: 3,
+          padding: 10
         });
         aLabel.set({left: moveableA.left as number - 10, top: moveableA.top as number - 30});
         bLabel.set({left: pointB.x - 20, top: pointB.y + 5});
@@ -527,28 +532,20 @@ export default defineComponent(
           (pointA.x + pointB.x - pointA.y + pointB.y) / 2,
           (pointA.y + pointB.y - pointB.x + pointA.x) / 2);
         // Perpendicular bisector
-        lineAD.set({
-          x1: pointA.x, y1: 0,
-          x2: pointD[0], y2: 500,
-          stroke:"green"
-        });
-        dLabel.set({left: pointD[0] - 5, top: pointD[1]});
-        eLabel.set({left: pointE.x + 5, top: pointE.y - 10});
-        fLabel.set({left: pointF.x - 20, top: pointF.y - 15});
+        lineAD.set({x1: 250, y1: 50, x2: 250, y2: 450, stroke:"blue"});
+        dLabel.set({left: pointD[0] + 5, top: pointD[1]});
+        eLabel.set({left: pointE.x + 15, top: pointE.y - 5});
+        fLabel.set({left: pointF.x - 25, top: pointF.y - 10});
 
         // Inner canvas
         const leftTop = new fabric.Point(50, 50), rightTop = new fabric.Point(450, 50),
           leftBottom = new fabric.Point(50, 450), rightBottom = new fabric.Point(450, 450);
-        const topLine = makeLine(leftTop, rightTop, 1, "lightBlue");
-        const bottomLine = makeLine(leftBottom, rightBottom,1, "lightBlue");
-        const leftLine = makeLine(leftTop, leftBottom,1, "lightBlue");
-        const rightLine = makeLine(rightTop, rightBottom,1, "lightBlue");
 
         // Two full perpendicular bisector lines
         const fullLine1 = makeLine(); //bisecPerpenLineOnAB
         const fullLine2 = makeLine(); // bisecPerpenLineOnAC
+        // Intersection points with l1
         let interX1 = 0, interY1 = 0, interX2 = 0, interY2 = 0;
-        let interX11 = 0, interY11 = 0, interX22 = 0, interY22 = 0;
         const topInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
           pointF, pointN, leftTop, rightTop) as Intersection).points![0];
         const leftInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
@@ -578,6 +575,8 @@ export default defineComponent(
           stroke:"green"
         });
 
+        // Intersection points with l2
+        let interX11 = 0, interY11 = 0, interX22 = 0, interY22 = 0;
         const topInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
           pointE, pointM, leftTop, rightTop) as Intersection).points![0];
         const leftInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
@@ -604,6 +603,15 @@ export default defineComponent(
           x1: interX11, y1: interY11,
           x2: interX22, y2: interY22,
           stroke:"green"
+        });
+        l1Label.set({left: interX1, top: interY1 - 30});
+        l2Label.set({left: interX11, top: interY11 - 30});
+        const interP = calculateLineIntersectInPoints(fullLine1, fullLine2);
+        interPoint.set({
+          originX: "center",
+          originY: "center",
+          left: interP?.x,
+          top: interP?.y
         });
         drawRightAngleSign(new fabric.Point(250, 250), new fabric.Point(250, 350), pointC,angleDsignl1, angleDsiggnl2, 8,"red");
         drawRightAngleSign(pointN, pointF, pointB,angleFsignl1, angleFsiggnl2, 8,"red");
@@ -641,7 +649,7 @@ export default defineComponent(
             (point.x + pointB.x - point.y + pointB.y) / 2,
             (point.y + pointB.y - pointB.x + point.x) / 2);
 
-          dLabel.set({left: pointD[0] - 5, top: pointD[1]});
+          dLabel.set({left: pointD[0] + 5, top: pointD[1]});
           eLabel.set({left: pointE.x + 5, top:pointE.y - 10});
           fLabel.set({left: pointF.x - 20, top: pointF.y - 15});
 
@@ -692,6 +700,7 @@ export default defineComponent(
               x2: interX2, y2: interY2,
             });
           }
+          l1Label.set({left: interX1, top: interY1 - 30});
 
           const topInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
             pointE, pointM, leftTop, rightTop) as Intersection);
@@ -737,18 +746,25 @@ export default defineComponent(
               x1: interX11, y1: interY11,
               x2: interX22, y2: interY22,
             });
+            const interP = calculateLineIntersectInPoints(fullLine1, fullLine2);
+            interPoint.set({
+              originX: "center",
+              originY: "center",
+              left: interP?.x,
+              top: interP?.y
+            });
           }
+          l2Label.set({left: interX11, top: interY11 - 30});
           drawRightAngleSign(pointN, pointF, pointB,angleFsignl1, angleFsiggnl2, 8,"red");
           drawRightAngleSign(new fabric.Point(interX22, interY22), pointE, pointC,angleEsignl1, angleEsiggnl2, 8,"red");
         };
 
         canvas2.on("object:moving", onMovePoint);
-        canvas2.add(aLabel, bLabel, cLabel, dLabel, eLabel, fLabel);
-        canvas2.add(moveableA);
+        canvas2.add(aLabel, bLabel, cLabel, dLabel, eLabel, fLabel, l1Label, l2Label);
+        canvas2.add(moveableA, interPoint);
         canvas2.add(lineAB, lineAC, lineBC,bisecPerpenLineOnAB,bisecPerpenLineOnAC, lineAD,lineBE,lineCF);
-        canvas2.add(leftLine, rightLine, topLine, bottomLine, fullLine1, fullLine2);
         canvas2.add(angleDsignl1, angleDsiggnl2, angleEsignl1, angleEsiggnl2, angleFsignl1, angleFsiggnl2);
-        // canvas2.add(fullLine1, fullLine2);
+        canvas2.add(fullLine1, fullLine2);
       })();
 
       // Orthocenter animation
