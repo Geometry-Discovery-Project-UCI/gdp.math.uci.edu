@@ -98,9 +98,11 @@ export default defineComponent(
             const heightOnAC = createLine([vertices[1].x, vertices[1].y, pedalPointOnAC.x, pedalPointOnAC.y], "grey");
 
             const linearAB = solveLinearEquation(vertices[0], vertices[1]);
+            const linearBC = solveLinearEquation(vertices[1], vertices[2]);
             const linearAC = solveLinearEquation(vertices[0], vertices[2]);
-            const perpendicularLineC = solveLinearEquation(vertices[2], pedalPointOnAB);
-            const perpendicularLineB = solveLinearEquation(vertices[1], pedalPointOnAC);
+            const linearDF = solveLinearEquation(pedalPointOnBC, pedalPointOnAB);
+            const linearEF = solveLinearEquation(pedalPointOnAB, pedalPointOnAC);
+            const linearDE = solveLinearEquation(pedalPointOnBC, pedalPointOnAC);
 
             const p1Node = createCircle(0, 0, 2, "red");
             const p2Node = createCircle(0, 0, 2, "red");
@@ -145,7 +147,7 @@ export default defineComponent(
                     onComplete: () => {
                         line.setCoords();
                     },
-                    duration: 500,
+                    duration: 1000,
                 });
             }
 
@@ -162,9 +164,9 @@ export default defineComponent(
             }
 
             canvas.on("mouse:move", function (event) {
-                const point = canvas.getPointer(event.e);
-                if (point?.x as number < vertices[2].x && point?.x as number > vertices[1].x
-                    && point?.y as number < vertices[1].y + 1 && point?.y as number > vertices[1].y - 1) {
+                const pointer = canvas.getPointer(event.e);
+                if (pointer?.x as number < vertices[2].x && pointer?.x as number > vertices[1].x
+                    && pointer?.y as number < vertices[1].y + 10 && pointer?.y as number > vertices[1].y - 10) {
                     triangle.set({ hoverCursor: "pointer" });
                 } else {
                     triangle.set({ hoverCursor: "default" });
@@ -172,14 +174,14 @@ export default defineComponent(
             });
 
             canvas.on("mouse:down", async function (event) {
-                const pointP1 = event.absolutePointer;
-                if (pointP1?.x as number < vertices[2].x && pointP1?.x as number > vertices[1].x
-                    && pointP1?.y as number < vertices[1].y + 0.5 && pointP1?.y as number > vertices[1].y - 0.5) {
-                    // hoverLine.set({ hoverCursor: "pointer" });
+                const pointer = event.absolutePointer;
+                if (pointer?.x as number < vertices[2].x && pointer?.x as number > vertices[1].x
+                    && pointer?.y as number < vertices[1].y + 10 && pointer?.y as number > vertices[1].y - 10) {
                     canvas.remove(lineP1P2, lineP2P3, lineP3P4, lineP4P5, lineP5P6, lineP6P1);
                     canvas.remove(p1Label, p2Label, p3Label, p4Label, p5Label, p6Label);
                     canvas.remove(p1Node, p2Node, p3Node, p4Node, p5Node, p6Node);
 
+                    const pointP1 = new fabric.Point(pointer?.x as number, vertices[1].y);
                     p1Node.set({
                         left: pointP1?.x,
                         top: pointP1?.y,
@@ -191,14 +193,14 @@ export default defineComponent(
                     });
                     canvas.add(p1Label);
 
-                    const linearP1P2 = findParallelLine(pointP1 as Coord, perpendicularLineC.m);
+                    const linearP1P2 = findParallelLine(pointP1 as Coord, linearDF.m);
                     const pointP2 = calculateLineIntersectInLinearEquation(linearAB.m, linearAB.b, linearP1P2.m, linearP1P2.b);
-                    animate(lineP1P2, (pointP1 as Coord), pointP2);
+                    animate(lineP1P2, pointP1, pointP2);
                     p2Node.set({
                         left: pointP2.x,
                         top: pointP2.y,
                     });
-                    await delay(500);
+                    await delay(1000);
                     canvas.add(p2Node);
                     p2Label.set({
                         left: pointP2?.x - 30,
@@ -206,14 +208,14 @@ export default defineComponent(
                     });
                     canvas.add(p2Label);
 
-                    const linearP2P3 = findParallelLine(pointP2 as Coord, perpendicularLineB.m);
+                    const linearP2P3 = findParallelLine(pointP2 as Coord, linearEF.m);
                     const pointP3 = calculateLineIntersectInLinearEquation(linearAC.m, linearAC.b, linearP2P3.m, linearP2P3.b);
-                    animate(lineP2P3, (pointP2 as Coord), pointP3);
+                    animate(lineP2P3, pointP2, pointP3);
                     p3Node.set({
                         left: pointP3.x,
                         top: pointP3.y,
                     });
-                    await delay(500);
+                    await delay(1000);
                     canvas.add(p3Node);
                     p3Label.set({
                         left: pointP3?.x + 10,
@@ -221,13 +223,14 @@ export default defineComponent(
                     });
                     canvas.add(p3Label);
 
-                    const pointP4 = getPedalPoint(pointP3, vertices[1], vertices[2]);
-                    animate(lineP3P4, (pointP3 as Coord), pointP4);
+                    const linearP3P4 = findParallelLine(pointP3 as Coord, linearDE.m);
+                    const pointP4 = calculateLineIntersectInLinearEquation(linearBC.m, linearBC.b, linearP3P4.m, linearP3P4.b);
+                    animate(lineP3P4, pointP3, pointP4);
                     p4Node.set({
                         left: pointP4.x,
                         top: pointP4.y,
                     });
-                    await delay(500);
+                    await delay(1000);
                     canvas.add(p4Node);
                     p4Label.set({
                         left: pointP4?.x - 10,
@@ -235,14 +238,14 @@ export default defineComponent(
                     });
                     canvas.add(p4Label);
 
-                    const linearP4P5 = findParallelLine(pointP4 as Coord, perpendicularLineC.m);
+                    const linearP4P5 = findParallelLine(pointP4 as Coord, linearDF.m);
                     const pointP5 = calculateLineIntersectInLinearEquation(linearAB.m, linearAB.b, linearP4P5.m, linearP4P5.b);
-                    animate(lineP4P5, (pointP4 as Coord), pointP5);
+                    animate(lineP4P5, pointP4, pointP5);
                     p5Node.set({
                         left: pointP5.x,
                         top: pointP5.y,
                     });
-                    await delay(500);
+                    await delay(1000);
                     canvas.add(p5Node);
                     p5Label.set({
                         left: pointP5?.x - 30,
@@ -250,14 +253,14 @@ export default defineComponent(
                     });
                     canvas.add(p5Label);
 
-                    const linearP5P6 = findParallelLine(pointP5 as Coord, perpendicularLineB.m);
+                    const linearP5P6 = findParallelLine(pointP5 as Coord, linearEF.m);
                     const pointP6 = calculateLineIntersectInLinearEquation(linearAC.m, linearAC.b, linearP5P6.m, linearP5P6.b);
-                    animate(lineP5P6, (pointP5 as Coord), pointP6);
+                    animate(lineP5P6, pointP5, pointP6);
                     p6Node.set({
                         left: pointP6.x,
                         top: pointP6.y,
                     });
-                    await delay(500);
+                    await delay(1000);
                     canvas.add(p6Node);
                     p6Label.set({
                         left: pointP6?.x + 10,
@@ -265,7 +268,9 @@ export default defineComponent(
                     });
                     canvas.add(p6Label);
 
-                    animate(lineP6P1, pointP6, (pointP1 as Coord));
+                    const linearP6P1 = findParallelLine(pointP6 as Coord, linearDE.m);
+                    const end = calculateLineIntersectInLinearEquation(linearBC.m, linearBC.b, linearP6P1.m, linearP6P1.b);
+                    animate(lineP6P1, pointP6, end);
                 }
             });
         }
