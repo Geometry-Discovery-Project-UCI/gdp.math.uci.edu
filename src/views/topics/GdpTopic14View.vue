@@ -2,20 +2,21 @@
   <TopicMeta :topic="topic" />
   <ATypographyParagraph>
   </ATypographyParagraph>
-  <svg id="tri-app_fermat-point" width="500" height="500" style="border: 2px solid black; background-color: floralwhite">
-      <polygon id="tri_fermat-point" stroke="black" stroke-width="2.5px" fill="transparent"></polygon>
-      <text id="letterA_fermat-point" font-size="25px">A</text>
-      <text id="letterB_fermat-point" font-size="25px">B</text>
-      <text id="letterC_fermat-point" font-size="25px">C</text>
-      <text id="letterP_fermat-point" font-size="25px">P</text>
-      <text id="letterX_fermat-point" font-size="25px"></text>
-      <text id="letterY_fermat-point" font-size="25px"></text>
-      <text id="letterQ_fermat-point" font-size="25px"></text>
-      <text id="letterP_fermat-point" font-size="25px">P</text>
-      <line id="line1_fermat-point" stroke="purple" stroke-width="1px"></line>
-      <line id="line2_fermat-point" stroke="purple" stroke-width="1px"></line>
-      <line id="line3_fermat-point" stroke="purple" stroke-width="1px"></line>
-      <circle id="circle_fermat-point" r="2px" fill="purple"></circle>
+  <svg id="tri-app_fermat-point" width="500" height="500"
+    style="border: 2px solid black; background-color: floralwhite">
+    <polygon id="tri_fermat-point" stroke="black" stroke-width="2.5px" fill="transparent"></polygon>
+    <text id="letterA_fermat-point" font-size="25px">A</text>
+    <text id="letterB_fermat-point" font-size="25px">B</text>
+    <text id="letterC_fermat-point" font-size="25px">C</text>
+    <text id="letterP_fermat-point" font-size="25px">P</text>
+    <text id="letterX_fermat-point" font-size="25px"></text>
+    <text id="letterY_fermat-point" font-size="25px"></text>
+    <text id="letterQ_fermat-point" font-size="25px"></text>
+    <text id="letterP_fermat-point" font-size="25px">P</text>
+    <line id="line1_fermat-point" stroke="purple" stroke-width="1px"></line>
+    <line id="line2_fermat-point" stroke="purple" stroke-width="1px"></line>
+    <line id="line3_fermat-point" stroke="purple" stroke-width="1px"></line>
+    <circle id="circle_fermat-point" r="2px" fill="purple"></circle>
   </svg>
   <p id="t1_fp">m1: 0</p>
   <input type="range" min="0" max="100" class="slider" id="m1_fp">
@@ -30,16 +31,13 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import {
-distToLine,
   drawLine,
   findDistance,
-  isInside,
   aboveBelow, setp,
-  lineLineIntersection, lerpp,
-  makeString, pointAlongLine, projectPoint2Line, fillDigits, radiansToDegress, findSlope, getPedalPoint, getEquationFromPoint
+  lerpp,
+  makeString, findSlope, getPedalPoint, getEquationFromPoint
 } from "@/utils/geometry";
-import { Vector } from "../../utils/vector";
-import { Circle, parseSVGDocument } from "fabric/fabric-impl";
+import { Vector } from "@/utils/vector";
 const topic = indexTopicMap.get(14) as Topic;
 export default defineComponent({
   setup() {
@@ -61,13 +59,13 @@ export default defineComponent({
     const letterA = document.querySelector("#letterA_fermat-point") as Element;
     const letterB = document.querySelector("#letterB_fermat-point") as Element;
     const letterC = document.querySelector("#letterC_fermat-point") as Element;
-    const letterQ =  document.querySelector("#letterQ_fermat-point") as Element;
-    const letterX =  document.querySelector("#letterX_fermat-point") as Element;
-    const letterY =  document.querySelector("#letterY_fermat-point") as Element;
-    const letterP =  document.querySelector("#letterP_fermat-point") as Element;
-    const line1 =  document.querySelector("#line1_fermat-point") as Element;
-    const line2 =  document.querySelector("#line2_fermat-point") as Element;
-    const line3 =  document.querySelector("#line3_fermat-point") as Element;
+    const letterQ = document.querySelector("#letterQ_fermat-point") as Element;
+    const letterX = document.querySelector("#letterX_fermat-point") as Element;
+    const letterY = document.querySelector("#letterY_fermat-point") as Element;
+    const letterP = document.querySelector("#letterP_fermat-point") as Element;
+    const line1 = document.querySelector("#line1_fermat-point") as Element;
+    const line2 = document.querySelector("#line2_fermat-point") as Element;
+    const line3 = document.querySelector("#line3_fermat-point") as Element;
     const m1 = document.querySelector("#m1_fp") as HTMLInputElement;
     const m2 = document.querySelector("#m2_fp") as HTMLInputElement;
     const m3 = document.querySelector("#m3_fp") as HTMLInputElement;
@@ -129,9 +127,9 @@ export default defineComponent({
         drawLine(pC, pC, line3);
         return;
       }
-      const alpha = Math.acos((m1v * m1v - m2v * m2v - m3v * m3v)/2/m2v/m3v);
-      const beta = Math.acos((m2v * m2v - m3v * m3v - m1v * m1v)/2/m3v/m1v);
-      const gamma = Math.acos((m3v * m3v - m2v * m2v - m1v * m1v)/2/m1v/m2v);
+      const alpha = Math.acos((m1v * m1v - m2v * m2v - m3v * m3v) / 2 / m2v / m3v);
+      const beta = Math.acos((m2v * m2v - m3v * m3v - m1v * m1v) / 2 / m3v / m1v);
+      const gamma = Math.acos((m3v * m3v - m2v * m2v - m1v * m1v) / 2 / m1v / m2v);
       const vab = new Vector(pB[0] - pA[0], pB[1] - pA[1]);
       const vac = new Vector(pC[0] - pA[0], pC[1] - pA[1]);
       const thetaA = Vector.angleBetween(vac, vab);
@@ -168,14 +166,14 @@ export default defineComponent({
       }
       const pD = [(pC[0] + pB[0]) / 2, (pC[1] + pB[1]) / 2];
       const mBC = findSlope(pB, pC);
-      const thetaD = Math.atan(-1/mBC);
+      const thetaD = Math.atan(-1 / mBC);
       const aaa = -findDistance(pB, pC) / Math.tan(alpha) / 2;
       console.log((Math.cos(thetaD) * aaa));
       let pX = [-(Math.cos(thetaD) * aaa) + pD[0], -(Math.sin(thetaD) * aaa) + pD[1]];
       const pE = [(pA[0] + pC[0]) / 2, (pA[1] + pC[1]) / 2];
       const mAC = findSlope(pA, pC);
       const bbb = -findDistance(pA, pC) / Math.tan(beta) / 2;
-      const thetaE = Math.atan(-1/mAC);
+      const thetaE = Math.atan(-1 / mAC);
       let pY = [-Math.cos(thetaE) * bbb + pE[0], -Math.sin(thetaE) * bbb + pE[1]];
       const a = getEquationFromPoint(pA, pC);
       if (aboveBelow(pY, a[0], a[1])) {
