@@ -17,6 +17,7 @@ import {
   calculateSlope,
   calculateLineIntersectInPoints,
   solveLinearEquation,
+  calculateDistanceBetweenTwoPoints,
 } from "@/utils/geometry";
 
 const topic = indexTopicMap.get(38) as Topic;
@@ -135,6 +136,8 @@ export default defineComponent({
     const pLabel = createLabel("P", 20, "red");
     const qLabel = createLabel("Q", 20, "red");
 
+    const valueTrianglePQR = createLabel("1");
+
     const triangle = new fabric.Polygon(vertexes, {
       fill: "transparent",
       strokeWidth: 1.5,
@@ -218,6 +221,29 @@ export default defineComponent({
       });
     }
 
+    function calcAreaOfPQR(): number {
+      const pointCoords = circleToCoord(pointA, pointB, pointC, pointD, pointE, pointF);
+      const x =
+        calculateDistanceBetweenTwoPoints(pointCoords[1], pointCoords[3]) /
+        calculateDistanceBetweenTwoPoints(pointCoords[3], pointCoords[2]);
+      const y =
+        calculateDistanceBetweenTwoPoints(pointCoords[2], pointCoords[4]) /
+        calculateDistanceBetweenTwoPoints(pointCoords[0], pointCoords[4]);
+      const z =
+        calculateDistanceBetweenTwoPoints(pointCoords[0], pointCoords[5]) /
+        calculateDistanceBetweenTwoPoints(pointCoords[5], pointCoords[1]);
+      const area =
+        (Math.pow(x * y * z - 1, 2) / (x * z + z + 1)) * (x * y + x + 1) * (y * z + y + 1);
+      return area;
+    }
+
+    valueTrianglePQR.set({
+      text: calcAreaOfPQR().toFixed(2),
+      left: 120,
+      top: 50,
+      fontSize: 18,
+    });
+
     const trianglePQR = new fabric.Polygon(circleToCoord(pointP, pointQ, pointR), {
       fill: "pink",
       strokeWidth: 1,
@@ -298,15 +324,43 @@ export default defineComponent({
 
       trianglePQR.set("points", circleToCoord(pointP, pointQ, pointR));
       setLabelToPoint();
+      valueTrianglePQR.set({
+        text: calcAreaOfPQR().toFixed(2),
+      });
     };
 
     setLabelToPoint();
     canvas.on("object:moving", onPointMove);
+
+    canvas.add(
+      new fabric.Text("S△PQR = S△ABC - S△CQA - S△ARB - S△BPC", {
+        left: 30,
+        top: 22,
+        strokeWidth: 0.3,
+        stroke: "black",
+        fill: "black",
+        fontSize: 18,
+        evented: false,
+      })
+    );
+    canvas.add(
+      new fabric.Text("=", {
+        left: 97,
+        top: 50,
+        strokeWidth: 0.3,
+        stroke: "black",
+        fill: "black",
+        fontSize: 18,
+        evented: false,
+      })
+    );
+
     canvas.add(triangle, trianglePQR);
     canvas.add(pointD, pointE, pointF);
     canvas.add(pointR, pointP, pointQ);
     canvas.add(lineAD, lineBE, lineCF);
     canvas.add(aLabel, bLabel, cLabel, dLabel, eLabel, fLabel, rLabel, pLabel, qLabel);
+    canvas.add(valueTrianglePQR);
   },
 });
 </script>
