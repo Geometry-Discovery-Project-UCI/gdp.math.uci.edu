@@ -1,9 +1,6 @@
 <template>
   <TopicMeta :topic="topic" />
-    <div id="Brainchon-wrapper" style="padding-top: 40px;">
-    <h2>Brainchon's Theorem</h2>
-    <canvas id="Brainchon-canvas" width="500" height="500" />
-  </div>
+
   <div id="Pascal-Brainchon-wrapper" style="padding-top: 40px;">
     <h2>Pappus' Theorem</h2>
     <canvas id="Pascal-Brainchon-canvas" width="500" height="500" />
@@ -17,6 +14,11 @@
   <div id="Desargues-wrapper" style="padding-top: 40px;">
     <h2>Desargues' Theorem</h2>
     <canvas id="Desargues-canvas" width="800" height="500" />
+  </div>
+
+  <div id="Brainchon-wrapper" style="padding-top: 40px;">
+    <h2>Brainchon's Theorem</h2>
+    <canvas id="Brainchon-canvas" width="500" height="500" />
   </div>
 
 </template>
@@ -276,9 +278,15 @@ function partFour() {
   const cf = makeLine(pc, pf, undefined, "green");
   Object.assign(ad, solveLinearEquation({x:ad.x1!, y:ad.y1!}, {x:ad.x2!, y:ad.y2!}));
   Object.assign(be, solveLinearEquation({x:be.x1!, y:be.y1!}, {x:be.x2!, y:be.y2!}));
-
   const intersection = makeCircle(
     getInterByLinearEq({m: ad.m!, b: ad.b!}, {m: be.m!, b: be.b!}), 4, "red");
+  intersection.set({selectable: false, evented: false});
+  const ia = makeLine(intersection, pa, undefined, "green");
+  const ib = makeLine(intersection, pb, undefined, "green");
+  const ic = makeLine(intersection, pc, undefined, "green");
+  const id = makeLine(intersection, pd, undefined, "green");
+  const ie = makeLine(intersection, pe, undefined, "green");
+  const iF = makeLine(intersection, pf, undefined, "green");
 
   pa.clockLine = fa;
   pa.cntClockLine = ab;
@@ -324,6 +332,12 @@ function partFour() {
   be.p2 = pe;
   cf.p1 = pc;
   cf.p2 = pf;
+  ia.p1 = pa;
+  ib.p1 = pb;
+  ic.p1 = pc;
+  id.p1 = pd;
+  ie.p1 = pe;
+  iF.p1 = pf;
 
   const aLabel = makeLabel("A", {x: 10, y: -20});
   const bLabel = makeLabel("B", {x: 0, y: -30});
@@ -336,8 +350,8 @@ function partFour() {
     [pa, pb, pc, pd, pe, pf, centerPoint]);
   cvsBra.add(aLabel, bLabel, cLabel, dLabel, eLabel, fLabel, oLabel);
   cvsBra.add(pa, pb, pc, pd, pe, pf, centerPoint);
-  cvsBra.add(intersection);
-  cvsBra.add(ab, bc, cd, de, ef, fa, ad, be, cf);
+  cvsBra.add(intersection, ia, ib, ic, id, ie, iF);
+  cvsBra.add(ab, bc, cd, de, ef, fa);
 
   const onPointMove = (e: IEvent): void => {
     const p = e.target! as Circle;
@@ -358,7 +372,6 @@ function partFour() {
       p.set({left: onCircle.x, top: onCircle.y});
     }
     setLabelToPoint([p.label!], [p]);
-    // log("radToCartesian(dist, rad-Math.PI, center, false), polarToCartesian(dist, rad, center, false));
     const clkRad = rad - alpha;
     const cntClkRad = alpha + rad;
     // New tangent point and lines
@@ -393,13 +406,16 @@ function partFour() {
     cntClkLine = p.cntClockLine!;
     setLineFromPoints(cntClkLine,
       {x: cntClkLine.p1!.left!, y: cntClkLine.p1!.top!}, {x: cntClkLine.p2!.left!, y: cntClkLine.p2!.top!});
-    [ad, be, cf].forEach(line => {
+    // Update intersections
+    [ad, be].forEach(line => {
       setLineFromPoints(line, {x: line.p1!.left!, y: line.p1!.top!}, {x: line.p2!.left!, y: line.p2!.top!});
     });
     Object.assign(ad, solveLinearEquation({x:ad.x1!, y:ad.y1!}, {x:ad.x2!, y:ad.y2!}));
     Object.assign(be, solveLinearEquation({x:be.x1!, y:be.y1!}, {x:be.x2!, y:be.y2!}));
     const updateInter = getInterByLinearEq({m: ad.m!, b: ad.b!}, {m: be.m!, b: be.b!});
     intersection.set({left: updateInter.x, top: updateInter.y});
+    [ia, ib, ic, id, ie, iF].forEach(line => setLineFromPoints(
+      line, {x: line.p1!.left!, y: line.p1!.top!}, {x: intersection.left!, y: intersection.top!}));
 
     setLabelToPoint([p.clockPoint!.label!, p.cntClockPoint!.label!], [p.clockPoint!, p.cntClockPoint!]);
   };
