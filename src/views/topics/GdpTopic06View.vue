@@ -1,10 +1,9 @@
 <template>
   <TopicMeta :topic="topic" />
-  <div id="Brainchon-wrapper" style="padding-top: 40px;">
+    <div id="Brainchon-wrapper" style="padding-top: 40px;">
     <h2>Brainchon's Theorem</h2>
     <canvas id="Brainchon-canvas" width="500" height="500" />
   </div>
-
   <div id="Pascal-Brainchon-wrapper" style="padding-top: 40px;">
     <h2>Pappus' Theorem</h2>
     <canvas id="Pascal-Brainchon-canvas" width="500" height="500" />
@@ -19,6 +18,7 @@
     <h2>Desargues' Theorem</h2>
     <canvas id="Desargues-canvas" width="800" height="500" />
   </div>
+
 </template>
 
 <script lang="ts">
@@ -274,6 +274,11 @@ function partFour() {
   const ad = makeLine(pa, pd, undefined, "green");
   const be = makeLine(pb, pe, undefined, "green");
   const cf = makeLine(pc, pf, undefined, "green");
+  Object.assign(ad, solveLinearEquation({x:ad.x1!, y:ad.y1!}, {x:ad.x2!, y:ad.y2!}));
+  Object.assign(be, solveLinearEquation({x:be.x1!, y:be.y1!}, {x:be.x2!, y:be.y2!}));
+
+  const intersection = makeCircle(
+    getInterByLinearEq({m: ad.m!, b: ad.b!}, {m: be.m!, b: be.b!}), 4, "red");
 
   pa.clockLine = fa;
   pa.cntClockLine = ab;
@@ -331,32 +336,34 @@ function partFour() {
     [pa, pb, pc, pd, pe, pf, centerPoint]);
   cvsBra.add(aLabel, bLabel, cLabel, dLabel, eLabel, fLabel, oLabel);
   cvsBra.add(pa, pb, pc, pd, pe, pf, centerPoint);
+  cvsBra.add(intersection);
   cvsBra.add(ab, bc, cd, de, ef, fa, ad, be, cf);
 
   const onPointMove = (e: IEvent): void => {
     const p = e.target! as Circle;
-    setLabelToPoint([p.label!], [p]);
-    const dist = calculateDistanceBetweenTwoPoints(circleToCoord(p)[0], center);
+    let dist = calculateDistanceBetweenTwoPoints(circleToCoord(p)[0], center);
+    const offset = 10;
+    if (dist <= RADIUS+offset) {
+      dist = RADIUS + offset;
+    }
     const alpha = Math.acos(RADIUS/dist);
     let rad = Math.atan(-findSlope([center.x, center.y], [p.left!, p.top!]));
-    // log("slope:", -findSlope([center.x, center.y], [p.left!, p.top!]));
-    // log("b4:", rad, p);
+
     if (p.left! < center.x) {
       rad -= Math.PI;
     }
     // Restrict movement outside of circle.
-    if (dist <= RADIUS) {
-      const onCircle = polarToCartesian(RADIUS, rad, center, false);
+    if (dist <= RADIUS+offset) {
+      const onCircle = polarToCartesian(RADIUS+offset, rad, center, false);
       p.set({left: onCircle.x, top: onCircle.y});
     }
-    // log("rad:", rad);
-    // log("coord", polarToCartesian(dist, rad-Math.PI, center, false), polarToCartesian(dist, rad, center, false));
+    setLabelToPoint([p.label!], [p]);
+    // log("radToCartesian(dist, rad-Math.PI, center, false), polarToCartesian(dist, rad, center, false));
     const clkRad = rad - alpha;
     const cntClkRad = alpha + rad;
     // New tangent point and lines
     const clkT = polarToCartesian(RADIUS, clkRad, center, false);
     const cntClkT = polarToCartesian(RADIUS, cntClkRad, center, false);
-    // log("tang p", clkT, cntClkT);
     const clkLinearEq = solveLinearEquation(circleToCoord(p)[0], clkT);
     const cntClkLinearEq = solveLinearEquation(circleToCoord(p)[0], cntClkT);
 
@@ -373,7 +380,6 @@ function partFour() {
       {x: cntClkLine.x2!, y: cntClkLine.y2!}
     ));
     p.cntClockPoint!.set({left: cntClkP.x, top: cntClkP.y});
-    // log("Points:", clkP, cntClkP);
 
     // Update lines accordingly
     setLineFromPoints(clkLine,
@@ -390,6 +396,10 @@ function partFour() {
     [ad, be, cf].forEach(line => {
       setLineFromPoints(line, {x: line.p1!.left!, y: line.p1!.top!}, {x: line.p2!.left!, y: line.p2!.top!});
     });
+    Object.assign(ad, solveLinearEquation({x:ad.x1!, y:ad.y1!}, {x:ad.x2!, y:ad.y2!}));
+    Object.assign(be, solveLinearEquation({x:be.x1!, y:be.y1!}, {x:be.x2!, y:be.y2!}));
+    const updateInter = getInterByLinearEq({m: ad.m!, b: ad.b!}, {m: be.m!, b: be.b!});
+    intersection.set({left: updateInter.x, top: updateInter.y});
 
     setLabelToPoint([p.clockPoint!.label!, p.cntClockPoint!.label!], [p.clockPoint!, p.cntClockPoint!]);
   };
