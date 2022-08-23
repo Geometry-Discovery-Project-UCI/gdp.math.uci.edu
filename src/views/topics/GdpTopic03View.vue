@@ -53,11 +53,11 @@ import {
   calculateIncenter,
   calculateLineIntersectInPoints,
   calculateMidpoint, calculateOrthocenter,
-  calculateThreeAngles, drawFullLine, drawRightAngleSign,
-  findMidpoint, findSlope,
-  getPedalPoint
+  calculateThreeAngles, drawRightAngleSign,
+  findMidpoint,
+  getPedalPoint, calculateInterPointsWithBoundary, subNums
 } from "@/utils/geometry";
-import {Circle, IEvent, Intersection} from "fabric/fabric-impl";
+import {Circle, IEvent} from "fabric/fabric-impl";
 const topic = indexTopicMap.get(3) as Topic;
 export default defineComponent(
   {
@@ -473,22 +473,6 @@ export default defineComponent(
           backgroundColor: "floralwhite",
         });
 
-        function subNums(str: string) {
-          let newStr = "";
-          for (let i=0; i<str.length; i++) {
-            //  Get the code of the current character
-            const code = str.charCodeAt(i);
-            if (code >= 48 && code <= 57) {
-              //  If it's between "0" and "9", offset the code ...
-              newStr += String.fromCharCode(code + 8272);
-            } else {
-              //   ... otherwise keep the character
-              newStr += str[i];
-            }
-          }
-          return newStr;
-        }
-
         const aLabel = makeLabel("A");
         const bLabel = makeLabel("B");
         const cLabel = makeLabel("C");
@@ -553,75 +537,23 @@ export default defineComponent(
         eLabel.set({left: pointE.x + 15, top: pointE.y - 5});
         fLabel.set({left: pointF.x - 25, top: pointF.y - 10});
 
-        // Inner canvas
-        const leftTop = new fabric.Point(50, 50), rightTop = new fabric.Point(450, 50),
-          leftBottom = new fabric.Point(50, 450), rightBottom = new fabric.Point(450, 450);
-
         // Two full perpendicular bisector lines
-        const fullLine1 = makeLine(); //bisecPerpenLineOnAB
-        const fullLine2 = makeLine(); // bisecPerpenLineOnAC
-        // Intersection points with l1
-        let interX1 = 0, interY1 = 0, interX2 = 0, interY2 = 0;
-        const topInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
-          pointF, pointN, leftTop, rightTop) as Intersection).points![0];
-        const leftInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
-           pointF, pointN, leftTop, leftBottom) as Intersection).points![0];
-        const bottomInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
-          pointF, pointN, rightBottom, rightTop) as Intersection).points![0];
-        const rightInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
-          pointF, pointN, rightTop, rightBottom) as Intersection).points![0];
-
-        if (topInterPoint1.x < 50) {
-           interX1 = leftInterPoint1.x;
-           interY1 = leftInterPoint1.y;
-        } else {
-          interX1 = topInterPoint1.x;
-          interY1 = topInterPoint1.y;
-        }
-        if (bottomInterPoint1.x > 450) {
-          interX2 = rightInterPoint1.x;
-          interY2 = rightInterPoint1.y;
-        } else {
-          interX2 = bottomInterPoint1.x;
-          interY2 = bottomInterPoint1.y;
-        }
+        const fullLine1 = makeLine(); //BisecPerpenLineOnAB
+        const fullLine2 = makeLine(); // BisecPerpenLineOnAC
+        const interPoints1 = calculateInterPointsWithBoundary(pointF, pointN,500, 500,50);
         fullLine1.set({
-          x1: interX1, y1: interY1,
-          x2: interX2, y2: interY2,
+          x1: interPoints1[0].x, y1: interPoints1[0].y,
+          x2: interPoints1[1].x, y2: interPoints1[1].y,
           stroke:"green"
         });
-
-        // Intersection points with l2
-        let interX11 = 0, interY11 = 0, interX22 = 0, interY22 = 0;
-        const topInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
-          pointE, pointM, leftTop, rightTop) as Intersection).points![0];
-        const leftInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
-          pointE, pointM, leftTop, leftBottom) as Intersection).points![0];
-        const bottomInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
-          pointE, pointM, rightBottom, leftBottom) as Intersection).points![0];
-        const rightInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
-          pointE, pointM, rightTop, rightBottom) as Intersection).points![0];
-        if (topInterPoint2.x > 450) {
-          interX11 = rightInterPoint2.x;
-          interY11 = rightInterPoint2.y;
-        } else {
-          interX11 = topInterPoint2.x;
-          interY11 = topInterPoint2.y;
-        }
-        if (bottomInterPoint2.x < 50) {
-          interX22 = leftInterPoint2.x;
-          interY22 = leftInterPoint2.y;
-        } else {
-          interX22 = bottomInterPoint2.x;
-          interY22 = bottomInterPoint2.y;
-        }
+        const interPoints2 = calculateInterPointsWithBoundary(pointE, pointM,500, 500,50);
         fullLine2.set({
-          x1: interX11, y1: interY11,
-          x2: interX22, y2: interY22,
+          x1: interPoints2[0].x, y1: interPoints2[0].y,
+          x2: interPoints2[1].x, y2: interPoints2[1].y,
           stroke:"green"
         });
-        l1Label.set({left: interX1, top: interY1 - 30, fill:"red", fontSize: 18});
-        l2Label.set({left: interX11, top: interY11 - 30,fill:"red", fontSize: 18});
+        l1Label.set({left: interPoints1[0].x, top: interPoints1[0].y - 30, fill:"red", fontSize: 18});
+        l2Label.set({left: interPoints2[0].x, top: interPoints2[0].y - 30,fill:"red", fontSize: 18});
         const interP = calculateLineIntersectInPoints(fullLine1, fullLine2);
         interPoint.set({
           originX: "center",
@@ -629,11 +561,12 @@ export default defineComponent(
           left: interP?.x,
           top: interP?.y
         });
-        drawRightAngleSign(new fabric.Point(250, 250), new fabric.Point(250, 350), pointC,angleDsignl1, angleDsiggnl2, 8,"red");
+        drawRightAngleSign(new fabric.Point(250, 250), new fabric.Point(250, 350),
+          pointC,angleDsignl1, angleDsiggnl2, 8,"red");
         drawRightAngleSign(pointN, pointF, pointB,angleFsignl1, angleFsiggnl2, 8,"red");
-        drawRightAngleSign(new fabric.Point(interX22, interY22), pointE, pointC,angleEsignl1, angleEsiggnl2, 8,"red");
+        drawRightAngleSign(interPoints2[1], pointE, pointC,angleEsignl1, angleEsiggnl2, 8,"red");
 
-        // drawFullLine(midPointOnBC,4,lineAD);
+        // Moving control.
         const onMovePoint = (e: IEvent): void => {
           const p = e.target! as Circle;
           const point = new fabric.Point(p.left!, p.top!);
@@ -665,114 +598,34 @@ export default defineComponent(
             (point.x + pointB.x - point.y + pointB.y) / 2,
             (point.y + pointB.y - pointB.x + point.x) / 2);
 
+          const interPoints = calculateInterPointsWithBoundary(pointF, pointN,500, 500,50);
+          fullLine1.set({
+              x1: interPoints[0].x, y1: interPoints[0].y,
+              x2: interPoints[1].x, y2: interPoints[1].y,
+          });
+
+          const interPoints2 = calculateInterPointsWithBoundary(pointE, pointM, 500, 500,50);
+          console.log(interPoints2);
+            fullLine2.set({
+              x1: interPoints2[0].x, y1: interPoints2[0].y,
+              x2: interPoints2[1].x, y2: interPoints2[1].y,
+            });
+
+          const interP = calculateLineIntersectInPoints(fullLine1, fullLine2);
+          interPoint.set({
+            originX: "center",
+            originY: "center",
+            left: interP?.x,
+            top: interP?.y
+          });
+          drawRightAngleSign(pointN, pointF, pointB,angleFsignl1, angleFsiggnl2, 8,"red");
+          drawRightAngleSign(interPoints2[1], pointE, pointC,angleEsignl1, angleEsiggnl2, 8,"red");
+
           dLabel.set({left: pointD[0] + 5, top: pointD[1]});
           eLabel.set({left: pointE.x + 5, top:pointE.y - 10});
           fLabel.set({left: pointF.x - 20, top: pointF.y - 15});
-
-          // When fullLine1 ,fullLine2 intersect with four boundaries.
-          const topInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
-            pointF, pointN, leftTop, rightTop) as Intersection);
-          const leftInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
-            pointF, pointN, leftTop, leftBottom) as Intersection);
-          const bottomInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
-            pointF, pointN, rightBottom, leftBottom) as Intersection);
-          const rightInterPoint1 = (fabric.Intersection.prototype.intersectLineLine(
-            pointF, pointN, rightTop, rightBottom) as Intersection);
-          // Horizontal line -- Parallel to top and bottom
-          if (topInterPoint1.status === "Parallel" || bottomInterPoint1.status === "Parallel") {
-            interX1 = leftInterPoint1.points![0].x;
-            interY1 = leftInterPoint1.points![0].y;
-            interX2 = rightInterPoint1.points![0].x;
-            interY2 = rightInterPoint1.points![0].y;
-            // Perpendicular line
-          } else if (leftInterPoint1.status === "Parallel" || rightInterPoint1.status === "Parallel"){
-            interX1 = topInterPoint1.points![0].x;
-            interY1 = topInterPoint1.points![0].y;
-            interX2 = bottomInterPoint1.points![0].x;
-            interY2 = bottomInterPoint1.points![0].y;
-          } else {
-            if (topInterPoint1.points![0].x < 50) {
-              interX1 = leftInterPoint1.points![0].x;
-              interY1 = leftInterPoint1.points![0].y;
-            } else if (topInterPoint1.points![0].x > 450) {
-              interX1 = rightInterPoint1.points![0].x;
-              interY1 = rightInterPoint1.points![0].y;
-            } else {
-              interX1 = topInterPoint1.points![0].x;
-              interY1 = topInterPoint1.points![0].y;
-            }
-            if (bottomInterPoint1.points![0].x > 450) {
-              interX2 = rightInterPoint1.points![0].x;
-              interY2 = rightInterPoint1.points![0].y;
-            } else if (bottomInterPoint1.points![0].x < 50) {
-              interX2 = leftInterPoint1.points![0].x;
-              interY2 = leftInterPoint1.points![0].y;
-            } else {
-              interX2 = bottomInterPoint1.points![0].x;
-              interY2 = bottomInterPoint1.points![0].y;
-            }
-            fullLine1.set({
-              x1: interX1, y1: interY1,
-              x2: interX2, y2: interY2,
-            });
-          }
-          l1Label.set({left: interX1, top: interY1 - 30, fill:"red", fontSize: 18});
-
-          const topInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
-            pointE, pointM, leftTop, rightTop) as Intersection);
-          const leftInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
-            pointE, pointM, leftTop, leftBottom) as Intersection);
-          const bottomInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
-            pointE, pointM, rightBottom, leftBottom) as Intersection);
-          const rightInterPoint2 = (fabric.Intersection.prototype.intersectLineLine(
-            pointE, pointM, rightTop, rightBottom) as Intersection);
-          if (topInterPoint2.status === "Parallel" || bottomInterPoint2.status === "Parallel") {
-            fullLine2.set({
-              x1: leftInterPoint2.points![0].x, y1: leftInterPoint2.points![0].y,
-              x2: rightInterPoint2.points![0].x, y2: rightInterPoint2.points![0].y,
-            });
-            // Perpendicular line
-          } else if (leftInterPoint2.status === "Parallel" || rightInterPoint2.status === "Parallel"){
-            fullLine1.set({
-              x1: topInterPoint2.points![0].x, y1: topInterPoint2.points![0].y,
-              x2: bottomInterPoint2.points![0].x, y2: bottomInterPoint2.points![0].y,
-            });
-          } else {
-            if (topInterPoint2.points![0].x < 50) {
-              interX11 = leftInterPoint2.points![0].x;
-              interY11 = leftInterPoint2.points![0].y;
-            }else if (topInterPoint2.points![0].x > 450) {
-              interX11 = rightInterPoint2.points![0].x;
-              interY11 = rightInterPoint2.points![0].y;
-            } else {
-              interX11 = topInterPoint2.points![0].x;
-              interY11 = topInterPoint2.points![0].y;
-            }
-            if (bottomInterPoint2.points![0].x < 50) {
-              interX22 = leftInterPoint2.points![0].x;
-              interY22 = leftInterPoint2.points![0].y;
-            } else if (bottomInterPoint2.points![0].x > 450) {
-              interX22 = rightInterPoint2.points![0].x;
-              interY22 = rightInterPoint2.points![0].y;
-            } else {
-              interX22 = bottomInterPoint2.points![0].x;
-              interY22 = bottomInterPoint2.points![0].y;
-            }
-            fullLine2.set({
-              x1: interX11, y1: interY11,
-              x2: interX22, y2: interY22,
-            });
-            const interP = calculateLineIntersectInPoints(fullLine1, fullLine2);
-            interPoint.set({
-              originX: "center",
-              originY: "center",
-              left: interP?.x,
-              top: interP?.y
-            });
-          }
-          l2Label.set({left: interX11, top: interY11 - 30,fill:"red", fontSize: 18});
-          drawRightAngleSign(pointN, pointF, pointB,angleFsignl1, angleFsiggnl2, 8,"red");
-          drawRightAngleSign(new fabric.Point(interX22, interY22), pointE, pointC,angleEsignl1, angleEsiggnl2, 8,"red");
+          l1Label.set({left: interPoints[0].x, top: interPoints[0].y - 30, fill:"red", fontSize: 18});
+          l2Label.set({left: interPoints2[0].x, top: interPoints2[0].y - 30,fill:"red", fontSize: 18});
         };
 
         canvas2.on("object:moving", onMovePoint);
