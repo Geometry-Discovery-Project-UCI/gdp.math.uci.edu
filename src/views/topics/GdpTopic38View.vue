@@ -18,6 +18,7 @@ import {
   calculateLineIntersectInPoints,
   solveLinearEquation,
   calculateDistanceBetweenTwoPoints,
+  area,
 } from "@/utils/geometry";
 
 const topic = indexTopicMap.get(38) as Topic;
@@ -136,6 +137,10 @@ export default defineComponent({
     const pLabel = createLabel("P", 20, "red");
     const qLabel = createLabel("Q", 20, "red");
 
+    const valueX = createLabel("0");
+    const valueY = createLabel("0");
+    const valueZ = createLabel("0");
+
     const valueTrianglePQR = createLabel("1");
 
     const triangle = new fabric.Polygon(vertexes, {
@@ -221,28 +226,57 @@ export default defineComponent({
       });
     }
 
-    function calcAreaOfPQR(): number {
+    const areaABC = area(
+      vertexes[0].x,
+      vertexes[0].y,
+      vertexes[1].x,
+      vertexes[1].y,
+      vertexes[2].x,
+      vertexes[2].y
+    ) as number;
+
+    function calcArea() {
       const pointCoords = circleToCoord(pointA, pointB, pointC, pointD, pointE, pointF);
       const x =
         calculateDistanceBetweenTwoPoints(pointCoords[1], pointCoords[3]) /
         calculateDistanceBetweenTwoPoints(pointCoords[3], pointCoords[2]);
+      valueX.set({
+        text: x.toFixed(2),
+        left: 80,
+        top: 35,
+        strokeWidth: 0.3,
+        fontSize: 17,
+      });
       const y =
         calculateDistanceBetweenTwoPoints(pointCoords[2], pointCoords[4]) /
         calculateDistanceBetweenTwoPoints(pointCoords[0], pointCoords[4]);
+      valueY.set({
+        text: y.toFixed(2),
+        left: 173,
+        top: 35,
+        strokeWidth: 0.3,
+        fontSize: 17,
+      });
       const z =
         calculateDistanceBetweenTwoPoints(pointCoords[0], pointCoords[5]) /
         calculateDistanceBetweenTwoPoints(pointCoords[5], pointCoords[1]);
-      const area =
+      valueZ.set({
+        text: z.toFixed(2),
+        left: 265,
+        top: 35,
+        strokeWidth: 0.3,
+        fontSize: 17,
+      });
+      const areaPQR =
         (Math.pow(x * y * z - 1, 2) / (x * z + z + 1)) * (x * y + x + 1) * (y * z + y + 1);
-      return area;
-    }
 
-    valueTrianglePQR.set({
-      text: calcAreaOfPQR().toFixed(2),
-      left: 120,
-      top: 50,
-      fontSize: 18,
-    });
+      valueTrianglePQR.set({
+        text: areaPQR.toFixed(2),
+        left: 100,
+        top: 119,
+        fontSize: 17,
+      });
+    }
 
     const trianglePQR = new fabric.Polygon(circleToCoord(pointP, pointQ, pointR), {
       fill: "pink",
@@ -324,33 +358,84 @@ export default defineComponent({
 
       trianglePQR.set("points", circleToCoord(pointP, pointQ, pointR));
       setLabelToPoint();
-      valueTrianglePQR.set({
-        text: calcAreaOfPQR().toFixed(2),
-      });
+      calcArea();
     };
 
     setLabelToPoint();
+    calcArea();
     canvas.on("object:moving", onPointMove);
 
+    const equationText = [
+      ["BD", "DC"],
+      ["CE", "AE"],
+      ["AF", "FB"],
+    ];
+    equationText.forEach((equation, i) => {
+      canvas.add(
+        new fabric.Text(equation[0]).set({
+          left: 35 + i * 91,
+          top: 25,
+          strokeWidth: 0.3,
+          stroke: "black",
+          fill: "black",
+          fontSize: 15,
+          evented: false,
+        })
+      );
+      canvas.add(
+        new fabric.Text(equation[1]).set({
+          left: 35 + i * 91,
+          top: 45,
+          strokeWidth: 0.3,
+          stroke: "black",
+          fill: "black",
+          fontSize: 15,
+          evented: false,
+        })
+      );
+    });
     canvas.add(
-      new fabric.Text("S△PQR = S△ABC - S△CQA - S△ARB - S△BPC", {
-        left: 30,
-        top: 22,
+      new fabric.Text("_____               _____              _____", {
+        left: 24,
+        top: 27,
         strokeWidth: 0.3,
         stroke: "black",
         fill: "black",
-        fontSize: 18,
+        fontSize: 15,
         evented: false,
       })
     );
     canvas.add(
-      new fabric.Text("=", {
-        left: 97,
-        top: 50,
+      new fabric.Text("=                       =                      =", {
+        left: 65,
+        top: 35,
         strokeWidth: 0.3,
         stroke: "black",
         fill: "black",
-        fontSize: 18,
+        fontSize: 15,
+        evented: false,
+      })
+    );
+
+    canvas.add(
+      new fabric.Text("S△ABC =  1", {
+        left: 30,
+        top: 80,
+        strokeWidth: 0.3,
+        stroke: "black",
+        fill: "black",
+        fontSize: 15,
+        evented: false,
+      })
+    );
+    canvas.add(
+      new fabric.Text("S△PQR =", {
+        left: 30,
+        top: 120,
+        strokeWidth: 0.3,
+        stroke: "black",
+        fill: "black",
+        fontSize: 15,
         evented: false,
       })
     );
@@ -360,6 +445,7 @@ export default defineComponent({
     canvas.add(pointR, pointP, pointQ);
     canvas.add(lineAD, lineBE, lineCF);
     canvas.add(aLabel, bLabel, cLabel, dLabel, eLabel, fLabel, rLabel, pLabel, qLabel);
+    canvas.add(valueX, valueY, valueZ);
     canvas.add(valueTrianglePQR);
   },
 });
