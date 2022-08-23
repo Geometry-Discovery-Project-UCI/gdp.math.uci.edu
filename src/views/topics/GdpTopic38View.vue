@@ -139,7 +139,7 @@ export default defineComponent({
     const valueX = createLabel("0");
     const valueY = createLabel("0");
     const valueZ = createLabel("0");
-    
+
     const valueTrianglePQR = createLabel("1");
 
     const triangle = new fabric.Polygon(vertexes, {
@@ -224,15 +224,6 @@ export default defineComponent({
         top: pointQ.top! - 30,
       });
     }
-
-    const areaABC = area(
-      vertexes[0].x,
-      vertexes[0].y,
-      vertexes[1].x,
-      vertexes[1].y,
-      vertexes[2].x,
-      vertexes[2].y
-    ) as number;
 
     function calcArea() {
       const pointCoords = circleToCoord(pointA, pointB, pointC, pointD, pointE, pointF);
