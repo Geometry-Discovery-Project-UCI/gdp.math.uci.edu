@@ -173,14 +173,14 @@ export function cartesianToTrilinear(pointA: number[], pointB: number[], pointC:
       Math.sign(calculateSignedDistanceFromPointToLine(pointB, pointA, pointC)),
     z:
       calculateSignedDistanceFromPointToLine(pointP, pointA, pointB) *
-      Math.sign(calculateSignedDistanceFromPointToLine(pointC, pointB, pointA)),
+      Math.sign(calculateSignedDistanceFromPointToLine(pointC, pointA, pointB)),
   };
 }
 
 // Singed distance, whose absolte value is the distance of a point to a line.
 export function calculateSignedDistanceFromPointToLine(pt: number[], v: number[], w: number[]) {
-  const ab = Math.sqrt((w[2] - v[2]) ** 2 + (w[1] - v[1]) ** 2);
-  return ((w[2] - v[2]) * (pt[1] - v[1]) - (w[1] - v[1]) * (pt[2] - v[2])) / ab;
+  const ab = Math.sqrt((w[1] - v[1]) ** 2 + (w[0] - v[0]) ** 2);
+  return ((w[1] - v[1]) * (pt[0] - v[0]) - (w[0] - v[0]) * (pt[1] - v[1])) / ab;
 }
 
 export function polarToCartesian(radius: number, angle: number, center?: Coord, isDegree = true) {
@@ -376,7 +376,8 @@ export const drawLine = (a: number[], b: number[], l: Element) => {
 };
 
 export const makeString = (arr: (string | number)[][]) => {
-  return `${arr[0][0]},${arr[0][1]} ${arr[1][0]},${arr[1][1]} ${arr[2][0]},${arr[2][1]}`;
+  if (arr.length === 3) return `${arr[0][0]},${arr[0][1]} ${arr[1][0]},${arr[1][1]} ${arr[2][0]},${arr[2][1]}`;
+  return `${arr[0][0]},${arr[0][1]} ${arr[1][0]},${arr[1][1]} ${arr[2][0]},${arr[2][1]},${arr[3][0]} ${arr[3][1]}`;
 };
 
 export const makeSvgTriangle = (pt0: number[], pt1: number[], pt2: number[], ptoTri: Element) => {
@@ -428,8 +429,8 @@ export const radiansToDegress = (r: number) => {
 };
 
 export function drawRightAngleSign(point1: Coord, pointO: Coord, point2: Coord,
-                                         line1: fabric.Line, line2: fabric.Line,
-                                         signSize = 8, stroke: "red") {
+  line1: fabric.Line, line2: fabric.Line,
+  signSize = 8, stroke: "red") {
   const fpoint1 = new fabric.Point(point1.x, point1.y);
   const fpointO = new fabric.Point(pointO.x, pointO.y);
   const fpoint2 = new fabric.Point(point2.x, point2.y);
@@ -442,8 +443,8 @@ export function drawRightAngleSign(point1: Coord, pointO: Coord, point2: Coord,
   const anglecoord2 = fpointO.lerp(fpoint2, t2);
   const temp = anglecoord1.add(anglecoord2);
   const anglecoord3 = temp.subtract(fpointO);
-  line1.set({x1: anglecoord1.x, y1: anglecoord1.y, x2: anglecoord3.x, y2: anglecoord3.y, stroke});
-  line2.set({x1: anglecoord2.x, y1: anglecoord2.y, x2: anglecoord3.x, y2: anglecoord3.y, stroke});
+  line1.set({ x1: anglecoord1.x, y1: anglecoord1.y, x2: anglecoord3.x, y2: anglecoord3.y, stroke });
+  line2.set({ x1: anglecoord2.x, y1: anglecoord2.y, x2: anglecoord3.x, y2: anglecoord3.y, stroke });
 }
 
 export const degreesToRadians = (theta: number) => {
@@ -454,7 +455,7 @@ export const fillDigits = (s: string, digits: number) => {
   let sSize = s.length;
   if (s.indexOf(".") === -1) {
     s += ".";
-  } else{
+  } else {
     sSize--;
   }
   while (sSize < digits) {
@@ -476,4 +477,22 @@ export const setp = (e: Element, p: number[]) => {
   e.setAttribute("x", p[0] + "");
   e.setAttribute("y", p[1] - 10 + "");
 };
+
+export const setc = (e: Element, p: number[]) => {
+  e.setAttribute("cx", p[0] + "");
+  e.setAttribute("cy", p[1] + "");
+};
+
+export const areaa = (polygon: number[]) => {
+  const length = polygon.length;
+
+  let sum = 0;
+
+  for (let i = 0; i < length; i += 2) {
+    sum += polygon[i] * polygon[(i + 3) % length] - polygon[i + 1] * polygon[(i + 2) % length];
+  }
+
+  return Math.abs(sum) * 0.5;
+};
+
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */

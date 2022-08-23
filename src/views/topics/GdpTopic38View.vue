@@ -18,7 +18,6 @@ import {
   calculateLineIntersectInPoints,
   solveLinearEquation,
   calculateDistanceBetweenTwoPoints,
-  area,
 } from "@/utils/geometry";
 
 const topic = indexTopicMap.get(38) as Topic;
@@ -140,7 +139,7 @@ export default defineComponent({
     const valueX = createLabel("0");
     const valueY = createLabel("0");
     const valueZ = createLabel("0");
-
+    
     const valueTrianglePQR = createLabel("1");
 
     const triangle = new fabric.Polygon(vertexes, {
@@ -436,6 +435,7 @@ export default defineComponent({
         stroke: "black",
         fill: "black",
         fontSize: 15,
+
         evented: false,
       })
     );

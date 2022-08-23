@@ -30,6 +30,7 @@ import { IEvent, Intersection } from "fabric/fabric-impl";
 const topic = indexTopicMap.get(2) as Topic;
 
 type Circle = fabric.Circle & {
+  // eslint-disable-next-line
   [key: string]: any;
   topBound?: Circle;
   bottomBound?: Circle;
