@@ -128,6 +128,8 @@ export default defineComponent(
             const p5Label = createLabel("P5", 0, 0, 18, "red");
             const p6Label = createLabel("P6", 0, 0, 18, "red");
 
+            const selectLine = createLine([vertices[2].x / 2, vertices[2].y, vertices[2].x, vertices[2].y], "blue");
+
             canvas.add(triangle);
             canvas.add(aLabel);
             canvas.add(bLabel);
@@ -135,6 +137,7 @@ export default defineComponent(
             canvas.add(heightOnAB);
             canvas.add(heightOnBC);
             canvas.add(heightOnAC);
+            canvas.add(selectLine);
 
             function animate(line: fabric.Line, start: Coord, end: Coord) {
                 line.set({ x1: start.x, y1: start.y, x2: start.x, y2: start.y });
@@ -147,7 +150,7 @@ export default defineComponent(
                     onComplete: () => {
                         line.setCoords();
                     },
-                    duration: 1000,
+                    duration: 2000,
                 });
             }
 
@@ -165,7 +168,7 @@ export default defineComponent(
 
             canvas.on("mouse:move", function (event) {
                 const pointer = canvas.getPointer(event.e);
-                if (pointer?.x as number < vertices[2].x && pointer?.x as number > vertices[1].x
+                if (pointer?.x as number <= vertices[2].x && pointer?.x as number >= vertices[2].x / 2
                     && pointer?.y as number < vertices[1].y + 10 && pointer?.y as number > vertices[1].y - 10) {
                     triangle.set({ hoverCursor: "pointer" });
                 } else {
@@ -175,7 +178,7 @@ export default defineComponent(
 
             canvas.on("mouse:down", async function (event) {
                 const pointer = event.absolutePointer;
-                if (pointer?.x as number < vertices[2].x && pointer?.x as number > vertices[1].x
+                if (pointer?.x as number <= vertices[2].x && pointer?.x as number >= vertices[2].x / 2
                     && pointer?.y as number < vertices[1].y + 10 && pointer?.y as number > vertices[1].y - 10) {
                     canvas.remove(lineP1P2, lineP2P3, lineP3P4, lineP4P5, lineP5P6, lineP6P1);
                     canvas.remove(p1Label, p2Label, p3Label, p4Label, p5Label, p6Label);
@@ -200,7 +203,7 @@ export default defineComponent(
                         left: pointP2.x,
                         top: pointP2.y,
                     });
-                    await delay(1000);
+                    await delay(2000);
                     canvas.add(p2Node);
                     p2Label.set({
                         left: pointP2.x - 30,
@@ -215,7 +218,7 @@ export default defineComponent(
                         left: pointP3.x,
                         top: pointP3.y,
                     });
-                    await delay(1000);
+                    await delay(2000);
                     canvas.add(p3Node);
                     p3Label.set({
                         left: pointP3.x + 10,
@@ -230,7 +233,7 @@ export default defineComponent(
                         left: pointP4.x,
                         top: pointP4.y,
                     });
-                    await delay(1000);
+                    await delay(2000);
                     canvas.add(p4Node);
                     p4Label.set({
                         left: pointP4.x - 10,
@@ -245,7 +248,7 @@ export default defineComponent(
                         left: pointP5.x,
                         top: pointP5.y,
                     });
-                    await delay(1000);
+                    await delay(2000);
                     canvas.add(p5Node);
                     p5Label.set({
                         left: pointP5.x - 30,
@@ -260,7 +263,7 @@ export default defineComponent(
                         left: pointP6.x,
                         top: pointP6.y,
                     });
-                    await delay(1000);
+                    await delay(2000);
                     canvas.add(p6Node);
                     p6Label.set({
                         left: pointP6.x + 10,
