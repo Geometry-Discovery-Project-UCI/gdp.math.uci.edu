@@ -14,7 +14,7 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
-import { calculateThreeAngles, getPedalPoint, trilinearToCartesian } from "@/utils/geometry";
+import { calculateInterPointsWithBoundary, calculateThreeAngles, getPedalPoint, trilinearToCartesian } from "@/utils/geometry";
 
 const topic = indexTopicMap.get(12) as Topic;
 
@@ -318,23 +318,18 @@ export default defineComponent({
         top: circumcenter.y,
         radius: circumCircleRadius,
         strokeDashArray: [5, 5],
-        stroke: "purple"
+        stroke: "purple",
       });
 
-      // const eulerLineLinearEquation = solveLinearEquation(orthocenter, circumcenter);
       const orthocenterPoint = new fabric.Point(orthocenter.x, orthocenter.y);
       const circumcenterPoint = new fabric.Point(circumcenter.x, circumcenter.y);
 
-      const eulerDistance = orthocenterPoint.distanceFrom(circumcenterPoint);
-      let eulerAdjustment = Math.max(1, canvas.getWidth() / 5 / eulerDistance);
-      if (eulerDistance > canvas.getWidth() / 5 * 1.1) {
-        eulerAdjustment = canvas.getWidth() / 5 * 1.1 / eulerDistance;
-      }
+      const eulerDistance = calculateInterPointsWithBoundary(orthocenterPoint, circumcenterPoint, 500, 500, 50);
       eulerLine.set({
-        x1: orthocenterPoint.lerp(circumcenterPoint, 2.3 * eulerAdjustment).x,
-        y1: orthocenterPoint.lerp(circumcenterPoint, 2.3 * eulerAdjustment).y,
-        x2: orthocenterPoint.lerp(circumcenterPoint, -1.5 * eulerAdjustment).x,
-        y2: orthocenterPoint.lerp(circumcenterPoint, -1.5 * eulerAdjustment).y,
+        x1: eulerDistance[0].x,
+        y1: eulerDistance[0].y,
+        x2: eulerDistance[1].x,
+        y2: eulerDistance[1].y,
       });
     }
 
