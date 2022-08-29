@@ -24,13 +24,13 @@ import {
   calculateLineIntersectInLinearEquation,
   isInside,
   solveLinearEquation,
-  lineLineIntersection,
 } from "@/utils/geometry";
 import { IEvent, Intersection } from "fabric/fabric-impl";
 
 const topic = indexTopicMap.get(2) as Topic;
 
 type Circle = fabric.Circle & {
+  // eslint-disable-next-line
   [key: string]: any;
   topBound?: Circle;
   bottomBound?: Circle;
@@ -42,6 +42,7 @@ type Line = fabric.Line & {
   m?: number;
   b?: number;
 };
+
 export default defineComponent({
   setup() {
     return { topic };
@@ -469,6 +470,7 @@ export default defineComponent({
         });
       }
 
+
       const movablePointQ = createCircle(450, 150, 2.5, "black").set({
         evented: true,
         lockMovementX: true,
@@ -492,7 +494,7 @@ export default defineComponent({
       const lineQA = makeLine() as Line;
       const lineQB = makeLine() as Line;
       const lineQG = makeLine() as Line;
-
+      
       const aLabel = createLabel("A");
       const bLabel = createLabel("B");
       const cLabel = createLabel("C");

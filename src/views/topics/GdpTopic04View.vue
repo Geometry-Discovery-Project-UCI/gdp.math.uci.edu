@@ -2,30 +2,33 @@
   <TopicMeta :topic="topic" />
   <ATypographyParagraph>
   </ATypographyParagraph>
-  <svg id="tri-app_erdos-mordell" width="500" height="500" style="border: 2px solid black; background-color: floralwhite">
-    <polygon id="tri_erdos-mordell" stroke="black" fill="transparent"></polygon>
+  <svg id="tri-app_erdos-mordell" width="500" height="500"
+    style="border: 2px solid black; background-color: floralwhite">
+    <polygon id="tri_erdos-mordell" stroke="black" stroke-width="2.5px" fill="transparent"></polygon>
     <text id="letterA_erdos-mordell" font-size="25px">A</text>
     <text id="letterB_erdos-mordell" font-size="25px">B</text>
     <text id="letterC_erdos-mordell" font-size="25px">C</text>
-    <text id="letterE_erdos-mordell" font-size="25px">E</text>
+    <text id="letterE_erdos-mordell" font-size="25px">D</text>
     <text id="letterF_erdos-mordell" font-size="25px">F</text>
-    <text id="letterD_erdos-mordell" font-size="25px">D</text>
+    <text id="letterD_erdos-mordell" font-size="25px">E</text>
     <text id="letterP_erdos-mordell" font-size="25px">P</text>
     <line id="line1_erdos-mordell" stroke="orange"></line>
     <line id="line2_erdos-mordell" stroke="orange"></line>
     <line id="line3_erdos-mordell" stroke="orange"></line>
-    <line id="line4_erdos-mordell" stroke="orange"></line>
-    <line id="line5_erdos-mordell" stroke="orange"></line>
-    <line id="line6_erdos-mordell" stroke="orange"></line>
-    <text font-size="20px" x="190" y="30">PA + PB + PC ≥ 2(PD + PE + PF)</text>
-    <text font-size="20px" id="PA_erdos-mordell" x="190" y="50"></text>
-    <text font-size="20px" id="PB_erdos-mordell" x="240" y="50"></text>
-    <text font-size="20px" id="PC_erdos-mordell" x="290" y="50"></text>
-    <text font-size="20px" id="PD_erdos-mordell" x="355" y="50"></text>
-    <text font-size="20px" id="PE_erdos-mordell" x="400" y="50"></text>
-    <text font-size="20px" id="PF_erdos-mordell" x="435" y="50"></text>
-    <text font-size="20px" id="LHS_erdos-mordell" x="290" y="80"></text>
-    <text font-size="20px" id="RHS_erdos-mordell" x="340" y="80"></text>
+    <line id="line4_erdos-mordell" stroke="purple"></line>
+    <line id="line5_erdos-mordell" stroke="purple"></line>
+    <line id="line6_erdos-mordell" stroke="purple"></line>
+    <rect id="rad_erdos-mordell" width="12px" height="12px" stroke="blue" fill="transparent"></rect>
+    <rect id="rae_erdos-mordell" width="12px" height="12px" stroke="blue" fill="transparent"></rect>
+    <rect id="raf_erdos-mordell" width="12px" height="12px" stroke="blue" fill="transparent"></rect>
+    <text font-size="20px" x="95" y="420">PA + PB + PC ≥ 2(PD + PE + PF)</text>
+    <text font-size="20px" id="PA_erdos-mordell" x="30" y="450"></text>
+    <text font-size="20px" id="PB_erdos-mordell" x="100" y="450"></text>
+    <text font-size="20px" id="PC_erdos-mordell" x="170" y="450"></text>
+    <text font-size="20px" id="PD_erdos-mordell" x="260" y="450"></text>
+    <text font-size="20px" id="PE_erdos-mordell" x="330" y="450"></text>
+    <text font-size="20px" id="PF_erdos-mordell" x="405" y="450"></text>
+    <circle id="circleP_erdos-mordell" r="2px"></circle>
   </svg>
 </template>
 
@@ -34,14 +37,11 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import {
-distToLine,
   drawLine,
   findDistance,
   isInside,
-  lineLineIntersection,
-  makeString, pointAlongLine, projectPoint2Line,
+  makeString, projectPoint2Line, fillDigits, radiansToDegress
 } from "@/utils/geometry";
-import { Vector } from "../../utils/vector";
 const topic = indexTopicMap.get(4) as Topic;
 export default defineComponent(
   {
@@ -69,14 +69,16 @@ export default defineComponent(
       const letterE = document.querySelector("#letterE_erdos-mordell") as Element;
       const letterD = document.querySelector("#letterD_erdos-mordell") as Element;
       const letterF = document.querySelector("#letterF_erdos-mordell") as Element;
+      const circleP = document.querySelector("#circleP_erdos-mordell") as Element;
       const PA = document.querySelector("#PA_erdos-mordell") as Element;
       const PB = document.querySelector("#PB_erdos-mordell") as Element;
       const PC = document.querySelector("#PC_erdos-mordell") as Element;
       const PD = document.querySelector("#PD_erdos-mordell") as Element;
       const PE = document.querySelector("#PE_erdos-mordell") as Element;
       const PF = document.querySelector("#PF_erdos-mordell") as Element;
-      const LHS = document.querySelector("#LHS_erdos-mordell") as Element;
-      const RHS = document.querySelector("#RHS_erdos-mordell") as Element;
+      const raD = document.querySelector("#rad_erdos-mordell") as Element;
+      const raE = document.querySelector("#rae_erdos-mordell") as Element;
+      const raF = document.querySelector("#raf_erdos-mordell") as Element;
       const line1 = document.querySelector("#line1_erdos-mordell") as Element;
       const line2 = document.querySelector("#line2_erdos-mordell") as Element;
       const line3 = document.querySelector("#line3_erdos-mordell") as Element;
@@ -94,12 +96,7 @@ export default defineComponent(
         "points",
         makeString([points[0], points[1], points[2]])
       );
-      let dpbc = distToLine(pP, pB, pC);
-      let dpac = distToLine(pP, pA, pC);
-      let dpab = distToLine(pP, pA, pB);
-      let dpa = findDistance(pP, pA);
-      let dpb = findDistance(pP, pB);
-      let dpc = findDistance(pP, pC);
+      let dpbc, dpab, dpac, dpa, dpb, dpc, mAB, mAC, mBC, tBC, tAC, tAB;
       const erdos_mordell = (p: DOMPoint) => {
         if (isInside(pA[0], pA[1], pB[0], pB[1], pC[0], pC[1], p.x, p.y)) {
           pP = [p.x, p.y];
@@ -107,6 +104,8 @@ export default defineComponent(
           dot.setAttributeNS(null, "cy", pP[1]);*/
           letterP?.setAttribute("x", pP[0] + "");
           letterP?.setAttribute("y", pP[1] - 10 + "");
+          circleP.setAttribute("cx", pP[0] + "");
+          circleP.setAttribute("cy", pP[1] + "");
         } else {
           return;
         }
@@ -118,9 +117,9 @@ export default defineComponent(
         letterA?.setAttribute("x", pA[0] + "");
         letterA?.setAttribute("y", pA[1] - 10 + "");
         letterB?.setAttribute("x", pB[0] - 20 + "");
-        letterB?.setAttribute("y", pB[1] + 5 + "");
-        letterC?.setAttribute("x", pC[0] - 5 + "");
-        letterC?.setAttribute("y", pC[1] - 5 + "");
+        letterB?.setAttribute("y", pB[1] + 25 + "");
+        letterC?.setAttribute("x", pC[0] + "");
+        letterC?.setAttribute("y", pC[1] + 25 + "");
         const pbc = projectPoint2Line(pP, pB, pC) as number[];
         drawLine(pbc, pP, line1);
         const pac = projectPoint2Line(pP, pA, pC) as number[];
@@ -131,25 +130,40 @@ export default defineComponent(
         drawLine(pP, pB, line5);
         drawLine(pP, pC, line6);
         letterE.setAttribute("x", pbc[0] + "");
-        letterE.setAttribute("y", pbc[1] + 20 + "");
-        letterD.setAttribute("x", pac[0] + "");
-        letterD.setAttribute("y", pac[1] + "");
+        letterE.setAttribute("y", pbc[1] + 25 + "");
+        letterD.setAttribute("x", pac[0] + 7 + "");
+        letterD.setAttribute("y", pac[1] - 5 + "");
         letterF.setAttribute("x", pab[0] - 20 + "");
         letterF.setAttribute("y", pab[1] + "");
-        dpbc = Math.round(findDistance(pbc, pP) / 10);
-        dpac = Math.round(findDistance(pac, pP) / 10);
-        dpab = Math.round(findDistance(pab, pP) / 10);
-        dpa = Math.round(findDistance(pP, pA) / 10);
-        dpb = Math.round(findDistance(pP, pB) / 10);
-        dpc = Math.round(findDistance(pP, pC) / 10);
+        dpbc = fillDigits(Math.round(findDistance(pbc, pP) * 10) / 100 + "", 4);
+        dpac = fillDigits(Math.round(findDistance(pac, pP) * 10) / 100 + "", 4);
+        dpab = fillDigits(Math.round(findDistance(pab, pP) * 10) / 100 + "", 4);
+        dpa = fillDigits(Math.round(findDistance(pP, pA) * 10) / 100 + "", 4);
+        dpb = fillDigits(Math.round(findDistance(pP, pB) * 10) / 100 + "", 4);
+        dpc = fillDigits(Math.round(findDistance(pP, pC) * 10) / 100 + "", 4);
         PA.innerHTML = dpa + " + ";
         PB.innerHTML = dpb + " + ";
         PC.innerHTML = dpc + " ≥ 2(";
         PD.innerHTML = dpac + " + ";
         PE.innerHTML = dpbc + " + ";
         PF.innerHTML = dpab + ")";
-        LHS.innerHTML = dpa + dpb + dpc + " ≥ ";
-        RHS.innerHTML = 2 * (dpac + dpbc + dpab) + "";
+        mBC = (pB[1] - pC[1]) / (pB[0] - pC[0]);
+        mAC = (pA[1] - pC[1]) / (pA[0] - pC[0]);
+        mAB = (pA[1] - pB[1]) / (pA[0] - pB[0]);
+        tBC = Math.atan(mBC);
+        tAC = Math.atan(mAC);
+        tAB = Math.atan(mAB);
+        raD.setAttribute("transform", "rotate(" + String(radiansToDegress(tAB)) + " " + pab[0] + " " + pab[1] + ")");
+        raD.setAttribute("x", pab[0] + "");
+        raD.setAttribute("y", pab[1] + "");
+
+        raE.setAttribute("transform", "rotate(" + String(radiansToDegress(tAC)) + " " + pac[0] + " " + pac[1] + ")");
+        raE.setAttribute("x", pac[0] + "");
+        raE.setAttribute("y", pac[1] + "");
+
+        raF.setAttribute("transform", "rotate(" + String(180 - radiansToDegress(tBC)) + " " + pbc[0] + " " + pbc[1] + ")");
+        raF.setAttribute("x", pbc[0] + "");
+        raF.setAttribute("y", pbc[1] + "");
       };
       const pPoint = DOMPoint.fromPoint({
         x: 160,

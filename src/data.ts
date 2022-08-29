@@ -174,10 +174,16 @@ export const MELISSA_YU: Contributor = {
   email: "melissajiayu@gmail.com",
 };
 
+export const ISHAN_DARJI: Contributor = {
+  name: "Ishan Darji",
+  email: "ishan.darji0@gmail.com"
+};
+
 export const contributors: Contributor[] = [
   ZHIQIN_LU,
   CHRISTOPHER_DAVIS,
   XIANFU_LIU,
+  YI_CHEN,
   YUE_CHU,
   RUOYING_DENG,
   JIAMING_FENG,
@@ -201,6 +207,7 @@ export const contributors: Contributor[] = [
   ZEJIN_XU,
   FELIX_YU,
   MELISSA_YU,
+  ISHAN_DARJI,
 ];
 
 export const otherEssays: { name: string, uri: string }[] = [
@@ -268,6 +275,7 @@ export const topics: Topic[] = [
     essay: "pdfs/topic03.pdf",
     animationContributors: [
       XINXI_GUO,
+      YI_CHEN,
     ],
     essayContributors: [
       ZHIQIN_LU,
@@ -393,7 +401,7 @@ export const topics: Topic[] = [
     index: 14,
     snapshot: "images/snapshots/topic14.png",
     essay: "pdfs/topic14.pdf",
-    animationContributors: [],
+    animationContributors: [MELISSA_YU],
     essayContributors: [],
   },
   {
@@ -538,7 +546,9 @@ export const topics: Topic[] = [
     index: 30,
     snapshot: "images/snapshots/topic30.png",
     essay: "pdfs/topic30.pdf",
-    animationContributors: [],
+    animationContributors: [
+      YI_CHEN,
+    ],
     essayContributors: [
       JIMENA_ISABEL_RAZO,
     ],
@@ -576,7 +586,9 @@ export const topics: Topic[] = [
     index: 34,
     snapshot: "images/snapshots/topic34.png",
     essay: "pdfs/topic34.pdf",
-    animationContributors: [],
+    animationContributors: [
+      ISHAN_DARJI,
+    ],
     essayContributors: [
       YUFEI_REN,
     ],
@@ -586,7 +598,7 @@ export const topics: Topic[] = [
     index: 35,
     snapshot: "images/snapshots/topic35.png",
     essay: "pdfs/topic35.pdf",
-    animationContributors: [],
+    animationContributors: [MELISSA_YU],
     essayContributors: [
       DAWEI_LIU,
     ],
