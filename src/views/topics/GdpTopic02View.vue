@@ -663,11 +663,10 @@ export default defineComponent({
             console.log("pointD === pointE");
           }
         }
-        if (pointP === pointD) {
+        if (pointD === undefined && pointE !== undefined) {
           if ((p.left as number) === 40) {
             const y = lineQG.m! * p.left! + lineQG.b!;
             p.set("top", y);
-            console.log("works");
           }
           console.log("pointD === pointP");
         }
