@@ -85,21 +85,21 @@ export default defineComponent(
 
         // Set initiate attributes for line2.
         const labelL2 = makeLabel("L2");
-        const labelM = makeLabel("M");
-        const labelN = makeLabel("N");
+        // const labelM = makeLabel("M");
+        // const labelN = makeLabel("N");
         const l2 = makeLine();
         const L2LeftPoint = makeMovablePoint(new fabric.Point(50, 200));
         const L2RightPoint = makeMovablePoint(new fabric.Point(450, 300));
-        L2LeftPoint.set({originX: "center", originY: "center", radius: 3, fill: "black", padding:20});
-        L2RightPoint.set({originX: "center", originY: "center", radius: 3,fill: "black", padding:20});
+        L2LeftPoint.set({originX: "center", originY: "center", radius: 3, fill: "black", padding:20, lockMovementX: true});
+        L2RightPoint.set({originX: "center", originY: "center", radius: 3,fill: "black", padding:20, lockMovementX: true});
         l2.set({
           x1: L2LeftPoint.left as number, y1: L2LeftPoint.top as number,
           x2: L2RightPoint.left, y2: L2RightPoint.top,
           strokeWidth: 2
         });
         labelL2.set({left:  440, top: 300});
-        labelM.set({left: L2LeftPoint.left as number - 30, top: L2LeftPoint.top as number - 20, fontSize: 20});
-        labelN.set({left: L2RightPoint.left as number + 10, top: L2RightPoint.top as number - 20, fontSize: 20});
+        // labelM.set({left: L2LeftPoint.left as number - 30, top: L2LeftPoint.top as number - 20, fontSize: 20});
+        // labelN.set({left: L2RightPoint.left as number + 10, top: L2RightPoint.top as number - 20, fontSize: 20});
 
         // Set initiate coordinates for moving points E, F, G,H.
         const labelE = makeLabel("E");
@@ -151,17 +151,12 @@ export default defineComponent(
         labelG.set({left: pointG!.x - 10, top: pointG!.y + 10});
         labelH.set({left: pointH!.x - 10, top: pointH!.y + 10});
 
-        pointE = calculateLineIntersectInPoints(l2, PA, false);
-        pointF = calculateLineIntersectInPoints(l2, PB, false);
-        pointG = calculateLineIntersectInPoints(l2, PC, false);
-        pointH = calculateLineIntersectInPoints(l2, PD, false);
-
         equation1.set({left:80, top: 430});
         equation2.set({left:80, top: 465});
         dividerSign1.set({left:80, top: 435, stroke: "black", strokeWidth: 1, fill: "black"});
         equalSign1.set({left:180, top: 445, stroke: "black",strokeWidth: 1,fill: "black"});
-        // Calculate distance of inter points.
-        // TODO: HANDLE NULL CASE
+
+        // Calculate distance of inter points. Initiated points won't be null.
         const disEH = findDistance([pointE!.x, pointE!.y], [pointH!.x, pointH!.y]);
         const disFG = findDistance([pointF!.x, pointF!.y], [pointG!.x, pointG!.y]);
         const disEF = findDistance([pointE!.x, pointE!.y], [pointF!.x, pointF!.y]);
@@ -207,64 +202,51 @@ export default defineComponent(
         dividerSign2.set({left:220, top: 435, stroke: "black", strokeWidth: 1, fill: "black"});
         equalSign2.set({left:360, top: 445, stroke: "black",strokeWidth: 1,fill: "black"});
 
-        function calculateSignedDistanceFromPointToLine(pt: number[], v: number[], w: number[]) {
-          const ab = Math.sqrt((w[1] - v[1]) ** 2 + (w[0] - v[0]) ** 2);
-          return ((w[1] - v[1]) * (pt[0] - v[0]) - (w[0] - v[0]) * (pt[1] - v[1])) / ab;
-        }
-
         // Moving point manipulate.
         const onMovePoint = (e: IEvent): void => {
           const p = e.target as Circle;
-          const point = new fabric.Point(p.left as number, p.top as number);
+          // const point = new fabric.Point(p.left as number, p.top as number);
           let point2: fabric.Point;
+          let disEH = 0, disGH = 0,disFG = 0, disEF = 0 ;
           // moving left point
-          if (point.x < pointP.x) {
+          if (p.left! < pointP.x) {
             point2 = new fabric.Point(L2RightPoint.left!, L2RightPoint.top!);
+            l2.set({x1: point2.x, y1: point2.y, x2: p.left!, y2: p.top!});
+            const equationPN = solveLinearEquation(pointP, point2);
+            const equationAN = solveLinearEquation(pointA, point2);
+            pointE = calculateLineIntersectInPoints(l2, PA, false);
+            pointH = calculateLineIntersectInPoints(l2, PD, false);
+            if (pointE === null) { // calculate the function of AN and PN
+              if (p.top! > pointA.y) { // PM
+                p.set({top: equationAN.m * p.left! + equationAN.b}); // Upper bound.
+              } else {
+                p.set({top: equationPN.m * p.left! + equationPN.b}); // Lower bound.
+              }
+            }
             labelL2.set({left: point2.x, top: point2.y});
-            labelM.set({left: L2LeftPoint.left as number - 30, top: L2LeftPoint.top as number - 20, fontSize: 20});
+            // labelM.set({left: p.left as number - 30, top: p.top as number - 20, fontSize: 20});
           } else {  // moving right point
             point2 = new fabric.Point(L2LeftPoint.left!, L2LeftPoint.top!);
-            // p.set({left: 450});
-            labelL2.set({left: point.x, top: point.y});
-            labelN.set({left: L2RightPoint.left as number + 10, top: L2RightPoint.top as number - 20, fontSize: 20});
+            l2.set({x1: point2.x, y1: point2.y, x2: p.left!, y2: p.top!});
+            const equationPM = solveLinearEquation(pointP, point2);
+            const equationDM = solveLinearEquation(pointD,point2);
+            pointE = calculateLineIntersectInPoints(l2, PA, false);
+            pointH = calculateLineIntersectInPoints(l2, PD, false);
+            if (pointH === null) {
+              if (p.left! > pointP.x && p.top! > pointD.y) {
+                p.set({top: equationDM.m * p.left! + equationDM.b});
+              } else {
+                p.set({top: equationPM.m * p.left! + equationPM.b});
+              }
+            }
+            labelL2.set({left: p.left!, top: p.top!});
+            // labelN.set({left: p.left as number + 10, top: p.top as number - 20, fontSize: 20});
           }
-          l2.set({
-            x1:point.x , y1: point.y,
-            x2: point2.x, y2: point2.y,
-          });
-
-          pointE = calculateLineIntersectInPoints(l2, PA, false);
+          l2.set({x1:p.left! , y1: p.top!, x2: point2.x, y2: point2.y,});
           pointF = calculateLineIntersectInPoints(l2, PB, false);
           pointG = calculateLineIntersectInPoints(l2, PC, false);
-          pointH = calculateLineIntersectInPoints(l2, PD, false);
-          // Case1: M up bound, M only move on PN, N is fixed
-          // const disPtoMN = calculateSignedDistanceFromPointToLine([pointP.x, pointP.y], [point.x, point.y], [point2.x, point2.y]);
-          // const disPtoAN = calculateSignedDistanceFromPointToLine([pointA.x, pointA.y], [point.x, point.y], [point2.x, point2.y]);
-          // const disPtoNM = calculateSignedDistanceFromPointToLine([pointP.x, pointP.y], [point.x, point.y], [point2.x, point2.y]);
-          // console.log(disPtoNM);
-          // if (disPtoMN < 0 && point.x < pointP.x) {
-          //   p.set({
-          //     // left: (p.top! - equationPN.b)/ equationPN.m,
-          //     top: equationPN.m * p.left! + equationPN.b});
-          //   l2.set({x1: point2.x, y1: point2.y, x2: p.left!, y2: p.top!});
-          // } else if (disPtoAN > 0) {
-          //   // Case2: M lowerBound, M could only move on line AN
-          //   const equationAN = solveLinearEquation(pointA, point2);
-          //   p.set({top: equationAN.m * p.left! + equationAN.b});
-          //   l2.set({x1: point2.x, y1: point2.y, x2: p.left!, y2: p.top!});
-          // } else if (point.x > pointP.x &&　disPtoNM > 0) {
-          //    const equationPM = solveLinearEquation(pointP, point2);
-          //   p.set({top: equationPM.m * p.left! + equationPM.b});
-          //  }
-          // Case 3: M is fixed, N up bound could only move on PM
-
-          // Case4: N lower bound, N could only move on line MD
 
           // Calculate distance of inter points.
-          // TODO: HANDLE NULL CASE
-          let disEH = 0, disGH = 0,disFG = 0, disEF = 0 ;
-          const equationPN = solveLinearEquation(pointP, point2);
-          const equationAN = solveLinearEquation(pointA, point2);
           if (pointE !== null && pointH !== null) {
             disEH = findDistance([pointE!.x, pointE!.y], [pointH!.x, pointH!.y]);
             disGH = findDistance([pointG!.x, pointG!.y], [pointH!.x, pointH!.y]);
@@ -278,38 +260,7 @@ export default defineComponent(
             labelF.set({left: pointF!.x - 10, top: pointF!.y + 10});
             labelG.set({left: pointG!.x - 10, top: pointG!.y + 10});
             labelH.set({left: pointH!.x - 10, top: pointH!.y + 10});
-          } else if (pointE === null) { // calculate the function of AN and PN
-            // console.log(equation);
-            console.log(p);
-            console.log(point);
-            if (point.x < pointP.x && point.y > pointP.y) { // PM
-              p.set({
-                top: equationPN.m * p.left! + equationPN.b
-              });
-              if (point.x > pointP.x) {
-                p.set({left: pointP.x});
-              }
-            } else if (point.x < pointP.x && point.y < pointA.y) {
-              p.set({top: equationAN.m * p.left! + equationAN.b});
-            }
-            console.log("after: ");
-            console.log(p);
-            console.log(point);
-            console.log(point2);
-            // else {
-            //   // l2.set({x1: point2.x, y1: point2.y, x2: pointP.x, y2: pointP.y});
-            // }
-            // console.log(p);
-            l2.set({x1: point2.x, y1: point2.y, x2: p.left!, y2: p.top!});
           }
-          // if (pointH === null) {
-          //   if (point.y > pointP.y) {
-          //     l2.set({x1: point2.x, y1: point2.y, x2: point.x, y2: point.y});
-          //   } else {
-          //     l2.set({x1: point2.x, y1: point2.y, x2: pointP.x, y2: pointP.y});
-          //   }
-          // }
-
           const result = (disEH /disGH)  * (disFG / disEF);
 
           // Set distance to display text
@@ -325,37 +276,9 @@ export default defineComponent(
         canvas.add(l1, PA, PB, PC, PD, l2);
         canvas.add(circleA, circleB, circleC, circleD, circleP, circleE, circleF, circleG, circleH);
         canvas.add(labelA, labelB, labelC, labelD, labelP,labelL1, labelL2, labelE, labelF, labelG,
-        labelH, labelM, labelN);
+        labelH);
         canvas.add(L2LeftPoint, L2RightPoint);
         canvas.add(disEHText, disFGText, disEFText, disGHText, disResult);
-      //   const disFromP2 = calculateSignedDistanceFromPointToLine([pointP.x, pointP.y],
-      //     [point.x, point.y], [point2.x, point2.y]);
-      //   const disFromD = calculateSignedDistanceFromPointToLine([pointD.x, pointD.y],
-      //     [point.x, point.y], [point2.x, point2.y]);
-      //   console.log(disFromD);
-      //   // console.log(pointP.x + ", " + pointP.y);
-      //   // console.log(point.x + ", " + point.y);
-      //   // console.log(point2.x + ", " + point2.y);
-      //   // console.log(disFromP2);
-      //   // let rBottomBoundY = 0;
-      //   if (disFromP2 === 0) {
-      //     rUpBound = point.x;
-      //     // rBottomBoundY = point.y;
-      //   }
-      //   if (disFromP2 > 0) {
-      //     p.set({left: rUpBound});
-      //   }
-      //   let rBottomBoundY = 0;
-      //   if (disFromD === 0) {
-      //     // rBottomBoundX = point.x;
-      //     rBottomBoundY = p.top!;
-      //     console.log(p);
-      //     console.log(rBottomBoundY);
-      //   }
-      //   if (disFromD < 0) {
-      //     p.set({top: rBottomBoundY});
-      //   }
-      // }
       }
     },
 );
