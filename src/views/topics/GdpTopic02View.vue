@@ -35,6 +35,14 @@ type Circle = fabric.Circle & {
   topBound?: Circle;
   bottomBound?: Circle;
 };
+
+type Line = fabric.Line & {
+  p1?: Circle;
+  p2?: Circle;
+  m?: number;
+  b?: number;
+};
+
 export default defineComponent({
   setup() {
     return { topic };
@@ -104,7 +112,8 @@ export default defineComponent({
       pointP.set({
         originX: "center",
         originY: "center",
-        radius: 2,
+        radius: 2.5,
+        padding: 3,
         fill: "red",
       });
 
@@ -190,25 +199,29 @@ export default defineComponent({
         dLabel.set({
           left: pointD.x - 5,
           top: pointD.y + 10,
-          fontSize: 18,
+          fontSize: 20,
+          fill: "blue",
         });
 
         eLabel.set({
           left: pointE.x + 15,
           top: pointE.y - 15,
-          fontSize: 18,
+          fontSize: 20,
+          fill: "blue",
         });
 
         fLabel.set({
           left: pointF.x - 20,
           top: pointF.y - 15,
-          fontSize: 18,
+          fontSize: 20,
+          fill: "blue",
         });
 
         pLabel.set({
           left: (pointP.left as number) - 25,
           top: (pointP.top as number) - 10,
-          fontSize: 18,
+          fontSize: 20,
+          fill: "red",
         });
 
         // set coordinates for the nodes
@@ -417,6 +430,7 @@ export default defineComponent({
           evented: false,
           radius: radius || 1,
           fill: fill || "transparent",
+          padding: 3,
         });
       }
 
@@ -456,17 +470,29 @@ export default defineComponent({
         });
       }
 
-      const movablePointQ = createCircle(450, 200, 2, "black").set({ evented: true });
+      const movablePointQ = createCircle(450, 150, 2.5, "black").set({
+        evented: true,
+        lockMovementX: true,
+      });
+      const movablePointP = createCircle(40, 390, 2.5, "black").set({
+        evented: true,
+        lockMovementX: true,
+      });
 
       const triangle = createPolygon();
 
-      const pNode = createCircle(40, 440, 2, "black");
-      const dNode = createCircle(0, 0, 2, "red");
-      const eNode = createCircle(0, 0, 2, "red");
-      const fNode = createCircle(0, 0, 2, "red");
+      const dNode = createCircle(0, 0, 2.5, "red");
+      const eNode = createCircle(0, 0, 2.5, "red");
+      const fNode = createCircle(0, 0, 2.5, "red");
 
-      const linePQ = createLine([], "orange");
+      const linePQ = createLine([], "green");
       const lineBC = createLine();
+
+      const linePA = makeLine() as Line;
+      const linePB = makeLine() as Line;
+      const lineQA = makeLine() as Line;
+      const lineQB = makeLine() as Line;
+      const lineQG = makeLine() as Line;
 
       const aLabel = createLabel("A");
       const bLabel = createLabel("B");
@@ -477,32 +503,187 @@ export default defineComponent({
       const eLabel = createLabel("E");
       const fLabel = createLabel("F");
 
-      function movablePoint() {
-        const vertices = [
-          new fabric.Point(270, 150),
-          new fabric.Point(170, 400),
-          new fabric.Point(420, 400),
-        ];
-        triangle.set({
-          points: vertices,
-        });
-        aLabel.set({
-          left: vertices[0].x - 10,
-          top: vertices[0].y - 35,
-        });
-        bLabel.set({
-          left: vertices[1].x - 20,
-          top: vertices[1].y,
-        });
-        cLabel.set({
-          left: vertices[2].x,
-          top: vertices[2].y - 2,
-        });
+      const vertices = [
+        new fabric.Point(340, 150),
+        new fabric.Point(170, 350),
+        new fabric.Point(440, 350),
+      ];
+      triangle.set({
+        points: vertices,
+      });
+      aLabel.set({
+        left: vertices[0].x - 10,
+        top: vertices[0].y - 35,
+      });
+      bLabel.set({
+        left: vertices[1].x - 20,
+        top: vertices[1].y,
+      });
+      cLabel.set({
+        left: vertices[2].x,
+        top: vertices[2].y - 2,
+      });
+      const extendPoint = new fabric.Point(
+        vertices[1].lerp(vertices[2], -0.5).x,
+        vertices[1].lerp(vertices[2], -0.5).y
+      );
+      lineBC.set({
+        x1: vertices[2].x,
+        y1: vertices[2].y,
+        x2: extendPoint.x,
+        y2: extendPoint.y,
+      });
 
-        const pointP = new fabric.Point(pNode.left as number, pNode.top as number);
-        const pointQ = new fabric.Point(movablePointQ.left as number, movablePointQ.top as number);
+      const pointP = new fabric.Point(movablePointP.left as number, movablePointP.top as number);
+      const pointQ = new fabric.Point(movablePointQ.left as number, movablePointQ.top as number);
 
-        const pointE = (
+      let pointE = (
+        fabric.Intersection.intersectLineLine(
+          pointP,
+          pointQ,
+          vertices[0],
+          vertices[1]
+        ) as Intersection
+      ).points![0];
+
+      let pointF = (
+        fabric.Intersection.intersectLineLine(
+          pointP,
+          pointQ,
+          vertices[0],
+          vertices[2]
+        ) as Intersection
+      ).points![0];
+
+      let pointD = (
+        fabric.Intersection.intersectLineLine(
+          pointP,
+          pointQ,
+          vertices[1],
+          extendPoint
+        ) as Intersection
+      ).points![0];
+
+      dNode.set({
+        left: pointD.x,
+        top: pointD.y,
+      });
+      eNode.set({
+        left: pointE.x,
+        top: pointE.y,
+      });
+      fNode.set({
+        left: pointF.x,
+        top: pointF.y,
+      });
+
+      linePQ.set({
+        x1: movablePointQ.left,
+        y1: movablePointQ.top,
+        x2: movablePointP.left,
+        y2: movablePointP.top,
+      });
+
+      pLabel.set({
+        left: pointP.x - 15,
+        top: pointP.y,
+        fill: "red",
+      });
+      qLabel.set({
+        left: movablePointQ.left,
+        top: movablePointQ.top,
+        fill: "red",
+      });
+
+      dLabel.set({
+        left: pointD.x - 20,
+        top: pointD.y - 25,
+        fill: "blue",
+        fontSize: 20,
+      });
+      eLabel.set({
+        left: pointE.x - 20,
+        top: pointE.y - 25,
+        fill: "blue",
+        fontSize: 20,
+      });
+      fLabel.set({
+        left: pointF.x - 3,
+        top: pointF.y - 30,
+        fill: "blue",
+        fontSize: 20,
+      });
+
+      const onPointMove = (e: IEvent): void => {
+        const p = e.target! as Circle;
+
+        pointP.x = movablePointP.left as number;
+        pointP.y = movablePointP.top as number;
+        pointQ.x = movablePointQ.left as number;
+        pointQ.y = movablePointQ.top as number;
+
+        Object.assign(
+          linePA,
+          solveLinearEquation({ x: movablePointP.left!, y: movablePointP.top! }, vertices[0])
+        );
+        Object.assign(
+          linePB,
+          solveLinearEquation({ x: movablePointP.left!, y: movablePointP.top! }, vertices[1])
+        );
+        Object.assign(
+          lineQA,
+          solveLinearEquation({ x: movablePointQ.left!, y: movablePointQ.top! }, vertices[0])
+        );
+        Object.assign(
+          lineQB,
+          solveLinearEquation({ x: movablePointQ.left!, y: movablePointQ.top! }, vertices[1])
+        );
+        Object.assign(
+          lineQG,
+          solveLinearEquation({ x: movablePointQ.left!, y: movablePointQ.top! }, extendPoint)
+        );
+
+        if (pointE === pointF) {
+          if ((p.left as number) === 450) {
+            const y = linePA.m! * p.left! + linePA.b!;
+            p.set("top", y);
+          } else if ((p.left as number) === 40) {
+            const y = lineQA.m! * p.left! + lineQA.b!;
+            p.set("top", y);
+          }
+          console.log("pointE === pointF");
+        }
+        if (pointD === pointE) {
+          if ((p.left as number) === 450) {
+            const y = linePB.m! * p.left! + linePB.b!;
+            p.set("top", y);
+          } else if ((p.left as number) === 40) {
+            const y = lineQB.m! * p.left! + lineQB.b!;
+            p.set("top", y);
+            console.log("pointD === pointE");
+          }
+        }
+        if (pointD === undefined && pointE !== undefined) {
+          if ((p.left as number) === 40) {
+            const y = lineQG.m! * p.left! + lineQG.b!;
+            p.set("top", y);
+          }
+          console.log("pointD === pointP");
+        }
+
+        // const p1 = [movablePointP.left as number, movablePointP.top as number];
+        // const q1 = [movablePointQ.left as number, movablePointQ.top as number];
+
+        // const a1 = [vertices[0].x, vertices[0].y];
+        // const b1 = [vertices[1].x, vertices[1].y];
+        // const c1 = [vertices[2].x, vertices[2].y];
+        // const ex1 = [extendPoint.x, extendPoint.y];
+
+        // const E1 = lineLineIntersection(p1, q1, a1, b1);
+        // const F1 = lineLineIntersection(p1, q1, a1, c1);
+        // const D1 = lineLineIntersection(p1, q1, ex1, c1);
+
+        pointE = (
           fabric.Intersection.intersectLineLine(
             pointP,
             pointQ,
@@ -511,7 +692,7 @@ export default defineComponent({
           ) as Intersection
         ).points![0];
 
-        const pointF = (
+        pointF = (
           fabric.Intersection.intersectLineLine(
             pointP,
             pointQ,
@@ -520,76 +701,72 @@ export default defineComponent({
           ) as Intersection
         ).points![0];
 
-        const a = new fabric.Point(
-          vertices[1].lerp(vertices[2], -0.5).x,
-          vertices[1].lerp(vertices[2], -0.5).y
-        );
-
-        const pointD = (
-          fabric.Intersection.intersectLineLine(pointP, pointQ, vertices[1], a) as Intersection
+        pointD = (
+          fabric.Intersection.intersectLineLine(
+            pointP,
+            pointQ,
+            vertices[1],
+            extendPoint
+          ) as Intersection
         ).points![0];
 
-        lineBC.set({
-          x1: vertices[2].x,
-          y1: vertices[2].y,
-          x2: a.x,
-          y2: a.y,
-        });
+        if (pointD !== undefined && pointE !== undefined && pointF !== undefined) {
+          linePQ.set({
+            x1: movablePointQ.left,
+            y1: movablePointQ.top,
+            x2: movablePointP.left,
+            y2: movablePointP.top,
+          });
 
-        dNode.set({
-          left: pointD.x,
-          top: pointD.y,
-        });
-        eNode.set({
-          left: pointE.x,
-          top: pointE.y,
-        });
-        fNode.set({
-          left: pointF.x,
-          top: pointF.y,
-        });
+          dNode.set({
+            left: pointD.x,
+            top: pointD.y,
+          });
+          eNode.set({
+            left: pointE.x,
+            top: pointE.y,
+          });
 
-        // lineBD.set({
-        //   x1: vertices[2].x,
-        //   y1: vertices[2].y,
-        //   x2: pointD.x,
-        //   y2: pointD.y,
-        // });
+          fNode.set({
+            left: pointF.x,
+            top: pointF.y,
+          });
 
-        linePQ.set({
-          x1: movablePointQ.left,
-          y1: movablePointQ.top,
-          x2: pNode.left,
-          y2: pNode.top,
-        });
+          pLabel.set({
+            left: pointP.x - 15,
+            top: pointP.y,
+            fill: "red",
+          });
+          qLabel.set({
+            left: movablePointQ.left,
+            top: movablePointQ.top,
+            fill: "red",
+          });
 
-        pLabel.set({
-          left: pointP.x - 15,
-          top: pointP.y,
-        });
-        qLabel.set({
-          left: movablePointQ.left,
-          top: movablePointQ.top,
-        });
+          dLabel.set({
+            left: pointD.x - 20,
+            top: pointD.y - 25,
+            fill: "blue",
+            fontSize: 20,
+          });
+          eLabel.set({
+            left: pointE.x - 20,
+            top: pointE.y - 25,
+            fill: "blue",
+            fontSize: 20,
+          });
+          fLabel.set({
+            left: pointF.x - 3,
+            top: pointF.y - 30,
+            fill: "blue",
+            fontSize: 20,
+          });
+        }
+      };
 
-        dLabel.set({
-          left: pointD.x - 20,
-          top: pointD.y - 25,
-        });
-        eLabel.set({
-          left: pointE.x - 20,
-          top: pointE.y - 25,
-        });
-        fLabel.set({
-          left: pointF.x - 3,
-          top: pointF.y - 30,
-        });
-      }
-
-      movablePoint();
-      canvas.on("object:moving", movablePoint);
+      canvas.on("object:moving", onPointMove);
       canvas.add(triangle);
-      canvas.add(pNode);
+      canvas.add(movablePointP);
       canvas.add(movablePointQ);
       canvas.add(dNode);
       canvas.add(eNode);
