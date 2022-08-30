@@ -1,5 +1,7 @@
 import { fabric } from "fabric";
 import { Coord } from "@/types";
+import {makeLine} from "@/utils/canvas";
+import {Intersection} from "fabric/fabric-impl";
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
@@ -173,14 +175,14 @@ export function cartesianToTrilinear(pointA: number[], pointB: number[], pointC:
       Math.sign(calculateSignedDistanceFromPointToLine(pointB, pointA, pointC)),
     z:
       calculateSignedDistanceFromPointToLine(pointP, pointA, pointB) *
-      Math.sign(calculateSignedDistanceFromPointToLine(pointC, pointB, pointA)),
+      Math.sign(calculateSignedDistanceFromPointToLine(pointC, pointA, pointB)),
   };
 }
 
 // Singed distance, whose absolte value is the distance of a point to a line.
 export function calculateSignedDistanceFromPointToLine(pt: number[], v: number[], w: number[]) {
-  const ab = Math.sqrt((w[2] - v[2]) ** 2 + (w[1] - v[1]) ** 2);
-  return ((w[2] - v[2]) * (pt[1] - v[1]) - (w[1] - v[1]) * (pt[2] - v[2])) / ab;
+  const ab = Math.sqrt((w[1] - v[1]) ** 2 + (w[0] - v[0]) ** 2);
+  return ((w[1] - v[1]) * (pt[0] - v[0]) - (w[0] - v[0]) * (pt[1] - v[1])) / ab;
 }
 
 export function polarToCartesian(radius: number, angle: number, center?: Coord, isDegree = true) {
@@ -376,7 +378,8 @@ export const drawLine = (a: number[], b: number[], l: Element) => {
 };
 
 export const makeString = (arr: (string | number)[][]) => {
-  return `${arr[0][0]},${arr[0][1]} ${arr[1][0]},${arr[1][1]} ${arr[2][0]},${arr[2][1]}`;
+  if (arr.length === 3) return `${arr[0][0]},${arr[0][1]} ${arr[1][0]},${arr[1][1]} ${arr[2][0]},${arr[2][1]}`;
+  return `${arr[0][0]},${arr[0][1]} ${arr[1][0]},${arr[1][1]} ${arr[2][0]},${arr[2][1]},${arr[3][0]} ${arr[3][1]}`;
 };
 
 export const makeSvgTriangle = (pt0: number[], pt1: number[], pt2: number[], ptoTri: Element) => {
@@ -428,8 +431,8 @@ export const radiansToDegress = (r: number) => {
 };
 
 export function drawRightAngleSign(point1: Coord, pointO: Coord, point2: Coord,
-                                         line1: fabric.Line, line2: fabric.Line,
-                                         signSize = 8, stroke: "red") {
+  line1: fabric.Line, line2: fabric.Line,
+  signSize = 8, stroke: "red") {
   const fpoint1 = new fabric.Point(point1.x, point1.y);
   const fpointO = new fabric.Point(pointO.x, pointO.y);
   const fpoint2 = new fabric.Point(point2.x, point2.y);
@@ -442,8 +445,8 @@ export function drawRightAngleSign(point1: Coord, pointO: Coord, point2: Coord,
   const anglecoord2 = fpointO.lerp(fpoint2, t2);
   const temp = anglecoord1.add(anglecoord2);
   const anglecoord3 = temp.subtract(fpointO);
-  line1.set({x1: anglecoord1.x, y1: anglecoord1.y, x2: anglecoord3.x, y2: anglecoord3.y, stroke});
-  line2.set({x1: anglecoord2.x, y1: anglecoord2.y, x2: anglecoord3.x, y2: anglecoord3.y, stroke});
+  line1.set({ x1: anglecoord1.x, y1: anglecoord1.y, x2: anglecoord3.x, y2: anglecoord3.y, stroke });
+  line2.set({ x1: anglecoord2.x, y1: anglecoord2.y, x2: anglecoord3.x, y2: anglecoord3.y, stroke });
 }
 
 export const degreesToRadians = (theta: number) => {
@@ -454,7 +457,7 @@ export const fillDigits = (s: string, digits: number) => {
   let sSize = s.length;
   if (s.indexOf(".") === -1) {
     s += ".";
-  } else{
+  } else {
     sSize--;
   }
   while (sSize < digits) {
@@ -464,4 +467,110 @@ export const fillDigits = (s: string, digits: number) => {
   return s;
 };
 
+export const aboveBelow = (p1: number[], m: number, b: number) => {
+  return p1[1] > (m * p1[0] + b);
+};
+
+export const lerpp = (p1: number[], p2: number[], t: number) => {
+  return [p1[0] + (p2[0] - p1[0]) * t, p1[1] + (p2[1] - p1[1]) * t];
+};
+
+export const setp = (e: Element, p: number[]) => {
+  e.setAttribute("x", p[0] + "");
+  e.setAttribute("y", p[1] - 10 + "");
+};
+
+export const setc = (e: Element, p: number[]) => {
+  e.setAttribute("cx", p[0] + "");
+  e.setAttribute("cy", p[1] + "");
+};
+
+export const areaa = (polygon: number[]) => {
+  const length = polygon.length;
+
+  let sum = 0;
+
+  for (let i = 0; i < length; i += 2) {
+    sum += polygon[i] * polygon[(i + 3) % length] - polygon[i + 1] * polygon[(i + 2) % length];
+  }
+
+  return Math.abs(sum) * 0.5;
+};
+
+// Change numbers in a string to subscript.
+export function subNums(str: string) {
+  let newStr = "";
+  for (let i=0; i<str.length; i++) {
+    //  Get the code of the current character
+    const code = str.charCodeAt(i);
+    if (code >= 48 && code <= 57) {
+      //  If it's between "0" and "9", offset the code ...
+      newStr += String.fromCharCode(code + 8272);
+    } else {
+      //   ... otherwise keep the character
+      newStr += str[i];
+    }
+  }
+  return newStr;
+}
+
+/*
+Calculate intersection points between a line and  canvas's 4 boundary lines. Point1 and Point2 are
+two points on the line. Width and height is canvas's default width and height. Offset is the gap
+between two canvas frames. Set offset to positive if it's inner frame.Negative for outer frame.
+ */
+export function calculateInterPointsWithBoundary(pt1: fabric.Point, pt2: fabric.Point, width: number, height: number, offset: number){
+  const
+    leftTop = new fabric.Point(offset, offset),
+    rightTop = new fabric.Point(width - offset, offset),
+    leftBottom = new fabric.Point(offset, height - offset),
+    rightBottom = new fabric.Point(width - offset, height - offset);
+
+  // Intersection points
+  let interX1 = 0, interY1 = 0, interX2 = 0, interY2 = 0;
+  const topInterPoint = (fabric.Intersection.prototype.intersectLineLine(
+    pt1, pt2, leftTop, rightTop) as Intersection);
+  const leftInterPoint = (fabric.Intersection.prototype.intersectLineLine(
+    pt1, pt2,  leftTop, leftBottom) as Intersection);
+  const bottomInterPoint = (fabric.Intersection.prototype.intersectLineLine(
+    pt1, pt2,  rightBottom, leftBottom) as Intersection);
+  const rightInterPoint = (fabric.Intersection.prototype.intersectLineLine(
+    pt1, pt2,  rightTop, rightBottom) as Intersection);
+
+  // Horizontal lines
+  if (topInterPoint.status === "Parallel" || bottomInterPoint.status === "Parallel") {
+    interX1 = leftInterPoint.points![0].x;
+    interY1 = leftInterPoint.points![0].y;
+    interX2 = rightInterPoint.points![0].x;
+    interY2 = rightInterPoint.points![0].y;
+    // Perpendicular lines
+  } else if (leftInterPoint.status === "Parallel" || rightInterPoint.status === "Parallel"){
+    interX1 = topInterPoint.points![0].x;
+    interY1 = topInterPoint.points![0].y;
+    interX2 = bottomInterPoint.points![0].x;
+    interY2 = bottomInterPoint.points![0].y;
+  } else {
+    if (topInterPoint.points![0].x < 50) {
+      interX1 = leftInterPoint.points![0].x;
+      interY1 = leftInterPoint.points![0].y;
+    } else if (topInterPoint.points![0].x > 450) {
+      interX1 = rightInterPoint.points![0].x;
+      interY1 = rightInterPoint.points![0].y;
+    } else {
+      interX1 = topInterPoint.points![0].x;
+      interY1 = topInterPoint.points![0].y;
+    }
+    if (bottomInterPoint.points![0].x > 450) {
+      interX2 = rightInterPoint.points![0].x;
+      interY2 = rightInterPoint.points![0].y;
+    } else if (bottomInterPoint.points![0].x < 50) {
+      interX2 = leftInterPoint.points![0].x;
+      interY2 = leftInterPoint.points![0].y;
+    } else {
+      interX2 = bottomInterPoint.points![0].x;
+      interY2 = bottomInterPoint.points![0].y;
+    }
+  }
+    return [new fabric.Point(interX1, interY1), new fabric.Point(interX2, interY2)];
+}
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */

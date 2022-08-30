@@ -5,7 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
+    <script defer src="https://tikzjax.com/v1/tikzjax.js"></script>
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <style>
+      div.tikz-diagram svg {
+        position: static !important;
+      }
+    </style>
   </head>
   <body>
     <noscript>

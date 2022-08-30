@@ -11,7 +11,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { indexTopicMap, otherImages } from "@/data";
+import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
 import {
@@ -19,7 +19,6 @@ import {
     makeLabel,
     makeCircle,
     makeMovablePolygon,
-    makeMovablePoint
 } from "@/utils/canvas";
 import {
     calculateMidpoint,
@@ -27,9 +26,8 @@ import {
     calculateDistanceBetweenTwoPoints,
     calculateSlope,
     calculateLineIntersectInPoints,
-    CANVAS_HEIGHT, CANVAS_WIDTH, calculateThreeAngles
+    CANVAS_HEIGHT, CANVAS_WIDTH
 } from "@/utils/geometry";
-import { LineHeightOutlined } from "@ant-design/icons-vue";
 const topic = indexTopicMap.get(31) as Topic;
 export default defineComponent(
     {
@@ -393,7 +391,7 @@ export default defineComponent(
             canvas.add(valueSquareABD);
             canvas.add(valueSquareABCD);
             const signCoords = [60, 170];
-            signCoords.forEach((signCoord) => {
+            signCoords.forEach(() => {
                 canvas.add(
 
                     new fabric.Text("S△ABD + S△BCD = S▱ABCD", {
