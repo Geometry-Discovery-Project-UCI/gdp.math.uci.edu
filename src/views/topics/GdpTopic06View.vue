@@ -54,7 +54,7 @@ type Circle = fabric.Circle & {
   moveLine?: Line,  // The line on which the point moves.
   upBound?: Circle,
   downBound?: Circle,
-  clockPoint?: Circle,
+  clockPoint?: Circle,  // This point's neighbor on the clock direction.
   cntClockPoint?: Circle,
   clockLine?: Line,
   cntClockLine?: Line,
@@ -67,6 +67,7 @@ type Line = fabric.Line & {
   b?: number,
   inter?: Circle,  // The intersection with another Line. So far only for part III
   thatLine?: Line,  // The other line to intersect with. So far only for part III
+  tan?: Circle,  // tangent point on circle. For part IV
 };
 
 interface Coord {
@@ -157,19 +158,28 @@ function circleToCoord(...circle: Circle[]): fabric.Point[] {
 
 const makeLine = (pt1: Coord | fabric.Point | fabric.Circle, pt2: Coord | fabric.Point | fabric.Circle,
   strokeWidth?: number, stroke?: string): Line => {
+  let oldPt1;
+  let oldPt2;
   if (pt1 instanceof fabric.Circle) {
+    oldPt1 = pt1;
     pt1 = { x: pt1.left!, y: pt1.top! };
   }
   if (pt2 instanceof fabric.Circle) {
+    oldPt2 = pt2;
     pt2 = { x: pt2.left!, y: pt2.top! };
   }
-  return new fabric.Line([pt1.x, pt1.y, pt2.x, pt2.y], {
+  const line = new fabric.Line([pt1.x, pt1.y, pt2.x, pt2.y], {
     stroke: stroke || "black",
     hasControls: false,
     hasBorders: false,
     evented: false,
     strokeWidth: strokeWidth || 1,
-  });
+  }) as Line;
+  if (oldPt1 instanceof fabric.Circle && oldPt2 instanceof fabric.Circle) {
+    line.p1 = oldPt1;
+    line.p2 = oldPt2;
+  }
+  return line;
 };
 
 function getIntersectFromLines(line1: fabric.Line, line2: fabric.Line): Coord {
@@ -273,6 +283,42 @@ function partFour() {
   const ef = makeLine(pf, pe);
   const fa = makeLine(pf, pa);
 
+  ab.tan = makeCircle(new fabric.Point(pa.left!, pa.top!).lerp({x: pb.left!, y: pb.top!}, 0.5));
+  bc.tan = makeCircle(new fabric.Point(pc.left!, pc.top!).lerp({x: pb.left!, y: pb.top!}, 0.5));
+  cd.tan = makeCircle(new fabric.Point(pc.left!, pc.top!).lerp({x: pd.left!, y: pd.top!}, 0.5));
+  de.tan = makeCircle(new fabric.Point(pd.left!, pd.top!).lerp({x: pe.left!, y: pe.top!}, 0.5));
+  ef.tan = makeCircle(new fabric.Point(pe.left!, pe.top!).lerp({x: pf.left!, y: pf.top!}, 0.5));
+  fa.tan = makeCircle(new fabric.Point(pa.left!, pa.top!).lerp({x: pf.left!, y: pf.top!}, 0.5));
+  // Tangent lines
+  ab.tan.clockLine = makeLine(ab.tan, pa);
+  ab.tan.cntClockLine = makeLine(ab.tan, pb);
+  bc.tan.clockLine = makeLine(bc.tan, pb);
+  bc.tan.cntClockLine = makeLine(bc.tan, pc);
+  cd.tan.clockLine = makeLine(cd.tan, pc);
+  cd.tan.cntClockLine = makeLine(cd.tan, pd);
+  de.tan.clockLine = makeLine(de.tan, pd);
+  de.tan.cntClockLine = makeLine(de.tan, pe);
+  ef.tan.clockLine = makeLine(ef.tan, pe);
+  ef.tan.cntClockLine = makeLine(ef.tan, pf);
+  fa.tan.clockLine = makeLine(fa.tan, pf);
+  fa.tan.cntClockLine = makeLine(fa.tan, pa);
+  ab.tan.clockLine.set({x1: 0, y1: 0, x2: 0, y2: 0});
+  bc.tan.clockLine.set({x1: 0, y1: 0, x2: 0, y2: 0});
+  cd.tan.clockLine.set({x1: 0, y1: 0, x2: 0, y2: 0});
+  de.tan.clockLine.set({x1: 0, y1: 0, x2: 0, y2: 0});
+  ef.tan.clockLine.set({x1: 0, y1: 0, x2: 0, y2: 0});
+  fa.tan.clockLine.set({x1: 0, y1: 0, x2: 0, y2: 0});
+  [ab, bc, cd, de, ef, fa].forEach(line => {
+    if (line.tan !== undefined) {
+      line.tan.clockLine?.set({strokeDashArray: [10], stroke: "Aqua"});
+      line.tan.cntClockLine?.set({strokeDashArray: [10], stroke: "Aqua"});
+      // line.tan.clockLine?.set({x1: 0, y1: 0, x2: 0, y2: 0});
+      // line.tan.cntClockLine?.set({x1: 0, y1: 0, x2: 0, y2: 0});
+      cvsBra.add(line.tan.clockLine!, line.tan.cntClockLine!);
+    }
+  });
+  log("pos", bc.tan.clockLine);
+
   const ad = makeLine(pa, pd, undefined, "green");
   const be = makeLine(pb, pe, undefined, "green");
   const cf = makeLine(pc, pf, undefined, "green");
@@ -350,7 +396,8 @@ function partFour() {
     [pa, pb, pc, pd, pe, pf, centerPoint]);
   cvsBra.add(aLabel, bLabel, cLabel, dLabel, eLabel, fLabel, oLabel);
   cvsBra.add(pa, pb, pc, pd, pe, pf, centerPoint);
-  cvsBra.add(intersection, ia, ib, ic, id, ie, iF);
+  cvsBra.add(ia, ib, ic, id, ie, iF);
+  cvsBra.add(intersection);
   cvsBra.add(ab, bc, cd, de, ef, fa);
 
   const onPointMove = (e: IEvent): void => {
@@ -377,6 +424,9 @@ function partFour() {
     // New tangent point and lines
     const clkT = polarToCartesian(RADIUS, clkRad, center, false);
     const cntClkT = polarToCartesian(RADIUS, cntClkRad, center, false);
+    // Update closest tangent points.
+    p.clockLine!.tan!.set({left: clkT.x, top: clkT.y});
+    p.cntClockLine!.tan!.set({left: cntClkT.x, top: cntClkT.y});
     const clkLinearEq = solveLinearEquation(circleToCoord(p)[0], clkT);
     const cntClkLinearEq = solveLinearEquation(circleToCoord(p)[0], cntClkT);
 
@@ -399,6 +449,16 @@ function partFour() {
       {x: clkLine.p1!.left!, y: clkLine.p1!.top!}, {x: clkLine.p2!.left!, y: clkLine.p2!.top!});
     setLineFromPoints(cntClkLine,
       {x: cntClkLine.p1!.left!, y: cntClkLine.p1!.top!}, {x: cntClkLine.p2!.left!, y: cntClkLine.p2!.top!});
+    // clkLine.tan!.set();
+    // Update strokes
+    [clkLine, cntClkLine].forEach(line => {
+      if (line.tan !== undefined && line.tan.clockLine !== undefined && line.tan.cntClockLine !== undefined) {
+        setLineFromPoints(line.tan.clockLine,
+          {x: line.tan.clockLine.p1!.left!, y: line.tan.clockLine.p1!.top!}, {x: line.tan.clockLine.p2!.left!, y: line.tan.clockLine.p2!.top!});
+        setLineFromPoints(line.tan.cntClockLine,
+          {x: line.tan.cntClockLine.p1!.left!, y: line.tan.cntClockLine.p1!.top!}, {x: line.tan.cntClockLine.p2!.left!, y: line.tan.cntClockLine.p2!.top!});
+      }
+    });
 
     clkLine = p.clockLine!;
     setLineFromPoints(clkLine,
@@ -410,6 +470,15 @@ function partFour() {
     [ad, be].forEach(line => {
       setLineFromPoints(line, {x: line.p1!.left!, y: line.p1!.top!}, {x: line.p2!.left!, y: line.p2!.top!});
     });
+    [clkLine, cntClkLine].forEach(line => {
+      if (line.tan !== undefined && line.tan.clockLine !== undefined && line.tan.cntClockLine !== undefined) {
+        setLineFromPoints(line.tan.clockLine,
+          {x: line.tan.clockLine.p1!.left!, y: line.tan.clockLine.p1!.top!}, {x: line.tan.clockLine.p2!.left!, y: line.tan.clockLine.p2!.top!});
+        setLineFromPoints(line.tan.cntClockLine,
+          {x: line.tan.cntClockLine.p1!.left!, y: line.tan.cntClockLine.p1!.top!}, {x: line.tan.cntClockLine.p2!.left!, y: line.tan.cntClockLine.p2!.top!});
+      }
+    });
+
     Object.assign(ad, solveLinearEquation({x:ad.x1!, y:ad.y1!}, {x:ad.x2!, y:ad.y2!}));
     Object.assign(be, solveLinearEquation({x:be.x1!, y:be.y1!}, {x:be.x2!, y:be.y2!}));
     const updateInter = getInterByLinearEq({m: ad.m!, b: ad.b!}, {m: be.m!, b: be.b!});
@@ -443,9 +512,9 @@ function partThree() {
   const pointB = makeCircle(xOffset + 0*mul, yOffset - 6*mul);
   const pointA = makeCircle(xOffset + 1.5*mul, yOffset - 4*mul);
   // (5.5,1.125)--(0,0)--(2.25,2)
-  const pointPrimeC = makeCircle(xOffset + mul*5.5, yOffset - mul*1.125);
-  const pointPrimeB = makeCircle(xOffset + mul*0, yOffset - mul*0);
-  const pointPrimeA = makeCircle(xOffset + mul*2.25, yOffset - mul*2);
+  const pointPrimeC = makeCircle(xOffset + mul*5.5, yOffset - mul*1.125, 1, undefined);
+  const pointPrimeB = makeCircle(xOffset + mul*0, yOffset - mul*0, 1, undefined);
+  const pointPrimeA = makeCircle(xOffset + mul*2.25, yOffset - mul*2, 1, undefined);
   const abc = new fabric.Polygon(circleToCoord(pointA, pointB, pointC), {fill: "yellow"});
   const primeTriangle = new fabric.Polygon(circleToCoord(pointPrimeA, pointPrimeB, pointPrimeC), {fill: "#5efc03"});
   abc.selectable = false;
@@ -456,7 +525,7 @@ function partThree() {
   cvsDes.add(pointA, pointB, pointC, pointPrimeA, pointPrimeB, pointPrimeC);
 
   const aLabel = makeLabel("A", {x: 15, y: -10});
-  const bLabel = makeLabel("B");
+  const bLabel = makeLabel("B", {x: -20, y: 5});
   const cLabel = makeLabel("C", {x: 15, y: -20});
   const aprimeLabel = makeLabel("A'");
   const bprimeLabel = makeLabel("B'");
@@ -552,8 +621,8 @@ function partThree() {
   const pq = makeLine(pointP, pointQ);
   pq.p1 = pointP;
   pq.p2 = pointQ;
-  cvsDes.add(pointP, pointQ, pointR);
   cvsDes.add(cp, cpP, aq, apQ, ar, apR, pq);
+  cvsDes.add(pointP, pointQ, pointR);
   // Assigning intersections
   ab.inter = pointR;
   apBp.inter = pointR;
@@ -704,9 +773,23 @@ function partTwo() {
     return p;
   }
 
+  const pa = makeCircle(pointA);
+  const pb = makeCircle(pointB);
+  const pc = makeCircle(pointC);
+  const pd = makeCircle(pointD);
+  const pe = makeCircle(pointE);
+  const pf = makeCircle(pointF);
+  const circles = [pa, pb, pc, pd, pe, pf];
+  cvsPascal.add(pa, pb, pc, pd, pe, pf);
+
   const poly = makeMovablePolygon([pointA, pointB, pointC, pointD, pointE, pointF],
     function (coords: fabric.Point[]) {
       [pointA, pointB, pointC, pointD, pointE, pointF] = coords;
+      for (let idx = 0; idx < coords.length; idx++) {
+        const c = circles[idx];
+        const coord = coords[idx];
+        c.set({left: coord.x, top: coord.y});
+      }
       setLabelToPoint([aLabel, bLabel, cLabel, dLabel, eLabel, fLabel],
         coords);
       pointX.setFromPoint(
