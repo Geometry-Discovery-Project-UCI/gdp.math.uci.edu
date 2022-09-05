@@ -47,6 +47,9 @@ export default defineComponent({
       backgroundColor: "floralwhite",
     });
 
+    const aNode = makeCircle();
+    const bNode = makeCircle();
+    const cNode = makeCircle();
     const rNode = makeCircle();
     const pNode = makeCircle();
     const qNode = makeCircle();
@@ -88,6 +91,31 @@ export default defineComponent({
         cLabel.set({
           left: coords[2].x + 5,
           top: coords[2].y - 3,
+        });
+
+        aNode.set({
+          originX: "center",
+          originY: "center",
+          left: coords[0].x,
+          top: coords[0].y,
+          radius: 4,
+          fill: "red",
+        });
+        bNode.set({
+          originX: "center",
+          originY: "center",
+          left: coords[1].x,
+          top: coords[1].y,
+          radius: 4,
+          fill: "red",
+        });
+        cNode.set({
+          originX: "center",
+          originY: "center",
+          left: coords[2].x,
+          top: coords[2].y,
+          radius: 4,
+          fill: "red",
         });
 
         // pointA rotate around Point B by 60 degree counterclockwise
@@ -311,6 +339,7 @@ export default defineComponent({
     canvas.add(xLabel, yLabel, zLabel);
     canvas.add(rLabel, qLabel, pLabel);
     canvas.add(triangle);
+    canvas.add(aNode, bNode, cNode);
     canvas.add(rNode, qNode, pNode);
     canvas.add(lineAR, lineBR);
     canvas.add(lineAQ, lineCQ);
