@@ -29,7 +29,8 @@ import {
   solveLinearEquation,
   calculateIncenter,
   calculateLineIntersectInLinearEquation,
-  getPedalPoint
+  getPedalPoint,
+  calculateDistanceBetweenTwoPoints
 } from "@/utils/geometry";
 const topic = indexTopicMap.get(24) as Topic;
 type Circle = fabric.Circle & {
@@ -97,22 +98,22 @@ export default defineComponent(
       aprimeLabel.set({
           left: points[0].x-25,
           top: points[0].y-25,
-          fill: "black",
+          fill: "gray",
         });
         bprimeLabel.set({
           left: points[1].x-25,
           top: points[1].y+5,
-          fill: "black",
+          fill: "gray",
         });
         cprimeLabel.set({
           left: points[2].x+5,
           top: points[2].y,
-          fill: "black",
+          fill: "gray",
         });
         dprimeLabel.set({
           left: points[3].x+5,
           top: points[3].y-25,
-          fill: "black",
+          fill: "gray",
         });
       const pointP = makeMovablePoint(new fabric.Point(180, 280));
       const pointS = new fabric.Point(250,250);
@@ -130,7 +131,7 @@ export default defineComponent(
         pointP.set({
         originX: "center",
         originY: "center",
-        radius: 5,
+        radius: 3,
         fill: "black",
       });
       const onPointMove = (e: IEvent): void => {
@@ -140,26 +141,33 @@ export default defineComponent(
           top: pointP.top as number + 5,
           fill: "green",
         });
+        const pointO = new fabric.Point(250,250);
         const pointp = new fabric.Point(p.left as number, p.top as number);
+        const dis = calculateDistanceBetweenTwoPoints(pointp,pointO);
+        if(dis<=150){
         const pedalSPA = getPedalPoint(pointS,points[0],pointp);
         aLabel.set({
           left:pedalSPA.x*2-points[0].x,
           top:pedalSPA.y*2-points[0].y,
+          fill:"red",
         });
         const pedalSPB = getPedalPoint(pointS,points[1],pointp);
         bLabel.set({
           left:pedalSPB.x*2-points[1].x+5,
           top:pedalSPB.y*2-points[1].y-25,
+          fill:"red",
         });
         const pedalSPC = getPedalPoint(pointS,points[2],pointp);
         cLabel.set({
           left:pedalSPC.x*2-points[2].x-25,
           top:pedalSPC.y*2-points[2].y-10,
+          fill:"red",
         });
         const pedalSPD = getPedalPoint(pointS,points[3],pointp);
         dLabel.set({
           left:pedalSPD.x*2-points[3].x-20,
           top:pedalSPD.y*2-points[3].y,
+          fill:"red",
         });
          lineAAPrime.set({
           x1: points[0].x,
@@ -253,6 +261,125 @@ export default defineComponent(
           strokeDashArray: [2.5, 2.5],
           stroke: "gray",
         });
+      }
+      if(dis>150){
+        const pedalSPA = getPedalPoint(pointS,points[0],pointp);
+        aLabel.set({
+          left:pedalSPA.x*2-points[0].x,
+          top:pedalSPA.y*2-points[0].y,
+          fill:"blue",
+        });
+        const pedalSPB = getPedalPoint(pointS,points[1],pointp);
+        bLabel.set({
+          left:pedalSPB.x*2-points[1].x+5,
+          top:pedalSPB.y*2-points[1].y-25,
+          fill:"blue",
+        });
+        const pedalSPC = getPedalPoint(pointS,points[2],pointp);
+        cLabel.set({
+          left:pedalSPC.x*2-points[2].x-25,
+          top:pedalSPC.y*2-points[2].y-10,
+          fill:"blue",
+        });
+        const pedalSPD = getPedalPoint(pointS,points[3],pointp);
+        dLabel.set({
+          left:pedalSPD.x*2-points[3].x-20,
+          top:pedalSPD.y*2-points[3].y,
+          fill:"blue",
+        });
+         lineAAPrime.set({
+          x1: points[0].x,
+          y1: points[0].y,
+          x2: pedalSPA.x*2-points[0].x,
+          y2: pedalSPA.y*2-points[0].y,
+          strokeDashArray: [2.5, 2.5],
+          stroke: "gray",
+        });
+        lineBBPrime.set({
+          x1: points[1].x,
+          y1: points[1].y,
+          x2: pedalSPB.x*2-points[1].x,
+          y2: pedalSPB.y*2-points[1].y,
+          strokeDashArray: [2.5, 2.5],
+          stroke: "gray",
+        });
+        lineCCPrime.set({
+          x1: points[2].x,
+          y1: points[2].y,
+          x2: pedalSPC.x*2-points[2].x,
+          y2: pedalSPC.y*2-points[2].y,
+          strokeDashArray: [2.5, 2.5],
+          stroke: "gray",
+        });
+        lineDDPrime.set({
+          x1: points[3].x,
+          y1: points[3].y,
+          x2: pedalSPD.x*2-points[3].x,
+          y2: pedalSPD.y*2-points[3].y,
+          strokeDashArray: [2.5, 2.5],
+          stroke: "gray",
+        });
+        lineAB.set({
+          x1: pedalSPA.x*2-points[0].x,
+          y1: pedalSPA.y*2-points[0].y,
+          x2: pedalSPB.x*2-points[1].x,
+          y2: pedalSPB.y*2-points[1].y,
+          stroke: "gray",
+        });
+        lineBC.set({
+          x1: pedalSPC.x*2-points[2].x,
+          y1: pedalSPC.y*2-points[2].y,
+          x2: pedalSPB.x*2-points[1].x,
+          y2: pedalSPB.y*2-points[1].y,
+          stroke: "gray",
+        });
+        lineCD.set({
+          x1: pedalSPC.x*2-points[2].x,
+          y1: pedalSPC.y*2-points[2].y,
+          x2: pedalSPD.x*2-points[3].x,
+          y2: pedalSPD.y*2-points[3].y,
+          stroke: "gray",
+        });
+        lineDA.set({
+          x1: pedalSPD.x*2-points[3].x,
+          y1: pedalSPD.y*2-points[3].y,
+          x2: pedalSPA.x*2-points[0].x,
+          y2: pedalSPA.y*2-points[0].y,
+          stroke: "gray",
+        });
+        linePA.set({
+          x1: pedalSPA.x*2-points[0].x,
+          y1: pedalSPA.y*2-points[0].y,
+          x2: pointp.x,
+          y2: pointp.y,
+          strokeDashArray: [2.5, 2.5],
+          stroke: "gray",
+        });
+        linePB.set({
+          x1: pedalSPB.x*2-points[1].x,
+          y1: pedalSPB.y*2-points[1].y,
+          x2: pointp.x,
+          y2: pointp.y,
+          strokeDashArray: [2.5, 2.5],
+          stroke: "gray",
+        });
+        linePC.set({
+          x1: pedalSPC.x*2-points[2].x,
+          y1: pedalSPC.y*2-points[2].y,
+          x2: pointp.x,
+          y2: pointp.y,
+          strokeDashArray: [2.5, 2.5],
+          stroke: "gray",
+        });
+        linePD.set({
+          x1: pedalSPD.x*2-points[3].x,
+          y1: pedalSPD.y*2-points[3].y,
+          x2: pointp.x,
+          y2: pointp.y,
+          strokeDashArray: [2.5, 2.5],
+          stroke: "gray",
+        });
+      }
 
         };
       canvas.on("object:moving", onPointMove);
@@ -261,21 +388,25 @@ export default defineComponent(
         aLabel.set({
           left:pedalSPA.x*2-points[0].x,
           top:pedalSPA.y*2-points[0].y,
+          fill:"red",
         });
          const pedalSPB = getPedalPoint(pointS,points[1],pointp);
         bLabel.set({
           left:pedalSPB.x*2-points[1].x+5,
           top:pedalSPB.y*2-points[1].y-25,
+          fill:"red",
         });
         const pedalSPC = getPedalPoint(pointS,points[2],pointp);
         cLabel.set({
           left:pedalSPC.x*2-points[2].x-25,
           top:pedalSPC.y*2-points[2].y-10,
+          fill:"red",
         });
         const pedalSPD = getPedalPoint(pointS,points[3],pointp);
         dLabel.set({
           left:pedalSPD.x*2-points[3].x-20,
           top:pedalSPD.y*2-points[3].y,
+          fill:"red",
         });
         lineAAPrime.set({
           x1: points[0].x,
