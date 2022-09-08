@@ -93,31 +93,6 @@ export default defineComponent({
           top: coords[2].y - 3,
         });
 
-        aNode.set({
-          originX: "center",
-          originY: "center",
-          left: coords[0].x,
-          top: coords[0].y,
-          radius: 4,
-          fill: "red",
-        });
-        bNode.set({
-          originX: "center",
-          originY: "center",
-          left: coords[1].x,
-          top: coords[1].y,
-          radius: 4,
-          fill: "red",
-        });
-        cNode.set({
-          originX: "center",
-          originY: "center",
-          left: coords[2].x,
-          top: coords[2].y,
-          radius: 4,
-          fill: "red",
-        });
-
         // pointA rotate around Point B by 60 degree counterclockwise
         const pointR = new fabric.Point(
           (coords[0].x - coords[1].x) * Math.cos((Math.PI / 180.0) * -60) -
@@ -313,6 +288,31 @@ export default defineComponent({
           fill: "transparent",
           stroke: "green",
           strokeWidth: 1,
+        });
+
+        aNode.set({
+          originX: "center",
+          originY: "center",
+          left: coords[0].x,
+          top: coords[0].y,
+          radius: 4,
+          fill: "black",
+        });
+        bNode.set({
+          originX: "center",
+          originY: "center",
+          left: coords[1].x,
+          top: coords[1].y,
+          radius: 4,
+          fill: "black",
+        });
+        cNode.set({
+          originX: "center",
+          originY: "center",
+          left: coords[2].x,
+          top: coords[2].y,
+          radius: 4,
+          fill: "black",
         });
         xLabel.set({
           left: circumcenterABR.x - 15,
