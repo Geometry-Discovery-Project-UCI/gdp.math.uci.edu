@@ -83,9 +83,9 @@ export default defineComponent(
             }
 
             const vertices = [
-                new fabric.Point(300, 100),
-                new fabric.Point(100, 400),
-                new fabric.Point(400, 400),
+                new fabric.Point(200, 120),
+                new fabric.Point(150, 320),
+                new fabric.Point(350, 320),
             ];
             const triangle = createPolygon(vertices);
 
@@ -96,9 +96,16 @@ export default defineComponent(
             const lineHI = createLine([], "red");
             const lineID = createLine([], "blue");
 
-            const aLabel = createLabel("A", 290, 70);
-            const bLabel = createLabel("B", 75, 390);
-            const cLabel = createLabel("C", 410, 390);
+            const auxiliaryLineA1 = createLine();
+            const auxiliaryLineA2 = createLine();
+            const auxiliaryLineB1 = createLine();
+            const auxiliaryLineB2 = createLine();
+            const auxiliaryLineC1 = createLine();
+            const auxiliaryLineC2 = createLine();
+
+            const aLabel = createLabel("A", vertices[0].x - 10, vertices[0].y - 30);
+            const bLabel = createLabel("B", vertices[1].x - 25, vertices[1].y - 10);
+            const cLabel = createLabel("C", vertices[2].x + 10, vertices[2].y - 10);
             const dLabel = createLabel("D");
             const eLabel = createLabel("E");
             const fLabel = createLabel("F");
@@ -134,9 +141,10 @@ export default defineComponent(
 
             canvas.on("mouse:move", function (event) {
                 const pointer = canvas.getPointer(event.e);
-                if (pointer?.x as number < vertices[2].x && pointer?.x as number > vertices[1].x
+                if (pointer?.x as number < 500 && pointer?.x as number > 0
                     && pointer?.y as number > vertices[0].y && pointer?.y as number < vertices[1].y) {
                     canvas.remove(lineDE, lineEF, lineFG, lineGH, lineHI, lineID);
+                    canvas.remove(auxiliaryLineA1, auxiliaryLineA2, auxiliaryLineB1, auxiliaryLineB2, auxiliaryLineC1, auxiliaryLineC2);
                     canvas.remove(dLabel, eLabel, fLabel, gLabel, hLabel, iLabel);
                     canvas.remove(circle);
 
@@ -237,6 +245,127 @@ export default defineComponent(
                         y2: pointEnd.y,
                     });
                     canvas.add(lineID);
+
+                    if (pointD.x > vertices[2].x) {
+                        auxiliaryLineC1.set({
+                            x1: vertices[2].x,
+                            y1: vertices[2].y,
+                            x2: pointD.x,
+                            y2: pointD.y,
+                            strokeDashArray: [5, 5],
+                        });
+                        canvas.add(auxiliaryLineC1);
+                    }
+                    if (pointD.x < vertices[1].x) {
+                        auxiliaryLineB1.set({
+                            x1: vertices[1].x,
+                            y1: vertices[1].y,
+                            x2: pointD.x,
+                            y2: pointD.y,
+                            strokeDashArray: [5, 5],
+                        });
+                        canvas.add(auxiliaryLineB1);
+                    }
+                    if (pointE.x > vertices[2].x) {
+                        auxiliaryLineC2.set({
+                            x1: vertices[2].x,
+                            y1: vertices[2].y,
+                            x2: pointE.x,
+                            y2: pointE.y,
+                            strokeDashArray: [5, 5],
+                        });
+                        canvas.add(auxiliaryLineC2);
+                    }
+                    if (pointE.x < vertices[0].x) {
+                        auxiliaryLineA1.set({
+                            x1: vertices[0].x,
+                            y1: vertices[0].y,
+                            x2: pointE.x,
+                            y2: pointE.y,
+                            strokeDashArray: [5, 5],
+                        });
+                        canvas.add(auxiliaryLineA1);
+                    }
+                    if (pointF.x > vertices[0].x) {
+                        auxiliaryLineA2.set({
+                            x1: vertices[0].x,
+                            y1: vertices[0].y,
+                            x2: pointF.x,
+                            y2: pointF.y,
+                            strokeDashArray: [5, 5],
+                        });
+                        canvas.add(auxiliaryLineA2);
+                    }
+                    if (pointF.x < vertices[1].x) {
+                        auxiliaryLineB1.set({
+                            x1: vertices[1].x,
+                            y1: vertices[1].y,
+                            x2: pointF.x,
+                            y2: pointF.y,
+                            strokeDashArray: [5, 5],
+                        });
+                        canvas.add(auxiliaryLineB1);
+                    }
+                    if (pointG.x > vertices[2].x) {
+                        auxiliaryLineC1.set({
+                            x1: vertices[2].x,
+                            y1: vertices[2].y,
+                            x2: pointG.x,
+                            y2: pointG.y,
+                            strokeDashArray: [5, 5],
+                        });
+                        canvas.add(auxiliaryLineC1);
+                    }
+                    if (pointG.x < vertices[1].x) {
+                        auxiliaryLineB2.set({
+                            x1: vertices[1].x,
+                            y1: vertices[1].y,
+                            x2: pointG.x,
+                            y2: pointG.y,
+                            strokeDashArray: [5, 5],
+                        });
+                        canvas.add(auxiliaryLineB2);
+                    }
+                    if (pointH.x > vertices[2].x) {
+                        auxiliaryLineC2.set({
+                            x1: vertices[2].x,
+                            y1: vertices[2].y,
+                            x2: pointH.x,
+                            y2: pointH.y,
+                            strokeDashArray: [5, 5],
+                        });
+                        canvas.add(auxiliaryLineC2);
+                    }
+                    if (pointH.x < vertices[0].x) {
+                        auxiliaryLineA1.set({
+                            x1: vertices[0].x,
+                            y1: vertices[0].y,
+                            x2: pointH.x,
+                            y2: pointH.y,
+                            strokeDashArray: [5, 5],
+                        });
+                        canvas.add(auxiliaryLineA1);
+                    }
+                    if (pointI.x > vertices[0].x) {
+                        auxiliaryLineA2.set({
+                            x1: vertices[0].x,
+                            y1: vertices[0].y,
+                            x2: pointI.x,
+                            y2: pointI.y,
+                            strokeDashArray: [5, 5],
+                        });
+                        canvas.add(auxiliaryLineA2);
+                    }
+                    if (pointI.x < vertices[1].x) {
+                        auxiliaryLineB2.set({
+                            x1: vertices[1].x,
+                            y1: vertices[1].y,
+                            x2: pointI.x,
+                            y2: pointI.y,
+                            strokeDashArray: [5, 5],
+                        });
+                        canvas.add(auxiliaryLineB2);
+                    }
 
                     const circleCenter = calculateCircumcenter(pointG, pointH, pointI);
                     const circleRadius = circleCenter.distanceFrom(pointI);
