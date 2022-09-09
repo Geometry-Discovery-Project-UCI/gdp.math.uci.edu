@@ -52,6 +52,10 @@ calculateLineIntersectInPoints,
     const circleCDF = makeCircle();
     const circleBCE = makeCircle();
     const mNode = makeCircle();
+    const aNode = makeCircle();
+    const bNode = makeCircle();
+    const cNode = makeCircle();
+    const dNode = makeCircle();
     const leftOffset = 0.75;
     const Quadrilateral = makeMovablePolygon(
       [
@@ -159,6 +163,30 @@ calculateLineIntersectInPoints,
           radius: 3,
           fill:"red",
                     });
+        aNode.set({
+            left: coords[0].x-leftOffset * 4,
+          top: coords[0].y-leftOffset * 4,
+          radius: 3,
+          fill:"black",
+                    });
+        bNode.set({
+            left: coords[1].x-leftOffset * 4,
+          top: coords[1].y-leftOffset * 4,
+          radius: 3,
+          fill:"black",
+                    });
+        cNode.set({
+            left: coords[2].x-leftOffset * 4,
+          top: coords[2].y-leftOffset * 4,
+          radius: 3,
+          fill:"black",
+                    });
+        dNode.set({
+            left: coords[3].x-leftOffset * 4,
+          top: coords[3].y-leftOffset * 4,
+          radius: 3,
+          fill:"black",
+                    });
         circleADE.set({
           originX: "center",
           originY: "center",
@@ -209,7 +237,7 @@ calculateLineIntersectInPoints,
     canvas.add(Quadrilateral);
     canvas.add(lineAE2,lineCF2,lineDE2,lineDF2);
     canvas.add(circleADE,circleCDF,circleBCE,circleABF);
-    canvas.add(mNode);
+    canvas.add(mNode,aNode,bNode,cNode,dNode);
     },
 });
 </script>
