@@ -1,10 +1,10 @@
 <template>
   <ATypographyTitle :level="1">Topics</ATypographyTitle>
-  <AList itemLayout="horizontal" :dataSource="topics" :grid="defaultGridParams">
+  <AList itemLayout="horizontal" :dataSource="topics" :grid="{gutter: 16}">
     <template #renderItem="{ item: topic }">
       <AListItem>
         <RouterLink :to="`/topic/${topic.index}`" target="_blank">
-          <ACard hoverable>
+          <ACard class="topic-card" hoverable>
             <template #cover>
               <AImage class="topic-image" :src="topic.snapshot" :alt="topic.name" height="22vh" :preview="false" />
             </template>
@@ -42,5 +42,9 @@ export default defineComponent({
 <style>
 .topic-image {
   padding: 1px;
+}
+
+.topic-card {
+  width: 300px;
 }
 </style>
