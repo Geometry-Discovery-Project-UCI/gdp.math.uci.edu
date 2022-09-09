@@ -73,9 +73,9 @@ export default defineComponent({
     const rLabel = makeLabel("R");
     const pLabel = makeLabel("P");
     const qLabel = makeLabel("Q");
-    const xLabel = makeLabel("X");
+    const xLabel = makeLabel("Z");
     const yLabel = makeLabel("Y");
-    const zLabel = makeLabel("Z");
+    const zLabel = makeLabel("X");
 
     const triangle = makeMovablePolygon(
       [new fabric.Point(300, 150), new fabric.Point(150, 270), new fabric.Point(350, 270)],
