@@ -73,9 +73,9 @@ export default defineComponent({
     const rLabel = makeLabel("R");
     const pLabel = makeLabel("P");
     const qLabel = makeLabel("Q");
-    const xLabel = makeLabel("X");
+    const xLabel = makeLabel("Z");
     const yLabel = makeLabel("Y");
-    const zLabel = makeLabel("Z");
+    const zLabel = makeLabel("X");
 
     const triangle = makeMovablePolygon(
       [new fabric.Point(300, 150), new fabric.Point(150, 270), new fabric.Point(350, 270)],
@@ -91,31 +91,6 @@ export default defineComponent({
         cLabel.set({
           left: coords[2].x + 5,
           top: coords[2].y - 3,
-        });
-
-        aNode.set({
-          originX: "center",
-          originY: "center",
-          left: coords[0].x,
-          top: coords[0].y,
-          radius: 4,
-          fill: "red",
-        });
-        bNode.set({
-          originX: "center",
-          originY: "center",
-          left: coords[1].x,
-          top: coords[1].y,
-          radius: 4,
-          fill: "red",
-        });
-        cNode.set({
-          originX: "center",
-          originY: "center",
-          left: coords[2].x,
-          top: coords[2].y,
-          radius: 4,
-          fill: "red",
         });
 
         // pointA rotate around Point B by 60 degree counterclockwise
@@ -313,6 +288,31 @@ export default defineComponent({
           fill: "transparent",
           stroke: "green",
           strokeWidth: 1,
+        });
+
+        aNode.set({
+          originX: "center",
+          originY: "center",
+          left: coords[0].x,
+          top: coords[0].y,
+          radius: 4,
+          fill: "black",
+        });
+        bNode.set({
+          originX: "center",
+          originY: "center",
+          left: coords[1].x,
+          top: coords[1].y,
+          radius: 4,
+          fill: "black",
+        });
+        cNode.set({
+          originX: "center",
+          originY: "center",
+          left: coords[2].x,
+          top: coords[2].y,
+          radius: 4,
+          fill: "black",
         });
         xLabel.set({
           left: circumcenterABR.x - 15,
