@@ -27,6 +27,7 @@ type Point = fabric.Point & {
   // tanCross?: Line,  // The line that crosses this point's tangent
   crossLines?: Line[],  // The (two) lines that cross at this point
   collP?: Circle,
+  lerpLine?: Line,
 };
 
 type Line = fabric.Line & {
@@ -150,6 +151,32 @@ function getTangentLine(inter: Coord, radius: number, center: Coord): LinearEq {
   return solvePerpendicularLineEquation(m, inter);
 }
 
+function setLineFromPoints(line: Line, a: Coord | Circle, b: Coord | Circle, offSet?: number): void {
+  if (!("x" in b) || !("y" in b)) {
+    b = {x: b.left!, y: b.top!};
+  } else {
+    b = {x: b.x, y: b.y};
+  }
+  if (!("x" in a) || !("y" in a)) {
+    a = {x: a.left!, y: a.top!};
+  } else {
+    a = {x: a.x, y: a.y};
+  }
+  if (offSet !== undefined) {
+    if (a.x < b.x) {
+      offSet = -offSet;
+    }
+    a.x += offSet;
+    a.y = a.x * line.m! + line.b!;
+
+  }
+  line.set({
+    x1: a.x,
+    y1: a.y,
+    x2: b.x,
+    y2: b.y,
+  });
+}
 const topic = indexTopicMap.get(18) as Topic;
 
 export default defineComponent(
@@ -163,7 +190,7 @@ export default defineComponent(
         backgroundColor: "floralwhite",
       });
       const RADIUS = 80;
-      const center = { x: 150, y: 350 } as Coord;
+      const center = { x: 200, y: 350 } as Coord;
       const circle = new fabric.Circle({
         radius: RADIUS,
         fill: "",
@@ -177,11 +204,14 @@ export default defineComponent(
       cvs.add(circle);
       log(cvs, "cvs");
       const pointA = coordToPoint(polarToCartesian(RADIUS, 55, center));
-      const pointB = coordToPoint(polarToCartesian(RADIUS, 200, center));
+      const pointB = coordToPoint(polarToCartesian(RADIUS, 230, center));
       const pointC = coordToPoint(polarToCartesian(RADIUS, 300, center));
       const tanA = makeLine();
       const tanB = makeLine();
       const tanC = makeLine();
+      tanA.set({stroke: "DeepPink"});
+      tanB.set({stroke: "DeepPink"});
+      tanC.set({stroke: "DeepPink"});
       pointA.tangent = tanA;
       pointB.tangent = tanB;
       pointC.tangent = tanC;
@@ -206,7 +236,24 @@ export default defineComponent(
       const labelZ = makeLabel("Z");
       const coll = makeLine();
       cvs.add(x, y, z, labelX, labelY, labelZ, coll);
-      cvs.add(pointA.tangent, pointB.tangent, pointC.tangent);
+      const labelA = makeLabel("A", {x: 10, y: -20});
+      const labelB = makeLabel("B", {x: -15, y: 5});
+      const labelC = makeLabel("C", {x: 15, y: -10});
+      const labels = [labelA, labelB, labelC];
+      cvs.add(pointA.tangent, pointB.tangent, pointC.tangent, labelA, labelB, labelC);
+      const ay = makeLine();
+      const bz = makeLine();
+      const cx = makeLine();
+      ay.set({stroke: "LimeGreen"});
+      bz.set({stroke: "LimeGreen"});
+      cx.set({stroke: "LimeGreen"});
+      ay.inter = y;
+      bz.inter = z;
+      cx.inter = x;
+      pointA.lerpLine = ay;
+      pointB.lerpLine = bz;
+      pointC.lerpLine = cx;
+      cvs.add(ay, bz, cx);
       const inits = [pointA, pointB, pointC];
 
       function circleRestrict(p: fabric.Point): fabric.Point {
@@ -228,7 +275,9 @@ export default defineComponent(
           for (let i = 0; i < 3; i++) {
             const p = inits[i];
             p.setXY(coords[i].x, coords[i].y);
+            // log("tan", pointA.tangent);
             p.tangent?.set(getTangentLine(p, RADIUS, center));
+            setLineFromPoints(p.tangent!, p, p.collP!);
             p.crossLines!.forEach(line => {
               line.set(solveLinearEquation(line.p1!, line.p2!));
             });
@@ -237,12 +286,19 @@ export default defineComponent(
             const l2 = p.collP!.crossLines![1];
             const c = calculateLineIntersectInLinearEquation(l1.m!, l1.b!, l2.m!, l2.b!);
             p.collP!.set({left: c.x, top: c.y});
+            // update exteded lines
+            setLineFromPoints(p.lerpLine!, p, p.lerpLine!.inter!);
+            const offSet = 40;
+            setLineFromPoints(p.tangent!, p, p.collP!, offSet);
           }
           coll.eq = solveLinearEquation({x: x.left!, y: x.top!}, {x: y.left!, y: y.top!});
+          // const left = cvs.width!*0.05;
+          // const right = cvs.width!*0.95;
           const left = 0;
           const right = cvs.width!;
           coll.set({x1: left, y1: left*coll.eq.m!+coll.eq!.b, x2: right, y2: right*coll.eq.m!+coll.eq!.b});
           setLabelToPoint([labelX, labelY, labelZ], [x, y, z]);
+          setLabelToPoint(labels, inits);
         },
         circleRestrict
       );
