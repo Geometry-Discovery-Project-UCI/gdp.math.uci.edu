@@ -2,7 +2,7 @@
   <TopicMeta :topic="topic" />
 
   <div id="Lemoine-line-wrapper" style="padding-top: 40px;">
-    <canvas id="Lemoine-line-canvas" width="1000" height="1000" />
+    <canvas id="Lemoine-line-canvas" width="800" height="500" />
   </div>
 </template>
 
@@ -190,7 +190,7 @@ export default defineComponent(
         backgroundColor: "floralwhite",
       });
       const RADIUS = 80;
-      const center = { x: 200, y: 350 } as Coord;
+      const center = { x: 200, y: 200 } as Coord;
       const circle = new fabric.Circle({
         radius: RADIUS,
         fill: "",
@@ -206,6 +206,12 @@ export default defineComponent(
       const pointA = coordToPoint(polarToCartesian(RADIUS, 55, center));
       const pointB = coordToPoint(polarToCartesian(RADIUS, 230, center));
       const pointC = coordToPoint(polarToCartesian(RADIUS, 300, center));
+      const circleA = makeCircle(pointA);
+      const circleB = makeCircle(pointB);
+      const circleC = makeCircle(pointC);
+      circleA.set({selectable: false, evented: false});
+      circleB.set({selectable: false, evented: false});
+      circleC.set({selectable: false, evented: false});
       const tanA = makeLine();
       const tanB = makeLine();
       const tanC = makeLine();
@@ -222,9 +228,9 @@ export default defineComponent(
       pointB.crossLines = [ab, bc];
       pointC.crossLines = [bc, ac];
 
-      const x = makeCircle(0, 0);
-      const y = makeCircle(0, 0);
-      const z = makeCircle(0, 0);
+      const x = makeCircle(0, 0, undefined, "red");
+      const y = makeCircle(0, 0, undefined, "red");
+      const z = makeCircle(0, 0, undefined, "red");
       x.crossLines = [pointA.tangent, bc];
       y.crossLines = [pointB.tangent, ac];
       z.crossLines = [pointC.tangent, ab];
@@ -235,7 +241,7 @@ export default defineComponent(
       const labelY = makeLabel("Y");
       const labelZ = makeLabel("Z");
       const coll = makeLine();
-      cvs.add(x, y, z, labelX, labelY, labelZ, coll);
+      cvs.add(labelX, labelY, labelZ, coll, x, y, z);
       const labelA = makeLabel("A", {x: 10, y: -20});
       const labelB = makeLabel("B", {x: -15, y: 5});
       const labelC = makeLabel("C", {x: 15, y: -10});
@@ -253,8 +259,9 @@ export default defineComponent(
       pointA.lerpLine = ay;
       pointB.lerpLine = bz;
       pointC.lerpLine = cx;
-      cvs.add(ay, bz, cx);
+      cvs.add(ay, bz, cx, circleA, circleB, circleC);
       const inits = [pointA, pointB, pointC];
+      const initCircles = [circleA, circleB, circleC];
 
       function circleRestrict(p: fabric.Point): fabric.Point {
         let rad = Math.atan(-findSlope([center.x, center.y], [p.x, p.y]));
@@ -272,6 +279,7 @@ export default defineComponent(
       }
       const triangle = makeMovablePolygon([pointA, pointB, pointC],
         function (coords: fabric.Point[]) {
+          const offSet = 30;
           for (let i = 0; i < 3; i++) {
             const p = inits[i];
             p.setXY(coords[i].x, coords[i].y);
@@ -288,14 +296,17 @@ export default defineComponent(
             p.collP!.set({left: c.x, top: c.y});
             // update exteded lines
             setLineFromPoints(p.lerpLine!, p, p.lerpLine!.inter!);
-            const offSet = 40;
             setLineFromPoints(p.tangent!, p, p.collP!, offSet);
+            initCircles[i].set({left: inits[i].x, top: inits[i].y});
           }
           coll.eq = solveLinearEquation({x: x.left!, y: x.top!}, {x: y.left!, y: y.top!});
-          // const left = cvs.width!*0.05;
-          // const right = cvs.width!*0.95;
-          const left = 0;
-          const right = cvs.width!;
+          const lo = Math.min(x.left!, y.left!, z.left!);
+          const hi = Math.max(x.left!, y.left!, z.left!);
+          const ratio = (hi - lo) / 130;
+          const left = Math.max(lo - offSet, lo - offSet * ratio);
+          const right = Math.min(hi + offSet, hi + offSet * ratio);
+          // const left = 0;
+          // const right = cvs.width!;
           coll.set({x1: left, y1: left*coll.eq.m!+coll.eq!.b, x2: right, y2: right*coll.eq.m!+coll.eq!.b});
           setLabelToPoint([labelX, labelY, labelZ], [x, y, z]);
           setLabelToPoint(labels, inits);
