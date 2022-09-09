@@ -262,6 +262,7 @@ export const topics: Topic[] = [
     essay: "pdfs/topic02.pdf",
     animationContributors: [
       MAI_NGUYEN,
+      JIANLIN_LI,
     ],
     essayContributors: [
       ZHIQIN_LU,
@@ -346,7 +347,9 @@ export const topics: Topic[] = [
     index: 9,
     snapshot: "images/snapshots/topic09.png",
     essay: "pdfs/topic09.pdf",
-    animationContributors: [],
+    animationContributors: [
+      JIANLIN_LI,
+    ],
     essayContributors: [
       ZHIQIN_LU,
     ],
@@ -425,7 +428,9 @@ export const topics: Topic[] = [
     index: 17,
     snapshot: "images/snapshots/topic17.png",
     essay: "pdfs/topic17.pdf",
-    animationContributors: [],
+    animationContributors: [
+      JIANLIN_LI,
+    ],
     essayContributors: [
       ZHIQIN_LU,
     ],
@@ -451,7 +456,9 @@ export const topics: Topic[] = [
     index: 20,
     snapshot: "images/snapshots/topic20.png",
     essay: "pdfs/topic20.pdf",
-    animationContributors: [],
+    animationContributors: [
+      YIXUAN_LI,
+    ],
     essayContributors: [
       ZHIQIN_LU,
       SHIYI_LYU,
@@ -630,7 +637,9 @@ export const topics: Topic[] = [
     index: 38,
     snapshot: "images/snapshots/topic38.png",
     essay: "pdfs/topic38.pdf",
-    animationContributors: [],
+    animationContributors: [
+      JIANLIN_LI,
+    ],
     essayContributors: [
       YUE_CHU,
     ],
