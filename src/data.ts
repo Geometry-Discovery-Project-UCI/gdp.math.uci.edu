@@ -448,7 +448,7 @@ export const topics: Topic[] = [
     index: 19,
     snapshot: "images/snapshots/topic19.png",
     essay: "pdfs/topic19.pdf",
-    animationContributors: [],
+    animationContributors: [VINNIE_HSIA],
     essayContributors: [],
   },
   {
@@ -547,6 +547,7 @@ export const topics: Topic[] = [
     essay: "pdfs/topic29.pdf",
     animationContributors: [
       ZHIQIN_LU,
+      VINNIE_HSIA,
     ],
     essayContributors: [],
   },
@@ -577,7 +578,7 @@ export const topics: Topic[] = [
     index: 32,
     snapshot: "images/snapshots/topic32.png",
     essay: "pdfs/topic32.pdf",
-    animationContributors: [],
+    animationContributors: [VINNIE_HSIA],
     essayContributors: [
       MAI_NGUYEN,
     ],
