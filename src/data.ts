@@ -262,6 +262,7 @@ export const topics: Topic[] = [
     essay: "pdfs/topic02.pdf",
     animationContributors: [
       MAI_NGUYEN,
+      JIANLIN_LI,
     ],
     essayContributors: [
       ZHIQIN_LU,
@@ -301,6 +302,7 @@ export const topics: Topic[] = [
     essay: "pdfs/topic05.pdf",
     animationContributors: [
       MELISSA_YU,
+      YIXUAN_LI,
     ],
     essayContributors: [
       ZHIQIN_LU,
@@ -346,7 +348,9 @@ export const topics: Topic[] = [
     index: 9,
     snapshot: "images/snapshots/topic09.png",
     essay: "pdfs/topic09.pdf",
-    animationContributors: [],
+    animationContributors: [
+      JIANLIN_LI,
+    ],
     essayContributors: [
       ZHIQIN_LU,
     ],
@@ -425,7 +429,9 @@ export const topics: Topic[] = [
     index: 17,
     snapshot: "images/snapshots/topic17.png",
     essay: "pdfs/topic17.pdf",
-    animationContributors: [],
+    animationContributors: [
+      JIANLIN_LI,
+    ],
     essayContributors: [
       ZHIQIN_LU,
     ],
@@ -435,7 +441,7 @@ export const topics: Topic[] = [
     index: 18,
     snapshot: "images/snapshots/topic18.png",
     essay: "pdfs/topic18.pdf",
-    animationContributors: [],
+    animationContributors: [ZEJIN_XU],
     essayContributors: [],
   },
   {
@@ -562,7 +568,9 @@ export const topics: Topic[] = [
     index: 31,
     snapshot: "images/snapshots/topic31.png",
     essay: "pdfs/topic31.pdf",
-    animationContributors: [],
+    animationContributors: [
+      YIXUAN_LI,
+    ],
     essayContributors: [
       ZHIQIN_LU,
     ],
@@ -622,7 +630,9 @@ export const topics: Topic[] = [
     index: 37,
     snapshot: "images/snapshots/topic37.png",
     essay: "pdfs/topic37.pdf",
-    animationContributors: [],
+    animationContributors: [
+      YIXUAN_LI,
+    ],
     essayContributors: [
       NATASHA_XIAO,
     ],
@@ -632,7 +642,9 @@ export const topics: Topic[] = [
     index: 38,
     snapshot: "images/snapshots/topic38.png",
     essay: "pdfs/topic38.pdf",
-    animationContributors: [],
+    animationContributors: [
+      JIANLIN_LI,
+    ],
     essayContributors: [
       YUE_CHU,
     ],
