@@ -88,6 +88,10 @@ export default defineComponent(
 
         // centroid
         const gLabel = makeLabel("G");
+        // controll circles
+        const circleA = makeCircle();
+        const circleB = makeCircle();
+        const circleC = makeCircle();
 
         const triangle = makeMovablePolygon(
           [new fabric.Point(125, 50), new fabric.Point(50, 450), new fabric.Point(450, 450)],
@@ -95,6 +99,33 @@ export default defineComponent(
             const mp1 = calculateMidpoint(coords[0], coords[1]);
             const mp2 = calculateMidpoint(coords[0], coords[2]);
             const mp3 = calculateMidpoint(coords[1], coords[2]);
+            circleA.set({
+              originX: "center",
+              originY: "center",
+              left: coords[0].x,
+              top: coords[0].y,
+              radius: 3,
+              padding: 20,
+              fill:"black"
+            });
+            circleB.set({
+              originX: "center",
+              originY: "center",
+              left: coords[1].x,
+              top: coords[1].y,
+              radius: 3,
+              padding: 20,
+              fill:"black"
+            });
+            circleC.set({
+              originX: "center",
+              originY: "center",
+              left: coords[2].x,
+              top: coords[2].y,
+              radius: 3,
+              padding: 20,
+              fill:"black"
+            });
 
             median1.set({
               x1: coords[0].x,
@@ -164,6 +195,8 @@ export default defineComponent(
         canvas.add(fLabel);
 
         canvas.add(gLabel);
+
+        canvas.add(circleA, circleB, circleC);
       })();
       // Incenter animation function
       (() => {
@@ -188,6 +221,9 @@ export default defineComponent(
         const iLabel = makeLabel("I");
 
         const incircle = makeCircle();
+        const circleA = makeCircle();
+        const circleB = makeCircle();
+        const circleC = makeCircle();
 
         const triangle = makeMovablePolygon([new fabric.Point(125, 50), new fabric.Point(50, 450), new fabric.Point(450, 450)],
           function (coords: fabric.Point[]) {
@@ -202,6 +238,33 @@ export default defineComponent(
             cLabel.set({
               left: coords[2].x + 5,
               top: coords[2].y,
+            });
+            circleA.set({
+              originX: "center",
+              originY: "center",
+              left: coords[0].x,
+              top: coords[0].y,
+              radius: 3,
+              padding: 20,
+              fill:"black"
+            });
+            circleB.set({
+              originX: "center",
+              originY: "center",
+              left: coords[1].x,
+              top: coords[1].y,
+              radius: 3,
+              padding: 20,
+              fill:"black"
+            });
+            circleC.set({
+              originX: "center",
+              originY: "center",
+              left: coords[2].x,
+              top: coords[2].y,
+              radius: 3,
+              padding: 20,
+              fill:"black"
             });
 
             const incenter = calculateIncenter(coords[0], coords[1], coords[2]);
@@ -289,7 +352,7 @@ export default defineComponent(
         canvas.add(bisectionOnAC);
         canvas.add(bisectionOnBC);
 
-        canvas.add(incircle);
+        canvas.add(incircle, circleA, circleB, circleC);
       })();
 
       // Circumcenter animation1.
@@ -655,6 +718,9 @@ export default defineComponent(
         const heightOnAC = makeLine();
         const heightOnAB = makeLine();
         const hCenter = makeCircle();
+        const circleA = makeCircle();
+        const circleB = makeCircle();
+        const circleC = makeCircle();
 
         // Extension lines
         const lineBAHc = makeLine();
@@ -691,6 +757,33 @@ export default defineComponent(
             cLabel.set({
               left: coords[2].x + 5,
               top: coords[2].y,
+            });
+            circleA.set({
+              originX: "center",
+              originY: "center",
+              left: coords[0].x,
+              top: coords[0].y,
+              radius: 3,
+              padding: 20,
+              fill:"black"
+            });
+            circleB.set({
+              originX: "center",
+              originY: "center",
+              left: coords[1].x,
+              top: coords[1].y,
+              radius: 3,
+              padding: 20,
+              fill:"black"
+            });
+            circleC.set({
+              originX: "center",
+              originY: "center",
+              left: coords[2].x,
+              top: coords[2].y,
+              radius: 3,
+              padding: 20,
+              fill:"black"
             });
 
             const pedalPointOnBC = getPedalPoint(coords[0], coords[1], coords[2]);
@@ -914,7 +1007,7 @@ export default defineComponent(
         canvas.add(lineCHcH);
         canvas.add(lineHbBH);
         canvas.add(lineHcCH);
-        canvas.add(hCenter);
+        canvas.add(hCenter, circleA, circleB, circleC);
         canvas.add(line1);
         canvas.add(line2);
         canvas.add(line3);
