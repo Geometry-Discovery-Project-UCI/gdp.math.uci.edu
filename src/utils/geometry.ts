@@ -550,20 +550,20 @@ export function calculateInterPointsWithBoundary(pt1: fabric.Point, pt2: fabric.
     interX2 = bottomInterPoint.points![0].x;
     interY2 = bottomInterPoint.points![0].y;
   } else {
-    if (topInterPoint.points![0].x < 50) {
+    if (topInterPoint.points![0].x < offset) {
       interX1 = leftInterPoint.points![0].x;
       interY1 = leftInterPoint.points![0].y;
-    } else if (topInterPoint.points![0].x > 450) {
+    } else if (topInterPoint.points![0].x > width - offset) {
       interX1 = rightInterPoint.points![0].x;
       interY1 = rightInterPoint.points![0].y;
     } else {
       interX1 = topInterPoint.points![0].x;
       interY1 = topInterPoint.points![0].y;
     }
-    if (bottomInterPoint.points![0].x > 450) {
+    if (bottomInterPoint.points![0].x > height - offset) {
       interX2 = rightInterPoint.points![0].x;
       interY2 = rightInterPoint.points![0].y;
-    } else if (bottomInterPoint.points![0].x < 50) {
+    } else if (bottomInterPoint.points![0].x < offset) {
       interX2 = leftInterPoint.points![0].x;
       interY2 = leftInterPoint.points![0].y;
     } else {
