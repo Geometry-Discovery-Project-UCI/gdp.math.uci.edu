@@ -36,10 +36,13 @@ export default defineComponent(
         const linePD = makeLine();
         const linePF = makeLine();
         const linePE = makeLine();
-        const lineHeight = makeLine();
         const sumPD = makeLine();
         const sumPF = makeLine();
         const sumPE = makeLine();
+
+        const bcDot = new fabric.Line([0, 0, 0, 0], {stroke: "black",width: 1,strokeDashArray: [5]});
+        const baDot = new fabric.Line([0, 0, 0, 0], {stroke: "black",width: 1,strokeDashArray: [5]});
+        const acDot = new fabric.Line([0, 0, 0, 0], {stroke: "black",width: 1,strokeDashArray: [5]});
 
         const projectPF = makeLine();
         const projectPE = makeLine();
@@ -60,12 +63,13 @@ export default defineComponent(
 
         const equation = makeLabel("PD + PE + PF = H");
 
+        const triangleBottom = 425;
         // create triangle
         const triangle = new fabric.Polygon(
             [
-            { x: 200, y: 150 },
-            { x: 25, y: 450 },
-            { x: 375, y: 450 },
+            { x: 225, y: 150 },
+            { x: 68, y: 425 },
+            { x: 383, y: 425 },
             ],
             {
             fill: "transparent",
@@ -141,12 +145,12 @@ export default defineComponent(
                 x1: pointP.left,
                 y1: pointP.top,
                 x2: pointP.left,
-                y2: 450,
+                y2: triangleBottom,
                 stroke: "red",
             });
 
             // store length of each line for side display
-            const pdDist = calculateDistanceBetweenTwoPoints(new fabric.Point(pointP.left!, pointP.top!), new fabric.Point(pointP.left!, 450));
+            const pdDist = calculateDistanceBetweenTwoPoints(new fabric.Point(pointP.left!, pointP.top!), new fabric.Point(pointP.left!, triangleBottom));
             const peDist = calculateDistanceBetweenTwoPoints(new fabric.Point(pointP.left!, pointP.top!), new fabric.Point(pointE.x, pointE.y!));
             const pfDist = calculateDistanceBetweenTwoPoints(new fabric.Point(pointP.left!, pointP.top!), new fabric.Point(pointF.x, pointF.y!));
 
@@ -156,7 +160,7 @@ export default defineComponent(
             let peSign = "+";
             let pfSign = "+";
 
-            if (pointP.top as number > 450) {
+            if (pointP.top as number > triangleBottom) {
                 pdSign = "-";
             }
             if (pointP.left as number > pointE.x) {
@@ -166,186 +170,186 @@ export default defineComponent(
                 pfSign = " - ";
             }
 
-            if (pointP.top as number > 450 && pointP.left as number > pointE.x) {
+            if (pointP.top as number > triangleBottom && pointP.left as number > pointE.x) {
                 sumPD.set({
-                    x1: 450,
-                    y1: 150 + pfDist - peDist,
-                    x2: 450,
-                    y2: 150 + pfDist - peDist - pdDist,
+                    x1: 475, y1: 150 + pfDist - peDist, x2: 475, y2: 150 + pfDist - peDist - pdDist,
                     stroke: "red",
                     strokeWidth: 2,
                 });
 
                 sumPE.set({
-                    x1: 450,
-                    y1: 150 + pfDist,
-                    x2: 450,
-                    y2: 150 + pfDist - peDist,
+                    x1: 475, y1: 150 + pfDist, x2: 475, y2: 150 + pfDist - peDist,
                     stroke: "green",
                     strokeWidth: 2,
                 });
 
                 sumPF.set({
-                    x1: 425,
-                    y1: 150,
-                    x2: 425,
-                    y2: 150 + pfDist,
+                    x1: 450, y1: 150, x2: 450, y2: 150 + pfDist,
                     stroke: "blue",
                     strokeWidth: 2,
                 });
-            } else if (pointP.top as number > 450 && pointP.left as number < pointF.x) {
+            } else if (pointP.top as number > triangleBottom && pointP.left as number < pointF.x) {
                sumPD.set({
-                    x1: 450,
-                    y1: 150 + peDist - pfDist,
-                    x2: 450,
-                    y2: 150 + peDist - pfDist - pdDist,
+                    x1: 475, y1: 150 + peDist - pfDist, x2: 475, y2: 150 + peDist - pfDist - pdDist,
                     stroke: "red",
                     strokeWidth: 2,
                 });
 
                 sumPE.set({
-                    x1: 425,
-                    y1: 150,
-                    x2: 425,
-                    y2: 150 + peDist,
+                    x1: 450, y1: 150, x2: 450, y2: 150 + peDist,
                     stroke: "green",
                     strokeWidth: 2,
                 });
 
                 sumPF.set({
-                    x1: 450,
-                    y1: 150 + peDist,
-                    x2: 450,
-                    y2: 150 + peDist - pfDist,
+                    x1: 475, y1: 150 + peDist, x2: 475, y2: 150 + peDist - pfDist,
                     stroke: "blue",
                     strokeWidth: 2,
                 });
             } else if (pointP.left as number > pointE.x && pointP.left as number < pointF.x) {
                sumPD.set({
-                    x1: 425, y1: 150, x2: 425, y2: 150 + pdDist,
+                    x1: 450, y1: 150, x2: 450, y2: 150 + pdDist,
                     stroke: "red",
                     strokeWidth: 2,
                 });
 
                 sumPE.set({
-                    x1: 450, y1: 150 + pdDist, x2: 450, y2: 150 + pdDist - peDist,
+                    x1: 475, y1: 150 + pdDist, x2: 475, y2: 150 + pdDist - peDist,
                     stroke: "green",
                     strokeWidth: 2,
                 });
 
                 sumPF.set({
-                    x1: 450, y1: 150 + pdDist - peDist, x2: 450, y2: 150 + pdDist - pfDist - peDist,
+                    x1: 475, y1: 150 + pdDist - peDist, x2: 475, y2: 150 + pdDist - pfDist - peDist,
                     stroke: "blue",
                     strokeWidth: 2,
                 });
-            } else if (pointP.top as number > 450) {
+            } else if (pointP.top as number > triangleBottom) {
                 sumPD.set({
-                    x1: 450, y1: 150 + peDist + pfDist, x2: 450, y2: 150 + peDist + pfDist - pdDist,
+                    x1: 475, y1: 150 + peDist + pfDist, x2: 475, y2: 150 + peDist + pfDist - pdDist,
                     stroke: "red",
                     strokeWidth: 2,
                 });
 
                 sumPE.set({
-                    x1: 425, y1: 150, x2: 425, y2: 150 + peDist,
+                    x1: 450, y1: 150, x2: 450, y2: 150 + peDist,
                     stroke: "green",
                     strokeWidth: 2,
                 });
 
                 sumPF.set({
-                    x1: 425, y1: 150 + peDist, x2: 425, y2: 150 + peDist + pfDist,
+                    x1: 450, y1: 150 + peDist, x2: 450, y2: 150 + peDist + pfDist,
                     stroke: "blue",
                     strokeWidth: 2,
                 });
             } else if (pointP.left as number > pointE.x) {
-                sumPD.set({x1: 425, y1: 150, x2: 425, y2: 150 + pdDist,
+                sumPD.set({x1: 450, y1: 150, x2: 450, y2: 150 + pdDist,
                     stroke: "red",
                     strokeWidth: 2,
                 });
 
                 sumPE.set({
-                    x1: 450, y1: 150 + pdDist + pfDist - peDist, x2: 450, y2: 150 + pdDist + pfDist,
+                    x1: 475, y1: 150 + pdDist + pfDist - peDist, x2: 475, y2: 150 + pdDist + pfDist,
                     stroke: "green",
                     strokeWidth: 2,
                 });
 
                 sumPF.set({
-                    x1: 425, y1: 150 + pdDist, x2: 425, y2: 150 + pdDist + pfDist,
+                    x1: 450, y1: 150 + pdDist, x2: 450, y2: 150 + pdDist + pfDist,
                     stroke: "blue",
                     strokeWidth: 2,
                 });
             } else if (pointP.left as number < pointF.x) {
                 sumPD.set({
-                    x1: 425, y1: 150, x2: 425, y2: 150 + pdDist,
+                    x1: 450, y1: 150, x2: 450, y2: 150 + pdDist,
                     stroke: "red",
                     strokeWidth: 2,
                 });
 
                 sumPE.set({
-                    x1: 425, y1: 150 + pdDist, x2: 425, y2: 150 + pdDist + peDist,
+                    x1: 450, y1: 150 + pdDist, x2: 450, y2: 150 + pdDist + peDist,
                     stroke: "green",
                     strokeWidth: 2,
                 });
 
                 sumPF.set({
-                    x1: 450, y1: 150 + pdDist + peDist - pfDist, x2: 450, y2: 150 + pdDist + peDist,
+                    x1: 475, y1: 150 + pdDist + peDist - pfDist, x2: 475, y2: 150 + pdDist + peDist,
                     stroke: "blue",
                     strokeWidth: 2,
                 });
             } else {
                 sumPD.set({
-                    x1: 425, y1: 150, x2: 425, y2: 150 + pdDist,
+                    x1: 450, y1: 150, x2: 450, y2: 150 + pdDist,
                     stroke: "red",
                     strokeWidth: 2,
                 });
 
                 sumPE.set({
-                    x1: 425, y1: 150 + pdDist, x2: 425, y2: 150 + pdDist + peDist,
+                    x1: 450, y1: 150 + pdDist, x2: 450, y2: 150 + pdDist + peDist,
                     stroke: "green",
                     strokeWidth: 2,
                 });
 
                 sumPF.set({
-                    x1: 425, y1: 150 + pdDist + peDist, x2: 425, y2: 150 + pdDist + peDist + pfDist,
+                    x1: 450, y1: 150 + pdDist + peDist, x2: 450, y2: 150 + pdDist + peDist + pfDist,
                     stroke: "blue",
                     strokeWidth: 2,
                 });
             }
 
+            // draw extended dotted lines across BC
+            if (pointP.left as number < points[1].x) {
+                bcDot.set({x1: dLabel.left as number, y1: dLabel.top as number-1, x2: points[1].x, y2: points[2].y});
+            } else if (pointP.left as number > points[2].x) {
+                bcDot.set({x1: dLabel.left as number, y1: dLabel.top as number-1, x2: points[2].x, y2: points[2].y});
+            } else {
+                bcDot.set({x1: 0, y1: 0, x2: 0, y2: 0});
+            }
+
+            // draw extended dotted lines across BA
+            if (pointF.y > points[1].y) {
+                baDot.set({x1: pointF.x, y1: pointF.y, x2: points[1].x, y2: points[2].y});
+            } else if (pointF.y < points[0].y) {
+                baDot.set({x1: pointF.x, y1: pointF.y, x2: points[0].x, y2: points[0].y});
+            } else {
+                baDot.set({x1: 0, y1: 0, x2: 0, y2: 0});
+            }
+
+            // draw extended dotted lines across CA
+            if (pointE.y > points[2].y) {
+                acDot.set({x1: pointE.x, y1: pointE.y, x2: points[2].x, y2: points[2].y});
+            } else if (pointE.y < points[0].y) {
+                acDot.set({x1: pointE.x, y1: pointE.y, x2: points[0].x, y2: points[0].y});
+            } else {
+                acDot.set({x1: 0, y1: 0, x2: 0, y2: 0});
+            }
+
             // draw values of individual side lengths
-            const normalizeFactor = 301.5;
+            const normalizeFactor = 266;
             //(eval(stringDist)/normalizeFactor).toFixed(2)
             // var stringDist = (pdSign + pdDist.toString() + peSign + peDist.toString() + pfSign + pfDist.toString())
-            valuePD.set({text: pdSign + (pdDist/normalizeFactor).toFixed(3).toString() + " " + peSign + "  ", left:110, top:90});
-            valuePE.set({text: (peDist/normalizeFactor).toFixed(3).toString() + " " + pfSign, left:190, top:90});
-            valuePF.set({text: (pfDist/normalizeFactor).toFixed(3).toString() + "  =  1.00 ", left:270, top:90});
-
-            lineHeight.set({
-                x1: 475,
-                y1: 150,
-                x2: 475,
-                y2: 450,
-                stroke: "black",
-                strokeWidth: 2,
-            });
+            valuePD.set({text: pdSign + (pdDist/normalizeFactor).toFixed(3).toString() + " " + peSign + "  ", left:110, top:60});
+            valuePE.set({text: (peDist/normalizeFactor).toFixed(3).toString() + " " + pfSign, left:190, top:60});
+            valuePF.set({text: (pfDist/normalizeFactor).toFixed(3).toString() + "  =  1.00 ", left:270, top:60});
 
             // set coordinates for the labels
             aLabel.set({left: points[0].x - 5, top: points[0].y - 30, fontSize: 20});
             bLabel.set({left: points[1].x - 10, top: points[1].y + 10, fontSize: 20});
             cLabel.set({left: points[2].x + 10, top: points[2].y + 10, fontSize: 20});
 
-            dLabel.set({left: pointP.left as number, top: 450, fontSize: 18});
+            dLabel.set({left: pointP.left as number, top: triangleBottom, fontSize: 18});
             eLabel.set({left: pointE.x - 20, top: pointE.y - 15, fontSize: 18});
             fLabel.set({left: pointF.x - 20,top: pointF.y - 15,fontSize: 18});
 
-            hLabel.set({left: 455,top: 300,fontSize: 18});
+            hLabel.set({left: 465,top: 300,fontSize: 18});
             pLabel.set({left: pointP.left as number - 25,top: pointP.top as number - 10,fontSize: 18});
             // Align squares to their respective points
-            angleD.set({left: pointP.left as number - 10,top: 440});
+            angleD.set({left: pointP.left as number - 10,top: 415});
             angleF.set({left: pointF.x as number - 6, top: pointF.y as number + 10});
             angleE.set({left: pointE.x, top: pointE.y});
         }
 
-        equation.set({left:135, top:50, fontSize:30});
+        equation.set({left:135, top:25, fontSize:30});
 
         movePointP();
 
@@ -361,7 +365,10 @@ export default defineComponent(
         canvas.add(sumPD);
         canvas.add(sumPF);
         canvas.add(sumPE);
-        canvas.add(lineHeight);
+
+        canvas.add(acDot);
+        canvas.add(bcDot);
+        canvas.add(baDot);
 
         canvas.add(aLabel);
         canvas.add(bLabel);
