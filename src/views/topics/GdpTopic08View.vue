@@ -18,7 +18,7 @@ import {
   makeLine,
   makeLabel,
   makeCircle,
-  makeMovablePolygon
+  makeMovablePolygon, makeSelectCircle
 } from "@/utils/canvas";
 import {
   calculateThreeAngles,
@@ -66,6 +66,9 @@ export default defineComponent(
       const gNode = makeCircle();
       const nNode = makeCircle();
       const iNode = makeCircle();
+      const circleA = makeSelectCircle();
+      const circleB = makeSelectCircle();
+      const circleC = makeSelectCircle();
 
       const triangle = makeMovablePolygon(
         [
@@ -86,6 +89,18 @@ export default defineComponent(
           cLabel.set({
             left: coords[2].x + 10,
             top: coords[2].y,
+          });
+          circleA.set({
+            left: coords[0].x,
+            top: coords[0].y
+          });
+          circleB.set({
+            left: coords[1].x,
+            top: coords[1].y
+          });
+          circleC.set({
+            left: coords[2].x,
+            top: coords[2].y
           });
           const angles = calculateThreeAngles(coords[0], coords[1], coords[2]);
           const pointG = trilinearToCartesian(
@@ -288,6 +303,7 @@ export default defineComponent(
       canvas.add(iNode);
       canvas.add(iLabel);
       canvas.add(inscribedCircle);
+      canvas.add(circleA, circleB, circleC);
     }
   },
 );

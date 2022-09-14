@@ -112,8 +112,8 @@ export default defineComponent({
       pointP.set({
         originX: "center",
         originY: "center",
-        radius: 2.5,
-        padding: 3,
+        radius: 3,
+        padding: 20,
         fill: "red",
       });
 
@@ -470,11 +470,13 @@ export default defineComponent({
         });
       }
 
-      const movablePointQ = createCircle(450, 150, 2.5, "black").set({
+      const movablePointQ = createCircle(450, 150, 3, "black").set({
+        padding: 20,
         evented: true,
         lockMovementX: true,
       });
-      const movablePointP = createCircle(40, 390, 2.5, "black").set({
+      const movablePointP = createCircle(40, 390, 3, "black").set({
+        padding: 20,
         evented: true,
         lockMovementX: true,
       });

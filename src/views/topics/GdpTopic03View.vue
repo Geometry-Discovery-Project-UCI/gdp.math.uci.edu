@@ -45,7 +45,7 @@ import {
   makeLabel,
   makeLine,
   makeMovablePoint,
-  makeMovablePolygon
+  makeMovablePolygon, makeSelectCircle
 } from "@/utils/canvas";
 import {
   calculateCircumcenter,
@@ -89,9 +89,9 @@ export default defineComponent(
         // centroid
         const gLabel = makeLabel("G");
         // controll circles
-        const circleA = makeCircle();
-        const circleB = makeCircle();
-        const circleC = makeCircle();
+        const circleA = makeSelectCircle();
+        const circleB = makeSelectCircle();
+        const circleC = makeSelectCircle();
 
         const triangle = makeMovablePolygon(
           [new fabric.Point(125, 50), new fabric.Point(50, 450), new fabric.Point(450, 450)],
@@ -100,31 +100,16 @@ export default defineComponent(
             const mp2 = calculateMidpoint(coords[0], coords[2]);
             const mp3 = calculateMidpoint(coords[1], coords[2]);
             circleA.set({
-              originX: "center",
-              originY: "center",
               left: coords[0].x,
               top: coords[0].y,
-              radius: 3,
-              padding: 20,
-              fill:"black"
             });
             circleB.set({
-              originX: "center",
-              originY: "center",
               left: coords[1].x,
               top: coords[1].y,
-              radius: 3,
-              padding: 20,
-              fill:"black"
             });
             circleC.set({
-              originX: "center",
-              originY: "center",
               left: coords[2].x,
               top: coords[2].y,
-              radius: 3,
-              padding: 20,
-              fill:"black"
             });
 
             median1.set({
@@ -221,9 +206,9 @@ export default defineComponent(
         const iLabel = makeLabel("I");
 
         const incircle = makeCircle();
-        const circleA = makeCircle();
-        const circleB = makeCircle();
-        const circleC = makeCircle();
+        const circleA = makeSelectCircle();
+        const circleB = makeSelectCircle();
+        const circleC = makeSelectCircle();
 
         const triangle = makeMovablePolygon([new fabric.Point(125, 50), new fabric.Point(50, 450), new fabric.Point(450, 450)],
           function (coords: fabric.Point[]) {
@@ -240,38 +225,23 @@ export default defineComponent(
               top: coords[2].y,
             });
             circleA.set({
-              originX: "center",
-              originY: "center",
               left: coords[0].x,
               top: coords[0].y,
-              radius: 3,
-              padding: 20,
-              fill:"black"
             });
             circleB.set({
-              originX: "center",
-              originY: "center",
               left: coords[1].x,
               top: coords[1].y,
-              radius: 3,
-              padding: 20,
-              fill:"black"
             });
             circleC.set({
-              originX: "center",
-              originY: "center",
               left: coords[2].x,
               top: coords[2].y,
-              radius: 3,
-              padding: 20,
-              fill:"black"
             });
 
             const incenter = calculateIncenter(coords[0], coords[1], coords[2]);
             iLabel.set({
               left: incenter.x + 5,
               top: incenter.y + 5,
-              stroke: "blue"
+              stroke: "black"
             });
             const onBC = calculateLineIntersectInPoints(
               makeLine(coords[0], incenter),
@@ -710,17 +680,17 @@ export default defineComponent(
         const aLabel = makeLabel("A");
         const bLabel = makeLabel("B");
         const cLabel = makeLabel("C");
-        const haLabel = makeLabel("Ha");
-        const hbLabel = makeLabel("Hb");
-        const hcLabel = makeLabel("Hc");
+        const dLabel = makeLabel("D");
+        const eLabel = makeLabel("E");
+        const fLabel = makeLabel("F");
         const hLabel = makeLabel("H");
         const heightOnBC = makeLine();
         const heightOnAC = makeLine();
         const heightOnAB = makeLine();
         const hCenter = makeCircle();
-        const circleA = makeCircle();
-        const circleB = makeCircle();
-        const circleC = makeCircle();
+        const circleA = makeSelectCircle();
+        const circleB = makeSelectCircle();
+        const circleC = makeSelectCircle();
 
         // Extension lines
         const lineBAHc = makeLine();
@@ -759,31 +729,16 @@ export default defineComponent(
               top: coords[2].y,
             });
             circleA.set({
-              originX: "center",
-              originY: "center",
               left: coords[0].x,
               top: coords[0].y,
-              radius: 3,
-              padding: 20,
-              fill:"black"
             });
             circleB.set({
-              originX: "center",
-              originY: "center",
               left: coords[1].x,
               top: coords[1].y,
-              radius: 3,
-              padding: 20,
-              fill:"black"
             });
             circleC.set({
-              originX: "center",
-              originY: "center",
               left: coords[2].x,
               top: coords[2].y,
-              radius: 3,
-              padding: 20,
-              fill:"black"
             });
 
             const pedalPointOnBC = getPedalPoint(coords[0], coords[1], coords[2]);
@@ -794,7 +749,7 @@ export default defineComponent(
               y2: pedalPointOnBC.y,
               stroke: "green"
             });
-            haLabel.set({
+            dLabel.set({
               left: pedalPointOnBC.x - 10,
               top: pedalPointOnBC.y,
             });
@@ -807,7 +762,7 @@ export default defineComponent(
               y2: pedalPointOnAC.y,
               stroke: "green"
             });
-            hbLabel.set({
+            eLabel.set({
               left: pedalPointOnAC.x + 5,
               top: pedalPointOnAC.y - 20,
             });
@@ -820,7 +775,7 @@ export default defineComponent(
               y2: pedalPointOnAB.y,
               stroke: "green"
             });
-            hcLabel.set({left: pedalPointOnAB.x - 35, top: pedalPointOnAB.y - 15,});
+            fLabel.set({left: pedalPointOnAB.x - 35, top: pedalPointOnAB.y - 15,});
 
             // Orthocenter point H
             const angles = calculateThreeAngles(coords[0], coords[1], coords[2]);
@@ -988,9 +943,9 @@ export default defineComponent(
         canvas.add(aLabel);
         canvas.add(bLabel);
         canvas.add(cLabel);
-        canvas.add(haLabel);
-        canvas.add(hbLabel);
-        canvas.add(hcLabel);
+        canvas.add(dLabel);
+        canvas.add(eLabel);
+        canvas.add(fLabel);
         canvas.add(hLabel);
         canvas.add(heightOnBC);
         canvas.add(heightOnAC);

@@ -14,7 +14,13 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import {fabric} from "fabric";
-import {makeCircle, makeLabel, makeLine, makeMovablePolygon} from "@/utils/canvas";
+import {
+  makeCircle,
+  makeLabel,
+  makeLine,
+  makeMovablePolygon,
+  makeSelectCircle
+} from "@/utils/canvas";
 import {
   calculateDistanceBetweenTwoPoints,
   calculateThreeAngles, drawRightAngleSign,
@@ -79,6 +85,9 @@ export default defineComponent(
         const QCLabel = makeLabel("Qc");
         const PCLabel = makeLabel("Pc");
         const taylorCircle = makeCircle();
+        const circleA = makeSelectCircle();
+        const circleB = makeSelectCircle();
+        const circleC = makeSelectCircle();
         const triangle = makeMovablePolygon(
           [
             new fabric.Point(200, 100),
@@ -99,6 +108,9 @@ export default defineComponent(
               left: coords[2].x + 5,
               top: coords[2].y,
             });
+            circleA.set({left:coords[0].x, top: coords[0].y});
+            circleB.set({left:coords[1].x, top: coords[1].y});
+            circleC.set({left:coords[2].x, top: coords[2].y});
 
             // Calculate three angle of the triangle ABC
             const angles = calculateThreeAngles(coords[0], coords[1], coords[2]);
@@ -479,6 +491,7 @@ export default defineComponent(
         canvas.add(squarHbline1, squarHbline2);
         canvas.add(squarHcline1, squarHcline2);
         canvas.add(taylorCircle);
+        canvas.add(circleA, circleB,circleC);
       }
     },
 );
