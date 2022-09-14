@@ -15,7 +15,7 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
-import { makeLine, makeLabel, makeMovablePolygon } from "@/utils/canvas";
+import {makeLine, makeLabel, makeMovablePolygon} from "@/utils/canvas";
 import { calculateThreeAngles, trilinearToCartesian } from "@/utils/geometry";
 
 const topic = indexTopicMap.get(1) as Topic;
@@ -29,7 +29,21 @@ export default defineComponent(
       const canvas = new fabric.Canvas("morley-canvas", {
         selection: false,
       });
-
+      function makeSelectCircle(radius = 3, center: fabric.Point = new fabric.Point(0, 0), fill = "black", padding = 20, strokeWidth = 1){
+        return new fabric.Circle({
+          originX: "center",
+          originY: "center",
+          left: center.x,
+          top: center.y,
+          hasControls: false,
+          hasBorders: false,
+          evented: false,
+          radius,
+          fill,
+          padding,
+          strokeWidth,
+        });
+      }
       const ABprime = makeLine(undefined, undefined, undefined, "purple");
       const ACprime = makeLine(undefined, undefined, undefined, "purple");
       const BCprime = makeLine(undefined, undefined, undefined, "purple");
@@ -47,6 +61,9 @@ export default defineComponent(
       const aprimeLabel = makeLabel("A'", 18);
       const bprimeLabel = makeLabel("B'", 18);
       const cprimeLabel = makeLabel("C'", 18);
+      const circleA = makeSelectCircle();
+      const circleB = makeSelectCircle();
+      const circleC = makeSelectCircle();
 
       const triangle = makeMovablePolygon([new fabric.Point(187, 75), new fabric.Point(75, 375), new fabric.Point(375, 375)],
         function (coords: fabric.Point[]) {
@@ -62,6 +79,9 @@ export default defineComponent(
             left: coords[2].x + 5,
             top: coords[2].y,
           });
+          circleA.set({left: coords[0].x, top: coords[0].y});
+          circleB.set({left: coords[1].x, top: coords[1].y});
+          circleC.set({left: coords[2].x, top: coords[2].y});
 
           const angles = calculateThreeAngles(coords[0], coords[1], coords[2]);
 
@@ -191,6 +211,10 @@ export default defineComponent(
       canvas.add(aprimeLabel);
       canvas.add(bprimeLabel);
       canvas.add(cprimeLabel);
+
+      canvas.add(circleA);
+      canvas.add(circleB);
+      canvas.add(circleC);
     }
   },
 );
