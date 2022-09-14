@@ -6,11 +6,11 @@
         <RouterLink :to="`/topic/${topic.index}`" target="_blank">
           <ACard class="topic-card" hoverable>
             <template #cover>
-              <AImage class="topic-image" :src="topic.snapshot" :alt="topic.name" height="22vh" :preview="false" />
+              <img :src="topic.snapshot" class="topic-image" />
             </template>
             <ACardMeta :title="`Topic ${topic.index}`">
               <template #description>
-                <div style="height: 3rem">
+                <div style="height: 3rem; width: 250px;">
                   {{ topic.name }}
                 </div>
               </template>
@@ -41,10 +41,8 @@ export default defineComponent({
 
 <style>
 .topic-image {
-  padding: 1px;
-}
-
-.topic-card {
+  height: 200px;
   width: 300px;
+  padding: 1px;
 }
 </style>
