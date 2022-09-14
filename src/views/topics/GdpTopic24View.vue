@@ -84,7 +84,7 @@ export default defineComponent(
         {
           fill: "transparent",
           strokeWidth: 1.5,
-          stroke: "black",
+          stroke: "gray",
           objectCaching: false,
           transparentCorners: false,
           cornerStyle: "circle",
@@ -149,25 +149,25 @@ export default defineComponent(
         aLabel.set({
           left:pedalSPA.x*2-points[0].x,
           top:pedalSPA.y*2-points[0].y,
-          fill:"red",
+          fill:"blue",
         });
         const pedalSPB = getPedalPoint(pointS,points[1],pointp);
         bLabel.set({
           left:pedalSPB.x*2-points[1].x+5,
           top:pedalSPB.y*2-points[1].y-25,
-          fill:"red",
+          fill:"blue",
         });
         const pedalSPC = getPedalPoint(pointS,points[2],pointp);
         cLabel.set({
           left:pedalSPC.x*2-points[2].x-25,
           top:pedalSPC.y*2-points[2].y-10,
-          fill:"red",
+          fill:"blue",
         });
         const pedalSPD = getPedalPoint(pointS,points[3],pointp);
         dLabel.set({
           left:pedalSPD.x*2-points[3].x-20,
           top:pedalSPD.y*2-points[3].y,
-          fill:"red",
+          fill:"blue",
         });
          lineAAPrime.set({
           x1: points[0].x,
@@ -206,28 +206,28 @@ export default defineComponent(
           y1: pedalSPA.y*2-points[0].y,
           x2: pedalSPB.x*2-points[1].x,
           y2: pedalSPB.y*2-points[1].y,
-          stroke: "gray",
+          stroke: "blue",
         });
         lineBC.set({
           x1: pedalSPC.x*2-points[2].x,
           y1: pedalSPC.y*2-points[2].y,
           x2: pedalSPB.x*2-points[1].x,
           y2: pedalSPB.y*2-points[1].y,
-          stroke: "gray",
+          stroke: "blue",
         });
         lineCD.set({
           x1: pedalSPC.x*2-points[2].x,
           y1: pedalSPC.y*2-points[2].y,
           x2: pedalSPD.x*2-points[3].x,
           y2: pedalSPD.y*2-points[3].y,
-          stroke: "gray",
+          stroke: "blue",
         });
         lineDA.set({
           x1: pedalSPD.x*2-points[3].x,
           y1: pedalSPD.y*2-points[3].y,
           x2: pedalSPA.x*2-points[0].x,
           y2: pedalSPA.y*2-points[0].y,
-          stroke: "gray",
+          stroke: "blue",
         });
         linePA.set({
           x1: pedalSPA.x*2-points[0].x,
@@ -267,25 +267,25 @@ export default defineComponent(
         aLabel.set({
           left:pedalSPA.x*2-points[0].x,
           top:pedalSPA.y*2-points[0].y,
-          fill:"blue",
+          fill:"red",
         });
         const pedalSPB = getPedalPoint(pointS,points[1],pointp);
         bLabel.set({
           left:pedalSPB.x*2-points[1].x+5,
           top:pedalSPB.y*2-points[1].y-25,
-          fill:"blue",
+          fill:"red",
         });
         const pedalSPC = getPedalPoint(pointS,points[2],pointp);
         cLabel.set({
           left:pedalSPC.x*2-points[2].x-25,
           top:pedalSPC.y*2-points[2].y-10,
-          fill:"blue",
+          fill:"red",
         });
         const pedalSPD = getPedalPoint(pointS,points[3],pointp);
         dLabel.set({
           left:pedalSPD.x*2-points[3].x-20,
           top:pedalSPD.y*2-points[3].y,
-          fill:"blue",
+          fill:"red",
         });
          lineAAPrime.set({
           x1: points[0].x,
@@ -324,28 +324,28 @@ export default defineComponent(
           y1: pedalSPA.y*2-points[0].y,
           x2: pedalSPB.x*2-points[1].x,
           y2: pedalSPB.y*2-points[1].y,
-          stroke: "gray",
+          stroke: "red",
         });
         lineBC.set({
           x1: pedalSPC.x*2-points[2].x,
           y1: pedalSPC.y*2-points[2].y,
           x2: pedalSPB.x*2-points[1].x,
           y2: pedalSPB.y*2-points[1].y,
-          stroke: "gray",
+          stroke: "red",
         });
         lineCD.set({
           x1: pedalSPC.x*2-points[2].x,
           y1: pedalSPC.y*2-points[2].y,
           x2: pedalSPD.x*2-points[3].x,
           y2: pedalSPD.y*2-points[3].y,
-          stroke: "gray",
+          stroke: "red",
         });
         lineDA.set({
           x1: pedalSPD.x*2-points[3].x,
           y1: pedalSPD.y*2-points[3].y,
           x2: pedalSPA.x*2-points[0].x,
           y2: pedalSPA.y*2-points[0].y,
-          stroke: "gray",
+          stroke: "red",
         });
         linePA.set({
           x1: pedalSPA.x*2-points[0].x,
@@ -388,25 +388,25 @@ export default defineComponent(
         aLabel.set({
           left:pedalSPA.x*2-points[0].x,
           top:pedalSPA.y*2-points[0].y,
-          fill:"red",
+          fill:"blue",
         });
          const pedalSPB = getPedalPoint(pointS,points[1],pointp);
         bLabel.set({
           left:pedalSPB.x*2-points[1].x+5,
           top:pedalSPB.y*2-points[1].y-25,
-          fill:"red",
+          fill:"blue",
         });
         const pedalSPC = getPedalPoint(pointS,points[2],pointp);
         cLabel.set({
           left:pedalSPC.x*2-points[2].x-25,
           top:pedalSPC.y*2-points[2].y-10,
-          fill:"red",
+          fill:"blue",
         });
         const pedalSPD = getPedalPoint(pointS,points[3],pointp);
         dLabel.set({
           left:pedalSPD.x*2-points[3].x-20,
           top:pedalSPD.y*2-points[3].y,
-          fill:"red",
+          fill:"blue",
         });
         lineAAPrime.set({
           x1: points[0].x,
@@ -445,28 +445,28 @@ export default defineComponent(
           y1: pedalSPA.y*2-points[0].y,
           x2: pedalSPB.x*2-points[1].x,
           y2: pedalSPB.y*2-points[1].y,
-          stroke: "gray",
+          stroke: "blue",
         });
         lineBC.set({
           x1: pedalSPC.x*2-points[2].x,
           y1: pedalSPC.y*2-points[2].y,
           x2: pedalSPB.x*2-points[1].x,
           y2: pedalSPB.y*2-points[1].y,
-          stroke: "gray",
+          stroke: "blue",
         });
         lineCD.set({
           x1: pedalSPC.x*2-points[2].x,
           y1: pedalSPC.y*2-points[2].y,
           x2: pedalSPD.x*2-points[3].x,
           y2: pedalSPD.y*2-points[3].y,
-          stroke: "gray",
+          stroke: "blue",
         });
         lineDA.set({
           x1: pedalSPD.x*2-points[3].x,
           y1: pedalSPD.y*2-points[3].y,
           x2: pedalSPA.x*2-points[0].x,
           y2: pedalSPA.y*2-points[0].y,
-          stroke: "gray",
+          stroke: "blue",
         });
         linePA.set({
           x1: pedalSPA.x*2-points[0].x,
