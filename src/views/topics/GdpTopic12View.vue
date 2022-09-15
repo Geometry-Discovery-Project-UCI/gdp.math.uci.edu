@@ -79,9 +79,9 @@ export default defineComponent({
       });
     }
 
-    const vertexA = createCircle(200, 150, 10).set({ evented: true });
-    const vertexB = createCircle(75, 350, 10).set({ evented: true });
-    const vertexC = createCircle(400, 350, 10).set({ evented: true });
+    const vertexA = createCircle(200, 150, 3).set({ evented: true, fill:"black", padding: 20});
+    const vertexB = createCircle(75, 350, 3).set({ evented: true, fill:"black", padding: 20 });
+    const vertexC = createCircle(400, 350, 3).set({ evented:true, fill:"black", padding: 20 });
 
     const triangle = createPolygon();
     const midPointTriangle = createPolygon();
