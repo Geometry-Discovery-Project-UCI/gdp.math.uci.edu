@@ -15,15 +15,16 @@ import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
 import {
-    makeLine,
-    makeLabel,
-    makeCircle,
-    makeMovablePolygon
+  makeLine,
+  makeLabel,
+  makeCircle,
+  makeMovablePolygon, makeSelectCircle
 } from "@/utils/canvas";
 import {
-    calculateLineIntersectInPoints,
-    calculateMidpoint,
-    calculateSlope
+  calculateInterPointsWithBoundary,
+  calculateLineIntersectInPoints,
+  calculateMidpoint,
+  calculateSlope
 } from "@/utils/geometry";
 
 const topic = indexTopicMap.get(26) as Topic;
@@ -66,6 +67,10 @@ export default defineComponent(
             const mNode = makeCircle();
             const nNode = makeCircle();
             const lNode = makeCircle();
+            const circleA = makeSelectCircle();
+            const circleB = makeSelectCircle();
+            const circleC = makeSelectCircle();
+            const circleD = makeSelectCircle();
 
             // Creates movable quadrilateral
             const quadrilateral = makeMovablePolygon(
@@ -112,6 +117,11 @@ export default defineComponent(
                         fill: "green",
                     });
 
+                    circleA.set({left:coords[0].x, top: coords[0].y });
+                    circleB.set({left:coords[1].x, top: coords[1].y });
+                    circleC.set({left:coords[2].x, top: coords[2].y });
+                    circleD.set({left:coords[3].x, top: coords[3].y });
+
                     // Update the line coordinates
                     // for the diagonals of the quadrilateral
                     diagAC.set({
@@ -135,40 +145,49 @@ export default defineComponent(
                     const midpoint1 = calculateMidpoint(coords[0], coords[2]);
                     const midpoint2 = calculateMidpoint(coords[1], coords[3]);
 
-                    // Calculate the slope between two midpoints
-                    // (Slope of Newton's Line)
-                    const slope = calculateSlope(midpoint1, midpoint2);
+                  const linePoints = calculateInterPointsWithBoundary(midpoint1, midpoint2,500, 500, 20);
+                  newtonLine.set({
+                    x1: linePoints[0].x,
+                    y1: linePoints[0].y,
+                    x2: linePoints[1].x,
+                    y2: linePoints[1].y,
+                    stroke: "blue"
+                  });
 
-                    // Update Newton's line coordinates
-                    // that extend from border to border
-                    // (1) When slope is not finite, draw vertical line
-                    if (!isFinite(slope)) {
-                        newtonLine.set({
-                            x1: midpoint1.x,
-                            y1: 0,
-                            x2: midpoint1.x,
-                            y2: CANVAS_HEIGHT,
-                            stroke: "red",
-                        });
-                        // (2) When length between 2 points = 0, set slope = 0
-                    } else if (isNaN(slope)) {
-                        newtonLine.set({
-                            x1: 0,
-                            y1: midpoint1.y,
-                            x2: CANVAS_WIDTH,
-                            y2: midpoint1.y,
-                            stroke: "red",
-                        });
-                        // (3) Else, draw the line using linear equations with slope and midpoint1
-                    } else {
-                        newtonLine.set({
-                            x1: 0,
-                            y1: -slope * midpoint1.x + midpoint1.y - topOffset,
-                            x2: CANVAS_WIDTH,
-                            y2: slope * (CANVAS_WIDTH - midpoint1.x) + midpoint1.y - topOffset,
-                            stroke: "red",
-                        });
-                    }
+                    // // Calculate the slope between two midpoints
+                    // // (Slope of Newton's Line)
+                    // const slope = calculateSlope(midpoint1, midpoint2);
+                    //
+                    // // Update Newton's line coordinates
+                    // // that extend from border to border
+                    // // (1) When slope is not finite, draw vertical line
+                    // if (!isFinite(slope)) {
+                    //     newtonLine.set({
+                    //         x1: midpoint1.x,
+                    //         y1: 0,
+                    //         x2: midpoint1.x,
+                    //         y2: CANVAS_HEIGHT,
+                    //         stroke: "red",
+                    //     });
+                    //     // (2) When length between 2 points = 0, set slope = 0
+                    // } else if (isNaN(slope)) {
+                    //     newtonLine.set({
+                    //         x1: 0,
+                    //         y1: midpoint1.y,
+                    //         x2: CANVAS_WIDTH,
+                    //         y2: midpoint1.y,
+                    //         stroke: "red",
+                    //     });
+                    //     // (3) Else, draw the line using linear equations with slope and midpoint1
+                    // } else {
+                    //     newtonLine.set({
+                    //         x1: 0,
+                    //         y1: -slope * midpoint1.x + midpoint1.y - topOffset,
+                    //         x2: CANVAS_WIDTH,
+                    //         y2: slope * (CANVAS_WIDTH - midpoint1.x) + midpoint1.y - topOffset,
+                    //         stroke: "red",
+                    //     });
+                    // }
 
                     // Creates 4 constants to be 4 sides of the quadrilateral
                     // Used to determine when the opposite sides are parallel
@@ -336,6 +355,10 @@ export default defineComponent(
             canvas.add(mNode);
             canvas.add(nNode);
             canvas.add(lNode);
+            canvas.add(circleA);
+            canvas.add(circleB);
+            canvas.add(circleC);
+            canvas.add(circleD);
 
             canvas.add(quadrilateral);
         }

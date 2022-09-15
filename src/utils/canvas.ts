@@ -130,6 +130,22 @@ export function makeCircle(radius = 5, center: fabric.Point = new fabric.Point(0
   });
 }
 
+export function makeSelectCircle(radius = 3, center: fabric.Point = new fabric.Point(0, 0), fill = "black", padding = 20, strokeWidth = 1){
+  return new fabric.Circle({
+    originX: "center",
+    originY: "center",
+    left: center.x,
+    top: center.y,
+    hasControls: false,
+    hasBorders: false,
+    evented: false,
+    radius,
+    fill,
+    padding,
+    strokeWidth,
+  });
+}
+
 export function makeMovablePoint(pt: fabric.Point) {
   return new fabric.Circle({
     left: pt.x,
