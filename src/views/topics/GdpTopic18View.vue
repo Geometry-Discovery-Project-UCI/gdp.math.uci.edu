@@ -147,20 +147,20 @@ const makeLine = (pt1?: Coord | fabric.Point, pt2?: Coord | fabric.Point,
 };
 
 function getTangentLine(inter: Coord, radius: number, center: Coord): LinearEq {
-  const {m, b} = solveLinearEquation(inter, center);
+  const { m } = solveLinearEquation(inter, center);
   return solvePerpendicularLineEquation(m, inter);
 }
 
 function setLineFromPoints(line: Line, a: Coord | Circle, b: Coord | Circle, offSet?: number): void {
   if (!("x" in b) || !("y" in b)) {
-    b = {x: b.left!, y: b.top!};
+    b = { x: b.left!, y: b.top! };
   } else {
-    b = {x: b.x, y: b.y};
+    b = { x: b.x, y: b.y };
   }
   if (!("x" in a) || !("y" in a)) {
-    a = {x: a.left!, y: a.top!};
+    a = { x: a.left!, y: a.top! };
   } else {
-    a = {x: a.x, y: a.y};
+    a = { x: a.x, y: a.y };
   }
   if (offSet !== undefined) {
     if (a.x < b.x) {
@@ -209,15 +209,15 @@ export default defineComponent(
       const circleA = makeCircle(pointA);
       const circleB = makeCircle(pointB);
       const circleC = makeCircle(pointC);
-      circleA.set({selectable: false, evented: false});
-      circleB.set({selectable: false, evented: false});
-      circleC.set({selectable: false, evented: false});
+      circleA.set({ selectable: false, evented: false });
+      circleB.set({ selectable: false, evented: false });
+      circleC.set({ selectable: false, evented: false });
       const tanA = makeLine();
       const tanB = makeLine();
       const tanC = makeLine();
-      tanA.set({stroke: "DeepPink"});
-      tanB.set({stroke: "DeepPink"});
-      tanC.set({stroke: "DeepPink"});
+      tanA.set({ stroke: "DeepPink" });
+      tanB.set({ stroke: "DeepPink" });
+      tanC.set({ stroke: "DeepPink" });
       pointA.tangent = tanA;
       pointB.tangent = tanB;
       pointC.tangent = tanC;
@@ -242,17 +242,17 @@ export default defineComponent(
       const labelZ = makeLabel("Z");
       const coll = makeLine();
       cvs.add(labelX, labelY, labelZ, coll, x, y, z);
-      const labelA = makeLabel("A", {x: 10, y: -20});
-      const labelB = makeLabel("B", {x: -15, y: 5});
-      const labelC = makeLabel("C", {x: 15, y: -10});
+      const labelA = makeLabel("A", { x: 10, y: -20 });
+      const labelB = makeLabel("B", { x: -15, y: 5 });
+      const labelC = makeLabel("C", { x: 15, y: -10 });
       const labels = [labelA, labelB, labelC];
       cvs.add(pointA.tangent, pointB.tangent, pointC.tangent, labelA, labelB, labelC);
       const ay = makeLine();
       const bz = makeLine();
       const cx = makeLine();
-      ay.set({stroke: "LimeGreen"});
-      bz.set({stroke: "LimeGreen"});
-      cx.set({stroke: "LimeGreen"});
+      ay.set({ stroke: "LimeGreen" });
+      bz.set({ stroke: "LimeGreen" });
+      cx.set({ stroke: "LimeGreen" });
       ay.inter = y;
       bz.inter = z;
       cx.inter = x;
@@ -293,13 +293,13 @@ export default defineComponent(
             const l1 = p.collP!.crossLines![0];
             const l2 = p.collP!.crossLines![1];
             const c = calculateLineIntersectInLinearEquation(l1.m!, l1.b!, l2.m!, l2.b!);
-            p.collP!.set({left: c.x, top: c.y});
+            p.collP!.set({ left: c.x, top: c.y });
             // update exteded lines
             setLineFromPoints(p.lerpLine!, p, p.lerpLine!.inter!);
             setLineFromPoints(p.tangent!, p, p.collP!, offSet);
-            initCircles[i].set({left: inits[i].x, top: inits[i].y});
+            initCircles[i].set({ left: inits[i].x, top: inits[i].y });
           }
-          coll.eq = solveLinearEquation({x: x.left!, y: x.top!}, {x: y.left!, y: y.top!});
+          coll.eq = solveLinearEquation({ x: x.left!, y: x.top! }, { x: y.left!, y: y.top! });
           const lo = Math.min(x.left!, y.left!, z.left!);
           const hi = Math.max(x.left!, y.left!, z.left!);
           const ratio = (hi - lo) / 130;
@@ -307,7 +307,7 @@ export default defineComponent(
           const right = Math.min(hi + offSet, hi + offSet * ratio);
           // const left = 0;
           // const right = cvs.width!;
-          coll.set({x1: left, y1: left*coll.eq.m!+coll.eq!.b, x2: right, y2: right*coll.eq.m!+coll.eq!.b});
+          coll.set({ x1: left, y1: left * coll.eq.m! + coll.eq!.b, x2: right, y2: right * coll.eq.m! + coll.eq!.b });
           setLabelToPoint([labelX, labelY, labelZ], [x, y, z]);
           setLabelToPoint(labels, inits);
         },

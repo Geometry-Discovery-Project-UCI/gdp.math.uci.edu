@@ -1,38 +1,39 @@
 <template>
     <TopicMeta :topic="topic" />
-  <ATypographyParagraph>
-  </ATypographyParagraph>
+    <ATypographyParagraph>
+    </ATypographyParagraph>
     <svg id="tri-app_35" width="500" height="500" style="border: 2px solid black; background-color: floralwhite">
-    <polygon id="tri_35" stroke="black" stroke-width="2.5px" fill="transparent"/>
-    <polygon id="eabh_35" stroke="black" stroke-width="1.5px" fill="purple" fill-opacity="0.4"/>
-    <polygon id="dacg_35" stroke="black" stroke-width="1.5px" fill="orange" fill-opacity="0.4"/>
-    <polygon id="bqkp_35" stroke="black" stroke-width="1.5px" fill="purple" fill-opacity="0.4"/>
-    <polygon id="qcmp_35" stroke="black" stroke-width="1.5px" fill="orange" fill-opacity="0.4"/>
-    <line id="lineFE_35" font-size="20px" stroke="black" stroke-width="1.5px"/>
-    <line id="lineFD_35" font-size="20px" stroke="black" stroke-width="1.5px"/>
-    <line id="lineFA_35" font-size="20px" stroke="red" stroke-width="2px"/>
-    <line id="lineBK_35" font-size="20px" stroke="red" stroke-width="2px"/>
-    <line id="lineCM_35" font-size="20px" stroke="red" stroke-width="2px"/>
-    <line id="lineAQ_35" font-size="20px" stroke="black" stroke-dasharray="4" stroke-width="1.5px"/>
-    <line id="lineTC_35" font-size="20px" stroke="black" stroke-dasharray="4" stroke-width="1.5px"/>
-    <line id="lineLB_35" font-size="20px" stroke="black" stroke-dasharray="4" stroke-width="1.5px"/>    <text id="letterA_35" font-size="20px">A</text>
-    <text id="letterB_35" font-size="20px">B</text>
-    <text id="letterC_35" font-size="20px">C</text>
-    <text id="letterE_35" font-size="20px">E</text>
-    <text id="letterF_35" font-size="20px">F</text>
-    <text id="letterD_35" font-size="20px">D</text>
-    <text id="letterT_35" font-size="20px">T</text>
-    <text id="letterG_35" font-size="20px">G</text>
-    <text id="letterM_35" font-size="20px">M</text>
-    <text id="letterP_35" font-size="20px">P</text>
-    <text id="letterQ_35" font-size="20px">Q</text>
-    <text id="letterK_35" font-size="20px">K</text>
-    <text id="letterH_35" font-size="20px">H</text>
-    <text id="letterL_35" font-size="20px">L</text>
-    <text id="p1arr_35" font-size="20px" x="290" y="30"></text>
-    <text id="p2arr_35" font-size="20px" x="360" y="30"></text>
-    <text id="p3arr_35" font-size="20px" x="430" y="30"></text>
-  </svg>
+        <polygon id="tri_35" stroke="black" stroke-width="2.5px" fill="transparent" />
+        <polygon id="eabh_35" stroke="black" stroke-width="1.5px" fill="purple" fill-opacity="0.4" />
+        <polygon id="dacg_35" stroke="black" stroke-width="1.5px" fill="orange" fill-opacity="0.4" />
+        <polygon id="bqkp_35" stroke="black" stroke-width="1.5px" fill="purple" fill-opacity="0.4" />
+        <polygon id="qcmp_35" stroke="black" stroke-width="1.5px" fill="orange" fill-opacity="0.4" />
+        <line id="lineFE_35" font-size="20px" stroke="black" stroke-width="1.5px" />
+        <line id="lineFD_35" font-size="20px" stroke="black" stroke-width="1.5px" />
+        <line id="lineFA_35" font-size="20px" stroke="red" stroke-width="2px" />
+        <line id="lineBK_35" font-size="20px" stroke="red" stroke-width="2px" />
+        <line id="lineCM_35" font-size="20px" stroke="red" stroke-width="2px" />
+        <line id="lineAQ_35" font-size="20px" stroke="black" stroke-dasharray="4" stroke-width="1.5px" />
+        <line id="lineTC_35" font-size="20px" stroke="black" stroke-dasharray="4" stroke-width="1.5px" />
+        <line id="lineLB_35" font-size="20px" stroke="black" stroke-dasharray="4" stroke-width="1.5px" /> <text
+            id="letterA_35" font-size="20px">A</text>
+        <text id="letterB_35" font-size="20px">B</text>
+        <text id="letterC_35" font-size="20px">C</text>
+        <text id="letterE_35" font-size="20px">E</text>
+        <text id="letterF_35" font-size="20px">F</text>
+        <text id="letterD_35" font-size="20px">D</text>
+        <text id="letterT_35" font-size="20px">T</text>
+        <text id="letterG_35" font-size="20px">G</text>
+        <text id="letterM_35" font-size="20px">M</text>
+        <text id="letterP_35" font-size="20px">P</text>
+        <text id="letterQ_35" font-size="20px">Q</text>
+        <text id="letterK_35" font-size="20px">K</text>
+        <text id="letterH_35" font-size="20px">H</text>
+        <text id="letterL_35" font-size="20px">L</text>
+        <text id="p1arr_35" font-size="20px" x="290" y="30"></text>
+        <text id="p2arr_35" font-size="20px" x="360" y="30"></text>
+        <text id="p3arr_35" font-size="20px" x="430" y="30"></text>
+    </svg>
 </template>
 
 <script lang="ts">
@@ -40,15 +41,11 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import {
-distToLine,
-  drawLine,
-  findDistance,
-  isInside, area, areaa,
-  lineLineIntersection, setc, aboveBelow,
-  makeString, pointAlongLine, projectPoint2Line, fillDigits, radiansToDegress, setp, getEquationFromPoint
+    drawLine,
+    isInside, areaa,
+    lineLineIntersection, aboveBelow,
+    makeString, fillDigits, setp, getEquationFromPoint
 } from "@/utils/geometry";
-import { Step } from "ant-design-vue";
-import { setInputSelection } from "ant-design-vue/lib/vc-mentions/src/util";
 const topic = indexTopicMap.get(35) as Topic;
 
 export default defineComponent(
@@ -58,10 +55,6 @@ export default defineComponent(
         },
         mounted() {
             const svg = document.querySelector("#tri-app_35") as SVGGraphicsElement;
-            const pi = 3.14;
-            const radius = 100;
-            const xx = 250;
-            const yy = 250;
 
             const pC = [400, 330];
             const pB = [100, 330];
@@ -130,7 +123,7 @@ export default defineComponent(
                 drawLine(pB, pL, LB);
                 setp(letterL, pL);
                 pT = lineLineIntersection([fafa[0] + pC[0], fafa[1] + pC[1]], pC, pD, pG) as number[];
-                drawLine(pC,pT, TC);
+                drawLine(pC, pT, TC);
                 setp(letterT, pT);
                 // console.log(fafa);
                 pM = [pC[0] - fafa[0], pC[1] - fafa[1]];

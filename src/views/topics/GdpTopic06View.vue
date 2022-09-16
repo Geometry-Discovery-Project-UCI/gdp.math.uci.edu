@@ -127,7 +127,7 @@ function setLabelToPoint(labels: Label[], points: Circle[] | { top: number, left
 function makeCircle(point: fabric.Point | Coord, radius?: number, fill?: any): Circle;
 function makeCircle(x: number, y: number, radius?: any, fill?: string): Circle;
 function makeCircle(x: number | fabric.Point | Coord, y?: number, radius?: any, fill?: string): Circle {
-  if (typeof(x) !== "number") {
+  if (typeof (x) !== "number") {
     fill = radius;
     radius = y;
     y = x.y;
@@ -206,7 +206,7 @@ function setLineFromPoints(line: fabric.Line, a: Coord, b: Coord): void {
 function updateInterAndLine(line1: Line, line2: Line, inter: Circle): void {
   const newInter = calculateLineIntersectInPoints(line1, line2, true);
   if (newInter === null || newInter === undefined) return;
-  inter.set({left: newInter.x, top: newInter.y});
+  inter.set({ left: newInter.x, top: newInter.y });
   if (inter.crossLines !== undefined) {
     inter.crossLines.forEach(line => {
       line.set({
@@ -220,7 +220,7 @@ function updateInterAndLine(line1: Line, line2: Line, inter: Circle): void {
 }
 
 function getTangentLine(inter: Coord, radius: number, center: Coord): LinearEq {
-  const {m, b} = solveLinearEquation(inter, center);
+  const { m } = solveLinearEquation(inter, center);
   return solvePerpendicularLineEquation(m, inter);
 }
 
@@ -283,12 +283,12 @@ function partFour() {
   const ef = makeLine(pf, pe);
   const fa = makeLine(pf, pa);
 
-  ab.tan = makeCircle(new fabric.Point(pa.left!, pa.top!).lerp({x: pb.left!, y: pb.top!}, 0.5));
-  bc.tan = makeCircle(new fabric.Point(pc.left!, pc.top!).lerp({x: pb.left!, y: pb.top!}, 0.5));
-  cd.tan = makeCircle(new fabric.Point(pc.left!, pc.top!).lerp({x: pd.left!, y: pd.top!}, 0.5));
-  de.tan = makeCircle(new fabric.Point(pd.left!, pd.top!).lerp({x: pe.left!, y: pe.top!}, 0.5));
-  ef.tan = makeCircle(new fabric.Point(pe.left!, pe.top!).lerp({x: pf.left!, y: pf.top!}, 0.5));
-  fa.tan = makeCircle(new fabric.Point(pa.left!, pa.top!).lerp({x: pf.left!, y: pf.top!}, 0.5));
+  ab.tan = makeCircle(new fabric.Point(pa.left!, pa.top!).lerp({ x: pb.left!, y: pb.top! }, 0.5));
+  bc.tan = makeCircle(new fabric.Point(pc.left!, pc.top!).lerp({ x: pb.left!, y: pb.top! }, 0.5));
+  cd.tan = makeCircle(new fabric.Point(pc.left!, pc.top!).lerp({ x: pd.left!, y: pd.top! }, 0.5));
+  de.tan = makeCircle(new fabric.Point(pd.left!, pd.top!).lerp({ x: pe.left!, y: pe.top! }, 0.5));
+  ef.tan = makeCircle(new fabric.Point(pe.left!, pe.top!).lerp({ x: pf.left!, y: pf.top! }, 0.5));
+  fa.tan = makeCircle(new fabric.Point(pa.left!, pa.top!).lerp({ x: pf.left!, y: pf.top! }, 0.5));
   // Tangent lines
   ab.tan.clockLine = makeLine(ab.tan, pa);
   ab.tan.cntClockLine = makeLine(ab.tan, pb);
@@ -302,16 +302,16 @@ function partFour() {
   ef.tan.cntClockLine = makeLine(ef.tan, pf);
   fa.tan.clockLine = makeLine(fa.tan, pf);
   fa.tan.cntClockLine = makeLine(fa.tan, pa);
-  ab.tan.clockLine.set({x1: 0, y1: 0, x2: 0, y2: 0});
-  bc.tan.clockLine.set({x1: 0, y1: 0, x2: 0, y2: 0});
-  cd.tan.clockLine.set({x1: 0, y1: 0, x2: 0, y2: 0});
-  de.tan.clockLine.set({x1: 0, y1: 0, x2: 0, y2: 0});
-  ef.tan.clockLine.set({x1: 0, y1: 0, x2: 0, y2: 0});
-  fa.tan.clockLine.set({x1: 0, y1: 0, x2: 0, y2: 0});
+  ab.tan.clockLine.set({ x1: 0, y1: 0, x2: 0, y2: 0 });
+  bc.tan.clockLine.set({ x1: 0, y1: 0, x2: 0, y2: 0 });
+  cd.tan.clockLine.set({ x1: 0, y1: 0, x2: 0, y2: 0 });
+  de.tan.clockLine.set({ x1: 0, y1: 0, x2: 0, y2: 0 });
+  ef.tan.clockLine.set({ x1: 0, y1: 0, x2: 0, y2: 0 });
+  fa.tan.clockLine.set({ x1: 0, y1: 0, x2: 0, y2: 0 });
   [ab, bc, cd, de, ef, fa].forEach(line => {
     if (line.tan !== undefined) {
-      line.tan.clockLine?.set({strokeDashArray: [10], stroke: "Aqua"});
-      line.tan.cntClockLine?.set({strokeDashArray: [10], stroke: "Aqua"});
+      line.tan.clockLine?.set({ strokeDashArray: [10], stroke: "Aqua" });
+      line.tan.cntClockLine?.set({ strokeDashArray: [10], stroke: "Aqua" });
       // line.tan.clockLine?.set({x1: 0, y1: 0, x2: 0, y2: 0});
       // line.tan.cntClockLine?.set({x1: 0, y1: 0, x2: 0, y2: 0});
       cvsBra.add(line.tan.clockLine!, line.tan.cntClockLine!);
@@ -322,11 +322,11 @@ function partFour() {
   const ad = makeLine(pa, pd, undefined, "green");
   const be = makeLine(pb, pe, undefined, "green");
   const cf = makeLine(pc, pf, undefined, "green");
-  Object.assign(ad, solveLinearEquation({x:ad.x1!, y:ad.y1!}, {x:ad.x2!, y:ad.y2!}));
-  Object.assign(be, solveLinearEquation({x:be.x1!, y:be.y1!}, {x:be.x2!, y:be.y2!}));
+  Object.assign(ad, solveLinearEquation({ x: ad.x1!, y: ad.y1! }, { x: ad.x2!, y: ad.y2! }));
+  Object.assign(be, solveLinearEquation({ x: be.x1!, y: be.y1! }, { x: be.x2!, y: be.y2! }));
   const intersection = makeCircle(
-    getInterByLinearEq({m: ad.m!, b: ad.b!}, {m: be.m!, b: be.b!}), 4, "red");
-  intersection.set({selectable: false, evented: false});
+    getInterByLinearEq({ m: ad.m!, b: ad.b! }, { m: be.m!, b: be.b! }), 4, "red");
+  intersection.set({ selectable: false, evented: false });
   const ia = makeLine(intersection, pa, undefined, "green");
   const ib = makeLine(intersection, pb, undefined, "green");
   const ic = makeLine(intersection, pc, undefined, "green");
@@ -385,10 +385,10 @@ function partFour() {
   ie.p1 = pe;
   iF.p1 = pf;
 
-  const aLabel = makeLabel("A", {x: 10, y: -20});
-  const bLabel = makeLabel("B", {x: 0, y: -30});
-  const cLabel = makeLabel("C", {x: -25, y: -5});
-  const dLabel = makeLabel("D", {x: -5, y: 10});
+  const aLabel = makeLabel("A", { x: 10, y: -20 });
+  const bLabel = makeLabel("B", { x: 0, y: -30 });
+  const cLabel = makeLabel("C", { x: -25, y: -5 });
+  const dLabel = makeLabel("D", { x: -5, y: 10 });
   const eLabel = makeLabel("E");
   const fLabel = makeLabel("F");
   const oLabel = makeLabel("O");
@@ -404,19 +404,19 @@ function partFour() {
     const p = e.target! as Circle;
     let dist = calculateDistanceBetweenTwoPoints(circleToCoord(p)[0], center);
     const offset = 10;
-    if (dist <= RADIUS+offset) {
+    if (dist <= RADIUS + offset) {
       dist = RADIUS + offset;
     }
-    const alpha = Math.acos(RADIUS/dist);
+    const alpha = Math.acos(RADIUS / dist);
     let rad = Math.atan(-findSlope([center.x, center.y], [p.left!, p.top!]));
 
     if (p.left! < center.x) {
       rad -= Math.PI;
     }
     // Restrict movement outside of circle.
-    if (dist <= RADIUS+offset) {
-      const onCircle = polarToCartesian(RADIUS+offset, rad, center, false);
-      p.set({left: onCircle.x, top: onCircle.y});
+    if (dist <= RADIUS + offset) {
+      const onCircle = polarToCartesian(RADIUS + offset, rad, center, false);
+      p.set({ left: onCircle.x, top: onCircle.y });
     }
     setLabelToPoint([p.label!], [p]);
     const clkRad = rad - alpha;
@@ -425,8 +425,8 @@ function partFour() {
     const clkT = polarToCartesian(RADIUS, clkRad, center, false);
     const cntClkT = polarToCartesian(RADIUS, cntClkRad, center, false);
     // Update closest tangent points.
-    p.clockLine!.tan!.set({left: clkT.x, top: clkT.y});
-    p.cntClockLine!.tan!.set({left: cntClkT.x, top: cntClkT.y});
+    p.clockLine!.tan!.set({ left: clkT.x, top: clkT.y });
+    p.cntClockLine!.tan!.set({ left: cntClkT.x, top: cntClkT.y });
     const clkLinearEq = solveLinearEquation(circleToCoord(p)[0], clkT);
     const cntClkLinearEq = solveLinearEquation(circleToCoord(p)[0], cntClkT);
 
@@ -434,57 +434,57 @@ function partFour() {
     let clkLine = p.clockPoint!.clockLine!;
     let cntClkLine = p.cntClockPoint!.cntClockLine!;
     const clkP = getInterByLinearEq(clkLinearEq, solveLinearEquation(
-      {x: clkLine.x1!, y: clkLine.y1!},
-      {x: clkLine.x2!, y: clkLine.y2!}
+      { x: clkLine.x1!, y: clkLine.y1! },
+      { x: clkLine.x2!, y: clkLine.y2! }
     ));
-    p.clockPoint!.set({left: clkP.x, top: clkP.y});
+    p.clockPoint!.set({ left: clkP.x, top: clkP.y });
     const cntClkP = getInterByLinearEq(cntClkLinearEq, solveLinearEquation(
-      {x: cntClkLine.x1!, y: cntClkLine.y1!},
-      {x: cntClkLine.x2!, y: cntClkLine.y2!}
+      { x: cntClkLine.x1!, y: cntClkLine.y1! },
+      { x: cntClkLine.x2!, y: cntClkLine.y2! }
     ));
-    p.cntClockPoint!.set({left: cntClkP.x, top: cntClkP.y});
+    p.cntClockPoint!.set({ left: cntClkP.x, top: cntClkP.y });
 
     // Update lines accordingly
     setLineFromPoints(clkLine,
-      {x: clkLine.p1!.left!, y: clkLine.p1!.top!}, {x: clkLine.p2!.left!, y: clkLine.p2!.top!});
+      { x: clkLine.p1!.left!, y: clkLine.p1!.top! }, { x: clkLine.p2!.left!, y: clkLine.p2!.top! });
     setLineFromPoints(cntClkLine,
-      {x: cntClkLine.p1!.left!, y: cntClkLine.p1!.top!}, {x: cntClkLine.p2!.left!, y: cntClkLine.p2!.top!});
+      { x: cntClkLine.p1!.left!, y: cntClkLine.p1!.top! }, { x: cntClkLine.p2!.left!, y: cntClkLine.p2!.top! });
     // clkLine.tan!.set();
     // Update strokes
     [clkLine, cntClkLine].forEach(line => {
       if (line.tan !== undefined && line.tan.clockLine !== undefined && line.tan.cntClockLine !== undefined) {
         setLineFromPoints(line.tan.clockLine,
-          {x: line.tan.clockLine.p1!.left!, y: line.tan.clockLine.p1!.top!}, {x: line.tan.clockLine.p2!.left!, y: line.tan.clockLine.p2!.top!});
+          { x: line.tan.clockLine.p1!.left!, y: line.tan.clockLine.p1!.top! }, { x: line.tan.clockLine.p2!.left!, y: line.tan.clockLine.p2!.top! });
         setLineFromPoints(line.tan.cntClockLine,
-          {x: line.tan.cntClockLine.p1!.left!, y: line.tan.cntClockLine.p1!.top!}, {x: line.tan.cntClockLine.p2!.left!, y: line.tan.cntClockLine.p2!.top!});
+          { x: line.tan.cntClockLine.p1!.left!, y: line.tan.cntClockLine.p1!.top! }, { x: line.tan.cntClockLine.p2!.left!, y: line.tan.cntClockLine.p2!.top! });
       }
     });
 
     clkLine = p.clockLine!;
     setLineFromPoints(clkLine,
-      {x: clkLine.p1!.left!, y: clkLine.p1!.top!}, {x: clkLine.p2!.left!, y: clkLine.p2!.top!});
+      { x: clkLine.p1!.left!, y: clkLine.p1!.top! }, { x: clkLine.p2!.left!, y: clkLine.p2!.top! });
     cntClkLine = p.cntClockLine!;
     setLineFromPoints(cntClkLine,
-      {x: cntClkLine.p1!.left!, y: cntClkLine.p1!.top!}, {x: cntClkLine.p2!.left!, y: cntClkLine.p2!.top!});
+      { x: cntClkLine.p1!.left!, y: cntClkLine.p1!.top! }, { x: cntClkLine.p2!.left!, y: cntClkLine.p2!.top! });
     // Update intersections
     [ad, be].forEach(line => {
-      setLineFromPoints(line, {x: line.p1!.left!, y: line.p1!.top!}, {x: line.p2!.left!, y: line.p2!.top!});
+      setLineFromPoints(line, { x: line.p1!.left!, y: line.p1!.top! }, { x: line.p2!.left!, y: line.p2!.top! });
     });
     [clkLine, cntClkLine].forEach(line => {
       if (line.tan !== undefined && line.tan.clockLine !== undefined && line.tan.cntClockLine !== undefined) {
         setLineFromPoints(line.tan.clockLine,
-          {x: line.tan.clockLine.p1!.left!, y: line.tan.clockLine.p1!.top!}, {x: line.tan.clockLine.p2!.left!, y: line.tan.clockLine.p2!.top!});
+          { x: line.tan.clockLine.p1!.left!, y: line.tan.clockLine.p1!.top! }, { x: line.tan.clockLine.p2!.left!, y: line.tan.clockLine.p2!.top! });
         setLineFromPoints(line.tan.cntClockLine,
-          {x: line.tan.cntClockLine.p1!.left!, y: line.tan.cntClockLine.p1!.top!}, {x: line.tan.cntClockLine.p2!.left!, y: line.tan.cntClockLine.p2!.top!});
+          { x: line.tan.cntClockLine.p1!.left!, y: line.tan.cntClockLine.p1!.top! }, { x: line.tan.cntClockLine.p2!.left!, y: line.tan.cntClockLine.p2!.top! });
       }
     });
 
-    Object.assign(ad, solveLinearEquation({x:ad.x1!, y:ad.y1!}, {x:ad.x2!, y:ad.y2!}));
-    Object.assign(be, solveLinearEquation({x:be.x1!, y:be.y1!}, {x:be.x2!, y:be.y2!}));
-    const updateInter = getInterByLinearEq({m: ad.m!, b: ad.b!}, {m: be.m!, b: be.b!});
-    intersection.set({left: updateInter.x, top: updateInter.y});
+    Object.assign(ad, solveLinearEquation({ x: ad.x1!, y: ad.y1! }, { x: ad.x2!, y: ad.y2! }));
+    Object.assign(be, solveLinearEquation({ x: be.x1!, y: be.y1! }, { x: be.x2!, y: be.y2! }));
+    const updateInter = getInterByLinearEq({ m: ad.m!, b: ad.b! }, { m: be.m!, b: be.b! });
+    intersection.set({ left: updateInter.x, top: updateInter.y });
     [ia, ib, ic, id, ie, iF].forEach(line => setLineFromPoints(
-      line, {x: line.p1!.left!, y: line.p1!.top!}, {x: intersection.left!, y: intersection.top!}));
+      line, { x: line.p1!.left!, y: line.p1!.top! }, { x: intersection.left!, y: intersection.top! }));
 
     setLabelToPoint([p.clockPoint!.label!, p.cntClockPoint!.label!], [p.clockPoint!, p.cntClockPoint!]);
   };
@@ -508,15 +508,15 @@ function partThree() {
   const mul = 50;
   const yOffset = 470;
   const xOffset = 20;
-  const pointC = makeCircle(xOffset + 2*mul, yOffset - 5.5*mul);
-  const pointB = makeCircle(xOffset + 0*mul, yOffset - 6*mul);
-  const pointA = makeCircle(xOffset + 1.5*mul, yOffset - 4*mul);
+  const pointC = makeCircle(xOffset + 2 * mul, yOffset - 5.5 * mul);
+  const pointB = makeCircle(xOffset + 0 * mul, yOffset - 6 * mul);
+  const pointA = makeCircle(xOffset + 1.5 * mul, yOffset - 4 * mul);
   // (5.5,1.125)--(0,0)--(2.25,2)
-  const pointPrimeC = makeCircle(xOffset + mul*5.5, yOffset - mul*1.125, 1, undefined);
-  const pointPrimeB = makeCircle(xOffset + mul*0, yOffset - mul*0, 1, undefined);
-  const pointPrimeA = makeCircle(xOffset + mul*2.25, yOffset - mul*2, 1, undefined);
-  const abc = new fabric.Polygon(circleToCoord(pointA, pointB, pointC), {fill: "yellow"});
-  const primeTriangle = new fabric.Polygon(circleToCoord(pointPrimeA, pointPrimeB, pointPrimeC), {fill: "#5efc03"});
+  const pointPrimeC = makeCircle(xOffset + mul * 5.5, yOffset - mul * 1.125, 1, undefined);
+  const pointPrimeB = makeCircle(xOffset + mul * 0, yOffset - mul * 0, 1, undefined);
+  const pointPrimeA = makeCircle(xOffset + mul * 2.25, yOffset - mul * 2, 1, undefined);
+  const abc = new fabric.Polygon(circleToCoord(pointA, pointB, pointC), { fill: "yellow" });
+  const primeTriangle = new fabric.Polygon(circleToCoord(pointPrimeA, pointPrimeB, pointPrimeC), { fill: "#5efc03" });
   abc.selectable = false;
   abc.evented = false;
   primeTriangle.selectable = false;
@@ -524,9 +524,9 @@ function partThree() {
   cvsDes.add(abc, primeTriangle);
   cvsDes.add(pointA, pointB, pointC, pointPrimeA, pointPrimeB, pointPrimeC);
 
-  const aLabel = makeLabel("A", {x: 15, y: -10});
-  const bLabel = makeLabel("B", {x: -20, y: 5});
-  const cLabel = makeLabel("C", {x: 15, y: -20});
+  const aLabel = makeLabel("A", { x: 15, y: -10 });
+  const bLabel = makeLabel("B", { x: -20, y: 5 });
+  const cLabel = makeLabel("C", { x: 15, y: -20 });
   const aprimeLabel = makeLabel("A'");
   const bprimeLabel = makeLabel("B'");
   const cprimeLabel = makeLabel("C'");
@@ -558,11 +558,11 @@ function partThree() {
   pointC.upBound = pointPrimeC;
   pointC.downBound = pointO;
   Object.assign(oAp, solveLinearEquation(
-    {x: pointO.left!, y: pointO.top!}, {x: pointPrimeA.left!, y: pointPrimeA.top!}));
+    { x: pointO.left!, y: pointO.top! }, { x: pointPrimeA.left!, y: pointPrimeA.top! }));
   Object.assign(oBp, solveLinearEquation(
-    {x: pointO.left!, y: pointO.top!}, {x: pointPrimeB.left!, y: pointPrimeB.top!}));
+    { x: pointO.left!, y: pointO.top! }, { x: pointPrimeB.left!, y: pointPrimeB.top! }));
   Object.assign(oCp, solveLinearEquation(
-    {x: pointO.left!, y: pointO.top!}, {x: pointPrimeC.left!, y: pointPrimeC.top!}));
+    { x: pointO.left!, y: pointO.top! }, { x: pointPrimeC.left!, y: pointPrimeC.top! }));
   cvsDes.add(pointO, oBp, oCp, oAp);
   // Triangle part
   const ab = makeLine(pointA, pointB);
@@ -646,14 +646,14 @@ function partThree() {
   cp.p2 = pointP;
   cpP.p1 = pointPrimeC;
   cpP.p2 = pointP;
-  const oLabel = makeLabel("O", {x: -5, y: -30});
+  const oLabel = makeLabel("O", { x: -5, y: -30 });
   const pLabel = makeLabel("P");
-  const qLabel = makeLabel("Q", {x: -25, y: 0});
-  const rLabel = makeLabel("R", {x: 10, y: 0});
+  const qLabel = makeLabel("Q", { x: -25, y: 0 });
+  const rLabel = makeLabel("R", { x: 10, y: 0 });
   setLabelToPoint([oLabel, pLabel, qLabel, rLabel], [pointO, pointP, pointQ, pointR]);
   cvsDes.add(oLabel, pLabel, qLabel, rLabel);
   [pointPrimeA, pointPrimeB, pointPrimeC, pointO, pointP, pointQ, pointR].forEach(p => {
-    p.set({lockMovementX: true, lockMovementY: true, evented: false});
+    p.set({ lockMovementX: true, lockMovementY: true, evented: false });
   });
 
   // Interaction
@@ -688,12 +688,12 @@ function partThree() {
     }
     // Update the collinear PQ line
     // Extend to canvas width
-    Object.assign(pq, solveLinearEquation({x: pq.p1!.left!, y: pq.p1!.top!}, {x:pq.p2!.left!, y:pq.p2!.top!}));
+    Object.assign(pq, solveLinearEquation({ x: pq.p1!.left!, y: pq.p1!.top! }, { x: pq.p2!.left!, y: pq.p2!.top! }));
     pq.set({
       x1: 0,
       y1: pq.b,
       x2: cvsWidth,
-      y2: cvsWidth*pq.m! + pq.b!,
+      y2: cvsWidth * pq.m! + pq.b!,
     });
     // Update according to position change
     if (p.label !== undefined) {
@@ -788,7 +788,7 @@ function partTwo() {
       for (let idx = 0; idx < coords.length; idx++) {
         const c = circles[idx];
         const coord = coords[idx];
-        c.set({left: coord.x, top: coord.y});
+        c.set({ left: coord.x, top: coord.y });
       }
       setLabelToPoint([aLabel, bLabel, cLabel, dLabel, eLabel, fLabel],
         coords);
@@ -821,8 +821,8 @@ function partTwo() {
       setLineFromPoints(by, pointB, pointY);
       setLineFromPoints(fy, pointF, pointY);
       const { m, b } = solveLinearEquation(pointX, pointY);
-      const y1 = m*500 + b;
-      setLineFromPoints(xy, { x: 500, y: y1 }, { x: 0, y: b});
+      const y1 = m * 500 + b;
+      setLineFromPoints(xy, { x: 500, y: y1 }, { x: 0, y: b });
     },
     circleRestrict
   );
@@ -1010,9 +1010,9 @@ export default defineComponent(
         pB, ppC, pC, ppB) as Intersection).points![0];
       const [pointX, pointY, pointZ] = [pX, pY, pZ].map(p => makeCircle(p, undefined, 3));
       // Disable user dragging on intersections
-      pointX.set({lockMovementX: true, lockMovementY: true});
-      pointY.set({lockMovementX: true, lockMovementY: true});
-      pointZ.set({lockMovementX: true, lockMovementY: true});
+      pointX.set({ lockMovementX: true, lockMovementY: true });
+      pointY.set({ lockMovementX: true, lockMovementY: true });
+      pointZ.set({ lockMovementX: true, lockMovementY: true });
 
       setLabelToPoint([zLabel, yLabel, xLabel], [pointZ, pointY, pointX]);
 
@@ -1082,24 +1082,24 @@ export default defineComponent(
         }
 
         if (p.intersects !== undefined) {
-            p.intersects.forEach(inter => {
-              const [l1, l2] = inter.crossLines!;
-              const intersect = getIntersectFromLines(l1, l2);
-              const coord = { left: intersect.x, top: intersect.y };
-              inter.set(coord);
+          p.intersects.forEach(inter => {
+            const [l1, l2] = inter.crossLines!;
+            const intersect = getIntersectFromLines(l1, l2);
+            const coord = { left: intersect.x, top: intersect.y };
+            inter.set(coord);
             if (inter.label !== undefined) {
               setLabelToPoint([inter.label!], [coord]);
             }
-            });
-            Object.assign(collinearLine, solveLinearEquation(
-              {x: collinearLine.p1!.left!, y: collinearLine.p1!.top!}, {x: collinearLine.p2!.left!, y: collinearLine.p2!.top!}
-            ));
-            collinearLine.set({
-              x1: collinearLine.p1!.left! - COLL_OFF_SET,
-              y1: collinearLine.m! * (collinearLine.p1!.left! - COLL_OFF_SET) + collinearLine.b!,
-              x2: collinearLine.p2!.left! + COLL_OFF_SET,
-              y2: collinearLine.m! * (collinearLine.p2!.left! + COLL_OFF_SET) + collinearLine.b!,
-            });
+          });
+          Object.assign(collinearLine, solveLinearEquation(
+            { x: collinearLine.p1!.left!, y: collinearLine.p1!.top! }, { x: collinearLine.p2!.left!, y: collinearLine.p2!.top! }
+          ));
+          collinearLine.set({
+            x1: collinearLine.p1!.left! - COLL_OFF_SET,
+            y1: collinearLine.m! * (collinearLine.p1!.left! - COLL_OFF_SET) + collinearLine.b!,
+            x2: collinearLine.p2!.left! + COLL_OFF_SET,
+            y2: collinearLine.m! * (collinearLine.p2!.left! + COLL_OFF_SET) + collinearLine.b!,
+          });
         }
 
         if (p.label !== undefined) {

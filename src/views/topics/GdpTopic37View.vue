@@ -11,37 +11,22 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { indexTopicMap, otherImages } from "@/data";
+import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
-import { IEvent, Point } from "fabric/fabric-impl";
 import { fabric } from "fabric";
 import {
     makeLine,
     makeLabel,
     makeCircle,
-    makeMovablePolygon,
     makeMovablePoint
 } from "@/utils/canvas";
 import {
     calculateMidpoint,
     getPedalPoint,
     calculateDistanceBetweenTwoPoints,
-    calculateSlope,
-    calculateLineIntersectInPoints,
-    CANVAS_HEIGHT, CANVAS_WIDTH, calculateThreeAngles,
     cartesianToTrilinear
 } from "@/utils/geometry";
-import { LineHeightOutlined } from "@ant-design/icons-vue";
 const topic = indexTopicMap.get(37) as Topic;
-type Circle = fabric.Circle & {
-    [key: string]: any,
-    intersects?: Circle[],
-    upLine?: fabric.Line[],
-    downLine?: fabric.Line[],
-    crossLines?: fabric.Line[],
-    leftBound?: Circle,
-    rightBound?: Circle,
-};
 export default defineComponent(
     {
         setup() {
@@ -377,7 +362,7 @@ export default defineComponent(
             canvas.add(angleY);
             canvas.add(angleZ);
             const signCoords = [60, 170];
-            signCoords.forEach((signCoord) => {
+            signCoords.forEach(() => {
                 canvas.add(new fabric.Text("𝒙     ：    𝒚     ：    𝒛", {
                     left: 300,
                     top: 22,

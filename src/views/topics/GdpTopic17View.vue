@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, h } from "vue";
+import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
@@ -32,21 +32,6 @@ import {
 import { makeLine } from "@/utils/canvas";
 
 const topic = indexTopicMap.get(17) as Topic;
-
-function calcSlope(pt1: fabric.Point, pt2: fabric.Point): number {
-  const a1 = pt1.y - pt2.y;
-  const a2 = pt1.x - pt2.x;
-  let k;
-
-  if (pt1.x === pt2.x) {
-    return NaN;
-  } else if (Math.abs(a1) < Math.abs(a2)) {
-    return (k = (pt1.y - pt2.y) / (pt1.x - pt2.x));
-  } else {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return (k = ((pt1.x - pt2.x) / (pt1.y - pt2.y)) * -1);
-  }
-}
 
 function createCircle(x?: number, y?: number, radius?: number, fill?: string): fabric.Circle {
   return new fabric.Circle({

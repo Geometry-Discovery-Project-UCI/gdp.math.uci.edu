@@ -1,7 +1,6 @@
 import { fabric } from "fabric";
 import { Coord } from "@/types";
-import {makeLine} from "@/utils/canvas";
-import {Intersection} from "fabric/fabric-impl";
+import { Intersection } from "fabric/fabric-impl";
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
@@ -500,7 +499,7 @@ export const areaa = (polygon: number[]) => {
 // Change numbers in a string to subscript.
 export function subNums(str: string) {
   let newStr = "";
-  for (let i=0; i<str.length; i++) {
+  for (let i = 0; i < str.length; i++) {
     //  Get the code of the current character
     const code = str.charCodeAt(i);
     if (code >= 48 && code <= 57) {
@@ -519,7 +518,7 @@ Calculate intersection points between a line and  canvas's 4 boundary lines. Poi
 two points on the line. Width and height is canvas's default width and height. Offset is the gap
 between two canvas frames. Set offset to positive if it's inner frame.Negative for outer frame.
  */
-export function calculateInterPointsWithBoundary(pt1: fabric.Point, pt2: fabric.Point, width: number, height: number, offset: number){
+export function calculateInterPointsWithBoundary(pt1: fabric.Point, pt2: fabric.Point, width: number, height: number, offset: number) {
   const
     leftTop = new fabric.Point(offset, offset),
     rightTop = new fabric.Point(width - offset, offset),
@@ -531,11 +530,11 @@ export function calculateInterPointsWithBoundary(pt1: fabric.Point, pt2: fabric.
   const topInterPoint = (fabric.Intersection.prototype.intersectLineLine(
     pt1, pt2, leftTop, rightTop) as Intersection);
   const leftInterPoint = (fabric.Intersection.prototype.intersectLineLine(
-    pt1, pt2,  leftTop, leftBottom) as Intersection);
+    pt1, pt2, leftTop, leftBottom) as Intersection);
   const bottomInterPoint = (fabric.Intersection.prototype.intersectLineLine(
-    pt1, pt2,  rightBottom, leftBottom) as Intersection);
+    pt1, pt2, rightBottom, leftBottom) as Intersection);
   const rightInterPoint = (fabric.Intersection.prototype.intersectLineLine(
-    pt1, pt2,  rightTop, rightBottom) as Intersection);
+    pt1, pt2, rightTop, rightBottom) as Intersection);
 
   // Horizontal lines
   if (topInterPoint.status === "Parallel" || bottomInterPoint.status === "Parallel") {
@@ -544,7 +543,7 @@ export function calculateInterPointsWithBoundary(pt1: fabric.Point, pt2: fabric.
     interX2 = rightInterPoint.points![0].x;
     interY2 = rightInterPoint.points![0].y;
     // Perpendicular lines
-  } else if (leftInterPoint.status === "Parallel" || rightInterPoint.status === "Parallel"){
+  } else if (leftInterPoint.status === "Parallel" || rightInterPoint.status === "Parallel") {
     interX1 = topInterPoint.points![0].x;
     interY1 = topInterPoint.points![0].y;
     interX2 = bottomInterPoint.points![0].x;
@@ -571,6 +570,6 @@ export function calculateInterPointsWithBoundary(pt1: fabric.Point, pt2: fabric.
       interY2 = bottomInterPoint.points![0].y;
     }
   }
-    return [new fabric.Point(interX1, interY1), new fabric.Point(interX2, interY2)];
+  return [new fabric.Point(interX1, interY1), new fabric.Point(interX2, interY2)];
 }
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */

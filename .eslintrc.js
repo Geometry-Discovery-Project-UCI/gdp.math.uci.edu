@@ -36,6 +36,8 @@ module.exports = {
       { selector: "property", format: null }
     ],
 
+    "@typescript-eslint/no-explicit-any": "off",
+
     "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
     "@typescript-eslint/consistent-type-assertions": ["error", { assertionStyle: "as" }],
 

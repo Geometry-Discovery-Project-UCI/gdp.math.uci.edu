@@ -15,7 +15,7 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
-import {makeLine, makeLabel, makeMovablePolygon} from "@/utils/canvas";
+import { makeLine, makeLabel, makeMovablePolygon } from "@/utils/canvas";
 import { calculateThreeAngles, trilinearToCartesian } from "@/utils/geometry";
 
 const topic = indexTopicMap.get(1) as Topic;
@@ -29,7 +29,7 @@ export default defineComponent(
       const canvas = new fabric.Canvas("morley-canvas", {
         selection: false,
       });
-      function makeSelectCircle(radius = 3, center: fabric.Point = new fabric.Point(0, 0), fill = "black", padding = 20, strokeWidth = 1){
+      function makeSelectCircle(radius = 3, center: fabric.Point = new fabric.Point(0, 0), fill = "black", padding = 20, strokeWidth = 1) {
         return new fabric.Circle({
           originX: "center",
           originY: "center",
@@ -79,9 +79,9 @@ export default defineComponent(
             left: coords[2].x + 5,
             top: coords[2].y,
           });
-          circleA.set({left: coords[0].x, top: coords[0].y});
-          circleB.set({left: coords[1].x, top: coords[1].y});
-          circleC.set({left: coords[2].x, top: coords[2].y});
+          circleA.set({ left: coords[0].x, top: coords[0].y });
+          circleB.set({ left: coords[1].x, top: coords[1].y });
+          circleC.set({ left: coords[2].x, top: coords[2].y });
 
           const angles = calculateThreeAngles(coords[0], coords[1], coords[2]);
 
