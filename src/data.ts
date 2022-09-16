@@ -6,7 +6,7 @@ export enum Institute {
 }
 
 // TODO(Kiyo5hi): Use enum for contributors
-// Knwon issue: https://github.com/microsoft/TypeScript/issues/40793
+// Known issue: https://github.com/microsoft/TypeScript/issues/40793
 
 export const YI_CHEN: Contributor = {
   name: "Yi Chen",
@@ -208,7 +208,20 @@ export const contributors: Contributor[] = [
   FELIX_YU,
   MELISSA_YU,
   ISHAN_DARJI,
-];
+].sort((a, b) => {
+  const aLastName = a.name.split(" ").pop() as string;
+  const bLastName = a.name.split(" ").pop() as string;
+
+  const diffInLastName = aLastName.localeCompare(bLastName);
+  if (diffInLastName !== 0) {
+    return diffInLastName;
+  }
+
+  const aFirstName = a.name.split(" ")[0];
+  const bFirstName = b.name.split(" ")[0];
+  return aFirstName.localeCompare(bFirstName);
+}
+);
 
 export const otherEssays: { name: string, uri: string }[] = [
   {
