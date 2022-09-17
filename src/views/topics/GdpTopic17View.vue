@@ -174,9 +174,6 @@ export default defineComponent({
         const slopeBC = calculateSlope(vertices[1], vertices[2]);
         const slopeCA = calculateSlope(vertices[2], vertices[0]);
         const slopeAB = calculateSlope(vertices[1], vertices[0]);
-        console.log("slopeAB", slopeAB);
-        console.log("slopeBC", slopeBC);
-        console.log("slopeCA", slopeCA);
 
         parallelToBC.set({
           x1: 0,

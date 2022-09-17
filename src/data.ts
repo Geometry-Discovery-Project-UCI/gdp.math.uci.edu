@@ -210,7 +210,7 @@ export const contributors: Contributor[] = [
   ISHAN_DARJI,
 ].sort((a, b) => {
   const aLastName = a.name.split(" ").pop() as string;
-  const bLastName = a.name.split(" ").pop() as string;
+  const bLastName = b.name.split(" ").pop() as string;
 
   const diffInLastName = aLastName.localeCompare(bLastName);
   if (diffInLastName !== 0) {

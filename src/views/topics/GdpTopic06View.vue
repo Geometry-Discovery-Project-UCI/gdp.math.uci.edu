@@ -89,8 +89,6 @@ interface LinearEq {
 /**
  * Utility functions
  */
-const log = console.log;
-
 const makeLabel = (text: string, offSet = { x: 0, y: 0 }, fontSize = 24): Label => {
   const label = new fabric.Text(text, {
     hasControls: false,
@@ -317,7 +315,6 @@ function partFour() {
       cvsBra.add(line.tan.clockLine!, line.tan.cntClockLine!);
     }
   });
-  log("pos", bc.tan.clockLine);
 
   const ad = makeLine(pa, pd, undefined, "green");
   const be = makeLine(pb, pe, undefined, "green");
@@ -828,7 +825,6 @@ function partTwo() {
   );
   cvsPascal.add(dx, bx, cz, az, by, fy, xy);
   cvsPascal.add(poly, xLable, yLable, zLable);
-  log("poly", poly);
 
   function _polygonPositionHandler(fn?: (points: fabric.Point[]) => void) {
     return function (this: { pointIndex: number }, _dim: any, _finalMatrix: any, fabricObject: fabric.Polygon) {
@@ -1038,7 +1034,6 @@ export default defineComponent(
         x2: collinearLine.p2!.left! + COLL_OFF_SET,
         y2: collinearLine.m! * (collinearLine.p2!.left! + COLL_OFF_SET) + collinearLine.b!,
       });
-      log("coll", collinearLine);
 
       // Bind related lines and intersects to points
       pointA.upLine = [aBprime, aCprime];

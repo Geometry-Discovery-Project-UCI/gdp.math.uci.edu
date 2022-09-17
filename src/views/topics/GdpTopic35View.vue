@@ -117,7 +117,6 @@ export default defineComponent(
                 drawLine(pF, pD, FD);
                 drawLine(pF, pE, FE);
                 drawLine(pA, pF, FA);
-                console.log(pF, pA);
                 const fafa = [pF[0] - pA[0], pF[1] - pA[1]];
                 pL = lineLineIntersection([fafa[0] + pB[0], fafa[1] + pB[1]], pB, pE, pH) as number[];
                 drawLine(pB, pL, LB);

@@ -168,7 +168,6 @@ export default defineComponent({
       const mBC = findSlope(pB, pC);
       const thetaD = Math.atan(-1 / mBC);
       const aaa = -findDistance(pB, pC) / Math.tan(alpha) / 2;
-      console.log((Math.cos(thetaD) * aaa));
       let pX = [-(Math.cos(thetaD) * aaa) + pD[0], -(Math.sin(thetaD) * aaa) + pD[1]];
       const pE = [(pA[0] + pC[0]) / 2, (pA[1] + pC[1]) / 2];
       const mAC = findSlope(pA, pC);

@@ -638,7 +638,6 @@ export default defineComponent(
           });
 
           const interPoints2 = calculateInterPointsWithBoundary(pointE, pointM, 500, 500,50);
-          console.log(interPoints2);
             fullLine2.set({
               x1: interPoints2[0].x, y1: interPoints2[0].y,
               x2: interPoints2[1].x, y2: interPoints2[1].y,

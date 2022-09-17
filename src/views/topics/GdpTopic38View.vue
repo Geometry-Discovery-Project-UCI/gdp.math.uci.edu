@@ -310,8 +310,6 @@ export default defineComponent({
         }
         p.set("left", x);
       }
-      const log = console.log;
-      log(lineBC);
 
       lineAD.set({
         x1: pointD.left!,

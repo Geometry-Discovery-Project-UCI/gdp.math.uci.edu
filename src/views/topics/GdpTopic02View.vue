@@ -653,7 +653,6 @@ export default defineComponent({
             const y = lineQA.m! * p.left! + lineQA.b!;
             p.set("top", y);
           }
-          console.log("pointE === pointF");
         }
         if (pointD === pointE) {
           if ((p.left as number) === 450) {
@@ -662,7 +661,6 @@ export default defineComponent({
           } else if ((p.left as number) === 40) {
             const y = lineQB.m! * p.left! + lineQB.b!;
             p.set("top", y);
-            console.log("pointD === pointE");
           }
         }
         if (pointD === undefined && pointE !== undefined) {
@@ -670,7 +668,6 @@ export default defineComponent({
             const y = lineQG.m! * p.left! + lineQG.b!;
             p.set("top", y);
           }
-          console.log("pointD === pointP");
         }
 
         // const p1 = [movablePointP.left as number, movablePointP.top as number];

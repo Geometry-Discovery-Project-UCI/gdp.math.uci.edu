@@ -60,7 +60,6 @@ interface LinearEq {
 /**
  * Utility functions
  */
-const log = console.log;
 const makeLabel = (text: string, offSet = { x: 0, y: 0 }, fontSize = 24): Label => {
   const label = new fabric.Text(text, {
     hasControls: false,
@@ -202,7 +201,6 @@ export default defineComponent(
         selectable: false,
       });
       cvs.add(circle);
-      log(cvs, "cvs");
       const pointA = coordToPoint(polarToCartesian(RADIUS, 55, center));
       const pointB = coordToPoint(polarToCartesian(RADIUS, 230, center));
       const pointC = coordToPoint(polarToCartesian(RADIUS, 300, center));
@@ -314,7 +312,6 @@ export default defineComponent(
         circleRestrict
       );
       cvs.add(triangle);
-      log(triangle);
       function _polygonPositionHandler(fn?: (points: fabric.Point[]) => void) {
         return function (this: { pointIndex: number }, _dim: any, _finalMatrix: any, fabricObject: fabric.Polygon) {
           const c = fabricObject.points!.map(function (pt: fabric.Point) {

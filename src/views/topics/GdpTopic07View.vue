@@ -273,10 +273,7 @@ export default defineComponent(
         const v2 = new Vector(pP[0] - pC[0], pP[1] - pC[1]);
         const v3 = new Vector(pB[0] - pC[0], pB[1] - pC[1]);
         const thetaBP = Vector.angleBetween(v3, v2);
-        const thetaAP = Vector.angleBetween(v2, v1);
-        const thetaAB = Vector.angleBetween(v3, v1);
         const medC = Vector.rotate(v1, thetaBP);
-        console.log(thetaBP + thetaAP - thetaAB);
         const medCl = lineLineIntersection([pC[0] + medC.x, pC[1] + medC.y], pC, pA, pB);
         if (medCl === null) return;
         drawLine(medCl, pC, line4a);
@@ -340,7 +337,6 @@ export default defineComponent(
       svgElement.addEventListener("mousemove", (event) => {
         let p = new DOMPoint(event.clientX, event.clientY);
         p = p.matrixTransform(svgElement.getScreenCTM()?.inverse());
-        console.log("B:::", p);
         if (mouseDown) {
           isotomicMouse(p);
         }
@@ -348,7 +344,6 @@ export default defineComponent(
       const svgElement2 = svg2 as SVGGraphicsElement;
       svgElement2.addEventListener("mousemove", (event) => {
         let p = new DOMPoint(event.clientX, event.clientY);
-        console.log("A:  ", p);
         p = p.matrixTransform(svgElement2.getScreenCTM()?.inverse());
         if (mouseDown) {
           isogonalConjugate(p);

@@ -118,7 +118,6 @@ export default defineComponent({
         });
 
         const angleABR = calculateThreeAngles(coords[0], coords[1], pointR);
-        console.log("xyz", angleABR.x, angleABR.y, angleABR.z);
         const circumcenterABR = trilinearToCartesian(
           coords[0],
           coords[1],
