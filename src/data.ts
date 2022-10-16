@@ -65,20 +65,12 @@ export const VINNIE_HSIA: Contributor = {
   email: "hsiat1@uci.edu",
   institute: Institute.UCIrvine,
 };
-<<<<<<< Updated upstream
 export const SHAOCHENG_HSU: Contributor = {
   name: "SHAOCHENG Hsu",
   email: "ecsonh@uci.edu",
   institute: Institute.UCIrvine,
 };
-=======
-export const ECSON_HSU: Contributor = {
-  name: "ShaoCheng Hsu",
-  email: "ecsonh@uci.edu",
-  institute: Institute.UCIrvine,
-};
 
->>>>>>> Stashed changes
 export const JIANLIN_LI: Contributor = {
   name: "Jianlin Li",
   email: "jianlil2@uci.edu",
@@ -210,11 +202,7 @@ export const contributors: Contributor[] = [
   BIN_GUO,
   XINXI_GUO,
   VINNIE_HSIA,
-<<<<<<< Updated upstream
   SHAOCHENG_HSU,
-=======
-  ECSON_HSU,
->>>>>>> Stashed changes
   JIANLIN_LI,
   TONGTONG_LI,
   YIXUAN_LI,
