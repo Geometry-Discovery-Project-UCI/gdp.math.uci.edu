@@ -7,6 +7,11 @@ export enum Institute {
 
 // TODO(Kiyo5hi): Use enum for contributors
 // Known issue: https://github.com/microsoft/TypeScript/issues/40793
+export const BRIAN_CABALLERO: Contributor = {
+  name: "Brian Caballero",
+  email: "bacaball@uci.edu",
+  institute: Institute.UCIrvine,
+};
 
 export const YI_CHEN: Contributor = {
   name: "Yi Chen",
@@ -18,6 +23,11 @@ export const YUE_CHU: Contributor = {
   name: "Yue Chu",
   email: "chuy13@uci.edu",
   institute: Institute.UCIrvine,
+};
+
+export const ISHAN_DARJI: Contributor = {
+  name: "Ishan Darji",
+  email: "ishan.darji0@gmail.com"
 };
 
 export const CHRISTOPHER_DAVIS: Contributor = {
@@ -174,13 +184,10 @@ export const MELISSA_YU: Contributor = {
   email: "melissajiayu@gmail.com",
 };
 
-export const ISHAN_DARJI: Contributor = {
-  name: "Ishan Darji",
-  email: "ishan.darji0@gmail.com"
-};
-
 export const contributors: Contributor[] = [
   ZHIQIN_LU,
+  BRIAN_CABALLERO,
+  ISHAN_DARJI,
   CHRISTOPHER_DAVIS,
   XIANFU_LIU,
   YI_CHEN,
@@ -207,7 +214,6 @@ export const contributors: Contributor[] = [
   ZEJIN_XU,
   FELIX_YU,
   MELISSA_YU,
-  ISHAN_DARJI,
 ].sort((a, b) => {
   const aLastName = a.name.split(" ").pop() as string;
   const bLastName = b.name.split(" ").pop() as string;
