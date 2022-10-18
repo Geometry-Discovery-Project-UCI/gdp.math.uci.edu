@@ -65,6 +65,11 @@ export const VINNIE_HSIA: Contributor = {
   email: "hsiat1@uci.edu",
   institute: Institute.UCIrvine,
 };
+export const SHAOCHENG_HSU: Contributor = {
+  name: "SHAOCHENG Hsu",
+  email: "ecsonh@uci.edu",
+  institute: Institute.UCIrvine,
+};
 
 export const JIANLIN_LI: Contributor = {
   name: "Jianlin Li",
@@ -197,6 +202,7 @@ export const contributors: Contributor[] = [
   BIN_GUO,
   XINXI_GUO,
   VINNIE_HSIA,
+  SHAOCHENG_HSU,
   JIANLIN_LI,
   TONGTONG_LI,
   YIXUAN_LI,
