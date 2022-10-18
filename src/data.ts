@@ -13,6 +13,12 @@ export const BRIAN_CABALLERO: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const CECHENG_CAO: Contributor = {
+  name: "Cecheng Cao",
+  email: "cechengc@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const YI_CHEN: Contributor = {
   name: "Yi Chen",
   email: "yic40@uci.edu",
@@ -192,6 +198,7 @@ export const MELISSA_YU: Contributor = {
 export const contributors: Contributor[] = [
   ZHIQIN_LU,
   BRIAN_CABALLERO,
+  CECHENG_CAO,
   ISHAN_DARJI,
   CHRISTOPHER_DAVIS,
   XIANFU_LIU,
