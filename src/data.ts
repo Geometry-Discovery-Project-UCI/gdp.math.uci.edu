@@ -25,6 +25,12 @@ export const YUE_CHU: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const CECHENG_CAO: Contributor = {
+  name: "Cecheng (Nicolas) Cao",
+  email: "cechengc@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const ISHAN_DARJI: Contributor = {
   name: "Ishan Darji",
   email: "ishan.darji0@gmail.com"
@@ -39,6 +45,12 @@ export const CHRISTOPHER_DAVIS: Contributor = {
 export const RUOYING_DENG: Contributor = {
   name: "Ruoying Deng",
   email: "ruoyind1@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
+export const JOHNSON_DINH: Contributor = {
+  name: "Johnson Dinh",
+  email: "dinhjd@uci.edu",
   institute: Institute.UCIrvine,
 };
 
@@ -63,6 +75,12 @@ export const XINXI_GUO: Contributor = {
 export const VINNIE_HSIA: Contributor = {
   name: "Vinnie Hsia",
   email: "hsiat1@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
+export const ECSON_HSU: Contributor = {
+  name: "Ecson Hsu",
+  email: "ecsonh@uci.edu",
   institute: Institute.UCIrvine,
 };
 
@@ -162,6 +180,12 @@ export const STEPHANIE_WANG: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const VERONICA_WANG: Contributor = {
+  name: "Veronica Wang",
+  email: "xinyw27@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const NATASHA_XIAO: Contributor = {
   name: "Natasha Xiao",
   email: "jxiao12@uci.edu",
@@ -187,6 +211,7 @@ export const MELISSA_YU: Contributor = {
 export const contributors: Contributor[] = [
   ZHIQIN_LU,
   BRIAN_CABALLERO,
+  CECHENG_CAO,
   ISHAN_DARJI,
   CHRISTOPHER_DAVIS,
   XIANFU_LIU,
