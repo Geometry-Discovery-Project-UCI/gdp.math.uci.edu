@@ -1,4 +1,4 @@
-# Geoemetry Discovery Project @ UC Irvine
+# Geometry Discovery Project @ UC Irvine
 
 ## Setup development environment
 
