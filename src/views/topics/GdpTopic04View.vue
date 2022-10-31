@@ -3,7 +3,7 @@
   <ATypographyParagraph>
   </ATypographyParagraph>
   <svg id="tri-app_erdos-mordell" width="500" height="500"
-    style="border: 2px solid black; background-color: floralwhite">
+    style="border: 2px solid black; background-color: floralwhite; user-select: none"> <!-- added user-select: none to prevent text highlighting -->
     <polygon id="tri_erdos-mordell" stroke="black" stroke-width="2.5px" fill="transparent"></polygon>
     <text id="letterA_erdos-mordell" font-size="25px">A</text>
     <text id="letterB_erdos-mordell" font-size="25px">B</text>
@@ -28,7 +28,7 @@
     <text font-size="20px" id="PD_erdos-mordell" x="260" y="450"></text>
     <text font-size="20px" id="PE_erdos-mordell" x="330" y="450"></text>
     <text font-size="20px" id="PF_erdos-mordell" x="405" y="450"></text>
-    <circle id="circleP_erdos-mordell" r="2px"></circle>
+    <circle id="circleP_erdos-mordell" r="3px" padding="20px"></circle> <!-- updated r=2px to 3px and added padding="20px" -->
   </svg>
 </template>
 
