@@ -5,7 +5,7 @@
   </ATypographyParagraph>
   <div class="app">
     <ATypographyTitle :level="4">Animated Isotomic Conjugate</ATypographyTitle>
-    <svg id="tri-app_isotomic" width="500" height="500" style="border: 2px solid black; background-color: floralwhite">
+    <svg id="tri-app_isotomic" width="500" height="500" style="border: 2px solid black; background-color: floralwhite; user-select: none"> <!-- added user-select: none to prevent text highlighting -->
       <polygon id="tri_isotomic" stroke="black" fill="transparent" />
       <line id="lineA_isotomic" stroke="purple" />
       <line id="lineB_isotomic" stroke="purple" />
@@ -40,10 +40,12 @@
             0    1px 0 #FFFFFF,
             -1px  1px 0 #FFFFFF,
             -1px  0   0 #FFFFFF;">P′</text>
+      <circle id="circleP_isotomic_conjugateP" r="3px" padding="20px"></circle>       // added circle element (isotomic conjugate P) to template
+      <circle id="circleP_isotomic_conjugatePprime" r="3px" padding="20px"></circle>  // added circle element (isotomic conjugate P') to template
     </svg>
 
         <ATypographyTitle :level="4">Animated Isogonal Conjugate</ATypographyTitle>
-    <svg id="tri-app_isogonal" width="500" height="500" style="border: 2px solid black; background-color: floralwhite">
+    <svg id="tri-app_isogonal" width="500" height="500" style="border: 2px solid black; background-color: floralwhite; user-select: none"> <!-- added user-select: none to prevent text highlighting -->
       <polygon id="tri_isogonal" stroke="black" fill="transparent" />
       <line id="lineA_isogonal" stroke="purple" />
       <line id="lineB_isogonal" stroke="purple" />
@@ -70,6 +72,8 @@
             -1px  1px 0 #FFFFFF,
             -1px  0   0 #FFFFFF;">P</text>
       <text id="letterPp_isogonal" font-size="25px">P′</text>
+      <circle id="circleP_isogonal_conjugateP" r="3px" padding="20px"></circle>       // added circle element (isogonal conjugate P) to template
+      <circle id="circleP_isogonal_conjugatePprime" r="3px" padding="20px"></circle>  // added circle element (isogonal conjugate P') to template
     </svg>
   </div>
 
@@ -210,6 +214,15 @@ export default defineComponent(
         letterPp?.setAttribute("x", pPN![0] + "");
         letterPp?.setAttribute("y", (pPN![1] - 10) + "");
 
+        // added filled circles to points P and P' for Isotomic Conjugate
+        const circlePIsotomicConjugate = document.querySelector("#circleP_isotomic_conjugateP") as Element;  // added circleP as an element
+        circlePIsotomicConjugate.setAttribute("cx", pP[0] + "");
+        circlePIsotomicConjugate.setAttribute("cy", (pP[1]) + "");
+
+        const circlePprimeIsotomicConjugate = document.querySelector("#circleP_isotomic_conjugatePprime") as Element;  // added circlePprime as an element
+        circlePprimeIsotomicConjugate.setAttribute("cx", pPN![0] + "");
+        circlePprimeIsotomicConjugate.setAttribute("cy", (pPN![1]) + "");
+
         letterF?.setAttribute("x", pCN![0] + "");
         letterF?.setAttribute("y", (pCN![1] + 20) + "");
 
@@ -230,6 +243,10 @@ export default defineComponent(
         letterEp?.setAttribute("x", (pDB[0] + 20) + "");
         letterEp?.setAttribute("y", pDB[1] + "");
       };
+
+      // added filled circles to point P for Isogonal Conjugate
+      const circlePIsogonalConjugate = document.querySelector("#circleP_isogonal_conjugateP") as Element;  // added circleP as an element
+
       const isogonalConjugate = (p: DOMPoint) => {
         if (isInside(pA[0], pA[1], pB[0], pB[1], pC[0], pC[1], p.x, p.y)) {
           pP = [p.x, p.y];
@@ -237,6 +254,10 @@ export default defineComponent(
           dot.setAttributeNS(null, "cy", pP[1]);*/
           letterP2?.setAttribute("x", pP[0] + "");
           letterP2?.setAttribute("y", pP[1] - 10 + "");
+
+          // set attributes (x, y) for circle dot for point P (isogonal conjugate)
+          circlePIsogonalConjugate.setAttribute("cx", pP[0] + "");
+          circlePIsogonalConjugate.setAttribute("cy", pP[1] + "");
         } else {
           return;
         }
@@ -305,6 +326,12 @@ export default defineComponent(
         letterE2.setAttribute("y", medBl[1] + "");
         letterF2.setAttribute("x", medAl[0] - 20 + "");
         letterF2.setAttribute("y", medAl[1] + "");
+
+        // added filled circles to points P and P' for Isogonal Conjugate
+        const circlePprimeIsogonalConjugate = document.querySelector("#circleP_isogonal_conjugatePprime") as Element;  // added circlePprime as an element
+
+        circlePprimeIsogonalConjugate.setAttribute("cx", pPrime[0] + "");
+        circlePprimeIsogonalConjugate.setAttribute("cy", pPrime[1] + "");
       };
         const pPoint = DOMPoint.fromPoint({
             x: 160,
