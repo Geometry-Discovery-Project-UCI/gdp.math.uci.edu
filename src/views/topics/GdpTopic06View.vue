@@ -504,7 +504,7 @@ function partThree() {
   // (2,5.5)--(0,6)--(1.5,4)
   const mul = 50;
   const yOffset = 470;
-  const xOffset = 20;
+  const xOffset = 75;  // changed value from 20 to 75
   const pointC = makeCircle(xOffset + 2 * mul, yOffset - 5.5 * mul);
   const pointB = makeCircle(xOffset + 0 * mul, yOffset - 6 * mul);
   const pointA = makeCircle(xOffset + 1.5 * mul, yOffset - 4 * mul);
@@ -522,9 +522,9 @@ function partThree() {
   cvsDes.add(pointA, pointB, pointC, pointPrimeA, pointPrimeB, pointPrimeC);
 
   const aLabel = makeLabel("A", { x: 15, y: -10 });
-  const bLabel = makeLabel("B", { x: -20, y: 5 });
+  const bLabel = makeLabel("B", { x: -18, y: 5 });        // updated x: -20 to x: -18
   const cLabel = makeLabel("C", { x: 15, y: -20 });
-  const aprimeLabel = makeLabel("A'");
+  const aprimeLabel = makeLabel("A'", { x: -10, y: 5 });  // added x: -10 and y: 5
   const bprimeLabel = makeLabel("B'");
   const cprimeLabel = makeLabel("C'");
   const movablePoints = [pointA, pointB, pointC, pointPrimeA, pointPrimeB, pointPrimeC];
@@ -718,12 +718,12 @@ function partTwo() {
   let pointE = coordToPoint(polarToCartesian(RADIUS, 225, center));
   let pointF = coordToPoint(polarToCartesian(RADIUS, 310, center));
 
-  const aLabel = makeLabel("A", { x: 20, y: -5 });
+  const aLabel = makeLabel("A", { x: 5, y: -10 });     //changed x: 20 to x: 5 and y: -5 to y: -10
   const bLabel = makeLabel("B", { x: -20, y: 0 });
   const cLabel = makeLabel("C", { x: -10, y: 10 });
   const dLabel = makeLabel("D", { x: -35, y: -20 });
   const eLabel = makeLabel("E", { x: -10, y: 5 });
-  const fLabel = makeLabel("F", { x: 5, y: 10 });
+  const fLabel = makeLabel("F", { x: 1, y: 10 });      //changed x: 5 to x: 1
   setLabelToPoint([aLabel, bLabel, cLabel, dLabel, eLabel, fLabel],
     [pointA, pointB, pointC, pointD, pointE, pointF]);
   cvsPascal.add(aLabel, bLabel, cLabel, dLabel, eLabel, fLabel);
@@ -740,9 +740,9 @@ function partTwo() {
   });
   cvsPascal.add(circle);
 
-  const xLable = makeLabel("X", { x: 15, y: -5 });
-  const yLable = makeLabel("Y");
-  const zLable = makeLabel("Z", { x: 15, y: -10 });
+  const xLable = makeLabel("X", { x: 0, y: -30 });    //changed x: 5 to x: 0 and y: -5 to y: -15
+  const yLable = makeLabel("Y", { x: -15, y: 0 });    // added x: -15 and y: 0
+  const zLable = makeLabel("Z", { x: 5, y: -25 });    // changed x: 15 to x: 5 and y:-10 to y: -25
   const pointX = new fabric.Point(0, 0);
   const pointY = new fabric.Point(0, 0);
   const pointZ = new fabric.Point(0, 0);
@@ -971,15 +971,16 @@ export default defineComponent(
       const bprimeLabel = makeLabel("B'", { x: 0, y: -40 });
       const cprimeLabel = makeLabel("C'", { x: 0, y: -40 });
       const xLabel = makeLabel("X", { x: 20, y: 0 });
-      const yLabel = makeLabel("Y", { x: -5, y: 20 });
+      const yLabel = makeLabel("Y", { x: -5, y: 5 });  // set y: 20 to y: 5
       const zLabel = makeLabel("Z", { x: -30, y: 0 });
 
-      const pointA = makeCircle(50, 400);
-      const pointB = makeCircle(250, 400);
-      const pointC = makeCircle(450, 400);
-      const pointPrimeA = makeCircle(50, upperLine.m! * 50 + upperLine.b!);
-      const pointPrimeB = makeCircle(250, upperLine.m! * 250 + upperLine.b!);
-      const pointPrimeC = makeCircle(450, upperLine.m! * 450 + upperLine.b!);
+      // updated each point below (for Picture 1) to have radius 3, although it seems that makeCircle function already defaults radius 3 and padding 20
+      const pointA = makeCircle(50, 400, 3);
+      const pointB = makeCircle(250, 400, 3);
+      const pointC = makeCircle(450, 400, 3);
+      const pointPrimeA = makeCircle(50, upperLine.m! * 50 + upperLine.b!, 3);
+      const pointPrimeB = makeCircle(250, upperLine.m! * 250 + upperLine.b!, 3);
+      const pointPrimeC = makeCircle(450, upperLine.m! * 450 + upperLine.b!, 3);
 
       const movablePoints = [pointA, pointB, pointC, pointPrimeA, pointPrimeB, pointPrimeC];
 
@@ -1005,6 +1006,10 @@ export default defineComponent(
       const pX = (fabric.Intersection.intersectLineLine(
         pB, ppC, pC, ppB) as Intersection).points![0];
       const [pointX, pointY, pointZ] = [pX, pY, pZ].map(p => makeCircle(p, undefined, 3));
+      // set fill to red for points X, Y, Z
+      pointX.fill = "red";
+      pointY.fill = "red";
+      pointZ.fill = "red";
       // Disable user dragging on intersections
       pointX.set({ lockMovementX: true, lockMovementY: true });
       pointY.set({ lockMovementX: true, lockMovementY: true });
