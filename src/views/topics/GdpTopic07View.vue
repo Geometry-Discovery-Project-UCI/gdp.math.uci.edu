@@ -5,7 +5,7 @@
   </ATypographyParagraph>
   <div class="app">
     <ATypographyTitle :level="4">Animated Isotomic Conjugate</ATypographyTitle>
-    <svg id="tri-app_isotomic" width="500" height="500" style="border: 2px solid black; background-color: floralwhite; user-select: none"> <!-- added user-select: none to prevent text highlighting -->
+    <svg id="tri-app_isotomic" width="500" height="500" style="border: 2px solid black; background-color: floralwhite; user-select: none">
       <polygon id="tri_isotomic" stroke="black" fill="transparent" />
       <line id="lineA_isotomic" stroke="purple" />
       <line id="lineB_isotomic" stroke="purple" />
@@ -45,7 +45,7 @@
     </svg>
 
         <ATypographyTitle :level="4">Animated Isogonal Conjugate</ATypographyTitle>
-    <svg id="tri-app_isogonal" width="500" height="500" style="border: 2px solid black; background-color: floralwhite; user-select: none"> <!-- added user-select: none to prevent text highlighting -->
+    <svg id="tri-app_isogonal" width="500" height="500" style="border: 2px solid black; background-color: floralwhite; user-select: none">
       <polygon id="tri_isogonal" stroke="black" fill="transparent" />
       <line id="lineA_isogonal" stroke="purple" />
       <line id="lineB_isogonal" stroke="purple" />
