@@ -31,7 +31,7 @@ export function getPedalPoint(from: Coord, toA: Coord, toB: Coord): Coord {
 }
 
 export function calculateIncenter(pointA: Coord, pointB: Coord, pointC: Coord) {
-  // Centroid         --     1 : 1 : 1
+  // Incenter         --     1 : 1 : 1
   const incenter = trilinearToCartesian(pointA, pointB, pointC, 1, 1, 1);
 
   return new fabric.Point(incenter.x, incenter.y);
