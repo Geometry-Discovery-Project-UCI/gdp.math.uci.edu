@@ -13,6 +13,12 @@ export const BRIAN_CABALLERO: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const CECHENG_CAO: Contributor = {
+  name: "Cecheng Cao",
+  email: "cechengc@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const YI_CHEN: Contributor = {
   name: "Yi Chen",
   email: "yic40@uci.edu",
@@ -22,12 +28,6 @@ export const YI_CHEN: Contributor = {
 export const YUE_CHU: Contributor = {
   name: "Yue Chu",
   email: "chuy13@uci.edu",
-  institute: Institute.UCIrvine,
-};
-
-export const CECHENG_CAO: Contributor = {
-  name: "Cecheng (Nicolas) Cao",
-  email: "cechengc@uci.edu",
   institute: Institute.UCIrvine,
 };
 
@@ -45,12 +45,6 @@ export const CHRISTOPHER_DAVIS: Contributor = {
 export const RUOYING_DENG: Contributor = {
   name: "Ruoying Deng",
   email: "ruoyind1@uci.edu",
-  institute: Institute.UCIrvine,
-};
-
-export const JOHNSON_DINH: Contributor = {
-  name: "Johnson Dinh",
-  email: "dinhjd@uci.edu",
   institute: Institute.UCIrvine,
 };
 
@@ -77,9 +71,8 @@ export const VINNIE_HSIA: Contributor = {
   email: "hsiat1@uci.edu",
   institute: Institute.UCIrvine,
 };
-
-export const ECSON_HSU: Contributor = {
-  name: "Ecson Hsu",
+export const SHAOCHENG_HSU: Contributor = {
+  name: "SHAOCHENG Hsu",
   email: "ecsonh@uci.edu",
   institute: Institute.UCIrvine,
 };
@@ -168,6 +161,11 @@ export const MINGYU_SHI: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const SIYU_SUN: Contributor = {
+  name: "Siyu Sun",
+  email: "siyus6@uci.edu",
+  institute: Institute.UCIrvine,
+};
 export const CHUXIANGBO_WANG: Contributor = {
   name: "Chuxiangbo Wang",
   email: "chuxianw@uci.edu",
@@ -177,12 +175,6 @@ export const CHUXIANGBO_WANG: Contributor = {
 export const STEPHANIE_WANG: Contributor = {
   name: "Stephanie Wang",
   email: "stephjw1@uci.edu",
-  institute: Institute.UCIrvine,
-};
-
-export const VERONICA_WANG: Contributor = {
-  name: "Veronica Wang",
-  email: "xinyw27@uci.edu",
   institute: Institute.UCIrvine,
 };
 
@@ -214,7 +206,6 @@ export const contributors: Contributor[] = [
   CECHENG_CAO,
   ISHAN_DARJI,
   CHRISTOPHER_DAVIS,
-  JOHNSON_DINH,
   XIANFU_LIU,
   YI_CHEN,
   YUE_CHU,
@@ -223,7 +214,7 @@ export const contributors: Contributor[] = [
   BIN_GUO,
   XINXI_GUO,
   VINNIE_HSIA,
-  ECSON_HSU,
+  SHAOCHENG_HSU,
   JIANLIN_LI,
   TONGTONG_LI,
   YIXUAN_LI,
@@ -235,9 +226,9 @@ export const contributors: Contributor[] = [
   YUFEI_REN,
   SATYAKI_SARKAR,
   MINGYU_SHI,
+  SIYU_SUN,
   CHUXIANGBO_WANG,
   STEPHANIE_WANG,
-  VERONICA_WANG,
   NATASHA_XIAO,
   ZEJIN_XU,
   FELIX_YU,
@@ -468,8 +459,12 @@ export const topics: Topic[] = [
     index: 16,
     snapshot: "images/snapshots/topic16.png",
     essay: "pdfs/topic16.pdf",
-    animationContributors: [],
-    essayContributors: [],
+    animationContributors: [
+      SIYU_SUN
+    ],
+    essayContributors: [
+      SIYU_SUN
+    ],
   },
   {
     name: "Lemoine Circles",
