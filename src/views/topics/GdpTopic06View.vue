@@ -504,7 +504,7 @@ function partThree() {
   // (2,5.5)--(0,6)--(1.5,4)
   const mul = 50;
   const yOffset = 470;
-  const xOffset = 75;  // changed value from 20 to 75
+  const xOffset = 75;
   const pointC = makeCircle(xOffset + 2 * mul, yOffset - 5.5 * mul);
   const pointB = makeCircle(xOffset + 0 * mul, yOffset - 6 * mul);
   const pointA = makeCircle(xOffset + 1.5 * mul, yOffset - 4 * mul);
@@ -522,9 +522,9 @@ function partThree() {
   cvsDes.add(pointA, pointB, pointC, pointPrimeA, pointPrimeB, pointPrimeC);
 
   const aLabel = makeLabel("A", { x: 15, y: -10 });
-  const bLabel = makeLabel("B", { x: -18, y: 5 });        // updated x: -20 to x: -18
+  const bLabel = makeLabel("B", { x: -18, y: 5 });
   const cLabel = makeLabel("C", { x: 15, y: -20 });
-  const aprimeLabel = makeLabel("A'", { x: -10, y: 5 });  // added x: -10 and y: 5
+  const aprimeLabel = makeLabel("A'", { x: -10, y: 5 });
   const bprimeLabel = makeLabel("B'");
   const cprimeLabel = makeLabel("C'");
   const movablePoints = [pointA, pointB, pointC, pointPrimeA, pointPrimeB, pointPrimeC];
@@ -718,12 +718,12 @@ function partTwo() {
   let pointE = coordToPoint(polarToCartesian(RADIUS, 225, center));
   let pointF = coordToPoint(polarToCartesian(RADIUS, 310, center));
 
-  const aLabel = makeLabel("A", { x: 5, y: -10 });     //changed x: 20 to x: 5 and y: -5 to y: -10
+  const aLabel = makeLabel("A", { x: 5, y: -10 });
   const bLabel = makeLabel("B", { x: -20, y: 0 });
   const cLabel = makeLabel("C", { x: -10, y: 10 });
   const dLabel = makeLabel("D", { x: -35, y: -20 });
   const eLabel = makeLabel("E", { x: -10, y: 5 });
-  const fLabel = makeLabel("F", { x: 1, y: 10 });      //changed x: 5 to x: 1
+  const fLabel = makeLabel("F", { x: 1, y: 10 });
   setLabelToPoint([aLabel, bLabel, cLabel, dLabel, eLabel, fLabel],
     [pointA, pointB, pointC, pointD, pointE, pointF]);
   cvsPascal.add(aLabel, bLabel, cLabel, dLabel, eLabel, fLabel);
@@ -740,14 +740,25 @@ function partTwo() {
   });
   cvsPascal.add(circle);
 
-  const xLable = makeLabel("X", { x: 0, y: -30 });    //changed x: 5 to x: 0 and y: -5 to y: -15
-  const yLable = makeLabel("Y", { x: -15, y: 0 });    // added x: -15 and y: 0
-  const zLable = makeLabel("Z", { x: 5, y: -25 });    // changed x: 15 to x: 5 and y:-10 to y: -25
+  const xLable = makeLabel("X", { x: 0, y: -30 });
+  const yLable = makeLabel("Y", { x: -15, y: 0 });
+  const zLable = makeLabel("Z", { x: 5, y: -25 });
   const pointX = new fabric.Point(0, 0);
   const pointY = new fabric.Point(0, 0);
   const pointZ = new fabric.Point(0, 0);
   const xy = makeLine(pointX, pointY, 1, "red");
 
+  function createLine(points?: number[], color?: string, strokeWidth?: number) {
+    return new fabric.Line(points || [], {
+      originX: "center",
+      originY: "center",
+      hasControls: false,
+      hasBorders: false,
+      evented: false,
+      stroke: color || "black",
+      strokeWidth: strokeWidth || 1,
+    });
+  }
   const dx = makeLine(pointX, pointD, 1, "blue");
   const bx = makeLine(pointB, pointX, 1, "blue");
   const cz = makeLine(pointC, pointZ, 1, "blue");
@@ -971,7 +982,7 @@ export default defineComponent(
       const bprimeLabel = makeLabel("B'", { x: 0, y: -40 });
       const cprimeLabel = makeLabel("C'", { x: 0, y: -40 });
       const xLabel = makeLabel("X", { x: 20, y: 0 });
-      const yLabel = makeLabel("Y", { x: -5, y: 5 });  // set y: 20 to y: 5
+      const yLabel = makeLabel("Y", { x: -5, y: 5 });
       const zLabel = makeLabel("Z", { x: -30, y: 0 });
 
       // updated each point below (for Picture 1) to have radius 3, although it seems that makeCircle function already defaults radius 3 and padding 20
