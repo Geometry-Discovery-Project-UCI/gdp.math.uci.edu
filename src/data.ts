@@ -48,6 +48,12 @@ export const RUOYING_DENG: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const JOHNSON_DINH: Contributor = {
+  name: "Johnson Dinh",
+  email: "dinhjd@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const JIAMING_FENG: Contributor = {
   name: "Jiaming Feng",
   email: "jiamif3@uci.edu",
@@ -71,8 +77,9 @@ export const VINNIE_HSIA: Contributor = {
   email: "hsiat1@uci.edu",
   institute: Institute.UCIrvine,
 };
-export const SHAOCHENG_HSU: Contributor = {
-  name: "SHAOCHENG Hsu",
+
+export const ECSON_HSU: Contributor = {
+  name: "Ecson Hsu",
   email: "ecsonh@uci.edu",
   institute: Institute.UCIrvine,
 };
@@ -178,6 +185,12 @@ export const STEPHANIE_WANG: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const VERONICA_WANG: Contributor = {
+  name: "Veronica Wang",
+  email: "xinyw27@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const NATASHA_XIAO: Contributor = {
   name: "Natasha Xiao",
   email: "jxiao12@uci.edu",
@@ -206,6 +219,7 @@ export const contributors: Contributor[] = [
   CECHENG_CAO,
   ISHAN_DARJI,
   CHRISTOPHER_DAVIS,
+  JOHNSON_DINH,
   XIANFU_LIU,
   YI_CHEN,
   YUE_CHU,
@@ -214,7 +228,7 @@ export const contributors: Contributor[] = [
   BIN_GUO,
   XINXI_GUO,
   VINNIE_HSIA,
-  SHAOCHENG_HSU,
+  ECSON_HSU,
   JIANLIN_LI,
   TONGTONG_LI,
   YIXUAN_LI,
@@ -229,6 +243,7 @@ export const contributors: Contributor[] = [
   SIYU_SUN,
   CHUXIANGBO_WANG,
   STEPHANIE_WANG,
+  VERONICA_WANG,
   NATASHA_XIAO,
   ZEJIN_XU,
   FELIX_YU,
