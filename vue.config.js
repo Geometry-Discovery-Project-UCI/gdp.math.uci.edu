@@ -7,5 +7,8 @@ module.exports = {
         args[0].title = "GDP@UCI";
         return args;
       });
-  }
+  },
+  devServer: {
+    allowedHosts: "all",
+  },
 };
