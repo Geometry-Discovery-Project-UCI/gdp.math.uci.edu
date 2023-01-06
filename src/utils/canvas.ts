@@ -158,5 +158,4 @@ export function makeMovablePoint(pt: fabric.Point) {
     strokeWidth: 0,
   });
 }
-
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
