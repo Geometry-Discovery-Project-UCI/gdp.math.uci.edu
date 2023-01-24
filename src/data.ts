@@ -293,6 +293,11 @@ export const otherLinks: { name: string, uri: string, author?: string }[] = [
     uri: "http://www.morningstarinstitute.org/",
     author: "Yifeng Yu",
   },
+  {
+    name: "Math 199 Introduction",
+    uri: "pdfs/199-intro.pdf/",
+    author: "Zhibo Cheng",
+  },
 ];
 
 export const topics: Topic[] = [

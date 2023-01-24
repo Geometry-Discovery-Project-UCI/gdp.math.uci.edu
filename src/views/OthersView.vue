@@ -1,8 +1,8 @@
 <template>
   <ATypographyTitle :level="1">Others</ATypographyTitle>
-  <ATypographyParagraph>Some extra information about geometry and us.</ATypographyParagraph>
+  <ATypographyParagraph>Additional  information about GDP  and us.</ATypographyParagraph>
 
-  <AList itenLayout="horizontal" :dataSource="materials" :grid="defaultGridParams">
+  <AList itemLayout="horizontal" :dataSource="materials" :grid="defaultGridParams">
     <template #renderItem="{ item: material }">
       <AListItem>
         <ACard :title="material.name">
@@ -26,7 +26,7 @@
     </template>
   </AList>
 
-  <ATypographyTitle :level="2">GDP Group</ATypographyTitle>
+  <ATypographyTitle :level="2">GDP Group Photos</ATypographyTitle>
   <AList itenLayout="horizontal" :dataSource="otherImages" :grid="defaultGridParams">
     <template #renderItem="{ item: image }">
       <AListItem :style="{
