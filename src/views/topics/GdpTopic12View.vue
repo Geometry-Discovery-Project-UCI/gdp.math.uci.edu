@@ -14,7 +14,7 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
-import { calculateInterPointsWithBoundary, calculateThreeAngles, getPedalPoint, trilinearToCartesian } from "@/utils/geometry";
+import { calculateThreeAngles, circleLineIntersection, getPedalPoint, solveLinearEquation, trilinearToCartesian } from "@/utils/geometry";
 
 const topic = indexTopicMap.get(12) as Topic;
 
@@ -124,6 +124,8 @@ export default defineComponent({
 
     const circumCircle = createCircle();
     const eulerLine = createLine([], "orange", 3);
+
+    const boundaryCircle = createCircle(250, 250, 220);
 
     function moveVertices() {
       const vertices = [
@@ -321,15 +323,13 @@ export default defineComponent({
         stroke: "purple",
       });
 
-      const orthocenterPoint = new fabric.Point(orthocenter.x, orthocenter.y);
-      const circumcenterPoint = new fabric.Point(circumcenter.x, circumcenter.y);
-
-      const eulerDistance = calculateInterPointsWithBoundary(orthocenterPoint, circumcenterPoint, 500, 500, 50);
+      const eulerLineLinearEquation = solveLinearEquation(orthocenter, circumcenter);
+      const intersections = circleLineIntersection(220, 250, 250, eulerLineLinearEquation.m, eulerLineLinearEquation.b);
       eulerLine.set({
-        x1: eulerDistance[0].x,
-        y1: eulerDistance[0].y,
-        x2: eulerDistance[1].x,
-        y2: eulerDistance[1].y,
+        x1: intersections[0][0],
+        y1: intersections[0][1],
+        x2: intersections[1][0],
+        y2: intersections[1][1],
       });
     }
 
@@ -364,6 +364,7 @@ export default defineComponent({
     canvas.add(pLabel);
     canvas.add(qLabel);
     canvas.add(rLabel);
+    canvas.add(boundaryCircle);
     canvas.add(eulerLine);
     canvas.add(oNode);
     canvas.add(hNode);
