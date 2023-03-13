@@ -24,6 +24,7 @@ import {
   calculateLineIntersectInLinearEquation,
   isInside,
   solveLinearEquation,
+  drawFractionLine,
 } from "@/utils/geometry";
 import { IEvent, Intersection } from "fabric/fabric-impl";
 
@@ -289,6 +290,8 @@ export default defineComponent({
           });
         });
 
+        drawFractionLine(canvas, 3, 4, {x: 328, y: 87});
+
         // calculate and update result
         const resultValue = Math.round(((((distBD / distDC) * distCE) / distEA) * distAF) / distFB);
         resultText.set({
@@ -332,6 +335,7 @@ export default defineComponent({
         ["CE", "EA"],
         ["AF", "FB"],
       ];
+
       equationText.forEach((equation, i) => {
         canvas.add(
           new fabric.Text(equation[0]).set({
@@ -358,32 +362,19 @@ export default defineComponent({
         );
       });
 
-      const signCoords = [27, 87];
-      signCoords.forEach((signCoord) => {
-        canvas.add(
-          new fabric.Text("____  ____  ____", {
-            left: 330,
-            top: signCoord,
-            strokeWidth: 1,
-            stroke: "black",
-            fill: "black",
-            fontSize: 20,
-            evented: false,
-          })
-        );
+      drawFractionLine(canvas, 3, 4, { x: 328, y: 27 });
 
-        canvas.add(
-          new fabric.Text("             .         .", {
-            left: 306,
-            top: signCoord + 5,
-            strokeWidth: 1,
-            stroke: "black",
-            fill: "black",
-            fontSize: 20,
-            evented: false,
-          })
-        );
-      });
+      canvas.add(
+        new fabric.Text("=").set({
+          left: 306,
+          top: 98,
+          strokeWidth: 1,
+          stroke: "black",
+          fill: "black",
+          fontSize: 20,
+          evented: false,
+        })
+      );
 
       canvas.add(triangle);
       canvas.add(lineAD);
@@ -496,14 +487,14 @@ export default defineComponent({
       const lineQB = makeLine() as Line;
       const lineQG = makeLine() as Line;
 
-      const aLabel = createLabel("A");
-      const bLabel = createLabel("B");
-      const cLabel = createLabel("C");
-      const dLabel = createLabel("D");
-      const pLabel = createLabel("P");
-      const qLabel = createLabel("Q");
-      const eLabel = createLabel("E");
-      const fLabel = createLabel("F");
+      const aLabel = createLabel("A", 20);
+      const bLabel = createLabel("B", 20);
+      const cLabel = createLabel("C", 20);
+      const dLabel = createLabel("D", 20);
+      const pLabel = createLabel("P", 20);
+      const qLabel = createLabel("Q", 20);
+      const eLabel = createLabel("E", 20);
+      const fLabel = createLabel("F", 20);
 
       const vertices = [
         new fabric.Point(340, 150),
@@ -601,19 +592,16 @@ export default defineComponent({
         left: pointD.x - 20,
         top: pointD.y - 25,
         fill: "blue",
-        fontSize: 20,
       });
       eLabel.set({
         left: pointE.x - 20,
         top: pointE.y - 25,
         fill: "blue",
-        fontSize: 20,
       });
       fLabel.set({
         left: pointF.x - 3,
         top: pointF.y - 30,
         fill: "blue",
-        fontSize: 20,
       });
 
       const onPointMove = (e: IEvent): void => {

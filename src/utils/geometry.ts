@@ -644,4 +644,65 @@ export function circleLineIntersection(r: number, h: number, k: number, m: numbe
   }
   return [];
 }
+
+export function getFractionLine(len: number) {
+  let res = "";
+  for (let i = 0; i < len; i++) {
+    res += "_";
+  }
+
+  return res + "  ";
+}
+
+export function getOperatorText(len: number, op: string, gaps: number) {
+  let res = "";
+  let gap = "";
+  for (let i = 0; i < gaps; i++) {
+    gap += " ";
+  }
+
+  for (let i = 0; i < len; i++) {
+    res += gap + op + " ";
+  }
+
+  return res + "  ";
+}
+
+/*
+canvas: the canvas that want to add on it
+n: number of fractions
+len: length of the fraction line
+coords: start position
+*/
+export function drawFractionLine(canvas: fabric.Canvas, n: number, len: number, coords: Coord) {
+  let fractinLine = "";
+  for (let i = 0; i < n; i++) {
+    fractinLine += getFractionLine(len);
+  }
+
+  canvas.add(
+    new fabric.Text(fractinLine, {
+      left: coords.x,
+      top: coords.y,
+      strokeWidth: 1,
+      stroke: "black",
+      fill: "black",
+      fontSize: 20,
+      evented: false,
+    })
+  );
+
+  const operatorText = getOperatorText(n - 1, ".", len * 2);
+  canvas.add(
+    new fabric.Text(operatorText, {
+      left: coords.x + 2,
+      top: coords.y + 5,
+      strokeWidth: 1,
+      stroke: "black",
+      fill: "black",
+      fontSize: 20,
+      evented: false,
+    })
+  );
+}
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
