@@ -295,7 +295,7 @@ export const otherLinks: { name: string, uri: string, author?: string }[] = [
   },
   {
     name: "Math 199 Introduction",
-    uri: "pdfs/199-intro.pdf/",
+    uri: "/pdfs/199-intro.pdf",
     author: "Zhibo Cheng",
   },
 ];
