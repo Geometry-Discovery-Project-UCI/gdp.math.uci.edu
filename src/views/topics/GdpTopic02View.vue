@@ -3,12 +3,21 @@
   <ATypographyParagraph> </ATypographyParagraph>
   <div id="ceva-theorem-wrapper">
     <ATypographyTitle :level="4">Animated Ceva Theorem</ATypographyTitle>
+    Inside  <span v-katex>\triangle ABC, P</span> is an arbitrary point. Click, hold, and move  point  <span v-katex>P</span>. <span v-katex>AP, BP, CP </span>
+    intersect <span v-katex>BC, CA, AB</span> at <span v-katex>D, E, F</span>, respectively. By Ceva's Theorem, we shall have
+    <div v-katex:display>
+      \frac{BD}{DC}\cdot\frac{CE}{EA}\cdot\frac{AF}{FB}=1.
+      </div>
     <canvas id="ceva-theorem-canvas" width="500" height="500" />
   </div>
 
   <ATypographyParagraph> </ATypographyParagraph>
   <div id="menelaus-theorem-wrapper">
     <ATypographyTitle :level="4">Animated Menelaus Theorems</ATypographyTitle>
+The line <span v-katex>PQ</span> intersect the three sides of <span v-katex>\triangle ABC </span> at
+<span v-katex>D, E</span> and <span v-katex>F</span>, respectively. By Menelaus' Theorem, we shall have
+<div v-katex:display> \frac{BD}{DC}\cdot\frac{CF}{FA}\cdot \frac{AE}{EB}=1.</div>
+Click, hold, and move points <span v-katex>P</span> or <span v-katex>Q</span> to see the effect.
     <canvas id="menelaus-theorem-canvas" width="500" height="500" />
   </div>
 </template>
