@@ -1,26 +1,18 @@
-name: ESLint
+name: build
 
 on:
-  push:
-    branches: [main]
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [main]
     types: ["opened", "edited", "reopened", "synchronize"]
 
 jobs:
-  eslint:
-    name: Run eslint scanning
+  build:
+    name: Test build
     runs-on: ubuntu-latest
     permissions:
       contents: read
       security-events: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install ESLint
-        run: npm install
-
-      - name: Run ESLint
-        run: npm run lint
+      - name: Build the Project
+        run: npm run build
