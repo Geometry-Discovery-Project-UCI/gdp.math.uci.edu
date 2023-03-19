@@ -54,6 +54,12 @@ export const JOHNSON_DINH: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const SHUCHENG_FEI: Contributor = {
+  name: "Shucheng Fei",
+  email: "shuchef@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const JIAMING_FENG: Contributor = {
   name: "Jiaming Feng",
   email: "jiamif3@uci.edu",
@@ -312,6 +318,9 @@ export const topics: Topic[] = [
     essayContributors: [
       ZHIQIN_LU,
     ],
+    captionContributors: [
+      ZHIQIN_LU,
+    ],
   },
   {
     name: "Ceva's and Menelaus' Theorems",
@@ -326,6 +335,7 @@ export const topics: Topic[] = [
       ZHIQIN_LU,
       XIANFU_LIU,
     ],
+    captionContributors: [SHUCHENG_FEI],
   },
   {
     name: "Five Triangle Centers",
@@ -352,6 +362,7 @@ export const topics: Topic[] = [
     essayContributors: [
       ZHIQIN_LU,
     ],
+    captionContributors: [],
   },
   {
     name: "Simson Line",
@@ -366,6 +377,7 @@ export const topics: Topic[] = [
       ZHIQIN_LU,
       SHIYI_LYU,
     ],
+    captionContributors: [],
   },
   {
     name: "Pascal and Brainchon Theorems",
@@ -377,6 +389,7 @@ export const topics: Topic[] = [
       ZHIQIN_LU,
       XIANFU_LIU,
     ],
+    captionContributors: [],
   },
   {
     name: "Isogonal Conjugate and Isotomic Conjugate Points",
@@ -390,6 +403,7 @@ export const topics: Topic[] = [
       ZHIQIN_LU,
       SHIYI_LYU,
     ],
+    captionContributors: [],
   },
   {
     name: "Gergonne and Nagel Points",
@@ -400,7 +414,9 @@ export const topics: Topic[] = [
       YIXUAN_LI,
     ],
     essayContributors: [],
+    captionContributors: [],
   },
+
   {
     name: "Napoleon's Theorem",
     index: 9,
@@ -412,6 +428,7 @@ export const topics: Topic[] = [
     essayContributors: [
       ZHIQIN_LU,
     ],
+    captionContributors: [],
   },
   {
     name: "Ptolemy Theorem's and Kelvin Transform",
@@ -424,6 +441,7 @@ export const topics: Topic[] = [
       FELIX_YU,
       XIANFU_LIU,
     ],
+    captionContributors: [],
   },
   {
     name: "Dual Triangles",
@@ -434,6 +452,7 @@ export const topics: Topic[] = [
     essayContributors: [
       ZHIQIN_LU,
     ],
+    captionContributors: [],
   },
   {
     name: "Euler Line",
@@ -444,6 +463,7 @@ export const topics: Topic[] = [
     essayContributors: [
       CHUXIANGBO_WANG,
     ],
+    captionContributors: [],
   },
   {
     name: "Nine-point Circle",
@@ -457,6 +477,7 @@ export const topics: Topic[] = [
       RUSSELL_MARASIGAN,
       MAI_NGUYEN,
     ],
+    captionContributors: [],
   },
   {
     name: "Fermat Point",
@@ -465,7 +486,9 @@ export const topics: Topic[] = [
     essay: "pdfs/topic14.pdf",
     animationContributors: [MELISSA_YU],
     essayContributors: [],
+    captionContributors: [],
   },
+
   {
     name: "Complete Quadrangle and Complete Qudrilateral",
     index: 15,
@@ -473,6 +496,7 @@ export const topics: Topic[] = [
     essay: "pdfs/topic15.pdf",
     animationContributors: [],
     essayContributors: [],
+    captionContributors: [],
   },
   {
     name: "Symmedian Point",
@@ -739,6 +763,14 @@ export const indexTopicMap: Map<number, Topic> = new Map(
 );
 
 export const otherImages: { title: string, image: string }[] = [
+  {
+    title: "2023 Winter GDP Group",
+    image: "images/group/2023-Winter-199B-1.jpg",
+  },
+  {
+    title: "2023 Winter GDP Group",
+    image: "images/group/2023-Winter-199B-2.jpg",
+  },
   {
     title: "2022 Fall GDP Group",
     image: "images/group/2022-Fall-199A.jpg",
