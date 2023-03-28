@@ -295,7 +295,7 @@ export const otherLinks: { name: string, uri: string, author?: string }[] = [
     uri: "https://www.fullerton.edu/math/resources/mathcircle.php",
   },
   {
-    name: "Morning Star Institue",
+    name: "Morning Star Institute",
     uri: "http://www.morningstarinstitute.org/",
     author: "Yifeng Yu",
   },
