@@ -310,6 +310,10 @@ export const otherLinks: { name: string, uri: string, author?: string }[] = [
     uri: "/pdfs/199-intro.pdf",
     author: "Zhibo Cheng",
   },
+  {
+    name: "Presentations",
+    uri: "#/presentations"
+  }
 ];
 
 export const topics: Topic[] = [
@@ -780,7 +784,7 @@ export const otherImages: { title: string, image: string }[] = [
   {
     title: "2022 Fall GDP Group",
     image: "images/group/2022-Fall-199A.jpg",
-  },{
+  }, {
     title: "2022 Spring GDP Group",
     image: "images/group/2022-Spring-199C-1.jpg",
   }, {
