@@ -3,11 +3,13 @@
   <ATypographyParagraph> </ATypographyParagraph>
   <div id="ceva-theorem-wrapper">
     <ATypographyTitle :level="4">Animated Ceva Theorem</ATypographyTitle>
-    <ATypographyParagraph class="topic2-theorem-description">
-      Inside <span v-katex>\triangle ABC, P</span> is an arbitrary point. Click, hold, and move
+    <ATypographyParagraph class="topics-description">
+      <p>Ceva's Theorem provides a necessary and sufficient condition for three lines to be concurrent.
+      </p>
+      <p>Inside <span v-katex>\triangle ABC, P</span> is an arbitrary point. Click, hold, and move
       point <span v-katex>P</span>. <span v-katex>AP, BP, CP </span> intersect
-      <span v-katex>BC, CA, AB</span> at <span v-katex>D, E, F</span>, respectively.<br />
-      By Ceva's Theorem, we shall have
+      <span v-katex>BC, CA, AB</span> at <span v-katex>D, E, F</span>, respectively. </p>
+      <p>By Ceva's Theorem, three lines <span v-katex>AD, BE, CF</span> are concurrent if and only if</p>
       <div v-katex:display class="topic2-formula">
         \frac{BD}{DC}\cdot\frac{CE}{EA}\cdot\frac{AF}{FB}=1.
       </div>
@@ -18,10 +20,12 @@
   <ATypographyParagraph> </ATypographyParagraph>
   <div id="menelaus-theorem-wrapper">
     <ATypographyTitle :level="4">Animated Menelaus Theorems</ATypographyTitle>
-    <ATypographyParagraph class="topic2-theorem-description">
-      The line <span v-katex>PQ</span> intersect the three sides of
+    <ATypographyParagraph class="topics-description">
+      <p>Menelaus' Theorem is the dual theorem to Ceva's Theorem, which provides a necessary and sufficient condition for three points to be collinear.</p>
+      <p> In the following picture,
+      Line <span v-katex>P Q</span> intersect the three sides of
       <span v-katex>\triangle ABC </span> at <span v-katex>D, E</span> and <span v-katex>F</span>,
-      respectively. <br />By Menelaus' Theorem, we shall have
+      respectively. Then the necessary and sufficient condition for <span v-katex>P, Q, R</span> to be collinear is </p>
       <div v-katex:display class="topic2-formula">\frac{BD}{DC}\cdot\frac{CF}{FA}\cdot \frac{AE}{EB}=1.</div>
       Click, hold, and move points <span v-katex>P</span> or <span v-katex>Q</span> to see the
       effect.
@@ -29,12 +33,7 @@
     <canvas id="menelaus-theorem-canvas" width="500" height="500" />
   </div>
 </template>
-
 <style>
-.topic2-theorem-description {
-  width: 50%;
-}
-
 .topic2-formula span {
   text-align: left;
 }
