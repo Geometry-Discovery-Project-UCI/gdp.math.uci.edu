@@ -43,6 +43,7 @@ import GdpTopic37View from "@/views/topics/GdpTopic37View.vue";
 import GdpTopic38View from "@/views/topics/GdpTopic38View.vue";
 import GdpTopic39View from "@/views/topics/GdpTopic39View.vue";
 import GdpTopic40View from "@/views/topics/GdpTopic40View.vue";
+import PresentationsView from "@/views/PresentationsView.vue";
 import { RouteProps } from "@/types";
 import {
   BookOutlined, UserOutlined, TagOutlined,
@@ -314,6 +315,12 @@ export const routesProps: RouteProps[] = [
     component: GdpTopic40View,
     layout: Layout.NoSider
   },
+  {
+    path: "/presentations",
+    name: "presentations",
+    component: PresentationsView,
+    layout: Layout.NoSider
+  }
 ];
 
 const routes = routesProps.map((routeProp) => ({
