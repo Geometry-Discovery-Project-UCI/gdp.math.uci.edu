@@ -3,8 +3,10 @@
   <ATypographyParagraph>
 
   </ATypographyParagraph>
+
   <div id="morley-wrapper">
     <ATypographyTitle :level="4">Animated Morley's Miracle</ATypographyTitle>
+    <ATypographyParagraph class="topics-description">
     <p>The Morley’s Theorem states that in any triangle, the three points of intersection of the adjacent angle trisectors
     form an equilateral triangle. The theorem was discovered by Frank Morley in 1899.</p>
 
@@ -14,6 +16,7 @@
     <span v-katex>\angle C</span>, respectively. Click, hold, and move  points <span v-katex>A, B,</span>
     and <span v-katex>C</span>, we shall see that <span v-katex>\triangle A'B'C'</span> is always an equilateral
     triangle.</p>
+  </ATypographyParagraph>
     <canvas id="morley-canvas" width="500" height="500" />
   </div>
 </template>

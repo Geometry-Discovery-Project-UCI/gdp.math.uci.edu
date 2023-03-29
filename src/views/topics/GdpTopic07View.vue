@@ -4,7 +4,15 @@
 
   </ATypographyParagraph>
   <div class="app">
-    <ATypographyTitle :level="4">Animated Isotomic Conjugate</ATypographyTitle>
+    <ATypographyTitle :level="4">Animated Isotomic Conjugate Points</ATypographyTitle>
+    <ATypographyParagraph class="topics-description">
+   <p>In the following triangle <span v-katex>\triangle ABC</span>, <span v-katex>P</span> and <span v-katex>P'</span>
+  are isotomic conjugate points. </p>
+
+  <p>Click, hold, and move Point  <span v-katex>P </span>, one can see that when lines
+    <span v-katex>AD, BE, CF </span> are concurrent, then the corresponding isotomic  lines  <span v-katex>AD', BE', CF'</span>
+  must be concurrent at the isotomic conjugate point  <span v-katex>P'</span> of <span v-katex>P</span>.</p>
+  </ATypographyParagraph>
     <svg id="tri-app_isotomic" width="500" height="500" style="border: 2px solid black; background-color: floralwhite; user-select: none">
       <polygon id="tri_isotomic" stroke="black" fill="transparent" />
       <line id="lineA_isotomic" stroke="purple" />
@@ -44,7 +52,15 @@
       <circle id="circleP_isotomic_conjugatePprime" r="3px" padding="20px"></circle>  // added circle element (isotomic conjugate P') to template
     </svg>
 
-        <ATypographyTitle :level="4">Animated Isogonal Conjugate</ATypographyTitle>
+        <ATypographyTitle :level="4">Animated Isogonal Conjugate Points</ATypographyTitle>
+        <ATypographyParagraph class="topics-description">
+   <p>In the following triangle <span v-katex>\triangle ABC</span>, <span v-katex>P</span> and <span v-katex>P'</span>
+  are isogonal conjugate points. </p>
+
+  <p>Click, hold, and move Point  <span v-katex>P </span>, one can see that when lines
+    <span v-katex>AD, BE, CF </span> are concurrent, then the corresponding isogonal lines  <span v-katex>AD', BE', CF'</span>
+  must be concurrent at the isogonal conjugate point  <span v-katex>P'</span> of <span v-katex>P</span>.</p>
+  </ATypographyParagraph>
     <svg id="tri-app_isogonal" width="500" height="500" style="border: 2px solid black; background-color: floralwhite; user-select: none">
       <polygon id="tri_isogonal" stroke="black" fill="transparent" />
       <line id="lineA_isogonal" stroke="purple" />

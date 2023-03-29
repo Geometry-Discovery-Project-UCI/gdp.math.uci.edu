@@ -54,6 +54,12 @@ export const JOHNSON_DINH: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const SHALLY_FAN: Contributor = {
+  name: "Shally Fan",
+  email: "xianglif@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const SHUCHENG_FEI: Contributor = {
   name: "Shucheng Fei",
   email: "shuchef@uci.edu",
@@ -114,9 +120,15 @@ export const YIXUAN_LI: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const TUNGHSUAN_LIN: Contributor = {
+  name: "Tung-Hsuan Lin",
+  email: "wenjinl8@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const WENJING_LIN: Contributor = {
   name: "Wenjing Lin",
-  email: "wenjinl8@uci.edu",
+  email: "tunghsul@uci.edu",
   institute: Institute.UCIrvine,
 };
 
@@ -209,6 +221,12 @@ export const NATASHA_XIAO: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const CHEN_XU: Contributor = {
+  name: "Chen Xu",
+  email: "cxu16@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const ZEJIN_XU: Contributor = {
   name: "Zejin Xu",
   email: "zejinx@uci.edu",
@@ -225,6 +243,12 @@ export const MELISSA_YU: Contributor = {
   email: "melissajiayu@gmail.com",
 };
 
+export const KIRA_ZHANG: Contributor = {
+  name: "Kira Zhang",
+  email: "kefanz5@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const contributors: Contributor[] = [
   ZHIQIN_LU,
   BRIAN_CABALLERO,
@@ -232,10 +256,13 @@ export const contributors: Contributor[] = [
   ISHAN_DARJI,
   CHRISTOPHER_DAVIS,
   JOHNSON_DINH,
+  TUNGHSUAN_LIN,
   XIANFU_LIU,
   YI_CHEN,
   YUE_CHU,
   RUOYING_DENG,
+  SHALLY_FAN,
+  SHUCHENG_FEI,
   JIAMING_FENG,
   BIN_GUO,
   XINXI_GUO,
@@ -257,9 +284,11 @@ export const contributors: Contributor[] = [
   STEPHANIE_WANG,
   VERONICA_WANG,
   NATASHA_XIAO,
+  CHEN_XU,
   ZEJIN_XU,
   FELIX_YU,
   MELISSA_YU,
+  KIRA_ZHANG
 ].sort((a, b) => {
   const aLastName = a.name.split(" ").pop() as string;
   const bLastName = b.name.split(" ").pop() as string;
@@ -340,6 +369,7 @@ export const topics: Topic[] = [
     animationContributors: [
       MAI_NGUYEN,
       JIANLIN_LI,
+      TUNGHSUAN_LIN,
     ],
     essayContributors: [
       ZHIQIN_LU,
@@ -399,7 +429,7 @@ export const topics: Topic[] = [
       ZHIQIN_LU,
       XIANFU_LIU,
     ],
-    captionContributors: [],
+    captionContributors: [CHEN_XU],
   },
   {
     name: "Isogonal Conjugate and Isotomic Conjugate Points",
@@ -413,7 +443,7 @@ export const topics: Topic[] = [
       ZHIQIN_LU,
       SHIYI_LYU,
     ],
-    captionContributors: [],
+    captionContributors: [KIRA_ZHANG],
   },
   {
     name: "Gergonne and Nagel Points",
@@ -438,7 +468,7 @@ export const topics: Topic[] = [
     essayContributors: [
       ZHIQIN_LU,
     ],
-    captionContributors: [],
+    captionContributors: [SHALLY_FAN],
   },
   {
     name: "Ptolemy Theorem's and Kelvin Transform",
