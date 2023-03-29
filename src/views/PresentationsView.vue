@@ -1,13 +1,13 @@
 <template>
     <div>
         <ATypographyTitle :level="1">Presentations</ATypographyTitle>
-        <div v-for="(names, year) in years" :key="year">
-            <ATypographyTitle :level="2">{{ year }}</ATypographyTitle>
+        <div v-for="item in presentations" :key="item.title">
+            <ATypographyTitle :level="2">{{ item.title }}</ATypographyTitle>
             <ul>
-                <li v-for="name in names" :key="`${year}-${name}`" :style="{
+                <li v-for="name in item.contributors" :key="`${item.title}-${name}`" :style="{
                     textTransform: 'capitalize'
                 }">
-                    <ATypographyLink :href="`/pdfs/wq-presentations/${year}/${name}.pdf`">
+                    <ATypographyLink :href="`/pdfs/presentations/${item.path}/${name}.pdf`">
                         {{ name.split('_').join(' ').toLowerCase() }}'s Presentation
                     </ATypographyLink>
                 </li>
@@ -17,24 +17,28 @@
 </template>
 
 <script setup lang="ts">
-const years = {
-    "2023 Winter Quarter" : [
-        "AMELIA_FANG",
-        "TINGHAI_HE",
-        "CHEN_XU",
-        "XIAOXUAN_LI",
-        "JINGXIN_CAI",
-        "XINYU_XU",
-        "KIRA_ZHANG",
-        "YIDING_HUANG",
-        "MINGYAN_XU",
-        "YI_YANG",
-        "MUFAN_ZHANG",
-        "YU_FENG",
-        "SHALLY_FAN",
-        "ZHIBO_CHENG",
-        "SHUCHENG_FEI",
-        "ZHUOYI_HE"
-    ]
-};
+const presentations = [
+    {
+        title: "2023 Winter Quarter",
+        path: "2023/wq",
+        contributors: [
+            "AMELIA_FANG",
+            "TINGHAI_HE",
+            "CHEN_XU",
+            "XIAOXUAN_LI",
+            "JINGXIN_CAI",
+            "XINYU_XU",
+            "KIRA_ZHANG",
+            "YIDING_HUANG",
+            "MINGYAN_XU",
+            "YI_YANG",
+            "MUFAN_ZHANG",
+            "YU_FENG",
+            "SHALLY_FAN",
+            "ZHIBO_CHENG",
+            "SHUCHENG_FEI",
+            "ZHUOYI_HE"
+        ]
+    }
+];
 </script>
