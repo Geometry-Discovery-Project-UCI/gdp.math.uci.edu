@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 const years = {
-    2023: [
+    "2023 Winter Quarter" : [
         "AMELIA_FANG",
         "TINGHAI_HE",
         "CHEN_XU",
