@@ -78,6 +78,12 @@ export const XINXI_GUO: Contributor = {
   institute: Institute.UCSanDiego,
 };
 
+export const TINGHAI_HE: Contributor = {
+  name: "Tinghai He",
+  email: "tinghaih@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const VINNIE_HSIA: Contributor = {
   name: "Vinnie Hsia",
   email: "hsiat1@uci.edu",
@@ -319,7 +325,7 @@ export const topics: Topic[] = [
       ZHIQIN_LU,
     ],
     captionContributors: [
-      ZHIQIN_LU,
+      TINGHAI_HE,
     ],
   },
   {

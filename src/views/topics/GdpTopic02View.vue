@@ -3,24 +3,42 @@
   <ATypographyParagraph> </ATypographyParagraph>
   <div id="ceva-theorem-wrapper">
     <ATypographyTitle :level="4">Animated Ceva Theorem</ATypographyTitle>
-    Inside  <span v-katex>\triangle ABC, P</span> is an arbitrary point. Click, hold, and move  point  <span v-katex>P</span>. <span v-katex>AP, BP, CP </span>
-    intersect <span v-katex>BC, CA, AB</span> at <span v-katex>D, E, F</span>, respectively. By Ceva's Theorem, we shall have
-    <div v-katex:display>
-      \frac{BD}{DC}\cdot\frac{CE}{EA}\cdot\frac{AF}{FB}=1.
+    <ATypographyParagraph class="topic2-theorem-description">
+      Inside <span v-katex>\triangle ABC, P</span> is an arbitrary point. Click, hold, and move
+      point <span v-katex>P</span>. <span v-katex>AP, BP, CP </span> intersect
+      <span v-katex>BC, CA, AB</span> at <span v-katex>D, E, F</span>, respectively.<br />
+      By Ceva's Theorem, we shall have
+      <div v-katex:display class="topic2-formula">
+        \frac{BD}{DC}\cdot\frac{CE}{EA}\cdot\frac{AF}{FB}=1.
       </div>
+    </ATypographyParagraph>
     <canvas id="ceva-theorem-canvas" width="500" height="500" />
   </div>
 
   <ATypographyParagraph> </ATypographyParagraph>
   <div id="menelaus-theorem-wrapper">
     <ATypographyTitle :level="4">Animated Menelaus Theorems</ATypographyTitle>
-The line <span v-katex>PQ</span> intersect the three sides of <span v-katex>\triangle ABC </span> at
-<span v-katex>D, E</span> and <span v-katex>F</span>, respectively. By Menelaus' Theorem, we shall have
-<div v-katex:display> \frac{BD}{DC}\cdot\frac{CF}{FA}\cdot \frac{AE}{EB}=1.</div>
-Click, hold, and move points <span v-katex>P</span> or <span v-katex>Q</span> to see the effect.
+    <ATypographyParagraph class="topic2-theorem-description">
+      The line <span v-katex>PQ</span> intersect the three sides of
+      <span v-katex>\triangle ABC </span> at <span v-katex>D, E</span> and <span v-katex>F</span>,
+      respectively. <br />By Menelaus' Theorem, we shall have
+      <div v-katex:display class="topic2-formula">\frac{BD}{DC}\cdot\frac{CF}{FA}\cdot \frac{AE}{EB}=1.</div>
+      Click, hold, and move points <span v-katex>P</span> or <span v-katex>Q</span> to see the
+      effect.
+    </ATypographyParagraph>
     <canvas id="menelaus-theorem-canvas" width="500" height="500" />
   </div>
 </template>
+
+<style>
+.topic2-theorem-description {
+  width: 50%;
+}
+
+.topic2-formula span {
+  text-align: left;
+}
+</style>
 
 <script lang="ts">
 import { defineComponent } from "vue";
@@ -287,6 +305,7 @@ export default defineComponent({
             left: 330 + i * 50,
             top: 85,
             fontSize: 20,
+            strokeWidth: 0.5,
             stroke: "black",
           });
 
@@ -295,11 +314,12 @@ export default defineComponent({
             left: 330 + i * 50,
             top: 110,
             fontSize: 20,
+            strokeWidth: 0.5,
             stroke: "black",
           });
         });
 
-        drawFractionLine(canvas, 3, 4, {x: 328, y: 87});
+        drawFractionLine(canvas, 3, 4, { x: 328, y: 87 });
 
         // calculate and update result
         const resultValue = Math.round(((((distBD / distDC) * distCE) / distEA) * distAF) / distFB);
@@ -308,6 +328,7 @@ export default defineComponent({
           left: 306,
           top: 155,
           fontSize: 20,
+          strokeWidth: 0.5,
           stroke: "black",
         });
       }
@@ -350,10 +371,11 @@ export default defineComponent({
           new fabric.Text(equation[0]).set({
             left: 335 + i * 50,
             top: 25,
-            strokeWidth: 1,
+            strokeWidth: 0.5,
             stroke: "black",
             fill: "black",
             fontSize: 20,
+            fontStyle: "italic",
             evented: false,
           })
         );
@@ -362,10 +384,11 @@ export default defineComponent({
           new fabric.Text(equation[1]).set({
             left: 335 + i * 50,
             top: 50,
-            strokeWidth: 1,
+            strokeWidth: 0.5,
             stroke: "black",
             fill: "black",
             fontSize: 20,
+            fontStyle: "italic",
             evented: false,
           })
         );
@@ -377,7 +400,7 @@ export default defineComponent({
         new fabric.Text("=").set({
           left: 306,
           top: 98,
-          strokeWidth: 1,
+          strokeWidth: 0.5,
           stroke: "black",
           fill: "black",
           fontSize: 20,
@@ -418,6 +441,14 @@ export default defineComponent({
         selection: false,
         backgroundColor: "floralwhite",
       });
+
+      const valueBD = makeLabel("0");
+      const valueDC = makeLabel("0");
+      const valueCF = makeLabel("0");
+      const valueFA = makeLabel("0");
+      const valueAE = makeLabel("0");
+      const valueEB = makeLabel("0");
+      const resultText = makeLabel("1");
 
       function createCircle(x?: number, y?: number, radius?: number, fill?: string): fabric.Circle {
         return new fabric.Circle({
@@ -613,6 +644,68 @@ export default defineComponent({
         fill: "blue",
       });
 
+      const points = triangle.points as fabric.Point[];
+
+      const drawFormulaValues = () => {
+        // calculate values for text
+        const distBD = calculateDistanceBetweenTwoPoints(points[1], pointD) / 100;
+        const distDC = calculateDistanceBetweenTwoPoints(points[2], pointD) / 100;
+        const distCF = calculateDistanceBetweenTwoPoints(points[2], pointF) / 100;
+        const distFA = calculateDistanceBetweenTwoPoints(points[0], pointF) / 100;
+        const distAE = calculateDistanceBetweenTwoPoints(points[0], pointE) / 100;
+        const distEB = calculateDistanceBetweenTwoPoints(points[1], pointE) / 100;
+
+        // update values for text
+        const valueList = [
+          [distBD, distDC],
+          [distCF, distFA],
+          [distAE, distEB],
+        ];
+        const valueConst = [
+          [valueBD, valueDC],
+          [valueCF, valueFA],
+          [valueAE, valueEB],
+        ];
+
+        valueList.forEach((value, i) => {
+          const num = [
+            String((Math.round(value[0] * 100) / 100).toFixed(2)),
+            String((Math.round(value[1] * 100) / 100).toFixed(2)),
+          ];
+
+          valueConst[i][0].set({
+            text: num[0],
+            left: 45 + i * 50,
+            top: 85,
+            fontSize: 20,
+            strokeWidth: 0.5,
+            stroke: "black",
+          });
+
+          valueConst[i][1].set({
+            text: num[1],
+            left: 45 + i * 50,
+            top: 110,
+            fontSize: 20,
+            strokeWidth: 0.5,
+            stroke: "black",
+          });
+        });
+
+        drawFractionLine(canvas, 3, 4, { x: 43, y: 87 });
+
+        // calculate and update result
+        const resultValue = Math.round(((((distBD / distDC) * distCF) / distFA) * distAE) / distEB);
+        resultText.set({
+          text: "=   " + String(resultValue.toFixed(2)),
+          left: 16,
+          top: 155,
+          fontSize: 20,
+          strokeWidth: 0.5,
+          stroke: "black",
+        });
+      };
+
       const onPointMove = (e: IEvent): void => {
         const p = e.target! as Circle;
 
@@ -758,9 +851,62 @@ export default defineComponent({
             fontSize: 20,
           });
         }
+
+        drawFormulaValues();
       };
 
+      drawFormulaValues();
+
       canvas.on("object:moving", onPointMove);
+
+      const equationText = [
+        ["BD", "DC"],
+        ["CF", "FA"],
+        ["AE", "EB"],
+      ];
+
+      equationText.forEach((equation, i) => {
+        canvas.add(
+          new fabric.Text(equation[0]).set({
+            left: 50 + i * 50,
+            top: 25,
+            strokeWidth: 0.5,
+            stroke: "black",
+            fill: "black",
+            fontSize: 20,
+            fontStyle: "italic",
+            evented: false,
+          })
+        );
+
+        canvas.add(
+          new fabric.Text(equation[1]).set({
+            left: 50 + i * 50,
+            top: 50,
+            strokeWidth: 0.5,
+            stroke: "black",
+            fill: "black",
+            fontSize: 20,
+            fontStyle: "italic",
+            evented: false,
+          })
+        );
+      });
+
+      drawFractionLine(canvas, 3, 4, { x: 43, y: 27 });
+
+      canvas.add(
+        new fabric.Text("=").set({
+          left: 16,
+          top: 98,
+          strokeWidth: 1,
+          stroke: "black",
+          fill: "black",
+          fontSize: 20,
+          evented: false,
+        })
+      );
+
       canvas.add(triangle);
       canvas.add(movablePointP);
       canvas.add(movablePointQ);
@@ -777,6 +923,13 @@ export default defineComponent({
       canvas.add(fLabel);
       canvas.add(pLabel);
       canvas.add(qLabel);
+      canvas.add(valueBD);
+      canvas.add(valueDC);
+      canvas.add(valueCF);
+      canvas.add(valueFA);
+      canvas.add(valueAE);
+      canvas.add(valueEB);
+      canvas.add(resultText);
     })();
   },
 });
