@@ -25,6 +25,12 @@ export const YI_CHEN: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const ZHIBO_CHENG: Contributor = {
+  name: "Zhibo Cheng",
+  email: "zhiboc1@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const YUE_CHU: Contributor = {
   name: "Yue Chu",
   email: "chuy13@uci.edu",
@@ -253,14 +259,13 @@ export const contributors: Contributor[] = [
   ZHIQIN_LU,
   BRIAN_CABALLERO,
   CECHENG_CAO,
-  ISHAN_DARJI,
-  CHRISTOPHER_DAVIS,
-  JOHNSON_DINH,
-  TUNGHSUAN_LIN,
-  XIANFU_LIU,
   YI_CHEN,
   YUE_CHU,
+  ZHIBO_CHENG,
+  ISHAN_DARJI,
+  CHRISTOPHER_DAVIS,
   RUOYING_DENG,
+  JOHNSON_DINH,
   SHALLY_FAN,
   SHUCHENG_FEI,
   JIAMING_FENG,
@@ -271,7 +276,9 @@ export const contributors: Contributor[] = [
   JIANLIN_LI,
   TONGTONG_LI,
   YIXUAN_LI,
+  TUNGHSUAN_LIN,
   WENJING_LIN,
+  XIANFU_LIU,
   SHIYI_LYU,
   RUSSELL_MARASIGAN,
   MAI_NGUYEN,
