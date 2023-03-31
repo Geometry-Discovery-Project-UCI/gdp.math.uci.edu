@@ -4,6 +4,22 @@
 
   <div id="napoleon-wrapper">
     <ATypographyTitle :level="4">Animated Napoleon's Theorem</ATypographyTitle>
+    <ATypographyParagraph class="topics-description">
+      <p>
+        Napoleon's theorem states that if equilateral
+        triangles are constructed on the sides of any triangle, the lines connecting the centres of those equilateral triangles themselves form an equilateral triangle.
+      </p>
+      <p>
+        On each side of triangle <span v-katex>\triangle ABC</span>, one can construct three
+         equilateral triangles: <span v-katex>\triangle BCP, \triangle CAQ</span> and <span v-katex>\triangle ABR</span>. Let
+         <span v-katex>X, Y, Z </span> be
+         the centers of these triangles, respectively. Then Triangle <span v-katex>\triangle XYZ</span>
+         is an  equilateral triangle. </p>
+         <p>
+         Click, hold and   move any of points <span v-katex>A, B, C</span>, one can observe that
+         <span v-katex>\triangle XYZ</span> is  equilateral.
+      </p>
+    </ATypographyParagraph>
     <canvas id="napoleon-canvas" width="500" height="500" />
   </div>
 </template>

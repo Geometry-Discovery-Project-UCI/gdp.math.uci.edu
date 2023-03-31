@@ -2,22 +2,78 @@
   <TopicMeta :topic="topic" />
 
   <div id="Pascal-Brainchon-wrapper" style="padding-top: 40px;">
-    <h2>Pappus' Theorem</h2>
+    <ATypographyTitle :level="4">Animated Pappus' Theorem </ATypographyTitle>
+    <ATypographyParagraph class="topics-description">
+      <p>Pappus' Theorem, also known as Pappus' Hexagon Theorem, is named after Greek mathematician Pappus of Alexandria, who lived approximately 3rd or 4th century AD.
+      </p>
+      <p> Let <span v-katex>A, B, C</span> be three points on one line (the bottom line in the picture),
+      and let <span v-katex>A', B', C'</span>be three points on another  line (the top line in the picture). Let
+      <span v-katex>X, Y, Z </span> be the intersections of <span v-katex>BC'</span> and <span v-katex>B'C</span>;
+      <span v-katex>AC'</span> and <span v-katex>A'C</span>; and <span v-katex>AB'</span> and <span v-katex>A'B</span>, respectively.
+    Then <span v-katex>X,Y,Z</span> are collinear.</p>
+    <p>Click, hold and move one of the six points <span v-katex>A,B,C,A',B',C'</span>. One can see that the red line always passing points
+      <span v-katex>X,Y,Z</span>. The red line is called the Pappus Line.</p>
+    </ATypographyParagraph>
     <canvas id="Pascal-Brainchon-canvas" width="500" height="500" />
   </div>
 
   <div id="Pascal-wrapper" style="padding-top: 40px;">
-    <h2>Pascal's Theorem</h2>
+    <ATypographyTitle :level="4"> Animated  Pascal's Theorem</ATypographyTitle>
+    <ATypographyParagraph class="topics-description">
+      <p>
+        Pascal's Theorem is named after Blaise Pascal,
+        which  was formulated by Blaise Pascal in a note written in 1639 when he was only 16 years old.</p>
+        <p>
+        Pascal's Theorem states that if <span v-katex>ABCDEF</span> is an inscribed hexagon of a circle, then the intersections
+        <span v-katex>X, Y, Z</span> of the three pairs of the opposite sides of the hexagon is collinear.
+      </p>
+      <p>Click, hold, and move any of points <span v-katex>A, B, C, D, E, F</span> to observe that points <span v-katex>X, Y, Z</span>
+      are always collinear.</p>
+      <p> Pascal's Theorem can be generalized to the case when a hexagon is inscribed in a conic curve. Since two lines
+          can be regarded as a degenerated conic curve, Pappus' Theorem is a special case of the (generalized) Pascal Theorem.  </p>
+    </ATypographyParagraph>
     <canvas id="Pascal-canvas" width="500" height="500" />
   </div>
 
   <div id="Desargues-wrapper" style="padding-top: 40px;">
-    <h2>Desargues' Theorem</h2>
+    <ATypographyTitle :level="4"> Animated  Desargues' Theorem</ATypographyTitle>
+    <ATypographyParagraph class="topics-description">
+      <p>
+        Two triangles in a plane are perspective from a point <span v-katex>O</span>,
+        called the center of perspectivity,  if the lines joining corresponding vertices  of the triangles
+          meet at <span v-katex>O</span>. Dually, the triangles are said to be perspective from a line
+         if the points of intersection of corresponding lines all lie on one line.
+      </p>
+      <p>
+        Desargues' theorem, named after Girard Desargues, states that two triangels are perspective from a point,
+        if and only if it is perspective from a point.
+      </p>
+      <p>
+        In the following picture, assume that  <span v-katex>AA', BB', CC'</span>
+        are concurrent. Let  <span v-katex>P,Q,R</span> be the intersections of  <span v-katex>BC</span> and  <span v-katex>B'C'</span>;
+        <span v-katex>CA</span> and  <span v-katex>C'A'</span>;
+        <span v-katex>AB</span> and  <span v-katex>A'B'</span>, respectively. Then <span v-katex>P, Q, R</span>
+        are collinear.
+      </p>
+      <p>Click, hold, and move any of points <span v-katex>A, B, C </span> to observe that points <span v-katex>P,Q, R</span>
+      are always collinear.</p>
+    </ATypographyParagraph>
     <canvas id="Desargues-canvas" width="800" height="500" />
   </div>
 
   <div id="Brainchon-wrapper" style="padding-top: 40px;">
-    <h2>Brainchon's Theorem</h2>
+    <ATypographyTitle :level="4"> Animated  Brainchon's Theorem</ATypographyTitle>
+    <ATypographyParagraph class="topics-description">
+      <p>
+        Brainchon's Theorem is named after French mathematician  Charles Julien Brianchon. It is the  famous dual theorem of Pascal's Theorem.
+        Like Pascal's Theorem, it can also be generalized to the case of conic curves. </p>
+        <p>
+      Brainchon's Theorem states that if <span v-katex>ABCDEF</span> is a hexagon circumscribed a circle, then the main diagonals  <span v-katex>AD, BE, CF</span>
+      are concurrent.
+      </p>
+      <p>Click, hold, and move any of points <span v-katex>A, B, C, D, E, F</span> to observe that lines <span v-katex>AD, BE, CF</span>
+      are always concurrent. The Hexagon  <span v-katex>ABCDEF</span> doesn't have to be convex for the Brianchon's Theorem to hold.</p>
+    </ATypographyParagraph>
     <canvas id="Brainchon-canvas" width="500" height="500" />
   </div>
 

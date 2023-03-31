@@ -40,6 +40,10 @@ export default defineComponent({
 </script>
 
 <style>
+.topics-description {
+  width: 50%;
+}
+
 .topic-image {
   height: 200px;
   width: 300px;

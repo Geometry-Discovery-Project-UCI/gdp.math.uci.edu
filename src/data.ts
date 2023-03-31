@@ -25,6 +25,12 @@ export const YI_CHEN: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const ZHIBO_CHENG: Contributor = {
+  name: "Zhibo Cheng",
+  email: "zhiboc1@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const YUE_CHU: Contributor = {
   name: "Yue Chu",
   email: "chuy13@uci.edu",
@@ -54,6 +60,18 @@ export const JOHNSON_DINH: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const SHALLY_FAN: Contributor = {
+  name: "Shally Fan",
+  email: "xianglif@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
+export const SHUCHENG_FEI: Contributor = {
+  name: "Shucheng Fei",
+  email: "shuchef@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const JIAMING_FENG: Contributor = {
   name: "Jiaming Feng",
   email: "jiamif3@uci.edu",
@@ -70,6 +88,12 @@ export const XINXI_GUO: Contributor = {
   name: "Xinxi Guo",
   email: "x6guo@ucsd.edu",
   institute: Institute.UCSanDiego,
+};
+
+export const TINGHAI_HE: Contributor = {
+  name: "Tinghai He",
+  email: "tinghaih@uci.edu",
+  institute: Institute.UCIrvine,
 };
 
 export const VINNIE_HSIA: Contributor = {
@@ -102,9 +126,15 @@ export const YIXUAN_LI: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const TUNGHSUAN_LIN: Contributor = {
+  name: "Tung-Hsuan Lin",
+  email: "wenjinl8@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const WENJING_LIN: Contributor = {
   name: "Wenjing Lin",
-  email: "wenjinl8@uci.edu",
+  email: "tunghsul@uci.edu",
   institute: Institute.UCIrvine,
 };
 
@@ -197,6 +227,12 @@ export const NATASHA_XIAO: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const CHEN_XU: Contributor = {
+  name: "Chen Xu",
+  email: "cxu16@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const ZEJIN_XU: Contributor = {
   name: "Zejin Xu",
   email: "zejinx@uci.edu",
@@ -213,17 +249,25 @@ export const MELISSA_YU: Contributor = {
   email: "melissajiayu@gmail.com",
 };
 
+export const KIRA_ZHANG: Contributor = {
+  name: "Kira Zhang",
+  email: "kefanz5@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const contributors: Contributor[] = [
   ZHIQIN_LU,
   BRIAN_CABALLERO,
   CECHENG_CAO,
-  ISHAN_DARJI,
-  CHRISTOPHER_DAVIS,
-  JOHNSON_DINH,
-  XIANFU_LIU,
   YI_CHEN,
   YUE_CHU,
+  ZHIBO_CHENG,
+  ISHAN_DARJI,
+  CHRISTOPHER_DAVIS,
   RUOYING_DENG,
+  JOHNSON_DINH,
+  SHALLY_FAN,
+  SHUCHENG_FEI,
   JIAMING_FENG,
   BIN_GUO,
   XINXI_GUO,
@@ -232,7 +276,9 @@ export const contributors: Contributor[] = [
   JIANLIN_LI,
   TONGTONG_LI,
   YIXUAN_LI,
+  TUNGHSUAN_LIN,
   WENJING_LIN,
+  XIANFU_LIU,
   SHIYI_LYU,
   RUSSELL_MARASIGAN,
   MAI_NGUYEN,
@@ -245,9 +291,11 @@ export const contributors: Contributor[] = [
   STEPHANIE_WANG,
   VERONICA_WANG,
   NATASHA_XIAO,
+  CHEN_XU,
   ZEJIN_XU,
   FELIX_YU,
   MELISSA_YU,
+  KIRA_ZHANG
 ].sort((a, b) => {
   const aLastName = a.name.split(" ").pop() as string;
   const bLastName = b.name.split(" ").pop() as string;
@@ -288,7 +336,7 @@ export const otherLinks: { name: string; uri: string; author?: string }[] = [
     uri: "https://www.fullerton.edu/math/resources/mathcircle.php",
   },
   {
-    name: "Morning Star Institue",
+    name: "Morning Star Institute",
     uri: "http://www.morningstarinstitute.org/",
     author: "Yifeng Yu",
   },
@@ -297,6 +345,10 @@ export const otherLinks: { name: string; uri: string; author?: string }[] = [
     uri: "/pdfs/199-intro.pdf",
     author: "Zhibo Cheng",
   },
+  {
+    name: "Presentations",
+    uri: "#/presentations"
+  }
 ];
 
 export const topics: Topic[] = [
@@ -305,16 +357,31 @@ export const topics: Topic[] = [
     index: 1,
     snapshot: "images/snapshots/topic01.png",
     essay: "pdfs/topic01.pdf",
-    animationContributors: [MELISSA_YU],
-    essayContributors: [ZHIQIN_LU],
+    animationContributors: [
+      MELISSA_YU,
+    ],
+    essayContributors: [
+      ZHIQIN_LU,
+    ],
+    captionContributors: [
+      TINGHAI_HE,
+    ],
   },
   {
     name: "Ceva's and Menelaus' Theorems",
     index: 2,
     snapshot: "images/snapshots/topic02.png",
     essay: "pdfs/topic02.pdf",
-    animationContributors: [MAI_NGUYEN, JIANLIN_LI],
-    essayContributors: [ZHIQIN_LU, XIANFU_LIU],
+    animationContributors: [
+      MAI_NGUYEN,
+      JIANLIN_LI,
+      TUNGHSUAN_LIN,
+    ],
+    essayContributors: [
+      ZHIQIN_LU,
+      XIANFU_LIU,
+    ],
+    captionContributors: [SHUCHENG_FEI],
   },
   {
     name: "Five Triangle Centers",
@@ -329,16 +396,28 @@ export const topics: Topic[] = [
     index: 4,
     snapshot: "images/snapshots/topic04.png",
     essay: "pdfs/topic04.pdf",
-    animationContributors: [MELISSA_YU],
-    essayContributors: [ZHIQIN_LU],
+    animationContributors: [
+      MELISSA_YU
+    ],
+    essayContributors: [
+      ZHIQIN_LU,
+    ],
+    captionContributors: [],
   },
   {
     name: "Simson Line",
     index: 5,
     snapshot: "images/snapshots/topic05.png",
     essay: "pdfs/topic05.pdf",
-    animationContributors: [MELISSA_YU, YIXUAN_LI],
-    essayContributors: [ZHIQIN_LU, SHIYI_LYU],
+    animationContributors: [
+      MELISSA_YU,
+      YIXUAN_LI,
+    ],
+    essayContributors: [
+      ZHIQIN_LU,
+      SHIYI_LYU,
+    ],
+    captionContributors: [],
   },
   {
     name: "Pascal and Brainchon Theorems",
@@ -346,15 +425,25 @@ export const topics: Topic[] = [
     snapshot: "images/snapshots/topic06.png",
     essay: "pdfs/topic06.pdf",
     animationContributors: [ZEJIN_XU],
-    essayContributors: [ZHIQIN_LU, XIANFU_LIU],
+    essayContributors: [
+      ZHIQIN_LU,
+      XIANFU_LIU,
+    ],
+    captionContributors: [CHEN_XU],
   },
   {
     name: "Isogonal Conjugate and Isotomic Conjugate Points",
     index: 7,
     snapshot: "images/snapshots/topic07.png",
     essay: "pdfs/topic07.pdf",
-    animationContributors: [MELISSA_YU],
-    essayContributors: [ZHIQIN_LU, SHIYI_LYU],
+    animationContributors: [
+      MELISSA_YU,
+    ],
+    essayContributors: [
+      ZHIQIN_LU,
+      SHIYI_LYU,
+    ],
+    captionContributors: [KIRA_ZHANG],
   },
   {
     name: "Gergonne and Nagel Points",
@@ -363,14 +452,21 @@ export const topics: Topic[] = [
     essay: "pdfs/topic08.pdf",
     animationContributors: [YIXUAN_LI],
     essayContributors: [],
+    captionContributors: [],
   },
+
   {
     name: "Napoleon's Theorem",
     index: 9,
     snapshot: "images/snapshots/topic09.png",
     essay: "pdfs/topic09.pdf",
-    animationContributors: [JIANLIN_LI],
-    essayContributors: [ZHIQIN_LU],
+    animationContributors: [
+      JIANLIN_LI,
+    ],
+    essayContributors: [
+      ZHIQIN_LU,
+    ],
+    captionContributors: [SHALLY_FAN],
   },
   {
     name: "Ptolemy Theorem's and Kelvin Transform",
@@ -378,7 +474,12 @@ export const topics: Topic[] = [
     snapshot: "images/snapshots/topic10.png",
     essay: "pdfs/topic10.pdf",
     animationContributors: [],
-    essayContributors: [ZHIQIN_LU, FELIX_YU, XIANFU_LIU],
+    essayContributors: [
+      ZHIQIN_LU,
+      FELIX_YU,
+      XIANFU_LIU,
+    ],
+    captionContributors: [],
   },
   {
     name: "Dual Triangles",
@@ -386,7 +487,10 @@ export const topics: Topic[] = [
     snapshot: "images/snapshots/topic11.png",
     essay: "pdfs/topic11.pdf",
     animationContributors: [],
-    essayContributors: [ZHIQIN_LU],
+    essayContributors: [
+      ZHIQIN_LU,
+    ],
+    captionContributors: [],
   },
   {
     name: "Euler Line",
@@ -394,15 +498,24 @@ export const topics: Topic[] = [
     snapshot: "images/snapshots/topic12.png",
     essay: "pdfs/topic12.pdf",
     animationContributors: [VINNIE_HSIA],
-    essayContributors: [CHUXIANGBO_WANG],
+    essayContributors: [
+      CHUXIANGBO_WANG,
+    ],
+    captionContributors: [],
   },
   {
     name: "Nine-point Circle",
     index: 13,
     snapshot: "images/snapshots/topic13.png",
     essay: "pdfs/topic13.pdf",
-    animationContributors: [MAI_NGUYEN],
-    essayContributors: [RUSSELL_MARASIGAN, MAI_NGUYEN],
+    animationContributors: [
+      MAI_NGUYEN,
+    ],
+    essayContributors: [
+      RUSSELL_MARASIGAN,
+      MAI_NGUYEN,
+    ],
+    captionContributors: [],
   },
   {
     name: "Fermat Point",
@@ -411,7 +524,9 @@ export const topics: Topic[] = [
     essay: "pdfs/topic14.pdf",
     animationContributors: [MELISSA_YU],
     essayContributors: [],
+    captionContributors: [],
   },
+
   {
     name: "Complete Quadrangle and Complete Qudrilateral",
     index: 15,
@@ -419,6 +534,7 @@ export const topics: Topic[] = [
     essay: "pdfs/topic15.pdf",
     animationContributors: [],
     essayContributors: [],
+    captionContributors: [],
   },
   {
     name: "Symmedian Point",
@@ -627,6 +743,14 @@ export const indexTopicMap: Map<number, Topic> = new Map(
 );
 
 export const otherImages: { title: string; image: string }[] = [
+  {
+    title: "2023 Winter GDP Group",
+    image: "images/group/2023-Winter-199B-1.jpg",
+  },
+  {
+    title: "2023 Winter GDP Group",
+    image: "images/group/2023-Winter-199B-2.jpg",
+  },
   {
     title: "2022 Fall GDP Group",
     image: "images/group/2022-Fall-199A.jpg",
