@@ -6,18 +6,20 @@
     <ATypographyTitle :level="4">Animated Napoleon's Theorem</ATypographyTitle>
     <ATypographyParagraph class="topics-description">
       <p>
-        Napoleon's theorem states that if equilateral
-        triangles are constructed on the sides of any triangle, the lines connecting the centres of those equilateral triangles themselves form an equilateral triangle.
+        Napoleon's theorem states that if equilateral triangles are constructed on the sides of any
+        triangle, the lines connecting the centres of those equilateral triangles themselves form an
+        equilateral triangle.
       </p>
       <p>
         On each side of triangle <span v-katex>\triangle ABC</span>, one can construct three
-         equilateral triangles: <span v-katex>\triangle BCP, \triangle CAQ</span> and <span v-katex>\triangle ABR</span>. Let
-         <span v-katex>X, Y, Z </span> be
-         the centers of these triangles, respectively. Then Triangle <span v-katex>\triangle XYZ</span>
-         is an  equilateral triangle. </p>
-         <p>
-         Click, hold and   move any of points <span v-katex>A, B, C</span>, one can observe that
-         <span v-katex>\triangle XYZ</span> is  equilateral.
+        equilateral triangles: <span v-katex>\triangle BCP, \triangle CAQ</span> and
+        <span v-katex>\triangle ABR</span>. Let <span v-katex>X, Y, Z </span> be the centers of
+        these triangles, respectively. Then Triangle <span v-katex>\triangle XYZ</span> is an
+        equilateral triangle.
+      </p>
+      <p>
+        Click, hold and move any of points <span v-katex>A, B, C</span>, one can observe that
+        <span v-katex>\triangle XYZ</span> is equilateral.
       </p>
     </ATypographyParagraph>
     <canvas id="napoleon-canvas" width="500" height="500" />
@@ -129,8 +131,7 @@ export default defineComponent({
         rNode.set({
           left: pointR.x,
           top: pointR.y,
-          radius: 1,
-          fill: "red",
+          radius: 0.5,
         });
 
         const angleABR = calculateThreeAngles(coords[0], coords[1], pointR);
@@ -188,8 +189,7 @@ export default defineComponent({
         qNode.set({
           left: pointQ.x,
           top: pointQ.y,
-          radius: 1,
-          fill: "red",
+          radius: 0.5,
         });
 
         const angleACQ = calculateThreeAngles(coords[0], coords[2], pointQ);
@@ -247,8 +247,7 @@ export default defineComponent({
         pNode.set({
           left: pointP.x,
           top: pointP.y,
-          radius: 1,
-          fill: "red",
+          radius: 0.5,
         });
 
         const angleBCP = calculateThreeAngles(coords[1], coords[2], pointP);
@@ -310,7 +309,7 @@ export default defineComponent({
           originY: "center",
           left: coords[0].x,
           top: coords[0].y,
-          radius: 4,
+          radius: 3,
           fill: "black",
         });
         bNode.set({
@@ -318,7 +317,7 @@ export default defineComponent({
           originY: "center",
           left: coords[1].x,
           top: coords[1].y,
-          radius: 4,
+          radius: 3,
           fill: "black",
         });
         cNode.set({
@@ -326,7 +325,7 @@ export default defineComponent({
           originY: "center",
           left: coords[2].x,
           top: coords[2].y,
-          radius: 4,
+          radius: 3,
           fill: "black",
         });
         xLabel.set({
