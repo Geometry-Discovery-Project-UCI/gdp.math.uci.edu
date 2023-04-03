@@ -128,7 +128,7 @@ export const YIXUAN_LI: Contributor = {
 
 export const TUNGHSUAN_LIN: Contributor = {
   name: "Tung-Hsuan Lin",
-  email: "wenjinl8@uci.edu",
+  email: "tunghsul@uci.edu",
   institute: Institute.UCIrvine,
 };
 
