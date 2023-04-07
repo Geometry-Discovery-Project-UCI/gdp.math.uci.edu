@@ -100,6 +100,8 @@ export function makeMovablePolygon(vertexes: fabric.Point[], fn: (points: fabric
 
 export function makeLine(pt1: fabric.Point = new fabric.Point(0, 0), pt2: fabric.Point = new fabric.Point(0, 0), strokeWidth = 1, color = "black") {
   return new fabric.Line([pt1.x, pt1.y, pt2.x, pt2.y], {
+    originX: "center",
+    originY: "center",
     stroke: color,
     hasControls: false,
     hasBorders: false,
@@ -146,14 +148,16 @@ export function makeSelectCircle(radius = 3, center: fabric.Point = new fabric.P
   });
 }
 
-export function makeMovablePoint(pt: fabric.Point) {
+export function makeMovablePoint(pt: fabric.Point, radius?: number) {
   return new fabric.Circle({
+    originX: "center",
+    originY: "center",
     left: pt.x,
     top: pt.y,
     hasControls: false,
     hasBorders: false,
     evented: true,
-    radius: 5,
+    radius: radius || 5,
     fill: "blue",
     strokeWidth: 0,
   });
