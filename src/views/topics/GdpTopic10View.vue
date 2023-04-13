@@ -25,22 +25,6 @@ export default defineComponent({
       selection: false,
     });
 
-    function createPolygon(vertices?: fabric.Point[]): fabric.Polygon {
-      return new fabric.Polygon(vertices || [], {
-        fill: "transparent",
-        stroke: "black",
-        strokeWidth: 1,
-        objectCaching: false,
-        transparentCorners: false,
-        cornerColor: "transparent",
-        hasBorders: false,
-        hasControls: false,
-        hoverCursor: "normal",
-        lockMovementX: true,
-        lockMovementY: true,
-      });
-    }
-
     function coordToPoint(cd: Coord): fabric.Point {
       return new fabric.Point(cd.x, cd.y);
     }
@@ -93,10 +77,8 @@ export default defineComponent({
     circumCircle.set({
       originX: "center",
       originY: "center",
-      stroke: "purple",
+      stroke: "black",
     });
-
-    const quadrilateral = createPolygon();
 
     const labelA = makeLabel("A");
     const labelB = makeLabel("B");
@@ -104,6 +86,10 @@ export default defineComponent({
     const labelD = makeLabel("D");
     const lineAC = makeLine();
     const lineBD = makeLine();
+    const lineAB = makeLine();
+    const lineCD = makeLine();
+    const lineAD = makeLine();
+    const lineBC = makeLine();
     const labelAC = makeLabel("AC");
     const labelBD = makeLabel("BD");
     const labelAB = makeLabel("AB");
@@ -173,10 +159,6 @@ export default defineComponent({
         return;
       }
 
-      quadrilateral.set({
-        points: vertices,
-      });
-
       pointA.set({
         left: vertices[0].x,
         top: vertices[0].y,
@@ -202,6 +184,7 @@ export default defineComponent({
         y1: vertices[0].y,
         x2: vertices[2].x,
         y2: vertices[2].y,
+        stroke: "#f49e36",
       });
 
       lineBD.set({
@@ -209,6 +192,39 @@ export default defineComponent({
         y1: vertices[1].y,
         x2: vertices[3].x,
         y2: vertices[3].y,
+        stroke: "#1d6e8dd9",
+      });
+
+      lineAB.set({
+        x1: vertices[0].x,
+        y1: vertices[0].y,
+        x2: vertices[1].x,
+        y2: vertices[1].y,
+        stroke: "#2416a2",
+      });
+
+      lineCD.set({
+        x1: vertices[2].x,
+        y1: vertices[2].y,
+        x2: vertices[3].x,
+        y2: vertices[3].y,
+        stroke: "#7a5548",
+      });
+
+      lineAD.set({
+        x1: vertices[0].x,
+        y1: vertices[0].y,
+        x2: vertices[3].x,
+        y2: vertices[3].y,
+        stroke: "#bf0e4a",
+      });
+
+      lineBC.set({
+        x1: vertices[1].x,
+        y1: vertices[1].y,
+        x2: vertices[2].x,
+        y2: vertices[2].y,
+        stroke: "purple",
       });
 
       labelA.set({
@@ -279,13 +295,14 @@ export default defineComponent({
     canvas.on("object:moving", moveVertices);
 
     const eqLables = [labelAC, labelBD, labelAB, labelCD, labelAD, labelBC];
+    const eqLablesColor = ["#f49e36", "#1d6e8dd9", "#2416a2", "#7a5548", "#bf0e4a", "purple"];
     eqLables.forEach((label, i) => {
       label.set({
         left: 100 + i * 55,
         top: 25,
         strokeWidth: 0.5,
-        stroke: "black",
-        fill: "black",
+        stroke: eqLablesColor[i],
+        fill: eqLablesColor[i],
         fontSize: 20,
         fontStyle: "italic",
         evented: false,
@@ -326,10 +343,9 @@ export default defineComponent({
     });
 
     canvas.add(circumCircle);
-    canvas.add(quadrilateral);
     canvas.add(labelA, labelB, labelC, labelD);
     canvas.add(pointA, pointB, pointC, pointD);
-    canvas.add(lineAC, lineBD);
+    canvas.add(lineAC, lineBD, lineAB, lineCD, lineAD, lineBC);
     canvas.add(labelAC, labelBD, labelAB, labelCD, labelAD, labelBC);
     canvas.add(valueAC, valueBD, valueAB, valueCD, valueAD, valueBC);
     canvas.add(circleA, circleB, circleC, circleD);
