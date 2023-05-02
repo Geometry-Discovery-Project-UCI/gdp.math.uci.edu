@@ -100,6 +100,9 @@ export default defineComponent({
     pointF.set({ originX: "center", originY: "center", fill: "red", radius: 3 });
     pointG.set({ originX: "center", originY: "center", fill: "red", radius: 3 });
 
+    const angleE = new fabric.Rect();
+    const angleF = new fabric.Rect();
+
     const circleRestrict = (p: fabric.Point): fabric.Point => {
       let rad = Math.atan(-findSlope([center.x, center.y], [p.x, p.y]));
       if (p.x < center.x) {
@@ -201,6 +204,51 @@ export default defineComponent({
       pointF.set({ left: pF.x, top: pF.y });
 
       lineGF.set({ x1: pG.x, y1: pG.y, x2: pF.x, y2: pF.y });
+      let angleEVal = -180;
+      let angleFVal = 90;
+
+      if (pE.x - 15 <= pA.x && pE.y - 15 <= pB.y) {
+        angleEVal = 360;
+      } else if (pE.x - 15 <= pA.x) {
+        angleEVal = 270;
+      } else if (pE.y - 15 <= pB.y) {
+        angleEVal = 90;
+      }
+
+      if (pF.y - 15 <= pB.y) {
+        angleFVal = 0;
+      }
+
+      angleE.set({
+        left: pE.x as number,
+        top: pE.y as number,
+        width: 10,
+        height: 10,
+        fill: "",
+        stroke: "black",
+        strokeWidth: 0.5,
+        angle: angleEVal,
+      });
+
+      angleF.set({
+        left: pF.x as number,
+        top: pF.y as number,
+        width: 10,
+        height: 10,
+        fill: "",
+        stroke: "black",
+        strokeWidth: 0.5,
+        angle:
+          (Math.acos(
+            (pA.distanceFrom(pC) * pA.distanceFrom(pC) +
+              pB.distanceFrom(pC) * pB.distanceFrom(pC) -
+              pB.distanceFrom(pA) * pB.distanceFrom(pA)) /
+              (2 * pB.distanceFrom(pC) * pA.distanceFrom(pC))
+          ) *
+            180) /
+            Math.PI +
+          angleFVal,
+      });
 
       labelA.set({
         left: p[2].x - 20,
@@ -231,6 +279,7 @@ export default defineComponent({
     canvas.on("object:moving", moveVertices);
 
     canvas.add(circle);
+    canvas.add(angleE, angleF);
     canvas.add(polygon);
     canvas.add(staticLineAC, staticLineBD);
     canvas.add(lineAC, lineBD, lineGF);
