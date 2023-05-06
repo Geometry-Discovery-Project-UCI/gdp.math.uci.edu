@@ -39,6 +39,14 @@ const presentations = [
             "SHUCHENG_FEI",
             "ZHUOYI_HE"
         ]
+    },
+    {
+        title: "2023 Spring Quarter",
+        path: "2023/sq",
+        contributors: [
+           "HANSON_HU",
+           "YUXIAO_HUANG"
+        ]
     }
 ];
 </script>
