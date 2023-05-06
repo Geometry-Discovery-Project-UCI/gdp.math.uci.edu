@@ -60,7 +60,7 @@
         the points of intersection of corresponding lines all lie on one line.
       </p>
       <p>
-        Desargues' theorem, named after Girard Desargues, states that two triangels are perspective
+        Desargues' theorem, named after Girard Desargues, states that two triangles are perspective
         from a point, if and only if it is perspective from a point.
       </p>
       <p>

@@ -1,6 +1,19 @@
 <template>
   <TopicMeta :topic="topic" />
   <ATypographyParagraph>
+  <br>
+<ATypographyTitle :level="4">Animated Erdős-Mordell Inequality</ATypographyTitle>
+    <ATypographyParagraph class="topics-description">
+    <p> Erdős–Mordell inequality states that for any  point inside
+a triangle, the sum of the distances from the point to the vertices is greater than or
+equal to twice of the sum of the distances from the point to the sides.</p>
+
+<p> Click, hold, and move point <i>P</i> in the picture below. We shall find that the inequality </p>
+<span v-katex:display>
+PA+PB+PC\geq 2(PD+PE+PF)
+</span>
+holds.
+    </ATypographyParagraph>
   </ATypographyParagraph>
   <svg id="tri-app_erdos-mordell" width="500" height="500"
     style="border: 2px solid black; background-color: floralwhite; user-select: none">
