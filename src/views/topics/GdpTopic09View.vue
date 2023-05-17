@@ -7,14 +7,14 @@
     <ATypographyParagraph class="topics-description">
       <p>
         Napoleon's theorem states that if equilateral triangles are constructed on the sides of any
-        triangle, the lines connecting the centres of those equilateral triangles themselves form an
+        triangle, the lines connecting the centers of those equilateral triangles themselves form an
         equilateral triangle.
       </p>
       <p>
         On each side of triangle <span v-katex>\triangle ABC</span>, one can construct three
         equilateral triangles: <span v-katex>\triangle BCP, \triangle CAQ</span> and
         <span v-katex>\triangle ABR</span>. Let <span v-katex>X, Y, Z </span> be the centers of
-        these triangles, respectively. Then Triangle <span v-katex>\triangle XYZ</span> is an
+        these triangles, respectively. Then triangle <span v-katex>\triangle XYZ</span> is an
         equilateral triangle.
       </p>
       <p>

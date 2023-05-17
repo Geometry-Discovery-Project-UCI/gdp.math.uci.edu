@@ -96,6 +96,18 @@ export const TINGHAI_HE: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const ZHUOYI_HE: Contributor = {
+  name: "Zhuoyi He",
+  email: "zhuoyih@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
+export const HANSON_HU: Contributor = {
+  name: "Hanson Hu",
+  email: "songhanh@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const VINNIE_HSIA: Contributor = {
   name: "Vinnie Hsia",
   email: "hsiat1@uci.edu",
@@ -105,6 +117,12 @@ export const VINNIE_HSIA: Contributor = {
 export const ECSON_HSU: Contributor = {
   name: "Ecson Hsu",
   email: "ecsonh@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
+export const YUXIAO_HUANG: Contributor = {
+  name: "Yuxiao Huang",
+  email: "yuxiaoh2@uci.edu",
   institute: Institute.UCIrvine,
 };
 
@@ -271,8 +289,11 @@ export const contributors: Contributor[] = [
   JIAMING_FENG,
   BIN_GUO,
   XINXI_GUO,
+  ZHUOYI_HE,
   VINNIE_HSIA,
   ECSON_HSU,
+  HANSON_HU,
+  YUXIAO_HUANG,
   JIANLIN_LI,
   TONGTONG_LI,
   YIXUAN_LI,
@@ -402,7 +423,9 @@ export const topics: Topic[] = [
     essayContributors: [
       ZHIQIN_LU,
     ],
-    captionContributors: [],
+    captionContributors: [
+      ZHUOYI_HE,
+    ],
   },
   {
     name: "Simson Line",
@@ -629,7 +652,7 @@ export const topics: Topic[] = [
     index: 27,
     snapshot: "images/snapshots/topic27.png",
     essay: "pdfs/topic27.pdf",
-    animationContributors: [],
+    animationContributors: [TUNGHSUAN_LIN],
     essayContributors: [SATYAKI_SARKAR],
   },
   {
@@ -637,7 +660,7 @@ export const topics: Topic[] = [
     index: 28,
     snapshot: "images/snapshots/topic28.png",
     essay: "pdfs/topic28.pdf",
-    animationContributors: [],
+    animationContributors: [TUNGHSUAN_LIN],
     essayContributors: [WENJING_LIN],
   },
   {
