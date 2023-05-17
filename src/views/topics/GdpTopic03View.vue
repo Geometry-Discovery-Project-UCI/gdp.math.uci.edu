@@ -1,7 +1,7 @@
 <template>
   <TopicMeta :topic="topic" />
 
-  <a-tabs v-model:activeKey="activeKey" @change="handleTabChange">
+  <a-tabs v-model:activeKey="activeKey" @change="handleTabChange" style="width: 500px">
     <a-tab-pane key="1" tab="Centroid">
       <div id="centroid-wrapper">
         <canvas id="centroid-canvas" width="500" height="500"></canvas></div
