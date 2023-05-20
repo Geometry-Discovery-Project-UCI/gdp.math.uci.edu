@@ -126,6 +126,12 @@ export const YUXIAO_HUANG: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const HONGYI_KE: Contributor = {
+  name: "Hongyi Ke",
+  email: "hongyik@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const JIANLIN_LI: Contributor = {
   name: "Jianlin Li",
   email: "jianlil2@uci.edu",
@@ -141,6 +147,12 @@ export const TONGTONG_LI: Contributor = {
 export const YIXUAN_LI: Contributor = {
   name: "Yixuan Li",
   email: "yixual44@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
+export const JIE_LIN: Contributor = {
+  name: "Jie Lin",
+  email: "jlin47@uci.edu",
   institute: Institute.UCIrvine,
 };
 
@@ -257,6 +269,11 @@ export const ZEJIN_XU: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const LU_YANG: Contributor = {
+  name: "Lu Yang",
+  email: "lyang44@uci.edu",
+};
+
 export const FELIX_YU: Contributor = {
   name: "Felix Yu",
   email: "felixyu2627@gmail.com",
@@ -294,9 +311,11 @@ export const contributors: Contributor[] = [
   ECSON_HSU,
   HANSON_HU,
   YUXIAO_HUANG,
+  HONGYI_KE,
   JIANLIN_LI,
   TONGTONG_LI,
   YIXUAN_LI,
+  JIE_LIN,
   TUNGHSUAN_LIN,
   WENJING_LIN,
   XIANFU_LIU,
@@ -314,6 +333,7 @@ export const contributors: Contributor[] = [
   NATASHA_XIAO,
   CHEN_XU,
   ZEJIN_XU,
+  LU_YANG,
   FELIX_YU,
   MELISSA_YU,
   KIRA_ZHANG
@@ -551,12 +571,12 @@ export const topics: Topic[] = [
   },
 
   {
-    name: "Complete Quadrangle and Complete Qudrilateral",
+    name: "Complete Quadrangle and  Qudrilateral",
     index: 15,
     snapshot: "images/snapshots/topic15.png",
     essay: "pdfs/topic15.pdf",
     animationContributors: [],
-    essayContributors: [],
+    essayContributors: [HONGYI_KE, JIE_LIN, LU_YANG],
     captionContributors: [],
   },
   {
