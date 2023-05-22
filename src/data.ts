@@ -251,6 +251,12 @@ export const VERONICA_WANG: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const ZHIFENG_WANG: Contributor = {
+  name: "Zhifeng Wang",
+  email: "zhifenw2@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const NATASHA_XIAO: Contributor = {
   name: "Natasha Xiao",
   email: "jxiao12@uci.edu",
@@ -330,6 +336,7 @@ export const contributors: Contributor[] = [
   CHUXIANGBO_WANG,
   STEPHANIE_WANG,
   VERONICA_WANG,
+  ZHIFENG_WANG,
   NATASHA_XIAO,
   CHEN_XU,
   ZEJIN_XU,
@@ -601,7 +608,7 @@ export const topics: Topic[] = [
     snapshot: "images/snapshots/topic18.png",
     essay: "pdfs/topic18.pdf",
     animationContributors: [ZEJIN_XU],
-    essayContributors: [],
+    essayContributors: [ZHIFENG_WANG],
   },
   {
     name: "Franago Triangle",
