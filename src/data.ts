@@ -150,6 +150,18 @@ export const YIXUAN_LI: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const XUANRU_LI: Contributor = {
+  name: "Xuanru Li",
+  email: "xuanrul@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
+export const YUKANG_LI: Contributor = {
+  name: "Yukang Li",
+  email: "yukangl2@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const JIE_LIN: Contributor = {
   name: "Jie Lin",
   email: "jlin47@uci.edu",
@@ -233,6 +245,13 @@ export const SIYU_SUN: Contributor = {
   email: "siyus6@uci.edu",
   institute: Institute.UCIrvine,
 };
+
+export const LINGLIN_TIAN: Contributor = {
+  name: "Linglin Tian",
+  email: "linglit@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const CHUXIANGBO_WANG: Contributor = {
   name: "Chuxiangbo Wang",
   email: "chuxianw@uci.edu",
@@ -321,6 +340,8 @@ export const contributors: Contributor[] = [
   JIANLIN_LI,
   TONGTONG_LI,
   YIXUAN_LI,
+  YUKANG_LI,
+  XUANRU_LI,
   JIE_LIN,
   TUNGHSUAN_LIN,
   WENJING_LIN,
@@ -333,6 +354,7 @@ export const contributors: Contributor[] = [
   SATYAKI_SARKAR,
   MINGYU_SHI,
   SIYU_SUN,
+  LINGLIN_TIAN,
   CHUXIANGBO_WANG,
   STEPHANIE_WANG,
   VERONICA_WANG,

@@ -45,7 +45,12 @@ const presentations = [
         path: "2023/sq",
         contributors: [
            "HANSON_HU",
-           "YUXIAO_HUANG"
+           "YUXIAO_HUANG",
+           "YUKANG_LI",
+           "XUANRU_LI",
+           "YUFEI_REN",
+           "LINGLIN_TIAN",
+           "LU_YANG"
         ]
     }
 ];
