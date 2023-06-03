@@ -240,6 +240,12 @@ export const MINGYU_SHI: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const KE_SU: Contributor = {
+  name: "Ke Su",
+  email: "kes5@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const SIYU_SUN: Contributor = {
   name: "Siyu Sun",
   email: "siyus6@uci.edu",
@@ -285,6 +291,12 @@ export const NATASHA_XIAO: Contributor = {
 export const CHEN_XU: Contributor = {
   name: "Chen Xu",
   email: "cxu16@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
+export const NINGYUE_XU: Contributor = {
+  name: "Ningyue Xu",
+  email: "ningyuex@uci.edu",
   institute: Institute.UCIrvine,
 };
 
@@ -353,6 +365,7 @@ export const contributors: Contributor[] = [
   YUFEI_REN,
   SATYAKI_SARKAR,
   MINGYU_SHI,
+  KE_SU,
   SIYU_SUN,
   LINGLIN_TIAN,
   CHUXIANGBO_WANG,
@@ -361,6 +374,7 @@ export const contributors: Contributor[] = [
   ZHIFENG_WANG,
   NATASHA_XIAO,
   CHEN_XU,
+  NINGYUE_XU,
   ZEJIN_XU,
   LU_YANG,
   FELIX_YU,
@@ -815,6 +829,14 @@ export const indexTopicMap: Map<number, Topic> = new Map(
 );
 
 export const otherImages: { title: string; image: string }[] = [
+  {
+    title: "2023 Spring GDP Group",
+    image: "images/group/2023-Spring-199C-1.jpg",
+  },
+  {
+    title: "2023 Spring GDP Group",
+    image: "images/group/2023-Spring-199C-2.jpg",
+  },
   {
     title: "2023 Winter GDP Group",
     image: "images/group/2023-Winter-199B-1.jpg",
