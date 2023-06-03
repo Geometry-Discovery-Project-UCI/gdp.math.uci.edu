@@ -49,8 +49,10 @@ const presentations = [
            "YUKANG_LI",
            "XUANRU_LI",
            "YUFEI_REN",
+           "KE_SU",
            "LINGLIN_TIAN",
-           "LU_YANG"
+           "NINGYUE_XU",
+            "LU_YANG",
         ]
     }
 ];
