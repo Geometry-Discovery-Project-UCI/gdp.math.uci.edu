@@ -5,7 +5,13 @@
     id="tri-app_fermat-point"
     width="500"
     height="500"
-    style="border: 2px solid black; background-color: floralwhite"
+    style="border: 2px solid black; background-color: floralwhite;
+    -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;"
   >
     <polygon id="tri_fermat-point" stroke="black" stroke-width="2.5px" fill="transparent"></polygon>
     <text id="letterA_fermat-point" font-size="25px">A</text>
