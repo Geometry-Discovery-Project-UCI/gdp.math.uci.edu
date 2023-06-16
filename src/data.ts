@@ -120,6 +120,12 @@ export const ECSON_HSU: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const YIDING_HUANG: Contributor = {
+  name: "Yiding Huang",
+  email: "yidingh@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const YUXIAO_HUANG: Contributor = {
   name: "Yuxiao Huang",
   email: "yuxiaoh2@uci.edu",
@@ -234,6 +240,12 @@ export const SATYAKI_SARKAR: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const JIAHUI_SHENG: Contributor = {
+  name: "Jiahui Sheng",
+  email: "jiahuis4@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const MINGYU_SHI: Contributor = {
   name: "Mingyu Shi",
   email: "mingyus3@uci.edu",
@@ -243,6 +255,12 @@ export const MINGYU_SHI: Contributor = {
 export const KE_SU: Contributor = {
   name: "Ke Su",
   email: "kes5@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
+export const JIANGYAO_SUN: Contributor = {
+  name: "Jiangyao Sun",
+  email: "jiangyas@uci.edu",
   institute: Institute.UCIrvine,
 };
 
@@ -273,6 +291,18 @@ export const STEPHANIE_WANG: Contributor = {
 export const VERONICA_WANG: Contributor = {
   name: "Veronica Wang",
   email: "xinyw27@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
+export const JINGXI_WANG: Contributor = {
+  name: "Jingxi Wang",
+  email: "jingxw12@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
+export const WILLA_WANG: Contributor = {
+  name: "Willa Wang",
+  email: "wangs19@uci.edu",
   institute: Institute.UCIrvine,
 };
 
@@ -311,6 +341,11 @@ export const LU_YANG: Contributor = {
   email: "lyang44@uci.edu",
 };
 
+export const SHENGKAI_YANG: Contributor = {
+  name: "Shengkai Yang",
+  email: "shengky1@uci.edu",
+};
+
 export const FELIX_YU: Contributor = {
   name: "Felix Yu",
   email: "felixyu2627@gmail.com",
@@ -347,6 +382,7 @@ export const contributors: Contributor[] = [
   VINNIE_HSIA,
   ECSON_HSU,
   HANSON_HU,
+  YIDING_HUANG,
   YUXIAO_HUANG,
   HONGYI_KE,
   JIANLIN_LI,
@@ -364,19 +400,24 @@ export const contributors: Contributor[] = [
   JIMENA_ISABEL_RAZO,
   YUFEI_REN,
   SATYAKI_SARKAR,
+  JIAHUI_SHENG,
   MINGYU_SHI,
   KE_SU,
+  JIANGYAO_SUN,
   SIYU_SUN,
   LINGLIN_TIAN,
   CHUXIANGBO_WANG,
+  JINGXI_WANG,
   STEPHANIE_WANG,
   VERONICA_WANG,
+  WILLA_WANG,
   ZHIFENG_WANG,
   NATASHA_XIAO,
   CHEN_XU,
   NINGYUE_XU,
   ZEJIN_XU,
   LU_YANG,
+  SHENGKAI_YANG,
   FELIX_YU,
   MELISSA_YU,
   KIRA_ZHANG

@@ -45,14 +45,20 @@ const presentations = [
         path: "2023/sq",
         contributors: [
            "HANSON_HU",
+           "YIDING_HUANG",
            "YUXIAO_HUANG",
            "YUKANG_LI",
            "XUANRU_LI",
            "YUFEI_REN",
+           "JIAHUI_SHENG",
            "KE_SU",
+           "JIANGYAO SUN",
            "LINGLIN_TIAN",
+           "JINGXI_WANG",
+           "WILLA_WANG",
            "NINGYUE_XU",
             "LU_YANG",
+            "SHENGKAI_YANG"
         ]
     }
 ];
