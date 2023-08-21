@@ -379,7 +379,7 @@ export const contributors: Contributor[] = [
   LU_YANG,
   FELIX_YU,
   MELISSA_YU,
-  KIRA_ZHANG
+  KIRA_ZHANG,
 ].sort((a, b) => {
   const aLastName = a.name.split(" ").pop() as string;
   const bLastName = b.name.split(" ").pop() as string;
@@ -431,8 +431,8 @@ export const otherLinks: { name: string; uri: string; author?: string }[] = [
   },
   {
     name: "Presentations",
-    uri: "#/presentations"
-  }
+    uri: "#/presentations",
+  },
 ];
 
 export const topics: Topic[] = [
@@ -441,30 +441,17 @@ export const topics: Topic[] = [
     index: 1,
     snapshot: "images/snapshots/topic01.png",
     essay: "pdfs/topic01.pdf",
-    animationContributors: [
-      MELISSA_YU,
-    ],
-    essayContributors: [
-      ZHIQIN_LU,
-    ],
-    captionContributors: [
-      TINGHAI_HE,
-    ],
+    animationContributors: [MELISSA_YU],
+    essayContributors: [ZHIQIN_LU],
+    captionContributors: [TINGHAI_HE],
   },
   {
     name: "Ceva's and Menelaus' Theorems",
     index: 2,
     snapshot: "images/snapshots/topic02.png",
     essay: "pdfs/topic02.pdf",
-    animationContributors: [
-      MAI_NGUYEN,
-      JIANLIN_LI,
-      TUNGHSUAN_LIN,
-    ],
-    essayContributors: [
-      ZHIQIN_LU,
-      XIANFU_LIU,
-    ],
+    animationContributors: [MAI_NGUYEN, JIANLIN_LI, TUNGHSUAN_LIN],
+    essayContributors: [ZHIQIN_LU, XIANFU_LIU],
     captionContributors: [SHUCHENG_FEI],
   },
   {
@@ -480,29 +467,17 @@ export const topics: Topic[] = [
     index: 4,
     snapshot: "images/snapshots/topic04.png",
     essay: "pdfs/topic04.pdf",
-    animationContributors: [
-      MELISSA_YU
-    ],
-    essayContributors: [
-      ZHIQIN_LU,
-    ],
-    captionContributors: [
-      ZHUOYI_HE,
-    ],
+    animationContributors: [MELISSA_YU],
+    essayContributors: [ZHIQIN_LU],
+    captionContributors: [ZHUOYI_HE],
   },
   {
     name: "Simson Line",
     index: 5,
     snapshot: "images/snapshots/topic05.png",
     essay: "pdfs/topic05.pdf",
-    animationContributors: [
-      MELISSA_YU,
-      YIXUAN_LI,
-    ],
-    essayContributors: [
-      ZHIQIN_LU,
-      SHIYI_LYU,
-    ],
+    animationContributors: [MELISSA_YU, YIXUAN_LI],
+    essayContributors: [ZHIQIN_LU, SHIYI_LYU],
     captionContributors: [],
   },
   {
@@ -511,10 +486,7 @@ export const topics: Topic[] = [
     snapshot: "images/snapshots/topic06.png",
     essay: "pdfs/topic06.pdf",
     animationContributors: [ZEJIN_XU],
-    essayContributors: [
-      ZHIQIN_LU,
-      XIANFU_LIU,
-    ],
+    essayContributors: [ZHIQIN_LU, XIANFU_LIU],
     captionContributors: [CHEN_XU],
   },
   {
@@ -522,13 +494,8 @@ export const topics: Topic[] = [
     index: 7,
     snapshot: "images/snapshots/topic07.png",
     essay: "pdfs/topic07.pdf",
-    animationContributors: [
-      MELISSA_YU,
-    ],
-    essayContributors: [
-      ZHIQIN_LU,
-      SHIYI_LYU,
-    ],
+    animationContributors: [MELISSA_YU],
+    essayContributors: [ZHIQIN_LU, SHIYI_LYU],
     captionContributors: [KIRA_ZHANG],
   },
   {
@@ -546,12 +513,8 @@ export const topics: Topic[] = [
     index: 9,
     snapshot: "images/snapshots/topic09.png",
     essay: "pdfs/topic09.pdf",
-    animationContributors: [
-      JIANLIN_LI,
-    ],
-    essayContributors: [
-      ZHIQIN_LU,
-    ],
+    animationContributors: [JIANLIN_LI],
+    essayContributors: [ZHIQIN_LU],
     captionContributors: [SHALLY_FAN],
   },
   {
@@ -560,11 +523,7 @@ export const topics: Topic[] = [
     snapshot: "images/snapshots/topic10.png",
     essay: "pdfs/topic10.pdf",
     animationContributors: [TUNGHSUAN_LIN],
-    essayContributors: [
-      ZHIQIN_LU,
-      FELIX_YU,
-      XIANFU_LIU,
-    ],
+    essayContributors: [ZHIQIN_LU, FELIX_YU, XIANFU_LIU],
     captionContributors: [],
   },
   {
@@ -573,9 +532,7 @@ export const topics: Topic[] = [
     snapshot: "images/snapshots/topic11.png",
     essay: "pdfs/topic11.pdf",
     animationContributors: [],
-    essayContributors: [
-      ZHIQIN_LU,
-    ],
+    essayContributors: [ZHIQIN_LU],
     captionContributors: [],
   },
   {
@@ -584,9 +541,7 @@ export const topics: Topic[] = [
     snapshot: "images/snapshots/topic12.png",
     essay: "pdfs/topic12.pdf",
     animationContributors: [VINNIE_HSIA],
-    essayContributors: [
-      CHUXIANGBO_WANG,
-    ],
+    essayContributors: [CHUXIANGBO_WANG],
     captionContributors: [],
   },
   {
@@ -594,13 +549,8 @@ export const topics: Topic[] = [
     index: 13,
     snapshot: "images/snapshots/topic13.png",
     essay: "pdfs/topic13.pdf",
-    animationContributors: [
-      MAI_NGUYEN,
-    ],
-    essayContributors: [
-      RUSSELL_MARASIGAN,
-      MAI_NGUYEN,
-    ],
+    animationContributors: [MAI_NGUYEN],
+    essayContributors: [RUSSELL_MARASIGAN, MAI_NGUYEN],
     captionContributors: [],
   },
   {
@@ -614,11 +564,11 @@ export const topics: Topic[] = [
   },
 
   {
-    name: "Complete Quadrangle and  Qudrilateral",
+    name: "Complete Quadrangle and Qudrilateral",
     index: 15,
     snapshot: "images/snapshots/topic15.png",
     essay: "pdfs/topic15.pdf",
-    animationContributors: [],
+    animationContributors: [JIANLIN_LI],
     essayContributors: [HONGYI_KE, JIE_LIN, LU_YANG],
     captionContributors: [],
   },
