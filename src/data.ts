@@ -3,6 +3,7 @@ import { Contributor, Topic } from "@/types";
 export enum Institute {
   UCIrvine = "UC Irvine",
   UCSanDiego = "UC San Diego",
+  UCLA = "UCLA",
 }
 
 // TODO(Kiyo5hi): Use enum for contributors
@@ -46,6 +47,12 @@ export const CHRISTOPHER_DAVIS: Contributor = {
   name: "Christopher Davis",
   email: "daviscj@uci.edu",
   institute: Institute.UCIrvine,
+};
+
+export const KEN_DENG: Contributor = {
+  name: "Ken Deng",
+  email: "dengken1@g.ucla.edu",
+  institute: Institute.UCLA,
 };
 
 export const RUOYING_DENG: Contributor = {
@@ -371,6 +378,7 @@ export const contributors: Contributor[] = [
   ZHIBO_CHENG,
   ISHAN_DARJI,
   CHRISTOPHER_DAVIS,
+  KEN_DENG,
   RUOYING_DENG,
   JOHNSON_DINH,
   SHALLY_FAN,
@@ -545,7 +553,7 @@ export const topics: Topic[] = [
     snapshot: "images/snapshots/topic08.png",
     essay: "pdfs/topic08.pdf",
     animationContributors: [YIXUAN_LI],
-    essayContributors: [],
+    essayContributors: [KEN_DENG],
     captionContributors: [],
   },
 
