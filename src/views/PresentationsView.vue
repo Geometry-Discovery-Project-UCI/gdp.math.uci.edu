@@ -52,7 +52,7 @@ const presentations = [
            "YUFEI_REN",
            "JIAHUI_SHENG",
            "KE_SU",
-           "JIANGYAO SUN",
+           "JIANGYAO_SUN",
            "LINGLIN_TIAN",
            "JINGXI_WANG",
            "WILLA_WANG",
