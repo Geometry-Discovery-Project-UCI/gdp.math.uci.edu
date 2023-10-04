@@ -386,6 +386,7 @@ export const contributors: Contributor[] = [
   JIAMING_FENG,
   BIN_GUO,
   XINXI_GUO,
+  TINGHAI_HE,
   ZHUOYI_HE,
   VINNIE_HSIA,
   ECSON_HSU,
