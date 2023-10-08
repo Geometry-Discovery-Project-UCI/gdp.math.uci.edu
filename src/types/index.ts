@@ -23,6 +23,7 @@ export interface Topic {
   essay?: string
   animationContributors: Contributor[]
   essayContributors: Contributor[]
+  captionContributors?: Contributor[]
 }
 
 export interface TopicRouteProps {

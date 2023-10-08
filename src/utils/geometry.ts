@@ -1,6 +1,7 @@
 import { fabric } from "fabric";
 import { Coord } from "@/types";
 import { Intersection } from "fabric/fabric-impl";
+import { singleCascaderProps } from "ant-design-vue/lib/vc-cascader/Cascader";
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
@@ -26,7 +27,6 @@ export function getPedalPoint(from: Coord, toA: Coord, toB: Coord): Coord {
       x: 0,
       y: 0,
     };
-
   }
 }
 
@@ -571,5 +571,138 @@ export function calculateInterPointsWithBoundary(pt1: fabric.Point, pt2: fabric.
     }
   }
   return [new fabric.Point(interX1, interY1), new fabric.Point(interX2, interY2)];
+}
+
+export function sin(degrees: number) {
+  return Math.sin(degrees * Math.PI/180);
+}
+
+export function getCircumcircleCenter(a: fabric.Point, b: fabric.Point, c: fabric.Point) {
+  // three points -> center of circle
+  const x1 = a.x, x2 = b.x, x3 = c.x, y1 = a.y, y2 = b.y, y3 = c.y;
+  const x12 = x1 - x2;
+  const x13 = x1 - x3;
+
+  const y12 = y1 - y2;
+  const y13 = y1 - y3;
+
+  const y31 = y3 - y1;
+  const y21 = y2 - y1;
+
+  const x31 = x3 - x1;
+  const x21 = x2 - x1;
+  const sx13 = x1 * x1 - x3 * x3;
+  const sy13 = y1 * y1 - y3 * y3;
+  const sx21 = x2 * x2 - x1 * x1;
+  const sy21 = y2 * y2 - y1 * y1;
+  const f = ((sx13) * (x12)
+             + (sy13) * (x12)
+             + (sx21) * (x13)
+             + (sy21) * (x13))
+            / (2 * ((y31) * (x12) - (y21) * (x13)));
+  const g = ((sx13) * (y12)
+            + (sy13) * (y12)
+            + (sx21) * (y13)
+            + (sy21) * (y13))
+          / (2 * ((x31) * (y12) - (x21) * (y13)));
+  const cc = -x1 * x1 - y1 * y1 - 2 * g * x1 - 2 * f * y1;
+
+  const h = -g;
+  const k = -f;
+  const sqrOfr = h * h + k * k - cc;
+
+  const r = Math.sqrt(sqrOfr);
+  return [h, k, r];
+}
+
+export function listToFPoint(p: number[]) {
+  return new fabric.Point(p[0], p[1]);
+}
+
+export function listToCoord(p: number[]) {
+  return {
+    x: p[0],
+    y: p[1],
+  };
+}
+
+export function circleLineIntersection(r: number, h: number, k: number, m: number, n: number) {
+  const a = 1 + m * m;
+  const b = - h * 2 + (m * (n - k)) * 2;
+  const c = h * h + (n - k) * (n - k) - r * r;
+
+  const d = b * b - 4 * a * c;
+  console.log("DD:: ", m, a, b, c);
+  if (d >= 0) {
+    const sol1 = (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+    const sol2 = (-b - Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+    const intersections = [[sol1, sol1 * m + n], [sol2, sol2 * m + n]];
+    if (d === 0) {
+      return [intersections[0]];
+    }
+    return intersections;
+  }
+  return [];
+}
+
+export function getFractionLine(len: number) {
+  let res = "";
+  for (let i = 0; i < len; i++) {
+    res += "_";
+  }
+
+  return res + "  ";
+}
+
+export function getOperatorText(len: number, op: string, gaps: number) {
+  let res = "";
+  let gap = "";
+  for (let i = 0; i < gaps; i++) {
+    gap += " ";
+  }
+
+  for (let i = 0; i < len; i++) {
+    res += gap + op + " ";
+  }
+
+  return res + "  ";
+}
+
+/*
+canvas: the canvas that want to add on it
+n: number of fractions
+len: length of the fraction line
+coords: start position
+*/
+export function drawFractionLine(canvas: fabric.Canvas, n: number, len: number, coords: Coord) {
+  let fractinLine = "";
+  for (let i = 0; i < n; i++) {
+    fractinLine += getFractionLine(len);
+  }
+
+  canvas.add(
+    new fabric.Text(fractinLine, {
+      left: coords.x,
+      top: coords.y,
+      strokeWidth: 1,
+      stroke: "black",
+      fill: "black",
+      fontSize: 20,
+      evented: false,
+    })
+  );
+
+  const operatorText = getOperatorText(n - 1, ".", len * 2);
+  canvas.add(
+    new fabric.Text(operatorText, {
+      left: coords.x + 2,
+      top: coords.y + 5,
+      strokeWidth: 1,
+      stroke: "black",
+      fill: "black",
+      fontSize: 20,
+      evented: false,
+    })
+  );
 }
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */

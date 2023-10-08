@@ -1,9 +1,18 @@
 <template>
   <TopicMeta :topic="topic" />
-  <ATypographyParagraph>
-  </ATypographyParagraph>
-  <svg id="tri-app_fermat-point" width="500" height="500"
-    style="border: 2px solid black; background-color: floralwhite">
+  <ATypographyParagraph> </ATypographyParagraph>
+  <svg
+    id="tri-app_fermat-point"
+    width="500"
+    height="500"
+    style="border: 2px solid black; background-color: floralwhite;
+    -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;"
+  >
     <polygon id="tri_fermat-point" stroke="black" stroke-width="2.5px" fill="transparent"></polygon>
     <text id="letterA_fermat-point" font-size="25px">A</text>
     <text id="letterB_fermat-point" font-size="25px">B</text>
@@ -19,11 +28,11 @@
     <circle id="circle_fermat-point" r="2px" fill="purple"></circle>
   </svg>
   <p id="t1_fp">m1: 0</p>
-  <input type="range" min="0" max="100" class="slider" id="m1_fp">
+  <input type="range" min="0" max="100" class="slider" id="m1_fp" />
   <p id="t2_fp">m2: 0</p>
-  <input type="range" min="0" max="100" class="slider" id="m2_fp">
+  <input type="range" min="0" max="100" class="slider" id="m2_fp" />
   <p id="t3_fp">m3: 0</p>
-  <input type="range" min="0" max="100" class="slider" id="m3_fp">
+  <input type="range" min="0" max="100" class="slider" id="m3_fp" />
 </template>
 
 <script lang="ts">
@@ -33,9 +42,13 @@ import { Topic } from "@/types";
 import {
   drawLine,
   findDistance,
-  aboveBelow, setp,
+  aboveBelow,
+  setp,
   lerpp,
-  makeString, findSlope, getPedalPoint, getEquationFromPoint
+  makeString,
+  findSlope,
+  getPedalPoint,
+  getEquationFromPoint,
 } from "@/utils/geometry";
 import { Vector } from "@/utils/vector";
 const topic = indexTopicMap.get(14) as Topic;
@@ -79,20 +92,14 @@ export default defineComponent({
     letterB?.setAttribute("y", pB[1] + 5 + "");
     letterC?.setAttribute("x", pC[0] - 5 + "");
     letterC?.setAttribute("y", pC[1] - 5 + "");
-    tri?.setAttributeNS(
-      null,
-      "points",
-      makeString([points[0], points[1], points[2]])
-    );
-    let m1v = parseInt(m1.value) / 100, m2v = parseInt(m2.value) / 100, m3v = parseInt(m3.value) / 100;
+    tri?.setAttributeNS(null, "points", makeString([points[0], points[1], points[2]]));
+    let m1v = parseInt(m1.value) / 100,
+      m2v = parseInt(m2.value) / 100,
+      m3v = parseInt(m3.value) / 100;
     m1t.innerHTML = "m1: " + m1v;
 
     const fermat_point = () => {
-      tri?.setAttributeNS(
-        null,
-        "points",
-        makeString([points[0], points[1], points[2]])
-      );
+      tri?.setAttributeNS(null, "points", makeString([points[0], points[1], points[2]]));
       letterA?.setAttribute("x", pA[0] + "");
       letterA?.setAttribute("y", pA[1] - 10 + "");
       letterB?.setAttribute("x", pB[0] - 20 + "");
@@ -105,7 +112,9 @@ export default defineComponent({
       if (m1v >= m2v + m3v) {
         cc.setAttribute("cx", pA[0] + "");
         cc.setAttribute("cy", pA[1] + "");
-        setp(letterP, pA);
+        letterP?.setAttribute("x", pA[0] - 15 + "");
+        letterP?.setAttribute("y", pA[1] - 8 + "");
+        //setp(letterP, pA);
         drawLine(pA, pA, line1);
         drawLine(pA, pB, line2);
         drawLine(pA, pC, line3);
@@ -113,7 +122,9 @@ export default defineComponent({
       } else if (m2v >= m3v + m1v) {
         cc.setAttribute("cx", pB[0] + "");
         cc.setAttribute("cy", pB[1] + "");
-        setp(letterP, pB);
+        letterP?.setAttribute("x", pB[0] - 20 + "");
+        letterP?.setAttribute("y", pB[1] - 10 + "");
+        //setp(letterP, pB);
         drawLine(pB, pA, line1);
         drawLine(pB, pB, line2);
         drawLine(pB, pC, line3);
@@ -142,7 +153,9 @@ export default defineComponent({
       if (alpha <= thetaA) {
         cc.setAttribute("cx", pA[0] + "");
         cc.setAttribute("cy", pA[1] + "");
-        setp(letterP, pA);
+        letterP?.setAttribute("x", pA[0] - 15 + "");
+        letterP?.setAttribute("y", pA[1] - 8 + "");
+        //setp(letterP, pA);
         drawLine(pA, pA, line1);
         drawLine(pA, pB, line2);
         drawLine(pA, pC, line3);
@@ -150,7 +163,9 @@ export default defineComponent({
       } else if (beta <= thetaB) {
         cc.setAttribute("cx", pB[0] + "");
         cc.setAttribute("cy", pB[1] + "");
-        setp(letterP, pB);
+        letterP?.setAttribute("x", pB[0] - 20 + "");
+        letterP?.setAttribute("y", pB[1] - 10 + "");
+        //setp(letterP, pB);
         drawLine(pB, pA, line1);
         drawLine(pB, pB, line2);
         drawLine(pB, pC, line3);
@@ -180,9 +195,13 @@ export default defineComponent({
       }
       const b = getEquationFromPoint(pB, pC);
       if (!aboveBelow(pX, b[0], b[1])) {
-        pX = [(Math.cos(thetaD) * aaa) + pD[0], (Math.sin(thetaD) * aaa) + pD[1]];
+        pX = [Math.cos(thetaD) * aaa + pD[0], Math.sin(thetaD) * aaa + pD[1]];
       }
-      const qqqqqq = getPedalPoint(new DOMPoint(pC[0], pC[1]), new DOMPoint(pX[0], pX[1]), new DOMPoint(pY[0], pY[1]));
+      const qqqqqq = getPedalPoint(
+        new DOMPoint(pC[0], pC[1]),
+        new DOMPoint(pX[0], pX[1]),
+        new DOMPoint(pY[0], pY[1])
+      );
       const pQ = [qqqqqq.x, qqqqqq.y];
       letterX.setAttribute("x", pX[0] + "");
       letterX.setAttribute("y", pX[1] + "");
@@ -257,6 +276,6 @@ export default defineComponent({
         }
       }
     });
-  }
+  },
 });
 </script>

@@ -38,3 +38,9 @@ pnpm run build
 ```
 pnpm run lint
 ```
+
+### Deploy
+
+```
+sudo bash deploy.sh gdp.math.uci.edu
+```
