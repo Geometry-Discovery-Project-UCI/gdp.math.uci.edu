@@ -55,6 +55,16 @@ function coordToPoint(cd: Coord): fabric.Point {
   return new fabric.Point(cd.x, cd.y);
 }
 
+function createLabel(text: string, fontSize?: number, color?: string) {
+  return new fabric.Text(text, {
+    hasControls: false,
+    hasBorders: false,
+    evented: false,
+    fontSize: fontSize || 22,
+    fill: color || "black",
+  });
+}
+
 export default defineComponent({
   setup() {
     return { topic };
@@ -65,9 +75,9 @@ export default defineComponent({
       backgroundColor: "floralwhite",
     });
 
-    const vertexA = createCircle(293, 297).set({ fill: "black", padding: 10, evented: true });
-    const vertexB = createCircle(40, 430).set({ fill: "black", padding: 10, evented: true });
-    const vertexC = createCircle(420, 430).set({ fill: "black", padding: 10, evented: true });
+    const vertexA = createCircle(161, 59).set({ fill: "black", padding: 10, evented: true });
+    const vertexB = createCircle(233, 243).set({ fill: "black", padding: 10, evented: true });
+    const vertexC = createCircle(453, 243).set({ fill: "black", padding: 10, evented: true });
 
     const pointS1 = createCircle().set({ fill: "red", padding: 10 });
     const pointS2 = createCircle().set({ fill: "red", padding: 10 });
@@ -81,6 +91,12 @@ export default defineComponent({
     const lineCS2 = makeLine();
 
     const triangle = createPolygon();
+
+    const aLabel = createLabel("A");
+    const bLabel = createLabel("B");
+    const cLabel = createLabel("C");
+    const sLabel = createLabel("S");
+    const s1Label = createLabel("S'");
 
     function moveVertices() {
       const vertices = [
@@ -125,6 +141,31 @@ export default defineComponent({
       pointS2.set({
         left: isodynamicPoint2.x,
         top: isodynamicPoint2.y,
+      });
+
+      aLabel.set({
+        left: vertices[0].x - 10,
+        top: vertices[0].y - 25,
+      });
+
+      bLabel.set({
+        left: vertices[1].x,
+        top: vertices[1].y,
+      });
+
+      cLabel.set({
+        left: vertices[2].x,
+        top: vertices[2].y,
+      });
+
+      sLabel.set({
+        left: pointS1.left,
+        top: pointS1.top,
+      });
+
+      s1Label.set({
+        left: pointS2.left,
+        top: pointS2.top,
       });
 
       lineAS1.set({
@@ -177,6 +218,10 @@ export default defineComponent({
         stroke: "green",
         strokeDashArray: [5, 5],
       });
+
+      console.log(vertexA);
+      console.log(vertexB);
+      console.log(vertexC);
     }
     moveVertices();
     canvas.on("object:moving", moveVertices);
@@ -184,6 +229,7 @@ export default defineComponent({
     canvas.add(lineAS1, lineBS1, lineCS1, lineAS2, lineBS2, lineCS2);
     canvas.add(vertexA, vertexB, vertexC);
     canvas.add(pointS1, pointS2);
+    canvas.add(aLabel, bLabel, cLabel, s1Label, sLabel);
   },
 });
 </script>
