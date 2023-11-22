@@ -684,7 +684,7 @@ export const topics: Topic[] = [
     snapshot: "images/snapshots/topic23.png",
     essay: "pdfs/topic23.pdf",
     animationContributors: [],
-    essayContributors: [],
+    essayContributors: [HANSON_HU],
   },
   {
     name: "Harmonic Quadrilateral",
