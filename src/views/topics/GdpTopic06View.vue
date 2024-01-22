@@ -126,27 +126,6 @@
       </div>
     </ATabPane>
   </ATabs>
-
-  <ATypographyParagraph>
-    <p>
-      Pascal's Theorem is named after Blaise Pascal, which was formulated by Blaise Pascal in a note
-      written in 1639 when he was only 16 years old.
-    </p>
-    <p>
-      Pascal's Theorem states that if <span v-katex>ABCDEF</span> is an inscribed hexagon of a
-      circle, then the intersections <span v-katex>X, Y, Z</span> of the three pairs of the opposite
-      sides of the hexagon is collinear.
-    </p>
-    <p>
-      Click, hold, and move any of points <span v-katex>A, B, C, D, E, F</span> to observe that
-      points <span v-katex>X, Y, Z</span> are always collinear.
-    </p>
-    <p>
-      Pascal's Theorem can be generalized to the case when a hexagon is inscribed in a conic curve.
-      Since two lines can be regarded as a degenerated conic curve, Pappus' Theorem is a special
-      case of the (generalized) Pascal Theorem.
-    </p>
-  </ATypographyParagraph>
 </template>
 
 <script lang="ts">

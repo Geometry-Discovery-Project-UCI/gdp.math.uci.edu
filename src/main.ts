@@ -22,7 +22,11 @@ createApp(App)
   .use(Antd)
   .directive("katex", (el, binding) => {
     const isDisplay = binding.arg === "display";
-    katex.render(el.innerHTML, el, { displayMode: isDisplay });
+    try {
+      katex.render(el.innerHTML, el, { displayMode: isDisplay });
+    } catch (e) {
+      console.error("KaTeX rendering error:", e);
+    }
   })
   .directive("tikz", (el) => {
     const scripts = el.innerHTML;
@@ -34,3 +38,5 @@ createApp(App)
     el.appendChild(scriptTag);
   })
   .mount("#app");
+
+// 函数用于解码 HTML 实体
