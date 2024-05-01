@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Install commitlint
         run: |
-          npm install -g conventional-changelog-conventionalcommits
-          npm install -g commitlint@latest
+          npm install -g @commitlint/cli @commitlint/config-conventional
 
       - name: Validate PR title with commitlint
         if: github.event_name == 'pull_request'
