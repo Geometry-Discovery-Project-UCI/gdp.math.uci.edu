@@ -8,6 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install Dependencies
-        run: npm install @commitlint/config-conventional
-      - uses: JulienKode/pull-request-name-linter-action@v0.5.0
+      - name: Install commitlint
+        run: |
+          npm install -g conventional-changelog-conventionalcommits
+          npm install -g commitlint@latest
+
+      - name: Validate PR title with commitlint
+        if: github.event_name == 'pull_request'
+        run: echo '${{ github.event.pull_request.title }}' | commitlint --verbose
