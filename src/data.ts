@@ -369,6 +369,12 @@ export const KIRA_ZHANG: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const MAUREEN_CHANG: Contributor = {
+  name: "Maureen Chang",
+  email: "yuhsuc7@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const contributors: Contributor[] = [
   ZHIQIN_LU,
   BRIAN_CABALLERO,
@@ -430,6 +436,7 @@ export const contributors: Contributor[] = [
   FELIX_YU,
   MELISSA_YU,
   KIRA_ZHANG,
+  MAUREEN_CHANG
 ].sort((a, b) => {
   const aLastName = a.name.split(" ").pop() as string;
   const bLastName = b.name.split(" ").pop() as string;
@@ -528,7 +535,7 @@ export const topics: Topic[] = [
     essay: "pdfs/topic05.pdf",
     animationContributors: [MELISSA_YU, YIXUAN_LI],
     essayContributors: [ZHIQIN_LU, SHIYI_LYU],
-    captionContributors: [],
+    captionContributors: [MAUREEN_CHANG],
   },
   {
     name: "Pascal and Brainchon Theorems",
