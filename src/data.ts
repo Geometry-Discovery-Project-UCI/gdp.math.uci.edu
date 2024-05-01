@@ -375,6 +375,12 @@ export const MAUREEN_CHANG: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const MENGMENG_TIAN: Contributor = {
+  name: "Mengmeng Tian",
+  email: "mengment@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const contributors: Contributor[] = [
   ZHIQIN_LU,
   BRIAN_CABALLERO,
@@ -436,7 +442,8 @@ export const contributors: Contributor[] = [
   FELIX_YU,
   MELISSA_YU,
   KIRA_ZHANG,
-  MAUREEN_CHANG
+  MAUREEN_CHANG,
+  MENGMENG_TIAN
 ].sort((a, b) => {
   const aLastName = a.name.split(" ").pop() as string;
   const bLastName = b.name.split(" ").pop() as string;
@@ -562,7 +569,7 @@ export const topics: Topic[] = [
     essay: "pdfs/topic08.pdf",
     animationContributors: [YIXUAN_LI],
     essayContributors: [KEN_DENG],
-    captionContributors: [],
+    captionContributors: [MENGMENG_TIAN],
   },
 
   {
