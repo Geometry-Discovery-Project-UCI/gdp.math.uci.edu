@@ -16,5 +16,4 @@ jobs:
 
       - name: Validate PR title with commitlint
         if: github.event_name == 'pull_request'
-        run: npx commitlint --from ${{ github.event.pull_request.title }} --to ${{ github.event.pull_request.title }} --verbose
-
+        run: echo ${{ github.event.pull_request.title }} | npx commitlint --verbose
