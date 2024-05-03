@@ -12,6 +12,19 @@
     ></a-tab-pane>
     <a-tab-pane key="3" tab="Circumcenter">
       <div id="circumcenter-wrapper">
+        <p>
+          The circumcenter of a triangle is the center of the circumcircle.
+        </p>
+        <p>
+          In the following <span v-katex>\triangle ABC</span>, let <span v-katex>OD, OE,</span>
+          and <span v-katex>OF</span> be the perpendicular bisectors of three sides
+          <span v-katex>BC, CA,</span> and <span v-katex>AB</span> respectively.
+        </p>
+        <p>
+          Click, hold, and move point <span v-katex>A</span>, we shall see that
+          <span v-katex>OD, OE,</span> and <span v-katex>OF</span>
+          are always concurrent at <span v-katex>O</span>.
+        </p>
         <canvas id="circumcenter-canvas1" width="500" height="500"></canvas>
         <ATypographyTitle :level="4"></ATypographyTitle>
         <canvas id="circumcenter-canvas2" width="500" height="500"></canvas>
@@ -19,6 +32,19 @@
     </a-tab-pane>
     <a-tab-pane key="4" tab="Orthocenter">
       <div id="orthocenter-wrapper">
+        <p>
+          The orthocenter of a triangle is the point where all three altitudes of the triangle intersect.
+        </p>
+        <p>
+          In the following <span v-katex>\triangle ABC</span>, let <span v-katex>AD, BE,</span>
+          and <span v-katex>CF</span> be the heights on <span v-katex>BC, CA,</span> and
+          <span v-katex>AB</span> respectively.
+        </p>
+        <p>
+          Click, hold, and move points <span v-katex>A, B,</span> and <span v-katex>C</span>,
+          we shall see that <span v-katex>AD, BE,</span> and <span v-katex>CF</span> are always
+          concurrent at a point <span v-katex>H</span>.
+        </p>
         <canvas id="orthocenter-canvas" width="500" height="500"></canvas></div
     ></a-tab-pane>
   </a-tabs>

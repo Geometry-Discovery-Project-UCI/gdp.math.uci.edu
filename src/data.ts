@@ -375,6 +375,12 @@ export const MAUREEN_CHANG: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const MINGHUA_TSAI: Contributor = {
+  name: "Minghua Tsai",
+  email: "minghut1@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const contributors: Contributor[] = [
   ZHIQIN_LU,
   BRIAN_CABALLERO,
@@ -436,7 +442,8 @@ export const contributors: Contributor[] = [
   FELIX_YU,
   MELISSA_YU,
   KIRA_ZHANG,
-  MAUREEN_CHANG
+  MAUREEN_CHANG,
+  MINGHUA_TSAI
 ].sort((a, b) => {
   const aLastName = a.name.split(" ").pop() as string;
   const bLastName = b.name.split(" ").pop() as string;
@@ -518,6 +525,7 @@ export const topics: Topic[] = [
     essay: "pdfs/topic03.pdf",
     animationContributors: [XINXI_GUO, YI_CHEN],
     essayContributors: [ZHIQIN_LU, SHIYI_LYU],
+    captionContributors: [MINGHUA_TSAI],
   },
   {
     name: "Erdős-Mordell Inequality",
@@ -654,7 +662,7 @@ export const topics: Topic[] = [
     essayContributors: [ZHIFENG_WANG],
   },
   {
-    name: "Franago Triangle",
+    name: "Fagnano Triangle",
     index: 19,
     snapshot: "images/snapshots/topic19.png",
     essay: "pdfs/topic19.pdf",
