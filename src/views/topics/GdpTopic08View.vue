@@ -7,18 +7,19 @@
     <ATypographyTitle :level="4">Gergonne and Nagel Points</ATypographyTitle>
     <ATypographyParagraph class="topics-description">
       <p>
-        In the following picture. <span v-katex>D, E, F</span> are the tangent points of the incircle
+        In the following picture, <span v-katex>D, E, F</span> are the tangent points of the incircle
         to the sides <span v-katex>BC, CA,</span> and <span v-katex>AB,</span> respectively.
         <span v-katex>AD, BE,</span> and <span v-katex>CF</span> are concurrent at the
         Gergonne point <span v-katex>G</span>.
       </p>
       <p>
         Similarly, let <span v-katex>J, K, L</span> be the tangent points of the excircles to the
-        sides <span v-katex>BC, CA, AB</span>. Then <span>AJ, BK, and CL</span> are concurrent at
+        sides <span v-katex>BC, CA, AB</span>. Then <span v-katex>AJ, BK</span>, and <span v-katex>CL</span> are concurrent at
         the Nagel point <span v-katex>N</span>.
       </p>
       <p>
-        Click, hold, and move points <span v-katex>A, B,</span> and <span v-katex>C</span>.
+        Click, hold, and move points <span v-katex>A, B,</span> and <span v-katex>C</span>, we shall see
+        the positions of <span v-katex>G</span> and <span v-katex>N</span> will also change accordingly.
       </p>
     </ATypographyParagraph>
     <canvas id="Gergonne-and-Nagel-Points-canvas" width="500" height="500" />
