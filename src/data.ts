@@ -375,6 +375,12 @@ export const MAUREEN_CHANG: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const MENGMENG_TIAN: Contributor = {
+  name: "Mengmeng Tian",
+  email: "mengment@uci.edu",
+  institute: Institute.UCIrvine,
+}
+
 export const MINGHUA_TSAI: Contributor = {
   name: "Minghua Tsai",
   email: "minghut1@uci.edu",
@@ -443,6 +449,7 @@ export const contributors: Contributor[] = [
   MELISSA_YU,
   KIRA_ZHANG,
   MAUREEN_CHANG,
+  MENGMENG_TIAN,
   MINGHUA_TSAI
 ].sort((a, b) => {
   const aLastName = a.name.split(" ").pop() as string;
@@ -570,7 +577,7 @@ export const topics: Topic[] = [
     essay: "pdfs/topic08.pdf",
     animationContributors: [YIXUAN_LI],
     essayContributors: [KEN_DENG],
-    captionContributors: [],
+    captionContributors: [MENGMENG_TIAN],
   },
 
   {

@@ -5,6 +5,23 @@
   </ATypographyParagraph>
   <div id="Gergonne-and-Nagel-Points-wapper">
     <ATypographyTitle :level="4">Gergonne and Nagel Points</ATypographyTitle>
+    <ATypographyParagraph class="topics-description">
+      <p>
+        In the following picture, <span v-katex>D, E, F</span> are the tangent points of the incircle
+        to the sides <span v-katex>BC, CA,</span> and <span v-katex>AB,</span> respectively.
+        <span v-katex>AD, BE,</span> and <span v-katex>CF</span> are concurrent at the
+        Gergonne point <span v-katex>G</span>.
+      </p>
+      <p>
+        Similarly, let <span v-katex>J, K, L</span> be the tangent points of the excircles to the
+        sides <span v-katex>BC, CA, AB</span>. Then <span v-katex>AJ, BK</span>, and <span v-katex>CL</span> are concurrent at
+        the Nagel point <span v-katex>N</span>.
+      </p>
+      <p>
+        Click, hold, and move points <span v-katex>A, B,</span> and <span v-katex>C</span>, we shall see
+        the positions of <span v-katex>G</span> and <span v-katex>N</span> will also change accordingly.
+      </p>
+    </ATypographyParagraph>
     <canvas id="Gergonne-and-Nagel-Points-canvas" width="500" height="500" />
   </div>
 </template>
@@ -41,9 +58,9 @@ export default defineComponent(
       const lineAD = makeLine();
       const lineBE = makeLine();
       const lineCF = makeLine();
-      const lineAL = makeLine();
-      const lineBJ = makeLine();
-      const lineCK = makeLine();
+      const lineAJ = makeLine();
+      const lineBK = makeLine();
+      const lineCL = makeLine();
       const lineAG = makeLine();
       const lineBG = makeLine();
       const lineCG = makeLine();
@@ -148,19 +165,19 @@ export default defineComponent(
             lineAB.m,
             lineAB.b
           );
-          const pointL = calculateLineIntersectInLinearEquation(
+          const pointJ = calculateLineIntersectInLinearEquation(
             lineAN.m,
             lineAN.b,
             lineBC.m,
             lineBC.b
           );
-          const pointJ = calculateLineIntersectInLinearEquation(
+          const pointK = calculateLineIntersectInLinearEquation(
             lineBN.m,
             lineBN.b,
             lineAC.m,
             lineAC.b
           );
-          const pointK = calculateLineIntersectInLinearEquation(
+          const pointL = calculateLineIntersectInLinearEquation(
             lineCN.m,
             lineCN.b,
             lineAB.m,
@@ -178,17 +195,17 @@ export default defineComponent(
             left: pointF.x - 23,
             top: pointF.y - 15,
           });
-          lLabel.set({
-            left: pointL.x - 5,
-            top: pointL.y + 10,
-          });
           jLabel.set({
-            left: pointJ.x + 10,
-            top: pointJ.y - 20,
+            left: pointJ.x - 5,
+            top: pointJ.y + 10,
           });
           kLabel.set({
-            left: pointK.x - 23,
-            top: pointK.y - 15,
+            left: pointK.x + 10,
+            top: pointK.y - 20,
+          });
+          lLabel.set({
+            left: pointL.x - 23,
+            top: pointL.y - 15,
           });
           gLabel.set({
             left: pointG.x + 5,
@@ -223,25 +240,25 @@ export default defineComponent(
             y2: pointF.y,
             stroke: "blue",
           });
-          lineAL.set({
+          lineAJ.set({
             x1: points[0].x,
             y1: points[0].y,
-            x2: pointL.x,
-            y2: pointL.y,
-            stroke: "green",
-          });
-          lineBJ.set({
-            x1: points[1].x,
-            y1: points[1].y,
             x2: pointJ.x,
             y2: pointJ.y,
             stroke: "green",
           });
-          lineCK.set({
-            x1: points[2].x,
-            y1: points[2].y,
+          lineBK.set({
+            x1: points[1].x,
+            y1: points[1].y,
             x2: pointK.x,
             y2: pointK.y,
+            stroke: "green",
+          });
+          lineCL.set({
+            x1: points[2].x,
+            y1: points[2].y,
+            x2: pointL.x,
+            y2: pointL.y,
             stroke: "green",
           });
           nNode.set({
@@ -289,9 +306,9 @@ export default defineComponent(
       canvas.add(lineAD);
       canvas.add(lineBE);
       canvas.add(lineCF);
-      canvas.add(lineAL);
-      canvas.add(lineBJ);
-      canvas.add(lineCK);
+      canvas.add(lineAJ);
+      canvas.add(lineBK);
+      canvas.add(lineCL);
       canvas.add(lineAG);
       canvas.add(lineBG);
       canvas.add(lineCG);
