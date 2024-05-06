@@ -3,9 +3,9 @@
     <ATypographyParagraph>
 
     </ATypographyParagraph>
-    <div id="franago-triangle-wrapper">
-        <ATypographyTitle :level="4">Animated Franago Triangle</ATypographyTitle>
-        <canvas id="franago-triangle-canvas" width="500" height="500" />
+    <div id="fagnano-triangle-wrapper">
+        <ATypographyTitle :level="4">Animated Fagnano Triangle</ATypographyTitle>
+        <canvas id="fagnano-triangle-canvas" width="500" height="500" />
     </div>
 </template>
 
@@ -24,7 +24,7 @@ export default defineComponent(
             return { topic };
         },
         mounted() {
-            const canvas = new fabric.Canvas("franago-triangle-canvas", {
+            const canvas = new fabric.Canvas("fagnano-triangle-canvas", {
                 selection: false,
             });
 

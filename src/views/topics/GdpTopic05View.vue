@@ -3,6 +3,21 @@
   <ATypographyParagraph> The description of Simson Line </ATypographyParagraph>
   <div id="Simson-Line-wapper">
     <ATypographyTitle :level="4">Simson Line</ATypographyTitle>
+    <ATypographyParagraph class="topics-description">
+      <p>
+        In the following <span v-katex>\triangle ABC</span>. Let
+        <span v-katex>P</span> be a point on the circumcircle. Let
+        <span v-katex>X, Y, Z</span> be the pedal points of <span v-katex>P</span> to
+        <span v-katex>BC,</span> <span v-katex>CA,</span> and
+        <span v-katex>AB</span> respectively. Then,
+        <span v-katex>X, Y, Z</span> are co-linear, such a
+        line is called the Simson Line.
+      </p>
+      <p>
+        Hold point <span v-katex>P</span> and move it along the circle, and one can see that
+        <span v-katex>X, Y, Z</span> are always collinear.
+      </p>
+    </ATypographyParagraph>
     <canvas id="Simson-Line-canvas" width="500" height="500" />
   </div>
 </template>
@@ -12,7 +27,12 @@ import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { IEvent } from "fabric/fabric-impl";
 import { fabric } from "fabric";
-import { makeLine, makeLabel, makeCircle, makeMovablePoint } from "@/utils/canvas";
+import {
+  makeLine,
+  makeLabel,
+  makeCircle,
+  makeMovablePoint,
+} from "@/utils/canvas";
 import {
   getPedalPoint,
   calculateDistanceBetweenTwoPoints,
@@ -74,9 +94,18 @@ export default defineComponent({
       radius: radiusCircle,
       stroke: "black",
     });
-    const pC = [xx + Math.cos(pi / 6) * radiusCircle, yy + Math.sin(pi / 6) * radiusCircle];
-    const pB = [xx - Math.cos(pi / 6) * radiusCircle, yy + Math.sin(pi / 6) * radiusCircle];
-    const pA = [xx - Math.cos(pi / 3) * radiusCircle, yy - Math.sin(pi / 3) * radiusCircle];
+    const pC = [
+      xx + Math.cos(pi / 6) * radiusCircle,
+      yy + Math.sin(pi / 6) * radiusCircle,
+    ];
+    const pB = [
+      xx - Math.cos(pi / 6) * radiusCircle,
+      yy + Math.sin(pi / 6) * radiusCircle,
+    ];
+    const pA = [
+      xx - Math.cos(pi / 3) * radiusCircle,
+      yy - Math.sin(pi / 3) * radiusCircle,
+    ];
     const pointA = new fabric.Point(pA[0], pA[1]);
     const pointB = new fabric.Point(pB[0], pB[1]);
     const pointC = new fabric.Point(pC[0], pC[1]);
@@ -289,7 +318,10 @@ export default defineComponent({
           stroke: "gray",
           strokeDashArray: [2.5, 2.5],
           angle:
-            (Math.acos((disBC * disBC + disAC * disAC - disAB * disAB) / (2 * disAC * disBC)) *
+            (Math.acos(
+              (disBC * disBC + disAC * disAC - disAB * disAB) /
+                (2 * disAC * disBC)
+            ) *
               180) /
             Math.PI,
         });
@@ -304,7 +336,10 @@ export default defineComponent({
           stroke: "gray",
           strokeDashArray: [2.5, 2.5],
           angle:
-            (Math.acos((disBC * disBC + disAC * disAC - disAB * disAB) / (2 * disAC * disBC)) *
+            (Math.acos(
+              (disBC * disBC + disAC * disAC - disAB * disAB) /
+                (2 * disAC * disBC)
+            ) *
               180) /
               Math.PI +
             90,
@@ -320,7 +355,10 @@ export default defineComponent({
           stroke: "gray",
           strokeDashArray: [2.5, 2.5],
           angle:
-            (Math.acos((disBC * disBC + disAC * disAC - disAB * disAB) / (2 * disAC * disBC)) *
+            (Math.acos(
+              (disBC * disBC + disAC * disAC - disAB * disAB) /
+                (2 * disAC * disBC)
+            ) *
               180) /
               Math.PI +
             270,
@@ -336,7 +374,10 @@ export default defineComponent({
           stroke: "gray",
           strokeDashArray: [2.5, 2.5],
           angle:
-            (Math.acos((disBC * disBC + disAC * disAC - disAB * disAB) / (2 * disAC * disBC)) *
+            (Math.acos(
+              (disBC * disBC + disAC * disAC - disAB * disAB) /
+                (2 * disAC * disBC)
+            ) *
               180) /
               Math.PI +
             90,
@@ -352,7 +393,10 @@ export default defineComponent({
           stroke: "gray",
           strokeDashArray: [2.5, 2.5],
           angle:
-            (Math.acos((disBC * disBC + disAB * disAB - disAC * disAC) / (2 * disAB * disBC)) *
+            (Math.acos(
+              (disBC * disBC + disAB * disAB - disAC * disAC) /
+                (2 * disAB * disBC)
+            ) *
               180) /
               Math.PI +
             300,
@@ -368,7 +412,10 @@ export default defineComponent({
           stroke: "gray",
           strokeDashArray: [2.5, 2.5],
           angle:
-            (Math.acos((disBC * disBC + disAB * disAB - disAC * disAC) / (2 * disAB * disBC)) *
+            (Math.acos(
+              (disBC * disBC + disAB * disAB - disAC * disAC) /
+                (2 * disAB * disBC)
+            ) *
               180) /
               Math.PI +
             210,
@@ -384,7 +431,10 @@ export default defineComponent({
           stroke: "gray",
           strokeDashArray: [2.5, 2.5],
           angle:
-            (Math.acos((disBC * disBC + disAB * disAB - disAC * disAC) / (2 * disAB * disBC)) *
+            (Math.acos(
+              (disBC * disBC + disAB * disAB - disAC * disAC) /
+                (2 * disAB * disBC)
+            ) *
               180) /
               Math.PI +
             210,
@@ -401,7 +451,10 @@ export default defineComponent({
           strokeDashArray: [2.5, 2.5],
           angle:
             -(
-              (Math.acos((disBC * disBC + disAB * disAB - disAC * disAC) / (2 * disAB * disBC)) *
+              (Math.acos(
+                (disBC * disBC + disAB * disAB - disAC * disAC) /
+                  (2 * disAB * disBC)
+              ) *
                 180) /
               Math.PI
             ) - 180,
@@ -602,7 +655,10 @@ export default defineComponent({
       stroke: "gray",
       strokeDashArray: [2.5, 2.5],
       angle:
-        (Math.acos((disBC * disBC + disAC * disAC - disAB * disAB) / (2 * disAC * disBC)) * 180) /
+        (Math.acos(
+          (disBC * disBC + disAC * disAC - disAB * disAB) / (2 * disAC * disBC)
+        ) *
+          180) /
           Math.PI +
         270,
     });
@@ -615,7 +671,10 @@ export default defineComponent({
       stroke: "gray",
       strokeDashArray: [2.5, 2.5],
       angle:
-        (Math.acos((disBC * disBC + disAB * disAB - disAC * disAC) / (2 * disAB * disBC)) * 180) /
+        (Math.acos(
+          (disBC * disBC + disAB * disAB - disAC * disAC) / (2 * disAB * disBC)
+        ) *
+          180) /
           Math.PI +
         300,
     });
