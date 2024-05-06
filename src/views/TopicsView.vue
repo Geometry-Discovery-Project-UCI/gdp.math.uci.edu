@@ -1,6 +1,6 @@
 <template>
   <ATypographyTitle :level="1">Topics</ATypographyTitle>
-  <AList itemLayout="horizontal" :dataSource="topics" :grid="{gutter: 16}">
+  <AList itemLayout="horizontal" :dataSource="topics" :grid="{ gutter: 16 }">
     <template #renderItem="{ item: topic }">
       <AListItem>
         <RouterLink :to="`/topic/${topic.index}`" target="_blank">
@@ -10,7 +10,7 @@
             </template>
             <ACardMeta :title="`Topic ${topic.index}`">
               <template #description>
-                <div style="height: 3rem; width: 250px;">
+                <div style="height: 3rem; width: 250px">
                   {{ topic.name }}
                 </div>
               </template>
@@ -48,5 +48,10 @@ export default defineComponent({
   height: 200px;
   width: 300px;
   padding: 1px;
+}
+
+.animation-layout {
+  display: flex;
+  gap: 20px;
 }
 </style>

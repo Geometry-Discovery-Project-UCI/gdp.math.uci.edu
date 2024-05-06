@@ -557,7 +557,7 @@ export const topics: Topic[] = [
     index: 6,
     snapshot: "images/snapshots/topic06.png",
     essay: "pdfs/topic06.pdf",
-    animationContributors: [ZEJIN_XU],
+    animationContributors: [ZEJIN_XU, JIANLIN_LI],
     essayContributors: [ZHIQIN_LU, XIANFU_LIU],
     captionContributors: [CHEN_XU],
   },
