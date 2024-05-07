@@ -379,7 +379,7 @@ export const MENGMENG_TIAN: Contributor = {
   name: "Mengmeng Tian",
   email: "mengment@uci.edu",
   institute: Institute.UCIrvine,
-}
+};
 
 export const MINGHUA_TSAI: Contributor = {
   name: "Minghua Tsai",
