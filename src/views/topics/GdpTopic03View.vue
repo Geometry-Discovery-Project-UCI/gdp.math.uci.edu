@@ -4,10 +4,33 @@
   <a-tabs v-model:activeKey="activeKey" @change="handleTabChange" style="width: 500px">
     <a-tab-pane key="1" tab="Centroid">
       <div id="centroid-wrapper">
+        <p>
+          The centroid of a triangle is the intersection of the three medians.
+        </p>
+        <p>
+          In the following <span v-katex>\triangle ABC</span>, <span v-katex>AD, BE, CF</span> are medians,
+          where <span v-katex>D, E, F</span> are the mid points of <span v-katex>BC, CA,</span> and
+          <span v-katex>AB</span> respectively.
+        </p>
+        <p>
+          Click, hold, and move points <span v-katex>A, B, C</span>, we shall see that <span v-katex>AD, BE,</span>
+          and <span v-katex>CF</span> are always concurrent at <span v-katex>G</span>.
+        </p>
         <canvas id="centroid-canvas" width="500" height="500"></canvas></div
     ></a-tab-pane>
     <a-tab-pane key="2" tab="Incenter & Excenter">
       <div id="incenter-wrapper">
+        <p>
+          The incenter of a triangle is the intersection of the three angle bisectors.
+        </p>
+        <p>
+          In the following <span v-katex>\triangle ABC</span>, <span v-katex>AD, BE, CF</span> are the
+          angle bisectors with respect to <span v-katex>\angle A, \angle B, \angle C</span>.
+        </p>
+        <p>
+          Click, hold, and move points <span v-katex>A, B, C</span>, we shall see that <span v-katex>AD, BE,</span>
+          and <span v-katex>CF</span> are always concurrent at <span v-katex>I</span>.
+        </p>
         <canvas id="incenter-canvas" width="500" height="500"></canvas></div
     ></a-tab-pane>
     <a-tab-pane key="3" tab="Circumcenter">
