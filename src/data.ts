@@ -387,6 +387,12 @@ export const MINGHUA_TSAI: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const ANNE_LIN: Contributor = {
+  name: "Anne Lin",
+  email: "ylin56@uci.edu",
+  institute: Institute.UCIrvine,
+};
+
 export const contributors: Contributor[] = [
   ZHIQIN_LU,
   BRIAN_CABALLERO,
@@ -450,7 +456,8 @@ export const contributors: Contributor[] = [
   KIRA_ZHANG,
   MAUREEN_CHANG,
   MENGMENG_TIAN,
-  MINGHUA_TSAI
+  MINGHUA_TSAI,
+  ANNE_LIN
 ].sort((a, b) => {
   const aLastName = a.name.split(" ").pop() as string;
   const bLastName = b.name.split(" ").pop() as string;
@@ -532,7 +539,7 @@ export const topics: Topic[] = [
     essay: "pdfs/topic03.pdf",
     animationContributors: [XINXI_GUO, YI_CHEN],
     essayContributors: [ZHIQIN_LU, SHIYI_LYU],
-    captionContributors: [MINGHUA_TSAI],
+    captionContributors: [MINGHUA_TSAI, ANNE_LIN],
   },
   {
     name: "Erdős-Mordell Inequality",
