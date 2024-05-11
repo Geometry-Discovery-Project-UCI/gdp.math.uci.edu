@@ -196,16 +196,16 @@ export default defineComponent({
           });
 
           dLabel.set({
-            left: mp1.x - 25,
-            top: mp1.y - 15,
+            left: mp3.x,
+            top: mp3.y,
           });
           eLabel.set({
             left: mp2.x + 15,
             top: mp2.y - 15,
           });
           fLabel.set({
-            left: mp3.x,
-            top: mp3.y,
+            left: mp1.x - 25,
+            top: mp1.y - 15,
           });
 
           const intersect = calculateLineIntersectInPoints(median1, median2) as fabric.Point;
@@ -316,16 +316,16 @@ export default defineComponent({
           ) as fabric.Point;
 
           dLabel.set({
-            left: onAB.x - 25,
-            top: onAB.y - 25,
+            left: onBC?.x,
+            top: onBC?.y,
           });
           eLabel.set({
             left: onAC.x + 10,
             top: onAC.y - 25,
           });
           fLabel.set({
-            left: onBC?.x,
-            top: onBC?.y,
+            left: onAB.x - 25,
+            top: onAB.y - 25,
           });
 
           bisectionOnAB.set({
