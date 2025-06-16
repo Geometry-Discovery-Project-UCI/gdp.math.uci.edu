@@ -72,6 +72,10 @@ export default defineComponent(
             const quadrilateral = makeMovablePolygon([new fabric.Point(140, 90), new fabric.Point(70, 300), new fabric.Point(340, 420), new fabric.Point(400, 300)],
                 function (coords: fabric.Point[]) {
                     // Change quadrilateral color
+                    // for (const point of coords) {
+                    //     point.x = Math.max(BORDER_WIDTH,Math.min(CANVAS_WIDTH - BORDER_WIDTH, point.x));
+                    //     point.y = Math.max(BORDER_HEIGHT,Math.min(CANVAS_HEIGHT - BORDER_HEIGHT, point.y));
+                    // }
                     quadrilateral.set({
                         stroke: "black",
                     });
@@ -357,7 +361,7 @@ export default defineComponent(
                             angle: 0 - (Math.acos((disBD * disBD + disBN * disBN - disDN * disDN) / (2 * disBD * disBN)) * 180 / Math.PI) + 180
                         });
                     }
-                }
+                },[5,5,CANVAS_WIDTH,CANVAS_HEIGHT]
             );
             canvas.add(aLabel);
             canvas.add(bLabel);
@@ -402,6 +406,13 @@ export default defineComponent(
                         fill: "black",
                         fontSize: 20,
                         evented: false,
+                        styles: {
+                          0: {
+                              1: { fontSize: 14, deltaY: 5 }, // Make △ smaller and lower
+                              9: { fontSize: 14, deltaY: 5 }, // Second △
+                              17: { fontSize: 14, deltaY: 5 } // The ▱ symbol
+                          }
+                      }
                     })
                 );
                 canvas.add(
