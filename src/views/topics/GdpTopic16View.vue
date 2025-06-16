@@ -18,7 +18,10 @@ import {
   calculateThreeAngles,
   calculateLineIntersectInPoints,
   calculateMidpoint,
+  BORDER_WIDTH,
+  BORDER_HEIGHT,
 } from "@/utils/geometry";
+import {setBorder} from "@/utils/canvas";
 const topic = indexTopicMap.get(16) as Topic;
 function createCircle(x?: number, y?: number, radius?: number, fill?: string): fabric.Circle {
   return new fabric.Circle({
@@ -81,6 +84,7 @@ export default defineComponent({
         selection: false,
         backgroundColor: "floralwhite",
       });
+      setBorder(canvas, BORDER_WIDTH,BORDER_HEIGHT);
 
       const vertexA = createCircle(140, 150, 10).set({evented: true});
       const vertexB = createCircle(75, 400, 10).set({evented: true});

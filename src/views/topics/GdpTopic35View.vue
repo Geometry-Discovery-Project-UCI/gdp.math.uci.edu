@@ -14,10 +14,14 @@ import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
 import {
+  BORDER_HEIGHT,
+  BORDER_WIDTH,
   calculateLineIntersectInLinearEquation,
   calculateSignedDistanceFromPointToLine,
   solveLinearEquation,
 } from "@/utils/geometry";
+
+import {setBorder} from "@/utils/canvas";
 
 const topic = indexTopicMap.get(35) as Topic;
 
@@ -38,7 +42,7 @@ function createCircle(x?: number, y?: number, radius?: number, fill?: string): f
 
 function createPolygon(vertices?: fabric.Point[], fill?: string): fabric.Polygon {
   return new fabric.Polygon(vertices || [], {
-    fill: "transparent" || fill,
+    fill: fill || "transparent",
     stroke: "black",
     strokeWidth: 1.5,
     objectCaching: false,
@@ -100,6 +104,8 @@ export default defineComponent({
         selection: false,
         backgroundColor: "floralwhite",
       });
+
+      setBorder(canvas, BORDER_WIDTH,BORDER_HEIGHT);
 
       const vertexA = createCircle(300, 180, 3, "red").set({ evented: true });
       const vertexB = createCircle(100, 330, 3, "red").set({ evented: true });

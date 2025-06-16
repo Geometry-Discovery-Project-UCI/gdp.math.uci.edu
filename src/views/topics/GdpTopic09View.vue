@@ -33,8 +33,12 @@ import { Topic } from "@/types";
 import { fabric } from "fabric";
 import { makeLabel, makeLine, makeCircle, makeMovablePolygon } from "@/utils/canvas";
 import {
+  BORDER_HEIGHT,
+  BORDER_WIDTH,
   calculateDistanceBetweenTwoPoints,
   calculateThreeAngles,
+  CANVAS_HEIGHT,
+  CANVAS_WIDTH,
   trilinearToCartesian,
 } from "@/utils/geometry";
 
@@ -346,7 +350,7 @@ export default defineComponent({
           fontSize: 18,
           fill: "green",
         });
-      }
+      },[BORDER_WIDTH,BORDER_HEIGHT,CANVAS_WIDTH,CANVAS_HEIGHT]
     );
 
     canvas.add(aLabel, bLabel, cLabel);

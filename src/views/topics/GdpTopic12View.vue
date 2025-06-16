@@ -14,8 +14,8 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
-import { calculateThreeAngles, circleLineIntersection, getPedalPoint, solveLinearEquation, trilinearToCartesian } from "@/utils/geometry";
-
+import { BORDER_WIDTH, BORDER_HEIGHT,calculateThreeAngles, circleLineIntersection, getPedalPoint, solveLinearEquation, trilinearToCartesian } from "@/utils/geometry";
+import {setBorder} from "@/utils/canvas";
 const topic = indexTopicMap.get(12) as Topic;
 
 export default defineComponent({
@@ -27,6 +27,7 @@ export default defineComponent({
       selection: false,
     });
 
+    setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
     function createCircle(x?: number, y?: number, radius?: number, fill?: string): fabric.Circle {
       return new fabric.Circle({
         originX: "center",

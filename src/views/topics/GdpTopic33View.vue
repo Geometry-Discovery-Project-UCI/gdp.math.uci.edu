@@ -13,10 +13,11 @@ import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
 import { trilinearToCartesian, calculateThreeAngles } from "@/utils/geometry";
-import { makeLine } from "@/utils/canvas";
+import { makeLine, setBorder} from "@/utils/canvas";
 
 const topic = indexTopicMap.get(33) as Topic;
-
+const BORDER_HEIGHT = 25;
+const BORDER_WIDTH = 25;
 interface Coord {
   x: number;
   y: number;
@@ -74,6 +75,8 @@ export default defineComponent({
       selection: false,
       backgroundColor: "floralwhite",
     });
+
+    setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
 
     const vertexA = createCircle(161, 59).set({ fill: "black", padding: 10, evented: true });
     const vertexB = createCircle(233, 243).set({ fill: "black", padding: 10, evented: true });

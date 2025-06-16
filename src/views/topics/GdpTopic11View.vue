@@ -11,8 +11,10 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { fabric } from "fabric";
 import { Topic } from "@/types";
-import { makeCircle, makeLabel, makeLine, makeMovablePoint } from "@/utils/canvas";
+import { makeCircle, makeLabel, makeLine, makeMovablePoint,setBorder, } from "@/utils/canvas";
 import {
+  BORDER_HEIGHT,
+  BORDER_WIDTH,
   calculateLineIntersectInLinearEquation,
   lineLineIntersection,
   solveLinearEquation,
@@ -29,7 +31,7 @@ export default defineComponent({
     const canvas = new fabric.Canvas("dual-triangles-canvas", {
       selection: false,
     });
-
+    setBorder(canvas,BORDER_WIDTH,BORDER_HEIGHT);
     function createPolygon(vertices?: fabric.Point[]): fabric.Polygon {
       return new fabric.Polygon(vertices || [], {
         fill: "transparent",

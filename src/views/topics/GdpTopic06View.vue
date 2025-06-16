@@ -143,6 +143,8 @@ import { Topic } from "@/types";
 import { fabric } from "fabric";
 import { IEvent } from "fabric/fabric-impl";
 import {
+  BORDER_HEIGHT,
+  BORDER_WIDTH,
   calculateDistanceBetweenTwoPoints,
   calculateLineIntersectInLinearEquation,
   calculateLineIntersectInPoints,
@@ -151,6 +153,7 @@ import {
   solveLinearEquation,
   solvePerpendicularLineEquation,
 } from "@/utils/geometry";
+import {setBorder,} from "@/utils/canvas";
 
 const topic = indexTopicMap.get(6) as Topic;
 
@@ -424,6 +427,7 @@ export default defineComponent({
         selection: false,
         backgroundColor: "floralwhite",
       });
+      setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
 
       const bottomLine = new fabric.Line([0, 400, 500, 400], {
         // # TODO use reduce
@@ -636,6 +640,7 @@ export default defineComponent({
         selection: false,
         backgroundColor: "aliceblue",
       });
+      setBorder(cvsPascal, BORDER_WIDTH, BORDER_HEIGHT);
       const RADIUS = 80;
       const center = { x: 150, y: 350 } as Coord;
       let pointA = coordToPoint(polarToCartesian(RADIUS, 10, center));
@@ -892,6 +897,7 @@ export default defineComponent({
         selection: false,
         backgroundColor: "floralwhite",
       });
+      setBorder(cvsDes, BORDER_WIDTH, BORDER_HEIGHT);
       /**
        * Position initialization.
        */
@@ -1133,6 +1139,7 @@ export default defineComponent({
         selection: false,
         backgroundColor: "floralwhite",
       });
+      setBorder(cvsBra, BORDER_WIDTH, BORDER_HEIGHT);
       const RADIUS = 120;
       const center = { x: 250, y: 250 } as Coord;
       const centerPoint = makeCircle(center);

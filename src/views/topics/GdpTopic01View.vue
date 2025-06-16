@@ -27,7 +27,7 @@ import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
 import { makeLine, makeLabel, makeMovablePolygon } from "@/utils/canvas";
-import { calculateThreeAngles, trilinearToCartesian } from "@/utils/geometry";
+import { BORDER_HEIGHT, BORDER_WIDTH, calculateThreeAngles, trilinearToCartesian } from "@/utils/geometry";
 
 const topic = indexTopicMap.get(1) as Topic;
 
@@ -200,7 +200,7 @@ export default defineComponent(
             x2: bprime.x,
             y2: bprime.y,
           });
-        }
+        },[BORDER_WIDTH,BORDER_HEIGHT,canvas.width as number, canvas.height as number]
       );
       canvas.add(triangle);
 

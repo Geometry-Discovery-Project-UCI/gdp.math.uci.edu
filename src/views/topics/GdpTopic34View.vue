@@ -13,11 +13,12 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import {fabric} from "fabric";
-import {makeLabel, makeLine, makeMovablePoint } from "@/utils/canvas";
+import {makeLabel, makeLine, makeMovablePoint,setBorder } from "@/utils/canvas";
 import {calculateDistanceBetweenTwoPoints, calculateLineIntersectInLinearEquation, solveLinearEquation } from "@/utils/geometry";
 
 const topic = indexTopicMap.get(34) as Topic;
-
+const BORDER_HEIGHT = 25;
+const BORDER_WIDTH = 25;
 export default defineComponent(
     {
         setup() {
@@ -28,6 +29,7 @@ export default defineComponent(
             selection: false,
             backgroundColor: "floralwhite"});
 
+        setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
         // create all lines/labels
         const angleD = new fabric.Rect({width: 10, height: 10, fill: "", stroke: "black"});
         const angleF = new fabric.Rect({width: 10, height: 10, fill: "", stroke: "black", angle: -60});

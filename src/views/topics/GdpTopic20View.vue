@@ -20,6 +20,10 @@ import {
   calculateCircumcenter,
   calculateDistanceBetweenTwoPoints,
   calculateLineIntersectInPoints,
+  CANVAS_HEIGHT,
+  CANVAS_WIDTH,
+  BORDER_WIDTH,
+  BORDER_HEIGHT,
 } from "@/utils/geometry";
 const topic = indexTopicMap.get(20) as Topic;
 export default defineComponent({
@@ -222,7 +226,7 @@ export default defineComponent({
           stroke: "green",
         });
 
-      }
+      },[BORDER_WIDTH,BORDER_HEIGHT,CANVAS_WIDTH,CANVAS_HEIGHT]
     );
     canvas.add(aLabel);
     canvas.add(bLabel);

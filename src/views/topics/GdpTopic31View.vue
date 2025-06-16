@@ -19,6 +19,7 @@ import {
     makeLabel,
     makeCircle,
     makeMovablePolygon,
+    setBorder,
 } from "@/utils/canvas";
 import {
     calculateMidpoint,
@@ -29,6 +30,8 @@ import {
     CANVAS_HEIGHT, CANVAS_WIDTH
 } from "@/utils/geometry";
 const topic = indexTopicMap.get(31) as Topic;
+const BORDER_HEIGHT = 25;
+const BORDER_WIDTH = 25;
 export default defineComponent(
     {
         setup() {
@@ -38,6 +41,7 @@ export default defineComponent(
             const canvas = new fabric.Canvas("Quadrilateral-Area-Formulas-canvas", {
                 selection: false,
             });
+            setBorder(canvas, BORDER_WIDTH,BORDER_HEIGHT);
             const aLabel = makeLabel("A");
             const bLabel = makeLabel("B");
             const cLabel = makeLabel("C");
@@ -361,7 +365,7 @@ export default defineComponent(
                             angle: 0 - (Math.acos((disBD * disBD + disBN * disBN - disDN * disDN) / (2 * disBD * disBN)) * 180 / Math.PI) + 180
                         });
                     }
-                },[5,5,CANVAS_WIDTH,CANVAS_HEIGHT]
+                },[25,25,CANVAS_WIDTH,CANVAS_HEIGHT]
             );
             canvas.add(aLabel);
             canvas.add(bLabel);

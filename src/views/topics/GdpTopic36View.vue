@@ -9,11 +9,13 @@
 </template>
 
 <script lang="ts">
+const BORDER_HEIGHT = 25;
+const BORDER_WIDTH = 25;
 import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
-import { makeCircle, makeLabel, makeLine, makeMovablePoint } from "@/utils/canvas";
+import { makeCircle, makeLabel, makeLine, makeMovablePoint,setBorder,} from "@/utils/canvas";
 import {
   calculateLineIntersectInPoints, findDistance, solveLinearEquation
 } from "@/utils/geometry";
@@ -31,6 +33,7 @@ export default defineComponent(
         selection: false,
         backgroundColor: "floralwhite",
       });
+      setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
       const labelA = makeLabel("A");
       const labelB = makeLabel("B");
       const labelC = makeLabel("C");
