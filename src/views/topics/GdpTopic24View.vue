@@ -19,11 +19,14 @@ import {
   makeLine,
   makeLabel,
   makeCircle,
-  makeMovablePoint
+  makeMovablePoint,
+  setBorder,
 } from "@/utils/canvas";
 import {
   getPedalPoint,
-  calculateDistanceBetweenTwoPoints
+  calculateDistanceBetweenTwoPoints,
+  BORDER_HEIGHT,
+  BORDER_WIDTH,
 } from "@/utils/geometry";
 const topic = indexTopicMap.get(24) as Topic;
 type Circle = fabric.Circle & {
@@ -45,6 +48,7 @@ export default defineComponent(
       const canvas = new fabric.Canvas("Harmonic-Quadrilateral-canvas", {
         selection: false,
       });
+      setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
       const aprimeLabel = makeLabel("A'");
       const bprimeLabel = makeLabel("B'");
       const cprimeLabel = makeLabel("C'");

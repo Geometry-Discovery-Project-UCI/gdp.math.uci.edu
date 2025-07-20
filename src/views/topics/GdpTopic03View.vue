@@ -62,6 +62,7 @@ import {
   makeMovablePoint,
   makeMovablePolygon,
   makeSelectCircle,
+  setBorder
 } from "@/utils/canvas";
 import {
   calculateCircumcenter,
@@ -76,6 +77,8 @@ import {
   getPedalPoint,
   calculateInterPointsWithBoundary,
   subNums,
+  BORDER_WIDTH,
+  BORDER_HEIGHT,
 } from "@/utils/geometry";
 import { Circle, IEvent } from "fabric/fabric-impl";
 const topic = indexTopicMap.get(3) as Topic;
@@ -122,6 +125,7 @@ export default defineComponent({
         selection: false,
         backgroundColor: "floralwhite",
       });
+      setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
 
       const median1 = makeLine();
       const median2 = makeLine();
@@ -214,7 +218,7 @@ export default defineComponent({
             left: intersect.x + 5,
             top: intersect.y + 10,
           });
-        }
+        },[BORDER_WIDTH,BORDER_HEIGHT, canvas.width as number, canvas.height as number]
       );
 
       canvas.add(triangle);
@@ -360,7 +364,7 @@ export default defineComponent({
             top: centerOfCircle.y,
             stroke: "blue",
           });
-        }
+        },[BORDER_WIDTH,BORDER_HEIGHT, canvas.width as number, canvas.height as number]
       );
 
       canvas.add(triangle);
@@ -386,6 +390,7 @@ export default defineComponent({
         selection: false,
         backgroundColor: "floralwhite",
       });
+      setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
       // vertexes
       const aLabel = makeLabel("A");
       const bLabel = makeLabel("B");
@@ -608,6 +613,7 @@ export default defineComponent({
         selection: false,
         backgroundColor: "floralwhite",
       });
+      setBorder(canvas2, BORDER_WIDTH, BORDER_HEIGHT);
 
       const aLabel = makeLabel("A");
       const bLabel = makeLabel("B");
@@ -1104,7 +1110,7 @@ export default defineComponent({
               strokeDashArray: [5, 5],
             });
           }
-        }
+        },[BORDER_WIDTH,BORDER_HEIGHT, canvas.width as number, canvas.height as number]
       );
 
       canvas.add(triangle);

@@ -1,38 +1,45 @@
 <template>
   <TopicMeta :topic="topic" />
 
-  <ATabs v-model:activeKey="activeKey1" @change="handleTabChange">
-    <ATabPane key="1" tab="Pappus">
-      <div id="Pascal-Brainchon-wrapper" class="animation-layout">
+  <div>
+    <div class="custum-tab-nav">
+      <button v-for="tab in tabs" :key="tab.key" :title="tab.title" :class="{ active: activeKey1 === tab.key }"
+        @click="handleTabChange(tab.key)">
+        {{ tab.title }}
+      </button>
+    </div>
+    <div v-show="activeKey1 === '1'" class="tab-pane">
+      <!-- Pappus content with KaTeX -->
+      <div id="Pascal-wrapper" class="animation-layout">
         <div>
           <canvas id="Pascal-Brainchon-canvas" width="500" height="500" />
         </div>
-        <div>
-          <ATypographyParagraph>
-            <p>
-              Pappus' Theorem, also known as Pappus' Hexagon Theorem, is named after Greek
-              mathematician Pappus of Alexandria, who lived approximately 3rd or 4th century AD.
-            </p>
-            <p>
-              Let <span v-katex>A^{\prime}, B^{\prime}, C^{\prime}</span> be three points on one
-              line (the bottom line in the picture), and let <span v-katex>A', B', C'</span>be three
-              points on another line (the top line in the picture). Let
-              <span v-katex>X, Y, Z </span> be the intersections of <span v-katex>BC'</span> and
-              <span v-katex>B'C</span>; <span v-katex>AC'</span> and <span v-katex>A'C</span>; and
-              <span v-katex>AB'</span> and <span v-katex>A'B</span>, respectively. Then
-              <span v-katex>X,Y,Z</span> are collinear.
-            </p>
-            <p>
-              Click, hold and move one of the six points <span v-katex>A,B,C,A',B',C'</span>. One
-              can see that the red line always passing points <span v-katex>X,Y,Z</span>. The red
-              line is called the Pappus Line.
-            </p>
-          </ATypographyParagraph>
-        </div>
-      </div>
-    </ATabPane>
 
-    <ATabPane key="2" tab="Pascal">
+        <ATypographyParagraph>
+          <p>
+            Pappus' Theorem, also known as Pappus' Hexagon Theorem, is named after Greek
+            mathematician Pappus of Alexandria, who lived approximately 3rd or 4th century AD.
+          </p>
+          <p>
+            Let <span v-katex>A^{\prime}, B^{\prime}, C^{\prime}</span> be three points on one
+            line (the bottom line in the picture), and let <span v-katex>A', B', C'</span>be three
+            points on another line (the top line in the picture). Let
+            <span v-katex>X, Y, Z </span> be the intersections of <span v-katex>BC'</span> and
+            <span v-katex>B'C</span>; <span v-katex>AC'</span> and <span v-katex>A'C</span>; and
+            <span v-katex>AB'</span> and <span v-katex>A'B</span>, respectively. Then
+            <span v-katex>X,Y,Z</span> are collinear.
+          </p>
+          <p>
+            Click, hold and move one of the six points <span v-katex>A,B,C,A',B',C'</span>. One
+            can see that the red line always passing points <span v-katex>X,Y,Z</span>. The red
+            line is called the Pappus Line.
+          </p>
+        </ATypographyParagraph>
+      </div>
+    </div>
+
+    <div v-show="activeKey1 === '2'" class="tab-pane">
+      <!-- Pascal content with KaTeX -->
       <div id="Pascal-wrapper" class="animation-layout">
         <div>
           <canvas id="Pascal-canvas" width="500" height="500" />
@@ -60,10 +67,13 @@
           </ATypographyParagraph>
         </div>
       </div>
-    </ATabPane>
 
-    <ATabPane key="3" tab="Desargues">
-      <div id="Desargues-wrapper">
+    </div>
+    <div id="Desargues-wrapper" class="tab-pane" tab="Desargues" v-show="activeKey1 === '3'">
+      <div id="Desargues-wrapper" class="animation-layout">
+        <div>
+          <canvas id="Desargues-canvas" width="800" height="500" />
+        </div>
         <div>
           <ATypographyParagraph>
             <p>
@@ -92,13 +102,10 @@
             </p>
           </ATypographyParagraph>
         </div>
-        <div>
-          <canvas id="Desargues-canvas" width="800" height="500" />
-        </div>
-      </div>
-    </ATabPane>
 
-    <ATabPane key="4" tab="Brainchon">
+      </div>
+    </div>
+    <div id="Brainchon-wrapper" class="tab-pane" v-show="activeKey1 === '4'">
       <div id="Brainchon-wrapper" class="animation-layout">
         <div>
           <canvas id="Brainchon-canvas" width="500" height="500" />
@@ -123,9 +130,10 @@
             </p>
           </ATypographyParagraph>
         </div>
+
       </div>
-    </ATabPane>
-  </ATabs>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -135,6 +143,8 @@ import { Topic } from "@/types";
 import { fabric } from "fabric";
 import { IEvent } from "fabric/fabric-impl";
 import {
+  BORDER_HEIGHT,
+  BORDER_WIDTH,
   calculateDistanceBetweenTwoPoints,
   calculateLineIntersectInLinearEquation,
   calculateLineIntersectInPoints,
@@ -143,6 +153,7 @@ import {
   solveLinearEquation,
   solvePerpendicularLineEquation,
 } from "@/utils/geometry";
+import {setBorder,} from "@/utils/canvas";
 
 const topic = indexTopicMap.get(6) as Topic;
 
@@ -361,6 +372,20 @@ function getInterByLinearEq(l1: LinearEq, l2: LinearEq): Coord {
 }
 
 export default defineComponent({
+  data() {
+    return {
+      activeTab: 0,
+      activeKey: "1",
+      tabs: [
+        { key: "1", title: "Pappus" },
+        { key: "2", title: "Pascal" },
+        { key: "3", title: "Desargues" },
+        { key: "4", title: "Brainchon" },
+        // ... other tabs
+
+      ]
+    };
+  },
   setup() {
     const state = reactive({
       topic,
@@ -402,6 +427,7 @@ export default defineComponent({
         selection: false,
         backgroundColor: "floralwhite",
       });
+      setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
 
       const bottomLine = new fabric.Line([0, 400, 500, 400], {
         // # TODO use reduce
@@ -614,6 +640,7 @@ export default defineComponent({
         selection: false,
         backgroundColor: "aliceblue",
       });
+      setBorder(cvsPascal, BORDER_WIDTH, BORDER_HEIGHT);
       const RADIUS = 80;
       const center = { x: 150, y: 350 } as Coord;
       let pointA = coordToPoint(polarToCartesian(RADIUS, 10, center));
@@ -870,6 +897,7 @@ export default defineComponent({
         selection: false,
         backgroundColor: "floralwhite",
       });
+      setBorder(cvsDes, BORDER_WIDTH, BORDER_HEIGHT);
       /**
        * Position initialization.
        */
@@ -1111,6 +1139,7 @@ export default defineComponent({
         selection: false,
         backgroundColor: "floralwhite",
       });
+      setBorder(cvsBra, BORDER_WIDTH, BORDER_HEIGHT);
       const RADIUS = 120;
       const center = { x: 250, y: 250 } as Coord;
       const centerPoint = makeCircle(center);
@@ -1446,3 +1475,83 @@ export default defineComponent({
 
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 </script>
+
+<style scoped>
+.custum-tab-nav {
+  display: flex;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0;
+  margin: 0;
+}
+
+.custum-tab-nav button {
+  background: white;
+  border: none;
+  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+  outline: none;
+}
+
+.custum-tab-nav button:hover {
+  color: #3b82f6;
+  background-color: #f0f7ff;
+}
+
+.custum-tab-nav button.active {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+  background-color: white;
+}
+
+.tab-pane {
+  padding: 30px;
+  background: white;
+}
+
+.animation-layout {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.animation-layout>div:first-child {
+  flex-shrink: 0;
+}
+
+.animation-layout>div:last-child {
+  flex: 1;
+}
+
+canvas {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .animation-layout {
+    flex-direction: column;
+  }
+
+  .custum-tab-nav {
+    flex-wrap: wrap;
+  }
+
+  .custum-tab-nav button {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .tab-pane {
+    padding: 20px;
+  }
+}
+</style>

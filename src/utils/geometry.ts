@@ -7,6 +7,8 @@ import { singleCascaderProps } from "ant-design-vue/lib/vc-cascader/Cascader";
 
 export const EPS = .000001;
 
+export const BORDER_HEIGHT = 25;
+export const BORDER_WIDTH = 25;
 // function to find feet of triangle's altitudes
 export function getPedalPoint(from: Coord, toA: Coord, toB: Coord): Coord {
   const toAPoint = new fabric.Point(toA.x, toA.y);

@@ -35,7 +35,7 @@ import {
   makeLine,
   makeLabel,
   makeCircle,
-  makeMovablePolygon, makeSelectCircle
+  makeMovablePolygon, makeSelectCircle,
 } from "@/utils/canvas";
 import {
   calculateThreeAngles,
@@ -43,7 +43,11 @@ import {
   calculateDistanceFromPointToLine,
   solveLinearEquation,
   calculateIncenter,
-  calculateLineIntersectInLinearEquation
+  calculateLineIntersectInLinearEquation,
+  BORDER_WIDTH,
+  BORDER_HEIGHT,
+  CANVAS_WIDTH,
+  CANVAS_HEIGHT
 } from "@/utils/geometry";
 const topic = indexTopicMap.get(8) as Topic;
 export default defineComponent(
@@ -289,7 +293,7 @@ export default defineComponent(
             stroke: "red",
             strokeWidth: 2,
           });
-        }
+        },[BORDER_WIDTH,BORDER_HEIGHT,CANVAS_WIDTH,CANVAS_HEIGHT]
       );
       canvas.add(triangle);
       canvas.add(aLabel);

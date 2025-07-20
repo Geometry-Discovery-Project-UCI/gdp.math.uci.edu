@@ -28,8 +28,10 @@ import {
   calculateSlope,
   calculateLineIntersectInPoints,
   calculateDistanceBetweenTwoPoints,
+  BORDER_WIDTH,
+  BORDER_HEIGHT,
 } from "@/utils/geometry";
-import { makeLine } from "@/utils/canvas";
+import { makeLine,setBorder } from "@/utils/canvas";
 
 const topic = indexTopicMap.get(17) as Topic;
 
@@ -94,6 +96,7 @@ export default defineComponent({
         selection: false,
         backgroundColor: "floralwhite",
       });
+      setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
 
       const vertexA = createCircle(175, 75, 10).set({ evented: true });
       const vertexB = createCircle(75, 400, 10).set({ evented: true });

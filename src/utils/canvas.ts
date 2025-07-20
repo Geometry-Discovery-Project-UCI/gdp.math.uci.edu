@@ -2,9 +2,14 @@ import { fabric } from "fabric";
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
-function _polygonPositionHandler(fn?: (points: fabric.Point[]) => void) {
+function _polygonPositionHandler(fn?: (points: fabric.Point[]) => void, border?: number[]) {
   return function (this: { pointIndex: number }, _dim: any, _finalMatrix: any, fabricObject: fabric.Polygon) {
     const c = fabricObject.points!.map(function (pt: fabric.Point) {
+      if (border) {
+        const [BORDER_WIDTH, BORDER_HEIGHT, CANVAS_WIDTH, CANVAS_HEIGHT] = border;
+        pt.x = Math.max(BORDER_WIDTH, Math.min(CANVAS_WIDTH - BORDER_WIDTH, pt.x));
+        pt.y = Math.max(BORDER_HEIGHT, Math.min(CANVAS_HEIGHT - BORDER_HEIGHT, pt.y));
+      }
       const transformPoint = new fabric.Point(pt.x - fabricObject.pathOffset.x, pt.y - fabricObject.pathOffset.y);
       return fabric.util.transformPoint(
         transformPoint,
@@ -64,8 +69,8 @@ function _anchorWrapper(anchorIndex: number, fn: (eventData: MouseEvent, transfo
     return actionPerformed;
   };
 }
-
-export function makeMovablePolygon(vertexes: fabric.Point[], fn: (points: fabric.Point[]) => void) {
+// borderInfo : [borderWidth, borderHeight, canvasWidth, canvasHeight]]
+export function makeMovablePolygon(vertexes: fabric.Point[], fn: (points: fabric.Point[]) => void, border?: number[]) {
   const polygon = new fabric.Polygon(vertexes, {
     fill: "transparent",
     strokeWidth: 1.5,
@@ -84,10 +89,10 @@ export function makeMovablePolygon(vertexes: fabric.Point[], fn: (points: fabric
       pointIndex: number
     };
     const control = new fabric.Control({
-      positionHandler: _polygonPositionHandler(fn),
+      positionHandler: _polygonPositionHandler(fn, border),
       actionHandler: _anchorWrapper(
         index > 0 ? index - 1 : polygon.points!.length - 1,
-        _actionHandler
+        _actionHandler,
       ),
       actionName: "modifyPolygon",
     }) as MyFabricControl;
@@ -132,7 +137,7 @@ export function makeCircle(radius = 5, center: fabric.Point = new fabric.Point(0
   });
 }
 
-export function makeSelectCircle(radius = 3, center: fabric.Point = new fabric.Point(0, 0), fill = "black", padding = 20, strokeWidth = 1){
+export function makeSelectCircle(radius = 3, center: fabric.Point = new fabric.Point(0, 0), fill = "black", padding = 20, strokeWidth = 1) {
   return new fabric.Circle({
     originX: "center",
     originY: "center",
@@ -162,4 +167,22 @@ export function makeMovablePoint(pt: fabric.Point, radius?: number) {
     strokeWidth: 0,
   });
 }
+
+export function setBorder(canvas: fabric.Canvas, borderWidth?:  number,borderHeight?: number) {
+  canvas.on("object:moving", ({ target: obj }) => {
+    if (obj === undefined) {
+      return;
+    }
+    obj.setCoords();
+    const minLeft = borderWidth || 0;
+    const minTop = borderHeight || 0;
+    const maxLeft = (canvas.width || 0) - (borderWidth || 0);
+    const maxTop = (canvas.height || 0) - (borderHeight || 0);
+    obj.set({
+      left: Math.min(Math.max(obj.left || 0, minLeft), maxLeft),
+      top: Math.min(Math.max(obj.top || 0, minTop), maxTop),
+    });
+  });
+}
 /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
+

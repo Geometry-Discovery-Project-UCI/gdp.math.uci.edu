@@ -23,6 +23,10 @@ import {
   calculateMidpoint,
   calculateOrthocenter,
   calculateDistanceBetweenTwoPoints,
+  CANVAS_WIDTH,
+  CANVAS_HEIGHT,
+  BORDER_WIDTH,
+  BORDER_HEIGHT,
 } from "@/utils/geometry";
 const topic = indexTopicMap.get(13) as Topic;
 export default defineComponent({
@@ -303,7 +307,7 @@ export default defineComponent({
           fill: "red",
           stroke: "red",
         });
-      }
+      },[BORDER_WIDTH,BORDER_HEIGHT,CANVAS_WIDTH,CANVAS_HEIGHT]
     );
     canvas.add(triangle);
     canvas.add(aLabel);

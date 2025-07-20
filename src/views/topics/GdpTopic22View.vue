@@ -12,8 +12,8 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
-import { makeLine, makeLabel, makeMovablePolygon, makeCircle } from "@/utils/canvas";
-import { calculateThreeAngles, calculateMidpoint, calculateIncenter, calculateDistanceBetweenTwoPoints, calculateCircumcenter, calculateOrthocenter, calculateSignedDistanceFromPointToLine } from "@/utils/geometry";
+import { makeLine, makeLabel, makeMovablePolygon, makeCircle, setBorder, } from "@/utils/canvas";
+import { calculateThreeAngles, calculateMidpoint, calculateIncenter, calculateDistanceBetweenTwoPoints, calculateCircumcenter, calculateOrthocenter, calculateSignedDistanceFromPointToLine, CANVAS_WIDTH,CANVAS_HEIGHT, BORDER_WIDTH, BORDER_HEIGHT} from "@/utils/geometry";
 
 const topic = indexTopicMap.get(22) as Topic;
 
@@ -87,7 +87,7 @@ export default defineComponent(
 
                     // find angles from coordinates
                     // const angles = calculateThreeAngles(coords[0], coords[1], coords[2]);
-                    
+
                     // find midpoints from points A, B, C
                     const BCmidpoint = calculateMidpoint(coords[1], coords[2]);
                     const ACmidpoint = calculateMidpoint(coords[0], coords[2]);
@@ -156,7 +156,7 @@ export default defineComponent(
                         x2: BCmidpoint.x,
                         y2: BCmidpoint.y,
                     });
-                }
+                },[BORDER_WIDTH,BORDER_HEIGHT,CANVAS_WIDTH,CANVAS_HEIGHT]
             );
             // add items to canvas
             canvas.add(triangle);
