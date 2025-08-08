@@ -30,6 +30,7 @@ import {
   BORDER_WIDTH,
   BORDER_HEIGHT,
 } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(26) as Topic;
 export default defineComponent(
@@ -38,10 +39,10 @@ export default defineComponent(
       return { topic };
     },
     mounted() {
-      const canvas = new fabric.Canvas("Newton-Line-canvas", {
+      const canvas = useFabricCanvas("Newton-Line-canvas", {
         selection: false,
+        backgroundColor: "floralwhite",
       });
-
       setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
       // Creates line and label objects
       const diagAC = makeLine();
@@ -329,7 +330,7 @@ export default defineComponent(
             fill: "red",
             stroke: "red",
           });
-        },[25,25,CANVAS_WIDTH, CANVAS_HEIGHT]
+        }, [25, 25, CANVAS_WIDTH, CANVAS_HEIGHT]
       );
 
       canvas.add(diagAC);

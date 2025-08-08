@@ -20,6 +20,7 @@ import {
   calculateLineIntersectInPoints, findDistance, solveLinearEquation
 } from "@/utils/geometry";
 import { IEvent, Circle } from "fabric/fabric-impl";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(36) as Topic;
 
@@ -29,7 +30,7 @@ export default defineComponent(
       return { topic };
     },
     mounted() {
-      const canvas = new fabric.Canvas("cross-ratio-canvas", {
+      const canvas = useFabricCanvas("cross-ratio-canvas", {
         selection: false,
         backgroundColor: "floralwhite",
       });

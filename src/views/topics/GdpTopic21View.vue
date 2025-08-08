@@ -20,6 +20,7 @@ import {
   solveLinearEquation,
   solvePerpendicularLineEquation,
 } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(21) as Topic;
 
@@ -28,10 +29,10 @@ export default defineComponent({
     return { topic };
   },
   mounted() {
-    const canvas = new fabric.Canvas("maclaurin-theorem-canvas", {
+    const canvas = useFabricCanvas("maclaurin-theorem-canvas", {
       selection: false,
+      backgroundColor: "floralwhite",
     });
-
     function createPolygon(vertices?: fabric.Point[]): fabric.Polygon {
       return new fabric.Polygon(vertices || [], {
         fill: "transparent",

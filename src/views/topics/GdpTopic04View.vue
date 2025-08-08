@@ -17,6 +17,7 @@ holds.
   </ATypographyParagraph>
   <svg id="tri-app_erdos-mordell" width="500" height="500"
     style="border: 2px solid black; background-color: floralwhite; user-select: none">
+    <text id="fading-text" font-size = "20px" x = 15 y = 25> drag the points to begin exploring</text>
     <polygon id="tri_erdos-mordell" stroke="black" stroke-width="2.5px" fill="transparent"></polygon>
     <text id="letterA_erdos-mordell" font-size="25px">A</text>
     <text id="letterB_erdos-mordell" font-size="25px">B</text>
@@ -63,6 +64,10 @@ export default defineComponent(
     },
     mounted() {
       const svg = document.querySelector("#tri-app_erdos-mordell");
+      svg?.addEventListener("mousedown", (event) => {
+        const fadingText = document.querySelector("#fading-text") as Element;
+        fadingText.setAttribute("opacity", "0");
+      });
       const pi = 3.14;
 
       const radius = 200;

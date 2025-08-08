@@ -27,6 +27,7 @@ import {
   calculateDistanceBetweenTwoPoints,
   cartesianToTrilinear
 } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 const topic = indexTopicMap.get(37) as Topic;
 const BORDER_HEIGHT = 25;
 const BORDER_WIDTH = 25;
@@ -36,8 +37,9 @@ export default defineComponent(
       return { topic };
     },
     mounted() {
-      const canvas = new fabric.Canvas("Trilinear-Coordinate-System-canvas", {
+      const canvas = useFabricCanvas("Trilinear-Coordinate-System-canvas", {
         selection: false,
+        backgroundColor: "floralwhite",
       });
       setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
       const aLabel = makeLabel("A");

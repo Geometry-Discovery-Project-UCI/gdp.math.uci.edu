@@ -14,6 +14,7 @@
   must be concurrent at the isotomic conjugate point  <span v-katex>P'</span> of <span v-katex>P</span>.</p>
   </ATypographyParagraph>
     <svg id="tri-app_isotomic" width="500" height="500" style="border: 2px solid black; background-color: floralwhite; user-select: none">
+      <text id="fading-text" font-size = "20px" x = 15 y = 25> click anywhere inside the triangle to begin exploring</text>
       <polygon id="tri_isotomic" stroke="black" fill="transparent" />
       <line id="lineA_isotomic" stroke="purple" />
       <line id="lineB_isotomic" stroke="purple" />
@@ -62,6 +63,7 @@
   must be concurrent at the isogonal conjugate point  <span v-katex>P'</span> of <span v-katex>P</span>.</p>
   </ATypographyParagraph>
     <svg id="tri-app_isogonal" width="500" height="500" style="border: 2px solid black; background-color: floralwhite; user-select: none">
+      <text id="fading-text2" font-size = "20px" x = 15 y = 25> click anywhere inside the triangle to begin exploring</text>
       <polygon id="tri_isogonal" stroke="black" fill="transparent" />
       <line id="lineA_isogonal" stroke="purple" />
       <line id="lineB_isogonal" stroke="purple" />
@@ -115,6 +117,10 @@ export default defineComponent(
     },
     mounted() {
       const svg = document.querySelector("#tri-app_isotomic");
+      svg?.addEventListener("mousedown", (event) => {
+        const fadingText = document.querySelector("#fading-text") as Element;
+        fadingText.setAttribute("display", "none");
+      });
       const pi = 3.14;
 
       const radius = 200;
@@ -153,6 +159,10 @@ export default defineComponent(
       letterC?.setAttribute("y", pC[1] - 5 + "");
       //
       const svg2 = document.querySelector("#tri-app_isogonal");
+      svg2?.addEventListener("mousedown", (event) => {
+        const fadingText = document.querySelector("#fading-text2") as Element;
+        fadingText.setAttribute("display", "none");
+      });
       const tri2 = document.querySelector("#tri_isogonal") as Element;
       const line1a = document.querySelector("#lineA_isogonal") as Element;
       const line2a = document.querySelector("#lineB_isogonal") as Element;

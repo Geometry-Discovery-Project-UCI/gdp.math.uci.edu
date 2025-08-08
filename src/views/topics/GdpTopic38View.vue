@@ -19,6 +19,7 @@ import {
   solveLinearEquation,
   calculateDistanceBetweenTwoPoints,
 } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(38) as Topic;
 
@@ -110,7 +111,7 @@ export default defineComponent({
     return { topic };
   },
   mounted() {
-    const canvas = new fabric.Canvas("routh-theorem-canvas", {
+    const canvas = useFabricCanvas("routh-theorem-canvas", {
       selection: false,
       backgroundColor: "floralwhite",
     });

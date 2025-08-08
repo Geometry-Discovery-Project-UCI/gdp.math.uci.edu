@@ -153,7 +153,8 @@ import {
   solveLinearEquation,
   solvePerpendicularLineEquation,
 } from "@/utils/geometry";
-import {setBorder,} from "@/utils/canvas";
+import { setBorder, } from "@/utils/canvas";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(6) as Topic;
 
@@ -417,13 +418,14 @@ export default defineComponent({
         }
       });
     }
+
     /**
      * Part I
      */
 
     function partOne() {
       if (state.firstCanvas) return;
-      const canvas = new fabric.Canvas("Pascal-Brainchon-canvas", {
+      const canvas = useFabricCanvas("Pascal-Brainchon-canvas", {
         selection: false,
         backgroundColor: "floralwhite",
       });
@@ -484,7 +486,6 @@ export default defineComponent({
         [aLabel, bLabel, cLabel, aprimeLabel, bprimeLabel, cprimeLabel],
         movablePoints
       );
-
       const pointsFromMovables = movablePoints.map((ele) => new fabric.Point(ele.left!, ele.top!));
       const [pA, pB, pC, ppA, ppB, ppC] = pointsFromMovables;
       const aBprime = makeLine(pA, ppB, undefined, "blue");
@@ -561,11 +562,12 @@ export default defineComponent({
       const onPointMove = (e: IEvent): void => {
         const p = e.target! as Circle;
         // Setting the boundaries of the point's position
+        const minGap = 1;
         if (p.leftBound !== undefined && p.left! < p.leftBound.left!) {
-          p.left = p.leftBound.left;
+          p.left = p.leftBound.left! + minGap;
         }
         if (p.rightBound !== undefined && p.left! > p.rightBound.left!) {
-          p.left = p.rightBound.left;
+          p.left = p.rightBound.left! - minGap;
         }
         if (p.upLine !== undefined) {
           p.top = 400; // Hard-coded for now
@@ -636,9 +638,9 @@ export default defineComponent({
 
     function partTwo() {
       if (state.secondCanvas) return;
-      const cvsPascal = new fabric.Canvas("Pascal-canvas", {
+      const cvsPascal = useFabricCanvas("Pascal-canvas", {
         selection: false,
-        backgroundColor: "aliceblue",
+        backgroundColor: "floralwhite",
       });
       setBorder(cvsPascal, BORDER_WIDTH, BORDER_HEIGHT);
       const RADIUS = 80;
@@ -893,7 +895,7 @@ export default defineComponent({
      */
     function partThree() {
       if (state.thirdCanvas) return;
-      const cvsDes = new fabric.Canvas("Desargues-canvas", {
+      const cvsDes = useFabricCanvas("Desargues-canvas", {
         selection: false,
         backgroundColor: "floralwhite",
       });
@@ -1135,7 +1137,7 @@ export default defineComponent({
       if (state.fouthCanvas) {
         return;
       }
-      const cvsBra = new fabric.Canvas("Brainchon-canvas", {
+      const cvsBra = useFabricCanvas("Brainchon-canvas", {
         selection: false,
         backgroundColor: "floralwhite",
       });

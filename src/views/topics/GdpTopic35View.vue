@@ -22,6 +22,7 @@ import {
 } from "@/utils/geometry";
 
 import {setBorder} from "@/utils/canvas";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(35) as Topic;
 
@@ -100,11 +101,10 @@ export default defineComponent({
 
   mounted() {
     (() => {
-      const canvas = new fabric.Canvas("Pappus-Area-canvas", {
+      const canvas = useFabricCanvas("Pappus-Area-canvas", {
         selection: false,
         backgroundColor: "floralwhite",
       });
-
       setBorder(canvas, BORDER_WIDTH,BORDER_HEIGHT);
 
       const vertexA = createCircle(300, 180, 3, "red").set({ evented: true });

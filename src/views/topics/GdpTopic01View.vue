@@ -1,13 +1,13 @@
 <template>
   <TopicMeta :topic="topic" />
-  <ATypographyParagraph>
 
+  <ATypographyParagraph>
   </ATypographyParagraph>
 
   <div id="morley-wrapper">
     <ATypographyTitle :level="4">Animated Morley's Miracle</ATypographyTitle>
     <ATypographyParagraph class="topics-description">
-    <p>The Morley’s Theorem states that in any triangle, the three points of intersection of the adjacent angle trisectors
+    <p>The Morley's Theorem states that in any triangle, the three points of intersection of the adjacent angle trisectors
     form an equilateral triangle. The theorem was discovered by Frank Morley in 1899.</p>
 
   <p>
@@ -26,8 +26,9 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
-import { makeLine, makeLabel, makeMovablePolygon } from "@/utils/canvas";
+import { makeLine, makeLabel, makeMovablePolygon, makeSelectCircle, createFadingText } from "@/utils/canvas";
 import { BORDER_HEIGHT, BORDER_WIDTH, calculateThreeAngles, trilinearToCartesian } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(1) as Topic;
 
@@ -37,24 +38,7 @@ export default defineComponent(
       return { topic };
     },
     mounted() {
-      const canvas = new fabric.Canvas("morley-canvas", {
-        selection: false,
-      });
-      function makeSelectCircle(radius = 3, center: fabric.Point = new fabric.Point(0, 0), fill = "black", padding = 20, strokeWidth = 1) {
-        return new fabric.Circle({
-          originX: "center",
-          originY: "center",
-          left: center.x,
-          top: center.y,
-          hasControls: false,
-          hasBorders: false,
-          evented: false,
-          radius,
-          fill,
-          padding,
-          strokeWidth,
-        });
-      }
+      const canvas = useFabricCanvas("morley-canvas");
       const ABprime = makeLine(undefined, undefined, undefined, "purple");
       const ACprime = makeLine(undefined, undefined, undefined, "purple");
       const BCprime = makeLine(undefined, undefined, undefined, "purple");
@@ -64,6 +48,8 @@ export default defineComponent(
       const AprimeBprime = makeLine(undefined, undefined, undefined, "red");
       const BprimeCprime = makeLine(undefined, undefined, undefined, "red");
       const CprimeAprime = makeLine(undefined, undefined, undefined, "red");
+
+      const fadingTextManager = createFadingText(canvas,"drag the points to begin exploring",{left:150,top:25});
 
       // vertexes
       const aLabel = makeLabel("A");

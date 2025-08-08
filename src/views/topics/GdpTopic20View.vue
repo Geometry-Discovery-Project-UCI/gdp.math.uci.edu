@@ -25,14 +25,16 @@ import {
   BORDER_WIDTH,
   BORDER_HEIGHT,
 } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 const topic = indexTopicMap.get(20) as Topic;
 export default defineComponent({
   setup() {
     return { topic };
   },
   mounted() {
-    const canvas = new fabric.Canvas("Miquel-Point-canvas", {
+    const canvas = useFabricCanvas("Miquel-Point-canvas", {
       selection: false,
+      backgroundColor: "floralwhite",
     });
     const aLabel = makeLabel("A");
     const bLabel = makeLabel("B");

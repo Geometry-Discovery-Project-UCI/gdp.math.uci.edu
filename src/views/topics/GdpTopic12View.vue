@@ -14,8 +14,9 @@ import { defineComponent } from "vue";
 import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
-import { BORDER_WIDTH, BORDER_HEIGHT,calculateThreeAngles, circleLineIntersection, getPedalPoint, solveLinearEquation, trilinearToCartesian } from "@/utils/geometry";
-import {setBorder} from "@/utils/canvas";
+import { BORDER_WIDTH, BORDER_HEIGHT, calculateThreeAngles, circleLineIntersection, getPedalPoint, solveLinearEquation, trilinearToCartesian } from "@/utils/geometry";
+import { setBorder } from "@/utils/canvas";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 const topic = indexTopicMap.get(12) as Topic;
 
 export default defineComponent({
@@ -23,10 +24,10 @@ export default defineComponent({
     return { topic };
   },
   mounted() {
-    const canvas = new fabric.Canvas("euler-line-canvas", {
+    const canvas = useFabricCanvas("euler-line-canvas", {
       selection: false,
+      backgroundColor: "floralwhite",
     });
-
     setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
     function createCircle(x?: number, y?: number, radius?: number, fill?: string): fabric.Circle {
       return new fabric.Circle({
@@ -80,9 +81,9 @@ export default defineComponent({
       });
     }
 
-    const vertexA = createCircle(178, 113, 3).set({ evented: true, fill:"black", padding: 20});
-    const vertexB = createCircle(55, 330, 3).set({ evented: true, fill:"black", padding: 20 });
-    const vertexC = createCircle(355, 331, 3).set({ evented:true, fill:"black", padding: 20 });
+    const vertexA = createCircle(178, 113, 3).set({ evented: true, fill: "black", padding: 20 });
+    const vertexB = createCircle(55, 330, 3).set({ evented: true, fill: "black", padding: 20 });
+    const vertexC = createCircle(355, 331, 3).set({ evented: true, fill: "black", padding: 20 });
 
     const triangle = createPolygon();
     const midPointTriangle = createPolygon();

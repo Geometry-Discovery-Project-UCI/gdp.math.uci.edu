@@ -49,6 +49,7 @@ import {
   CANVAS_WIDTH,
   CANVAS_HEIGHT
 } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 const topic = indexTopicMap.get(8) as Topic;
 export default defineComponent(
   {
@@ -56,8 +57,9 @@ export default defineComponent(
       return { topic };
     },
     mounted() {
-      const canvas = new fabric.Canvas("Gergonne-and-Nagel-Points-canvas", {
+      const canvas = useFabricCanvas("Gergonne-and-Nagel-Points-canvas", {
         selection: false,
+        backgroundColor: "floralwhite",
       });
       const lineAD = makeLine();
       const lineBE = makeLine();

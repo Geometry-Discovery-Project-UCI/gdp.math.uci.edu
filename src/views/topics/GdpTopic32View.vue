@@ -13,6 +13,7 @@ import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
 import { setBorder } from "@/utils/canvas";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 const topic = indexTopicMap.get(32) as Topic;
 const BORDER_HEIGHT = 25;
 const BORDER_WIDTH = 25;
@@ -21,10 +22,10 @@ export default defineComponent({
     return { topic };
   },
   mounted() {
-    const canvas = new fabric.Canvas("monge-theorem-canvas", {
+    const canvas = useFabricCanvas("monge-theorem-canvas", {
       selection: false,
+      backgroundColor: "floralwhite",
     });
-
     setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
     function createCircle(x?: number, y?: number, radius?: number, fill?: string): fabric.Circle {
       return new fabric.Circle({

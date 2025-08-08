@@ -28,6 +28,7 @@ import {
   BORDER_HEIGHT,
   BORDER_WIDTH,
 } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 const topic = indexTopicMap.get(24) as Topic;
 type Circle = fabric.Circle & {
   // eslint-disable-next-line
@@ -45,8 +46,9 @@ export default defineComponent(
       return { topic };
     },
     mounted() {
-      const canvas = new fabric.Canvas("Harmonic-Quadrilateral-canvas", {
+      const canvas = useFabricCanvas("Harmonic-Quadrilateral-canvas", {
         selection: false,
+        backgroundColor: "floralwhite",
       });
       setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
       const aprimeLabel = makeLabel("A'");

@@ -52,6 +52,7 @@ import {
   solveLinearEquation,
   drawFractionLine,
 } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 import { IEvent, Intersection } from "fabric/fabric-impl";
 
 const topic = indexTopicMap.get(2) as Topic;
@@ -77,11 +78,9 @@ export default defineComponent({
   mounted() {
     // Ceva Theorem
     (() => {
-      const canvas = new fabric.Canvas("ceva-theorem-canvas", {
-        selection: false,
+      const canvas = useFabricCanvas("ceva-theorem-canvas", {
         backgroundColor: "floralwhite",
       });
-
       const lineAD = makeLine();
       const lineBE = makeLine();
       const lineCF = makeLine();
