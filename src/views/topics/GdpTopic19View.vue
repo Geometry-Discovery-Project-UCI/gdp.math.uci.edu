@@ -27,7 +27,9 @@ export default defineComponent(
     mounted() {
       const canvas = useFabricCanvas("fagnano-triangle-canvas", {
         selection: false,
-      });
+      },
+    "click on the triangle edge BC to start the animation",
+      {left: 220, top: 25});
 
       function createPolygon(vertices?: fabric.Point[]) {
         return new fabric.Polygon(vertices || [], {

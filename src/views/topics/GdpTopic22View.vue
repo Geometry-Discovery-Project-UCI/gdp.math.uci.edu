@@ -113,7 +113,6 @@ export default defineComponent(
             left: spiekerCircle.left,
             top: spiekerCircle.top,
           });
-          console.log("x:", [xLabel.left, xLabel.top]);
           circleX.set({ left: xLabel.left, top: xLabel.top });
 
           // find coordinates for point D

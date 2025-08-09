@@ -331,6 +331,8 @@ export default defineComponent({
         });
       }
 
+      let lastValidPos = { left: pointP.left!, top: pointP.top! };
+
       const movePoint = (e: IEvent): void => {
         const p = e.target! as Circle;
         if (
@@ -345,11 +347,16 @@ export default defineComponent({
             p.top as number
           )
         ) {
+          lastValidPos = { left: p.left as number, top: p.top as number };
           p.set({
             left: p.left as number,
             top: p.top as number,
           });
         } else {
+          p.set({
+            left: lastValidPos.left,
+            top: lastValidPos.top,
+          });
           return;
         }
         movePointP();
