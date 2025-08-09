@@ -250,13 +250,14 @@ function setLabelToPoint(
   }
 }
 
-function makeCircle(point: fabric.Point | Coord, radius?: number, fill?: any): Circle;
-function makeCircle(x: number, y: number, radius?: any, fill?: string): Circle;
+// function makeCircle(point: fabric.Point | Coord, radius?: number, fill?: any): Circle;
+// function makeCircle(x: number, y: number, radius?: any, fill?: string): Circle;
 function makeCircle(
   x: number | fabric.Point | Coord,
   y?: number,
   radius?: any,
-  fill?: string
+  fill?: string,
+  evented?: boolean
 ): Circle {
   if (typeof x !== "number") {
     fill = radius;
@@ -269,7 +270,7 @@ function makeCircle(
     top: y,
     hasControls: false,
     hasBorders: false,
-    evented: true,
+    evented: (evented === undefined) && true,
     radius: radius || 3,
     fill: fill || "black",
     originX: "center",
@@ -683,18 +684,6 @@ export default defineComponent({
       const pointY = new fabric.Point(0, 0);
       const pointZ = new fabric.Point(0, 0);
       const xy = makeLine(pointX, pointY, 1, "red");
-
-      function createLine(points?: number[], color?: string, strokeWidth?: number) {
-        return new fabric.Line(points || [], {
-          originX: "center",
-          originY: "center",
-          hasControls: false,
-          hasBorders: false,
-          evented: false,
-          stroke: color || "black",
-          strokeWidth: strokeWidth || 1,
-        });
-      }
       const dx = makeLine(pointX, pointD, 1, "blue");
       const bx = makeLine(pointB, pointX, 1, "blue");
       const cz = makeLine(pointC, pointZ, 1, "blue");
@@ -711,13 +700,12 @@ export default defineComponent({
         p.setFromPoint(coord);
         return p;
       }
-
-      const pa = makeCircle(pointA);
-      const pb = makeCircle(pointB);
-      const pc = makeCircle(pointC);
-      const pd = makeCircle(pointD);
-      const pe = makeCircle(pointE);
-      const pf = makeCircle(pointF);
+      const pa = makeCircle(pointA, undefined, undefined, undefined, false);
+      const pb = makeCircle(pointB, undefined, undefined, undefined, false);
+      const pc = makeCircle(pointC, undefined, undefined, undefined, false);
+      const pd = makeCircle(pointD, undefined, undefined, undefined, false);
+      const pe = makeCircle(pointE, undefined, undefined, undefined, false);
+      const pf = makeCircle(pointF, undefined, undefined, undefined, false);
       const circles = [pa, pb, pc, pd, pe, pf];
       cvsPascal.add(pa, pb, pc, pd, pe, pf);
 
@@ -756,8 +744,8 @@ export default defineComponent({
             ) as fabric.Point
           );
           setLabelToPoint([xLable, yLable, zLable], [pointX, pointY, pointZ]);
-          setLineFromPoints(dx, pointX, pointD);
-          setLineFromPoints(bx, pointB, pointX);
+          // setLineFromPoints(dx, pointX, pointD);
+          // setLineFromPoints(bx, pointB, pointX);
           setLineFromPoints(cz, pointC, pointZ);
           setLineFromPoints(az, pointA, pointZ);
           setLineFromPoints(by, pointB, pointY);
