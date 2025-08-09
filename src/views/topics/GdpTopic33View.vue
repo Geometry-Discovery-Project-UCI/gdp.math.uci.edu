@@ -13,7 +13,8 @@ import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
 import { trilinearToCartesian, calculateThreeAngles } from "@/utils/geometry";
-import { makeLine, setBorder} from "@/utils/canvas";
+import { makeLine, setBorder } from "@/utils/canvas";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(33) as Topic;
 const BORDER_HEIGHT = 25;
@@ -71,11 +72,10 @@ export default defineComponent({
     return { topic };
   },
   mounted() {
-    const canvas = new fabric.Canvas("isodynamic-point-canvas", {
+    const canvas = useFabricCanvas("isodynamic-point-canvas", {
       selection: false,
       backgroundColor: "floralwhite",
     });
-
     setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
 
     const vertexA = createCircle(161, 59).set({ fill: "black", padding: 10, evented: true });

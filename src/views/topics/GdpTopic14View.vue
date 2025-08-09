@@ -14,6 +14,7 @@
   user-select: none;"
   >
     <polygon id="tri_fermat-point" stroke="black" stroke-width="2.5px" fill="transparent"></polygon>
+    <text id="fading-text" font-size = "20px" x = 15 y = 25> drag the points to begin exploring</text>
     <text id="letterA_fermat-point" font-size="25px">A</text>
     <text id="letterB_fermat-point" font-size="25px">B</text>
     <text id="letterC_fermat-point" font-size="25px">C</text>
@@ -58,6 +59,10 @@ export default defineComponent({
   },
   mounted() {
     const svg = document.querySelector("#tri-app_fermat-point");
+    svg?.addEventListener("mousedown", (event) => {
+      const fadingText = document.querySelector("#fading-text") as Element;
+      fadingText.setAttribute("opacity", "0");
+    });
     const pi = 3.14;
 
     const radius = 200;

@@ -13,7 +13,8 @@ import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
 import { makeLine, makeLabel, makeMovablePolygon, makeCircle, setBorder } from "@/utils/canvas";
-import { calculateThreeAngles, calculateIncenter, calculateDistanceBetweenTwoPoints, trilinearToCartesian, CANVAS_WIDTH, CANVAS_HEIGHT} from "@/utils/geometry";
+import { calculateThreeAngles, calculateIncenter, calculateDistanceBetweenTwoPoints, trilinearToCartesian, CANVAS_WIDTH, CANVAS_HEIGHT } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(25) as Topic;
 const BORDER_HEIGHT = 25;
@@ -24,11 +25,10 @@ export default defineComponent(
       return { topic };
     },
     mounted() {
-      const canvas = new fabric.Canvas("Brocard-Points-canvas", {
+      const canvas = useFabricCanvas("Brocard-Points-canvas", {
         selection: false,
         backgroundColor: "floralwhite",
       });
-
       setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
       function makeSelectCircle(radius = 3, center: fabric.Point = new fabric.Point(0, 0), fill = "black", padding = 20, strokeWidth = 1) {
         return new fabric.Circle({
@@ -183,7 +183,7 @@ export default defineComponent(
             left: coords[1].x - anglePBC.x - 5,
             top: coords[1].y - anglePBC.y + 30
           });
-        },[25,25,CANVAS_WIDTH,CANVAS_HEIGHT]
+        }, [25, 25, CANVAS_WIDTH, CANVAS_HEIGHT]
       );
 
       canvas.add(aLabel, bLabel, cLabel, pLabel);

@@ -21,6 +21,7 @@ import {
   findSlope,
 } from "@/utils/geometry";
 import { Intersection } from "fabric/fabric-impl";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(27) as Topic;
 
@@ -45,10 +46,10 @@ export default defineComponent({
     return { topic };
   },
   mounted() {
-    const canvas = new fabric.Canvas("napoleon-canvas", {
+    const canvas = useFabricCanvas("napoleon-canvas", {
       selection: false,
+      backgroundColor: "floralwhite",
     });
-
     function coordToPoint(cd: Coord): fabric.Point {
       return new fabric.Point(cd.x, cd.y);
     }
@@ -243,10 +244,10 @@ export default defineComponent({
             (pA.distanceFrom(pC) * pA.distanceFrom(pC) +
               pB.distanceFrom(pC) * pB.distanceFrom(pC) -
               pB.distanceFrom(pA) * pB.distanceFrom(pA)) /
-              (2 * pB.distanceFrom(pC) * pA.distanceFrom(pC))
+            (2 * pB.distanceFrom(pC) * pA.distanceFrom(pC))
           ) *
             180) /
-            Math.PI +
+          Math.PI +
           angleFVal,
       });
 

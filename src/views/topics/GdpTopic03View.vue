@@ -81,6 +81,7 @@ import {
   BORDER_HEIGHT,
 } from "@/utils/geometry";
 import { Circle, IEvent } from "fabric/fabric-impl";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 const topic = indexTopicMap.get(3) as Topic;
 export default defineComponent({
   setup() {
@@ -121,7 +122,7 @@ export default defineComponent({
       if (state.centroidCanvas) {
         return;
       }
-      const canvas = new fabric.Canvas("centroid-canvas", {
+      const canvas = useFabricCanvas("centroid-canvas", {
         selection: false,
         backgroundColor: "floralwhite",
       });

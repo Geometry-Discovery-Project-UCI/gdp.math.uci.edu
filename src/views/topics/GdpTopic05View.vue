@@ -40,6 +40,7 @@ import {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,
 } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 const topic = indexTopicMap.get(5) as Topic;
 type Circle = fabric.Circle & {
   // eslint-disable-next-line
@@ -56,8 +57,9 @@ export default defineComponent({
     return { topic };
   },
   mounted() {
-    const canvas = new fabric.Canvas("Simson-Line-canvas", {
+    const canvas = useFabricCanvas("Simson-Line-canvas", {
       selection: false,
+      backgroundColor: "floralwhite",
     });
     const pi = 3.14;
     const aLabel = makeLabel("A");

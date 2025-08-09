@@ -7,9 +7,7 @@
     <input name="iconType" type="radio" id="btn-HIDE" /><span class="radio-btn-title">HIDE</span>
     <input name="iconType" type="radio" id="btn-GFDE" /><span class="radio-btn-title">GFDE</span>
     <input name="iconType" type="radio" id="btn-HIGF" /><span class="radio-btn-title">HIGF</span>
-    <input name="iconType" type="radio" id="btn-HIDEGF" checked /><span class="radio-btn-title"
-      >HIDEGF</span
-    >
+    <input name="iconType" type="radio" id="btn-HIDEGF" checked /><span class="radio-btn-title">HIDEGF</span>
     <canvas id="Davis-canvas" width="500" height="500" />
   </div>
 </template>
@@ -28,6 +26,7 @@ import { Coord, Topic } from "@/types";
 import { fabric } from "fabric";
 import { makeCircle, makeLabel } from "@/utils/canvas";
 import { solveLinearEquation, circleLineIntersection } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(28) as Topic;
 
@@ -36,10 +35,10 @@ export default defineComponent({
     return { topic };
   },
   mounted() {
-    const canvas = new fabric.Canvas("Davis-canvas", {
+    const canvas = useFabricCanvas("Davis-canvas", {
       selection: false,
+      backgroundColor: "floralwhite",
     });
-
     function createPolygon(vertices?: fabric.Point[]): fabric.Polygon {
       return new fabric.Polygon(vertices || [], {
         fill: "transparent",

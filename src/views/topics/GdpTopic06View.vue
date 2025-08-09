@@ -153,7 +153,8 @@ import {
   solveLinearEquation,
   solvePerpendicularLineEquation,
 } from "@/utils/geometry";
-import {setBorder,} from "@/utils/canvas";
+import { setBorder, } from "@/utils/canvas";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(6) as Topic;
 
@@ -249,13 +250,14 @@ function setLabelToPoint(
   }
 }
 
-function makeCircle(point: fabric.Point | Coord, radius?: number, fill?: any): Circle;
-function makeCircle(x: number, y: number, radius?: any, fill?: string): Circle;
+// function makeCircle(point: fabric.Point | Coord, radius?: number, fill?: any): Circle;
+// function makeCircle(x: number, y: number, radius?: any, fill?: string): Circle;
 function makeCircle(
   x: number | fabric.Point | Coord,
   y?: number,
   radius?: any,
-  fill?: string
+  fill?: string,
+  evented?: boolean
 ): Circle {
   if (typeof x !== "number") {
     fill = radius;
@@ -268,7 +270,7 @@ function makeCircle(
     top: y,
     hasControls: false,
     hasBorders: false,
-    evented: true,
+    evented: (evented === undefined) && true,
     radius: radius || 3,
     fill: fill || "black",
     originX: "center",
@@ -417,13 +419,14 @@ export default defineComponent({
         }
       });
     }
+
     /**
      * Part I
      */
 
     function partOne() {
       if (state.firstCanvas) return;
-      const canvas = new fabric.Canvas("Pascal-Brainchon-canvas", {
+      const canvas = useFabricCanvas("Pascal-Brainchon-canvas", {
         selection: false,
         backgroundColor: "floralwhite",
       });
@@ -484,7 +487,6 @@ export default defineComponent({
         [aLabel, bLabel, cLabel, aprimeLabel, bprimeLabel, cprimeLabel],
         movablePoints
       );
-
       const pointsFromMovables = movablePoints.map((ele) => new fabric.Point(ele.left!, ele.top!));
       const [pA, pB, pC, ppA, ppB, ppC] = pointsFromMovables;
       const aBprime = makeLine(pA, ppB, undefined, "blue");
@@ -561,11 +563,12 @@ export default defineComponent({
       const onPointMove = (e: IEvent): void => {
         const p = e.target! as Circle;
         // Setting the boundaries of the point's position
+        const minGap = 1;
         if (p.leftBound !== undefined && p.left! < p.leftBound.left!) {
-          p.left = p.leftBound.left;
+          p.left = p.leftBound.left! + minGap;
         }
         if (p.rightBound !== undefined && p.left! > p.rightBound.left!) {
-          p.left = p.rightBound.left;
+          p.left = p.rightBound.left! - minGap;
         }
         if (p.upLine !== undefined) {
           p.top = 400; // Hard-coded for now
@@ -636,9 +639,9 @@ export default defineComponent({
 
     function partTwo() {
       if (state.secondCanvas) return;
-      const cvsPascal = new fabric.Canvas("Pascal-canvas", {
+      const cvsPascal = useFabricCanvas("Pascal-canvas", {
         selection: false,
-        backgroundColor: "aliceblue",
+        backgroundColor: "floralwhite",
       });
       setBorder(cvsPascal, BORDER_WIDTH, BORDER_HEIGHT);
       const RADIUS = 80;
@@ -681,18 +684,6 @@ export default defineComponent({
       const pointY = new fabric.Point(0, 0);
       const pointZ = new fabric.Point(0, 0);
       const xy = makeLine(pointX, pointY, 1, "red");
-
-      function createLine(points?: number[], color?: string, strokeWidth?: number) {
-        return new fabric.Line(points || [], {
-          originX: "center",
-          originY: "center",
-          hasControls: false,
-          hasBorders: false,
-          evented: false,
-          stroke: color || "black",
-          strokeWidth: strokeWidth || 1,
-        });
-      }
       const dx = makeLine(pointX, pointD, 1, "blue");
       const bx = makeLine(pointB, pointX, 1, "blue");
       const cz = makeLine(pointC, pointZ, 1, "blue");
@@ -709,13 +700,12 @@ export default defineComponent({
         p.setFromPoint(coord);
         return p;
       }
-
-      const pa = makeCircle(pointA);
-      const pb = makeCircle(pointB);
-      const pc = makeCircle(pointC);
-      const pd = makeCircle(pointD);
-      const pe = makeCircle(pointE);
-      const pf = makeCircle(pointF);
+      const pa = makeCircle(pointA, undefined, undefined, undefined, false);
+      const pb = makeCircle(pointB, undefined, undefined, undefined, false);
+      const pc = makeCircle(pointC, undefined, undefined, undefined, false);
+      const pd = makeCircle(pointD, undefined, undefined, undefined, false);
+      const pe = makeCircle(pointE, undefined, undefined, undefined, false);
+      const pf = makeCircle(pointF, undefined, undefined, undefined, false);
       const circles = [pa, pb, pc, pd, pe, pf];
       cvsPascal.add(pa, pb, pc, pd, pe, pf);
 
@@ -754,8 +744,8 @@ export default defineComponent({
             ) as fabric.Point
           );
           setLabelToPoint([xLable, yLable, zLable], [pointX, pointY, pointZ]);
-          setLineFromPoints(dx, pointX, pointD);
-          setLineFromPoints(bx, pointB, pointX);
+          // setLineFromPoints(dx, pointX, pointD);
+          // setLineFromPoints(bx, pointB, pointX);
           setLineFromPoints(cz, pointC, pointZ);
           setLineFromPoints(az, pointA, pointZ);
           setLineFromPoints(by, pointB, pointY);
@@ -893,7 +883,7 @@ export default defineComponent({
      */
     function partThree() {
       if (state.thirdCanvas) return;
-      const cvsDes = new fabric.Canvas("Desargues-canvas", {
+      const cvsDes = useFabricCanvas("Desargues-canvas", {
         selection: false,
         backgroundColor: "floralwhite",
       });
@@ -1135,7 +1125,7 @@ export default defineComponent({
       if (state.fouthCanvas) {
         return;
       }
-      const cvsBra = new fabric.Canvas("Brainchon-canvas", {
+      const cvsBra = useFabricCanvas("Brainchon-canvas", {
         selection: false,
         backgroundColor: "floralwhite",
       });

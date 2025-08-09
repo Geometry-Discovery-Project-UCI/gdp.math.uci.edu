@@ -28,6 +28,7 @@ import {
   getPedalPoint,
   trilinearToCartesian
 } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 const topic = indexTopicMap.get(30) as Topic;
 export default defineComponent(
   {
@@ -35,8 +36,9 @@ export default defineComponent(
       return { topic };
     },
     mounted() {
-      const canvas = new fabric.Canvas("Taylor-Circle-canvas", {
+      const canvas = useFabricCanvas("Taylor-Circle-canvas", {
         selection: false,
+        backgroundColor: "floralwhite",
       });
       setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
 

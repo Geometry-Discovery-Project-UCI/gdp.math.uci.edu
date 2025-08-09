@@ -21,6 +21,7 @@ import {
   BORDER_HEIGHT,
 } from "@/utils/geometry";
 import { setBorder } from "@/utils/canvas";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 const topic = indexTopicMap.get(15) as Topic;
 
 function createCircle(x?: number, y?: number, radius?: number, fill?: string): fabric.Circle {
@@ -110,11 +111,11 @@ export default defineComponent({
     return { topic };
   },
   mounted() {
-    const canvas = new fabric.Canvas("complete-quadrilateral-canvas", {
+    const canvas = useFabricCanvas("complete-quadrilateral-canvas", {
       selection: false,
       backgroundColor: "floralwhite",
     });
-    setBorder(canvas,BORDER_WIDTH, BORDER_HEIGHT);
+    setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
 
     const vertexA = createCircle(300, 75, 3, "black").set({ evented: true });
     const vertexB = createCircle(260, 120, 3, "black").set({ evented: true });

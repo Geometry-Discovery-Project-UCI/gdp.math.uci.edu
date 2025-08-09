@@ -1,10 +1,10 @@
 <template>
   <TopicMeta :topic="topic" />
-    <ATypographyParagraph> </ATypographyParagraph>
-    <div id="symmedian point-wrapper">
-      <ATypographyTitle :level="4">Animated Symmedian Point</ATypographyTitle>
-      <canvas id="symmedian-point-canvas" width="500" height="500" />
-    </div>
+  <ATypographyParagraph> </ATypographyParagraph>
+  <div id="symmedian point-wrapper">
+    <ATypographyTitle :level="4">Animated Symmedian Point</ATypographyTitle>
+    <canvas id="symmedian-point-canvas" width="500" height="500" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -21,7 +21,8 @@ import {
   BORDER_WIDTH,
   BORDER_HEIGHT,
 } from "@/utils/geometry";
-import {setBorder} from "@/utils/canvas";
+import { setBorder } from "@/utils/canvas";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 const topic = indexTopicMap.get(16) as Topic;
 function createCircle(x?: number, y?: number, radius?: number, fill?: string): fabric.Circle {
   return new fabric.Circle({
@@ -75,20 +76,20 @@ function createPolygon(vertices?: fabric.Point[]): fabric.Polygon {
 
 export default defineComponent({
   setup() {
-    return {topic};
+    return { topic };
   },
   mounted() {
     // Symmedian Point
     (() => {
-      const canvas = new fabric.Canvas("symmedian-point-canvas", {
+      const canvas = useFabricCanvas("symmedian-point-canvas", {
         selection: false,
         backgroundColor: "floralwhite",
       });
-      setBorder(canvas, BORDER_WIDTH,BORDER_HEIGHT);
+      setBorder(canvas, BORDER_WIDTH, BORDER_HEIGHT);
 
-      const vertexA = createCircle(140, 150, 10).set({evented: true});
-      const vertexB = createCircle(75, 400, 10).set({evented: true});
-      const vertexC = createCircle(400, 400, 10).set({evented: true});
+      const vertexA = createCircle(140, 150, 10).set({ evented: true });
+      const vertexB = createCircle(75, 400, 10).set({ evented: true });
+      const vertexC = createCircle(400, 400, 10).set({ evented: true });
 
       const triangle = createPolygon();
 
@@ -145,7 +146,7 @@ export default defineComponent({
           top: vertices[2].y - 5,
         });
         ANode.set({
-          left: vertices[0].x ,
+          left: vertices[0].x,
           top: vertices[0].y,
         });
         BNode.set({
@@ -170,9 +171,9 @@ export default defineComponent({
         });
 
         const angles = calculateThreeAngles(vertices[0], vertices[1], vertices[2]);
-        const pA=[vertices[0].x,vertices[0].y];
-        const pB=[vertices[1].x,vertices[1].y];
-        const pC=[vertices[2].x,vertices[2].y];
+        const pA = [vertices[0].x, vertices[0].y];
+        const pB = [vertices[1].x, vertices[1].y];
+        const pC = [vertices[2].x, vertices[2].y];
         const symmedianPoint = trilinearToCartesian(
           vertices[0],
           vertices[1],
@@ -181,21 +182,21 @@ export default defineComponent({
           Math.sin(angles.y),
           Math.sin(angles.z)
         );
-        const sym=[symmedianPoint.x,symmedianPoint.y];
-        const d1=lineLineIntersection(pA,sym, pB,pC) as number[];
+        const sym = [symmedianPoint.x, symmedianPoint.y];
+        const d1 = lineLineIntersection(pA, sym, pB, pC) as number[];
         d1Label.set({
-          left:d1[0],
-          top:d1[1],
+          left: d1[0],
+          top: d1[1],
         });
-        const e1=lineLineIntersection(pB,sym, pA,pC) as number[];
+        const e1 = lineLineIntersection(pB, sym, pA, pC) as number[];
         e1Label.set({
-          left:e1[0]+5,
-          top:e1[1]-20,
+          left: e1[0] + 5,
+          top: e1[1] - 20,
         });
-        const f1=lineLineIntersection(pC,sym, pB,pA) as number[];
+        const f1 = lineLineIntersection(pC, sym, pB, pA) as number[];
         f1Label.set({
-          left:f1[0]-25,
-          top:f1[1],
+          left: f1[0] - 25,
+          top: f1[1],
         });
         lineAB.set({
           x1: vertices[0].x,
@@ -238,24 +239,24 @@ export default defineComponent({
           stroke: "blue",
         });
         symmedian1.set({
-          x1:vertices[0].x,
-          y1:vertices[0].y,
-          x2:d1[0],
-          y2:d1[1],
+          x1: vertices[0].x,
+          y1: vertices[0].y,
+          x2: d1[0],
+          y2: d1[1],
           stroke: "green",
         });
         symmedian2.set({
-          x1:vertices[1].x,
-          y1:vertices[1].y,
-          x2:e1[0],
-          y2:e1[1],
+          x1: vertices[1].x,
+          y1: vertices[1].y,
+          x2: e1[0],
+          y2: e1[1],
           stroke: "green",
         });
         symmedian3.set({
-          x1:vertices[2].x,
-          y1:vertices[2].y,
-          x2:f1[0],
-          y2:f1[1],
+          x1: vertices[2].x,
+          y1: vertices[2].y,
+          x2: f1[0],
+          y2: f1[1],
           stroke: "green",
         });
         kNode.set({

@@ -41,6 +41,7 @@ import {
   CANVAS_WIDTH,
   trilinearToCartesian,
 } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(9) as Topic;
 
@@ -64,11 +65,10 @@ export default defineComponent({
     return { topic };
   },
   mounted() {
-    const canvas = new fabric.Canvas("napoleon-canvas", {
+    const canvas = useFabricCanvas("napoleon-canvas", {
       selection: false,
       backgroundColor: "floralwhite",
     });
-
     const aNode = makeCircle();
     const bNode = makeCircle();
     const cNode = makeCircle();
@@ -118,11 +118,11 @@ export default defineComponent({
         // pointA rotate around Point B by 60 degree counterclockwise
         const pointR = new fabric.Point(
           (coords[0].x - coords[1].x) * Math.cos((Math.PI / 180.0) * -60) -
-            (coords[0].y - coords[1].y) * Math.sin((Math.PI / 180.0) * -60) +
-            coords[1].x,
+          (coords[0].y - coords[1].y) * Math.sin((Math.PI / 180.0) * -60) +
+          coords[1].x,
           (coords[0].x - coords[1].x) * Math.sin((Math.PI / 180.0) * -60) +
-            (coords[0].y - coords[1].y) * Math.cos((Math.PI / 180.0) * -60) +
-            coords[1].y
+          (coords[0].y - coords[1].y) * Math.cos((Math.PI / 180.0) * -60) +
+          coords[1].y
         );
 
         // const disAR = calculateDistanceBetweenTwoPoints(coords[0], pointR);
@@ -183,11 +183,11 @@ export default defineComponent({
 
         const pointQ = new fabric.Point(
           (coords[0].x - coords[2].x) * Math.cos((Math.PI / 180.0) * +60) -
-            (coords[0].y - coords[2].y) * Math.sin((Math.PI / 180.0) * +60) +
-            coords[2].x,
+          (coords[0].y - coords[2].y) * Math.sin((Math.PI / 180.0) * +60) +
+          coords[2].x,
           (coords[0].x - coords[2].x) * Math.sin((Math.PI / 180.0) * +60) +
-            (coords[0].y - coords[2].y) * Math.cos((Math.PI / 180.0) * +60) +
-            coords[2].y
+          (coords[0].y - coords[2].y) * Math.cos((Math.PI / 180.0) * +60) +
+          coords[2].y
         );
 
         qNode.set({
@@ -241,11 +241,11 @@ export default defineComponent({
 
         const pointP = new fabric.Point(
           (coords[1].x - coords[2].x) * Math.cos((Math.PI / 180.0) * -60) -
-            (coords[1].y - coords[2].y) * Math.sin((Math.PI / 180.0) * -60) +
-            coords[2].x,
+          (coords[1].y - coords[2].y) * Math.sin((Math.PI / 180.0) * -60) +
+          coords[2].x,
           (coords[1].x - coords[2].x) * Math.sin((Math.PI / 180.0) * -60) +
-            (coords[1].y - coords[2].y) * Math.cos((Math.PI / 180.0) * -60) +
-            coords[2].y
+          (coords[1].y - coords[2].y) * Math.cos((Math.PI / 180.0) * -60) +
+          coords[2].y
         );
 
         pNode.set({
@@ -350,7 +350,7 @@ export default defineComponent({
           fontSize: 18,
           fill: "green",
         });
-      },[BORDER_WIDTH,BORDER_HEIGHT,CANVAS_WIDTH,CANVAS_HEIGHT]
+      }, [BORDER_WIDTH, BORDER_HEIGHT, CANVAS_WIDTH, CANVAS_HEIGHT]
     );
 
     canvas.add(aLabel, bLabel, cLabel);

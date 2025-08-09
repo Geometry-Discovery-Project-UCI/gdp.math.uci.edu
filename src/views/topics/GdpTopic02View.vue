@@ -52,6 +52,7 @@ import {
   solveLinearEquation,
   drawFractionLine,
 } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 import { IEvent, Intersection } from "fabric/fabric-impl";
 
 const topic = indexTopicMap.get(2) as Topic;
@@ -77,11 +78,9 @@ export default defineComponent({
   mounted() {
     // Ceva Theorem
     (() => {
-      const canvas = new fabric.Canvas("ceva-theorem-canvas", {
-        selection: false,
+      const canvas = useFabricCanvas("ceva-theorem-canvas", {
         backgroundColor: "floralwhite",
       });
-
       const lineAD = makeLine();
       const lineBE = makeLine();
       const lineCF = makeLine();
@@ -332,6 +331,8 @@ export default defineComponent({
         });
       }
 
+      let lastValidPos = { left: pointP.left!, top: pointP.top! };
+
       const movePoint = (e: IEvent): void => {
         const p = e.target! as Circle;
         if (
@@ -346,11 +347,16 @@ export default defineComponent({
             p.top as number
           )
         ) {
+          lastValidPos = { left: p.left as number, top: p.top as number };
           p.set({
             left: p.left as number,
             top: p.top as number,
           });
         } else {
+          p.set({
+            left: lastValidPos.left,
+            top: lastValidPos.top,
+          });
           return;
         }
         movePointP();

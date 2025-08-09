@@ -12,6 +12,7 @@ import { indexTopicMap } from "@/data";
 import { Topic } from "@/types";
 import { fabric } from "fabric";
 import { calculateLineIntersectInLinearEquation, findSlope, polarToCartesian, solveLinearEquation, solvePerpendicularLineEquation } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 /**
  * Type definitions
@@ -184,7 +185,7 @@ export default defineComponent(
       return { topic };
     },
     mounted() {
-      const cvs = new fabric.Canvas("Lemoine-line-canvas", {
+      const cvs = useFabricCanvas("Lemoine-line-canvas", {
         selection: false,
         backgroundColor: "floralwhite",
       });

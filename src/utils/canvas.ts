@@ -69,6 +69,122 @@ function _anchorWrapper(anchorIndex: number, fn: (eventData: MouseEvent, transfo
     return actionPerformed;
   };
 }
+// Interface for the fading text manager
+interface FadingTextManager {
+  text: fabric.Text;
+  animationId: number | null;
+  isAnimating: boolean;
+  userHasDragged: boolean;
+  startFadeAnimation: () => void;
+  stopFadeAnimation: () => void;
+  remove: () => void;
+}
+
+// Create fading instruction text
+export function createFadingText(
+  canvas: fabric.Canvas,
+  message = "drag the points to begin exploring",
+  options: {
+    left?: number;
+    top?: number;
+    fontSize?: number;
+    fill?: string;
+    fontFamily?: string;
+    fadeSpeed?: number;
+  } = {}
+): FadingTextManager {
+  const {
+    left = canvas.width ? canvas.width / 2 : 250,
+    top = canvas.height ? canvas.height / 2 : 250,
+    fontSize = 18,
+    fill = "#666",
+    fontFamily = "Arial",
+    fadeSpeed = 0.02
+  } = options;
+
+  const text = new fabric.Text(message, {
+    left,
+    top,
+    originX: "center",
+    originY: "center",
+    fontSize,
+    fill,
+    fontFamily,
+    selectable: false,
+    evented: false,
+    opacity: 1,
+  });
+
+  canvas.add(text);
+
+  let animationId: number | null = null;
+  let isAnimating = false;
+  let userHasDragged = false;
+  let fadeDirection = -1; // -1 for fade out, 1 for fade in
+  let currentOpacity = 1;
+
+  const animate = () => {
+    if (!isAnimating || userHasDragged) return;
+
+    currentOpacity += fadeDirection * fadeSpeed;
+
+    // Clamp opacity between 0.3 and 1
+    if (currentOpacity <= 0.3) {
+      currentOpacity = 0.3;
+      fadeDirection = 1; // Start fading in
+    } else if (currentOpacity >= 1) {
+      currentOpacity = 1;
+      fadeDirection = -1; // Start fading out
+    }
+
+    text.set({ opacity: currentOpacity });
+    canvas.renderAll();
+
+    animationId = requestAnimationFrame(animate);
+  };
+
+  const startFadeAnimation = () => {
+    if (!isAnimating && !userHasDragged) {
+      isAnimating = true;
+      animate();
+    }
+  };
+
+  const stopFadeAnimation = () => {
+    isAnimating = false;
+    if (animationId !== null) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+  };
+
+  const handleClick = () => {
+    remove();
+    canvas.off("mouse:down", handleClick);
+  };
+  canvas.on("mouse:down", handleClick);
+  const remove = () => {
+    if (!userHasDragged) {
+      userHasDragged = true;
+      stopFadeAnimation();
+      canvas.remove(text);
+      canvas.renderAll();
+    }
+  };
+
+  // Start the animation immediately
+  startFadeAnimation();
+
+  return {
+    text,
+    animationId,
+    isAnimating,
+    userHasDragged,
+    startFadeAnimation,
+    stopFadeAnimation,
+    remove
+  };
+}
 // borderInfo : [borderWidth, borderHeight, canvasWidth, canvasHeight]]
 export function makeMovablePolygon(vertexes: fabric.Point[], fn: (points: fabric.Point[]) => void, border?: number[]) {
   const polygon = new fabric.Polygon(vertexes, {

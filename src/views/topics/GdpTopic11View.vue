@@ -20,6 +20,7 @@ import {
   solveLinearEquation,
   solvePerpendicularLineEquation,
 } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(11) as Topic;
 
@@ -28,8 +29,9 @@ export default defineComponent({
     return { topic };
   },
   mounted() {
-    const canvas = new fabric.Canvas("dual-triangles-canvas", {
+    const canvas = useFabricCanvas("dual-triangles-canvas", {
       selection: false,
+      backgroundColor: "floralwhite",
     });
     setBorder(canvas,BORDER_WIDTH,BORDER_HEIGHT);
     function createPolygon(vertices?: fabric.Point[]): fabric.Polygon {

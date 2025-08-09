@@ -28,14 +28,16 @@ import {
   BORDER_WIDTH,
   BORDER_HEIGHT,
 } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 const topic = indexTopicMap.get(13) as Topic;
 export default defineComponent({
   setup() {
     return { topic };
   },
   mounted() {
-    const canvas = new fabric.Canvas("nine-point-circle-canvas", {
+    const canvas = useFabricCanvas("nine-point-circle-canvas", {
       selection: false,
+      backgroundColor: "floralwhite",
     });
     const heightOnAB = makeLine();
     const heightOnBC = makeLine();
@@ -307,7 +309,7 @@ export default defineComponent({
           fill: "red",
           stroke: "red",
         });
-      },[BORDER_WIDTH,BORDER_HEIGHT,CANVAS_WIDTH,CANVAS_HEIGHT]
+      }, [BORDER_WIDTH, BORDER_HEIGHT, CANVAS_WIDTH, CANVAS_HEIGHT]
     );
     canvas.add(triangle);
     canvas.add(aLabel);

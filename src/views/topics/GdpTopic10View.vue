@@ -15,16 +15,17 @@ import { Coord, Topic } from "@/types";
 import { fabric } from "fabric";
 import { makeLabel, makeLine, makeCircle, makeMovablePoint } from "@/utils/canvas";
 import { findSlope, polarToCartesian } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 const topic = indexTopicMap.get(10) as Topic;
 export default defineComponent({
   setup() {
     return { topic };
   },
   mounted() {
-    const canvas = new fabric.Canvas("Ptolemy-canvas", {
+    const canvas = useFabricCanvas("Ptolemy-canvas", {
       selection: false,
+      backgroundColor: "floralwhite",
     });
-
     function coordToPoint(cd: Coord): fabric.Point {
       return new fabric.Point(cd.x, cd.y);
     }

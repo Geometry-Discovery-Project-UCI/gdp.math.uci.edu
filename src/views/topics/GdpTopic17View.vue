@@ -31,7 +31,8 @@ import {
   BORDER_WIDTH,
   BORDER_HEIGHT,
 } from "@/utils/geometry";
-import { makeLine,setBorder } from "@/utils/canvas";
+import { makeLine, setBorder } from "@/utils/canvas";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(17) as Topic;
 
@@ -92,7 +93,7 @@ export default defineComponent({
   mounted() {
     // first lemonine circle
     (() => {
-      const canvas = new fabric.Canvas("lemonine-circle-canvas", {
+      const canvas = useFabricCanvas("lemonine-circle-canvas", {
         selection: false,
         backgroundColor: "floralwhite",
       });

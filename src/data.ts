@@ -4,6 +4,7 @@ export enum Institute {
   UCIrvine = "UC Irvine",
   UCSanDiego = "UC San Diego",
   UCLA = "UCLA",
+  SJSU = "San Jose State University",
 }
 
 // TODO(Kiyo5hi): Use enum for contributors
@@ -387,6 +388,12 @@ export const MINGHUA_TSAI: Contributor = {
   institute: Institute.UCIrvine,
 };
 
+export const ZHIYUAN_XU: Contributor = {
+  name: "Zhiyuan Xu",
+  email: "zhiyuanxu@sjsu.edu",
+  institute: Institute.SJSU,
+};
+
 export const contributors: Contributor[] = [
   ZHIQIN_LU,
   BRIAN_CABALLERO,
@@ -450,7 +457,8 @@ export const contributors: Contributor[] = [
   KIRA_ZHANG,
   MAUREEN_CHANG,
   MENGMENG_TIAN,
-  MINGHUA_TSAI
+  MINGHUA_TSAI,
+  ZHIYUAN_XU,
 ].sort((a, b) => {
   const aLastName = a.name.split(" ").pop() as string;
   const bLastName = b.name.split(" ").pop() as string;

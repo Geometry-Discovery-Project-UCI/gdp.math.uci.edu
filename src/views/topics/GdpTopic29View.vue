@@ -15,6 +15,7 @@ import { indexTopicMap } from "@/data";
 import { Coord, Topic } from "@/types";
 import { fabric } from "fabric";
 import { calculateCircumcenter, calculateLineIntersectInLinearEquation, getPedalPoint, solveLinearEquation } from "@/utils/geometry";
+import { useFabricCanvas } from "@/utils/useFabricCanvas";
 
 const topic = indexTopicMap.get(29) as Topic;
 
@@ -24,10 +25,12 @@ export default defineComponent(
       return { topic };
     },
     mounted() {
-      const canvas = new fabric.Canvas("tucker-circle-canvas", {
+      const canvas = useFabricCanvas("tucker-circle-canvas", {
         selection: false,
-      });
-
+        backgroundColor: "floralwhite",
+      },
+      "click anywhere in the canvas to begin exploring",
+      { left: 200, top: 25 });
       function createPolygon(vertices?: fabric.Point[]) {
         return new fabric.Polygon(vertices || [], {
           fill: "transparent",
@@ -375,9 +378,9 @@ export default defineComponent(
           });
           canvas.add(circle);
         }
-        console.log("Point: ",pointer);
+        console.log("Point: ", pointer);
       }
-      const initialPoint = new fabric.Point(300, 150);
+      const initialPoint = new fabric.Point(243, 130);
       drawAllLabels(initialPoint as Coord);
       let lock = true;
       canvas.defaultCursor = "pointer";
